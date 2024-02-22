@@ -1,0 +1,119 @@
+.sidebar-items {
+  background-color: #2b3445;
+  border-radius: 0px;
+  padding: 5px 18px 18px 18px;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  .header-sidebar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 6px;
+    width: 246px;
+    margin-bottom: 20px;
+    .logo{
+      height: 56px;
+      width: 84px ;
+      padding-top: 4px;
+    }
+    .icon {
+      position: relative;
+      cursor: pointer;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      transition: background-color 0.3s ease-in; /* Add transition */
+    
+      .rightIcon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 20px;
+        width: 20px;
+        transform: translate(-58%, -59%);
+        transition: fill 0.2s ease-in-out; /* Add transition */
+        fill:rgba(255, 255, 255, .6) ;
+      }
+      
+      &:hover {
+        background: #a9a9a916;
+        .rightIcon {
+          fill:white ; /* Change fill color on hover */
+        }
+      }
+    }
+    
+  }
+  .admin{
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 0.7rem;
+    margin-left: 15px;
+
+
+  }
+  .item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    height: 44px;
+    color: #fff;
+    padding: 12px 15px 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px !important;
+    font-weight: 300 !important;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+
+    .icon_color {
+      color: #4f68c7;
+      padding-bottom: 3px;
+    }
+
+    &:hover {
+      background-color: #323a4c;
+      color: #4f68c7;
+
+      .icon_color {
+        color: white;
+      }
+    }
+  }
+
+  .active {
+    background-color: #323a4c;
+    color: rgb(78, 151, 253);
+
+    &:hover {
+      background-color: #323a4c;
+      color: white;
+
+      .icon_color {
+        color: white;
+      }
+    }
+
+    .icon_color {
+      color: white;
+    }
+  }
+
+  .link-icon-stroke-color {
+    stroke: #4f68c7;
+  }
+
+  .link-icon-stroke-color-active {
+    stroke: white;
+  }
+}

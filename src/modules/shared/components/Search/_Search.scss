@@ -1,0 +1,20 @@
+.container_input{
+    width:200px;
+    height: 40px;
+    background: #f6f9fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 10px;
+    .search_input{
+        color: #c4c3c3b7;
+
+
+        background: #f6f9fc;
+        &::placeholder{
+            color: #c4c3c3b7;
+        }
+
+    }
+}
