@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../store'
 import { logout } from '@src/modules/auth/data/authThunk'
 import Search from '../Search/Search'
 import NotificationIcon from '../../assets/icons/navbar/bell.png'
+import { useAnimation } from '../../layout/MainLayout/context/animationContext'
 interface INavbarProps {
   setShowSidebar: React.Dispatch<React.gSetStateAction<boolean>>
   setCollapseSidebar: React.Dispatch<React.gSetStateAction<boolean>>
@@ -15,6 +16,8 @@ interface INavbarProps {
 }
 
 const Navbar: React.FC<INavbarProps> = () => {
+  const { isAnimating } = useAnimation();
+
 
 
   const dispatch = useAppDispatch()
@@ -59,8 +62,8 @@ const Navbar: React.FC<INavbarProps> = () => {
   ]
 
   return (
-    <div className="navbar">
-      <div className="navbar-left">
+    <div className={` ${isAnimating ? '' : ""} navbar `}>
+      <div className={`navbar-left ${isAnimating? "navbar-left-animate" : ""}`}>
         {/*<img
           src={menuIcon}
           alt="menu"
@@ -82,7 +85,7 @@ const Navbar: React.FC<INavbarProps> = () => {
           <span>Browse Website</span>
         </div>
       </div>
-      <div className="navbar-right">
+      <div className={`navbar-right ${isAnimating? "navbar-right-animate" :""} `}>
         <Space size={'middle'}>
           <Search/>
 
@@ -108,7 +111,7 @@ const Navbar: React.FC<INavbarProps> = () => {
         </Space>
 
       </div>
-    </div>
+      </div>
   )
 }
 

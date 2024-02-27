@@ -1,0 +1,21 @@
+.container_input-filter{
+    width:350px;
+    height: 44px;
+    background-color: white;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+    align-items: center;
+    gap: 14px;
+    border-radius: 10px;
+    .search_filter_input{
+        color: #c4c3c3b7;
+
+
+        background-color: white;
+        &::placeholder{
+            color: #c3c3c3;
+        }
+
+    }
+}

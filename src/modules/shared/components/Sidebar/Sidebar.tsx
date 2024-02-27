@@ -1,11 +1,15 @@
 import SidebarItems from '../SidebarItems/SidebarItems'
+import { useAnimation } from '../../layout/MainLayout/context/animationContext';
+
 interface ISidebarProps {
   collapseSidebar: boolean
 }
 
 const Sidebar: React.FC<ISidebarProps> = ({ collapseSidebar }) => {
+  const { toggleAnimation , isAnimating } = useAnimation();
+
   return (
-    <div className={`sidebar ${collapseSidebar ? 'collapse' : ''}`}>
+    <div className={`${isAnimating ? 'sidebar-animate' : ' '} sidebar`}>
     
       
       <div className="sidebar-content">

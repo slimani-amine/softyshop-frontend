@@ -1,0 +1,78 @@
+[aria-label='caret-up'] , [aria-label='caret-down'] {
+    svg{
+    fill: #7D879C;
+    
+}
+
+}
+.ant-table-thead {
+
+
+    tr{
+        th[aria-label='Name']{
+            width: 381px;
+            
+        }
+     
+
+        
+        
+      
+        th{
+            background-color: #f3f5f9 !important;
+            &::before{
+                display: hidden;
+            }
+        }
+        
+    }
+   
+  }
+.ant-table-tbody{
+    tr{
+        .cate{
+            .category-name{
+                background-color: #f3f5f9;
+                padding: 4px 8px;
+                border-radius: 12px;
+            }
+        }
+    }
+    
+}
+.Product-List {
+   
+  
+    .name-column{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 12px;
+        .data-name{
+            span{
+                color: #8d8d8dc3
+
+            };
+        }
+    
+      
+        
+    }
+    h1{
+        font-weight: 700;
+        font-size: 20px;
+        margin-bottom: 20PX;
+    }
+
+    .header-product-list{
+        display: flex ;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+       
+
+    }
+   
+}
+.icon{
+    color : red
+}

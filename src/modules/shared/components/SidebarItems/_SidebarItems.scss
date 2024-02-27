@@ -1,3 +1,4 @@
+
 .sidebar-items {
   background-color: #2b3445;
   border-radius: 0px;
@@ -15,12 +16,28 @@
     padding-left: 6px;
     width: 246px;
     margin-bottom: 20px;
+    user-select: none;
+
     .logo{
       height: 56px;
       width: 84px ;
       padding-top: 4px;
+      transition: all 0.3s ease;
     }
+    .miniLogo{
+      transition: all 0.3s ease;
+
+      margin-top: 10px;
+      margin-right: 18px;
+      height: 48px;
+      width: 48px;
+    }
+    .animate_icon{
+      transform: rotate(180deg)  ; 
+      
+       }
     .icon {
+     
       position: relative;
       cursor: pointer;
       margin-top: 1px;
@@ -30,7 +47,7 @@
       height: 40px;
       width: 40px;
       border-radius: 50%;
-      transition: background-color 0.3s ease-in; /* Add transition */
+      transition:  0.3s ease-in; /* Add transition */
     
       .rightIcon {
         position: absolute;
@@ -52,29 +69,82 @@
     }
     
   }
+  .hidden-admin{
+    opacity: 0;
+    transition: 0.1s ease-in;
+
+  }
   .admin{
     text-transform: uppercase;
     color: #fff;
     font-size: 0.7rem;
     margin-left: 15px;
+    transition: 0.1s ease-in;
 
 
   }
+  
   .item {
+    user-select: none;
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 8px;
+    
+   
+    .item-left{
+      display: hidden;
+      display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 12px;
     height: 44px;
-    color: #fff;
     padding: 12px 15px 8px 15px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 12px !important;
-    font-weight: 300 !important;
     display: flex;
     align-items: center;
+    flex:1;
     overflow: hidden;
+    .hidden{
+      display: hidden !important;
+    }
+    .item-label{
+      display: hidden !important;
+      color: #fff;
+      font-weight: 300 !important;
+      font-size: 12px !important;
+      
+
+    }
+
+
+    }
+    .rotate-expendIcon{
+      transform: rotate(90deg);
+      transition: 0.1s ease;
+
+    }
+    .hidden-icon{
+      fill: transparent;
+
+
+
+    }
+    .expendIcon{
+      fill: white;
+      height: 20px;
+      width: 20px;
+      transition: 0.1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+
+      
+      
+    }
+    
 
     .icon_color {
       color: #4f68c7;
@@ -83,17 +153,90 @@
 
     &:hover {
       background-color: #323a4c;
-      color: #4f68c7;
+      color: rgb(78, 151, 253);
 
       .icon_color {
         color: white;
       }
     }
   }
+    .children_expanded{
+      max-height: 200px;
+      overflow: hidden;
+      transition: all 0.4s ease-in-out;
+      .active-child{ background-color: #323a4c;
+        color: rgb(78, 151, 253);
 
+      }
+      
+      
+
+      .child-item{
+        .icon-child-active{
+          display: flex;
+          transition: 1s 0.1s  ease ;
+
+          justify-content: space-between;
+          height: 3px;
+          position: relative;
+          width: 3px;
+          background-color: rgb(78, 151, 253);
+          border-radius: 50%;
+        &::after{
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-56%, -46%);
+          height: 11px;
+          width: 11px;
+          border-radius: 40%;
+          background-color: rgba(76, 128, 200, 0.231);;
+        }
+
+        }
+        .icon-child{
+          height: 3px;
+          width: 3px;
+          background-color: white;
+          border-radius: 50%;
+          transition: 0.1 s ease ;
+        }
+        transition: all 0.3s ease;
+
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 24px;
+        height: 44px;
+        color: #fff;
+        padding: 12px 15px 8px 15px;
+        padding-left: 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 12px !important;
+        font-weight: 300 !important;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        &:hover {
+          background-color: #323a4c;
+          color: rgb(78, 151, 253);
+
+          .icon_color {
+            color: white;
+          }
+        }
+      }
+
+    }
+    .children{
+      max-height: 0;
+      overflow: hidden;
+    }
   .active {
     background-color: #323a4c;
-    color: rgb(78, 151, 253);
+    color: rgb(78, 151, 253) !important;
 
     &:hover {
       background-color: #323a4c;

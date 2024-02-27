@@ -1,6 +1,7 @@
 import { HTMLAttributes, useState } from 'react'
 import eyeOn from './eyeOn.svg'
 import eyeOff from './eyeOff.svg'
+import { log } from 'console'
 
 interface IInputProps extends HTMLAttributes<HTMLInputElement> {
   name: string
@@ -27,6 +28,17 @@ const Input: React.FC<IInputProps> = ({
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(true)
+  const [isFocused, setIsFocused] = useState(false);
+  console.log(isFocused)
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
 
   return (
     <div className="input-form">
@@ -43,27 +55,29 @@ const Input: React.FC<IInputProps> = ({
         ].join(' ')}
       >
         {icon && <img src={icon} alt="icon" className="icon" />}
-        <input
-          id={name}
-          name={name}
-          type={
-            type === 'password'
-              ? showPassword
-                ? 'password'
-                : 'text'
-              : type === 'text'
-              ? 'text'
-              : type === 'email'
-              ? 'email'
-              : 'number'
-          }
-          className={['input', `input-${size}`, `input-${variant}`].join(' ')}
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          value={formik?.values[name]}
-          autoComplete="new-password"
-          {...props}
-        />
+        <div className='input-field'>
+          <input
+            id={name}
+            name={name}
+            className={`${isFocused ? 'legend-label' : ""}`}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            type={
+              type === 'password'
+                ? showPassword
+                  ? 'password'
+                  : 'text'
+                : type === 'text'
+                ? 'text'
+                : type === 'email'
+                ? 'email'
+                : 'number'
+            }
+            autoComplete="new-password"
+            {...props}
+          />
+          <p className={`${isFocused ? "legend-input":""}`}>Name</p>
+        </div>
         {type === 'password' && (
           <img
             src={showPassword ? eyeOn : eyeOff}
@@ -74,9 +88,7 @@ const Input: React.FC<IInputProps> = ({
         )}
       </div>
 
-      {formik.touched[name] && formik.errors[name] ? (
-        <p className="error-message">{formik.errors[name]}</p>
-      ) : null}
+  
     </div>
   )
 }
