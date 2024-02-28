@@ -4,70 +4,51 @@ import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilte
 import Button from "@src/modules/shared/components/Button/Button";
 import { useNavigate } from "react-router-dom";
 
-interface Product {
+interface Category {
   id: string;
   name: string;
-  Product: string;
-  brand: string;
-  price: number;
-  published: boolean;
+  published: Boolean;
+  Category: string;
   imgUrl: string;
 }
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: (name: string, record: Product) => (
-      <div className="name-column">
-        <div className="picture-Product">
-          <img height={"30px"} width={"30px"} src={record.imgUrl} alt="" />
-        </div>
-        <div className="data-name">
-          <h3>{name}</h3>
-          <span>{record.id}</span>
-        </div>
-      </div>
-    ),
-    sorter: (a: Product, b: Product) => a.name.localeCompare(b.name),
+    title: "id",
+    dataIndex: "id",
+    key: "id",
+    render: (record: Category) => <p>{record.id}</p>,
+    sorter: (a: Category, b: Category) => a.id.localeCompare(b.id),
   },
   {
-    title: "Product",
-    className: "cate",
-    dataIndex: "Product",
-    render: (Product: string) => (
-      <span className="Product-name">{Product}</span>
-    ),
+    title: "name",
+    className: "name",
+    dataIndex: "name",
+    render: (name: string) => <span className="Category-name">{name}</span>,
 
-    key: "Product",
-    sorter: (a: Product, b: Product) => a.Product.localeCompare(b.Product),
+    key: "name",
+    sorter: (a: Category, b: Category) => a.name.localeCompare(b.name),
   },
   {
     title: "Brand",
     dataIndex: "brand",
     key: "brand",
-    sorter: (a: Product, b: Product) => a.brand.localeCompare(b.brand),
-    render: (record: Product) => (
+    sorter: (a: Category, b: Category) => a.imgUrl.localeCompare(b.imgUrl),
+    render: (record: Category) => (
       <div className="">
-        <img src={record.brand} alt="" />
+        <img src={record.imgUrl} alt="" />
       </div>
     ),
   },
+
   {
-    title: "Price",
-    dataIndex: "price",
-    key: "price",
-    sorter: (a: Product, b: Product) => a.price - b.price,
-  },
-  {
-    title: "Published",
+    title: "Featured",
     dataIndex: "published",
     key: "published",
 
-    sorter: (a: Product, b: Product) =>
+    sorter: (a: Category, b: Category) =>
       (a.published ? 1 : 0) - (b.published ? 1 : 0),
-    render: (published: boolean, record: Product) => (
+    render: (published: boolean) => (
       <Switch
         checked={published}
         onChange={(checked) => console.log(checked)}
@@ -118,62 +99,58 @@ const columns = [
   },
 ];
 
-const data: Product[] = [
+const data: Category[] = [
   {
     id: "#5645461",
-    name: "Product 1",
-    Product: "Product A",
-    brand: "Brand X",
-    price: 100,
+    name: "Category 1",
+    Category: "Category A",
+
     published: true,
     imgUrl: "/src/modules/shared/assets/images/samsung.png",
   },
   {
     id: "#5645098",
-    name: "Product 2",
-    Product: "Product B",
-    brand: "Brand Y",
-    price: 200,
+    name: "Category 2",
+    Category: "Category B",
+
     published: false,
     imgUrl: "/src/modules/shared/assets/images/samsung.png",
   },
   {
     id: "#5645794",
-    name: "Product 1",
-    Product: "Product C",
-    brand: "Brand Z",
-    price: 150,
+    name: "Category 1",
+    Category: "Category C",
+
     published: false,
     imgUrl: "/src/modules/shared/assets/images/samsung.png",
   },
   {
     id: "#5645998",
-    name: "Product 2",
-    Product: "Product D",
-    brand: "/src/modules/shared/assets/images/samsung copy.png",
-    price: 150,
+    name: "Category 2",
+    Category: "Category D",
+
     published: false,
     imgUrl: "/src/modules/shared/assets/images/samsung.png",
   },
 ];
 
-export default function ProductList() {
-  const [Products, setProducts] = useState<Product[]>(data);
+export default function CategoryList() {
+  const [categories, setCategories] = useState<Category[]>(data);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate("/vendor/Products/create");
+    navigate("/vendor/Categorys/create");
   };
   const handleSwitchChange = (id: string) => (checked: boolean) => {
-    setProducts((prevProducts: Product[]) =>
-      prevProducts.map((Product: Product) =>
-        Product.id === id ? { ...Product, published: checked } : Product
+    setCategories((prevCategorys: Category[]) =>
+      prevCategorys.map((Category: Category) =>
+        Category.id === id ? { ...Category, published: checked } : Category
       )
     );
   };
 
   const tableProps = {
-    dataSource: Products,
+    dataSource: categories,
     columns: columns,
     headerStyle: { backgroundColor: "lightblue" },
 
@@ -184,13 +161,13 @@ export default function ProductList() {
 
   return (
     <div className="Product-List">
-      <h1>Product List</h1>
+      <h1>Category List</h1>
       <div className="header-Product-list">
-        <SeachFilter placeholder={"Search Product.."} />
-        <Button onClick={handleNavigate}>+ Add Product</Button>
+        <SeachFilter placeholder={"Search Category.."} />
+        <Button onClick={handleNavigate}>+ Add Category</Button>
       </div>
       <div className="container-Product-List">
-        <Table<Product> {...tableProps} />
+        <Table<Category> {...tableProps} />
       </div>
     </div>
   );

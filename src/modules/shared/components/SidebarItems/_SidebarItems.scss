@@ -113,7 +113,7 @@
       display: hidden !important;
       color: #fff;
       font-weight: 300 !important;
-      font-size: 12px !important;
+      font-size: 14px !important;
       
 
     }
@@ -160,14 +160,16 @@
       }
     }
   }
+  
     .children_expanded{
-      max-height: 200px;
+      max-height: 200px !important;
       overflow: hidden;
       transition: all 0.4s ease-in-out;
       .active-child{ background-color: #323a4c;
         color: rgb(78, 151, 253);
 
       }
+  
       
       
 
@@ -175,10 +177,10 @@
         .icon-child-active{
           display: flex;
           transition: 1s 0.1s  ease ;
-
           justify-content: space-between;
           height: 3px;
           position: relative;
+          font-size: 14px !important;
           width: 3px;
           background-color: rgb(78, 151, 253);
           border-radius: 50%;
@@ -195,14 +197,17 @@
         }
 
         }
+        .child-label{
+          font-size: 14px;
+        }
         .icon-child{
           height: 3px;
           width: 3px;
           background-color: white;
           border-radius: 50%;
-          transition: 0.1 s ease ;
+          transition: 0.1s ease ;
         }
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
 
         display: flex;
         justify-content: flex-start;
@@ -214,7 +219,7 @@
         padding-left: 24px;
         border-radius: 8px;
         cursor: pointer;
-        font-size: 12px !important;
+        font-size: 14px !important;
         font-weight: 300 !important;
         display: flex;
         align-items: center;
@@ -233,6 +238,7 @@
     .children{
       max-height: 0;
       overflow: hidden;
+      transition: 0.2s ease;
     }
   .active {
     background-color: #323a4c;
@@ -253,10 +259,31 @@
   }
 
   .link-icon-stroke-color {
-    stroke: #4f68c7;
+    stroke: none;
+    path {
+      &:first-child{
+      fill: rgb(149, 159, 163)
+    };
+  
+      &:last-child{
+        fill: rgb(249, 249, 249);
+      
+    };
+
+  }  
   }
 
   .link-icon-stroke-color-active {
-    stroke: white;
-  }
-}
+    stroke: none;
+    path {
+      &:first-child{
+      fill: rgb(13, 150, 213)
+    };
+  
+      &:last-child{
+        fill: rgb(226, 227, 229);
+      
+    };
+
+  }  
+}}

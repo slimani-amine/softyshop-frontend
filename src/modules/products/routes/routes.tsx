@@ -17,10 +17,11 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: '/vendor/products/list',
+    path: '/vendor/products',
     component: lazy(() => import('../features/product_list/ProductList')),
     layout: MainLayout,
   },
+
   {
     exact: true,
     guard: AuthGuard,

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import logo from "../../../shared/assets/icons/sidebar/logo.svg";
 import miniLogo from "../../../shared/assets/icons/sidebar/petit-logo.svg"
 import { useAnimation } from '../../layout/MainLayout/context/animationContext';
+
 interface ISidebarItemsProps {
   collapseSidebar: boolean;
 }
@@ -17,16 +18,22 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
   const { t } = useTranslation('sidebar');
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [activeChild, setActiveChild] = useState<string | null>(null);
+  const [activeParent, setActiveParent] = useState<string | null>(null);
 
-  const handleToggleExpand = (link: string) => {
-    setExpandedItems(expandedItems.includes(link)
-      ? expandedItems.filter(item => item !== link)
-      : [...expandedItems, link]
-    );
+
+  const handleToggleExpand = (label: string) => {
+    console.log(label)
+    console.log(expandedItems)
+    if (expandedItems.includes(label)) {
+      setExpandedItems(expandedItems.filter(item => item !== label));
+    } else {
+      setExpandedItems([...expandedItems, label]);
+    }
   };
 
   const handleChildClick = (link: string) => {
-    setActiveChild(link);
+    setActiveParent(link);
+    
   };
 
   return (
@@ -37,24 +44,27 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
       </div>
       <span className={`${isAnimating ? "hidden-admin":""} admin`}>Admin</span>
       {SIDEBARITEMS?.map((route, index) => {
-        const isExpanded = expandedItems.includes(route?.link);
+        const isExpanded   = expandedItems.includes(route?.link);
+        const routeLabel   = (route.label.toLowerCase());
+        const currentLabel = (activeParent?.split('/')[2])?.toLowerCase()
         return (
           <React.Fragment key={index}>
             <Link
               to={route?.link}
               onClick={() => handleToggleExpand(route?.link)}
             
-              className={`item ${pathname === route?.link && 'active'}`}
+              className={`item ${pathname === route?.link  && 'active'} ${route.label.toLowerCase()===pathname.split('/')[2]&& 'active'}  `}
             >
               <div className='item-left'>
+                
                 <div
-                  className={`link-icon-stroke-color ${
-                    pathname === route?.link && 'link-icon-stroke-color-active'
+                  className={` link-icon-stroke-color  ${
+                    routeLabel === currentLabel && 'link-icon-stroke-color-active'
                   }`}
                 >
                   {route?.icon}
                 </div>
-                <p  className={`${isAnimating ? "hidden" :"" } ${pathname === route?.link && 'active'} item-label `}>{!collapseSidebar ? t(`${route?.label.toLowerCase().toUpperCase()}`) : null}</p>
+                <p  className={`${isAnimating ? "hidden" :"" }  ${pathname === route?.link && 'active'} item-label `}>{!collapseSidebar ? t(`${route?.label}`) : null}</p>
               </div>  
               <div className={`expendIcon ${isExpanded ? "rotate-expendIcon" : ''}`}>
                 <svg  className={` ${isAnimating ? 'hidden-icon' : "  "}`}  focusable="false"  aria-hidden="true" viewBox="0 0 24 24" data-testid="ChevronRightIcon"><path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg>
@@ -63,18 +73,20 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
 
 
             </Link>
-            <div className={`${isExpanded? "children_expanded" : "children"} `}>
+            <div className={`${isExpanded? "children_expanded" : "children"}  `}>
             {isExpanded && route.children && (
                 route.children.map((child, childIndex) => (
                   <Link
                     key={childIndex}
                     to={child.link}
-                    className={`child-item ${pathname === child.link && 'active'} ${child.link === activeChild ? 'active-child' : ''}`}
+                    className={`child-item ${pathname === child.link && 'active'} `}
                     onClick={() => handleChildClick(child.link)}
-                  >
 
-                    <div className={`${child.link===activeChild?"icon-child-active" : "icon-child" }  `}></div>
-                    {!collapseSidebar ? t(`${child.label.toLowerCase().toLocaleUpperCase()}`) : null}
+                  >
+                    
+
+                    <div className={`${pathname === child.link?"icon-child-active" : "icon-child" }  `}></div>
+                  {!collapseSidebar ? t(`${child.label} `) : null}
                   </Link>
                 ))
           
