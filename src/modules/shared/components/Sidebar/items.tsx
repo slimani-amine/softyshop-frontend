@@ -4,6 +4,7 @@ import { ReactComponent as ProfileIcon } from "../../assets/icons/sidebar/profil
 import { ReactComponent as ProductIcon } from "../../assets/icons/sidebar/Product.svg";
 import { ReactComponent as CatergoryIcon } from "../../assets/icons/sidebar/catergory.svg";
 import { ReactComponent as BrandIcon } from "../../assets/icons/sidebar/brand.svg";
+import { ReactComponent as StoreIcon } from "../../assets/icons/sidebar/bookstore.svg";
 
 export const SIDEBARITEMS = [
   {
@@ -36,7 +37,7 @@ export const SIDEBARITEMS = [
   {
     link: "",
     label: "Categories",
-    icon: <ProductIcon />,
+    icon: <StoreIcon />,
     children: [
       {
         link: "/vendor/Categories",
@@ -44,12 +45,34 @@ export const SIDEBARITEMS = [
         icon: "'",
       },
       {
-        link: "/vendor/Products/create",
+        link: "/vendor/Categories/create",
         label: "Create Category",
         icon: "",
       },
       {
-        link: "/vendor/Products/",
+        link: "/vendor",
+        label: "Product Review",
+        icon: "",
+      },
+    ],
+  },
+  {
+    link: "",
+    label: "Stores",
+    icon: <CatergoryIcon />,
+    children: [
+      {
+        link: "/vendor/stores",
+        label: "Stores List",
+        icon: "'",
+      },
+      {
+        link: "/vendor/stores/create",
+        label: "Create Store",
+        icon: "",
+      },
+      {
+        link: "/vendor//",
         label: "Product Review",
         icon: "",
       },

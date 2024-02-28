@@ -44,16 +44,16 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
       </div>
       <span className={`${isAnimating ? "hidden-admin":""} admin`}>Admin</span>
       {SIDEBARITEMS?.map((route, index) => {
-        const isExpanded   = expandedItems.includes(route?.link);
+        const isExpanded   = expandedItems.includes(route?.label);
         const routeLabel   = (route.label.toLowerCase());
         const currentLabel = (activeParent?.split('/')[2])?.toLowerCase()
         return (
           <React.Fragment key={index}>
             <Link
               to={route?.link}
-              onClick={() => handleToggleExpand(route?.link)}
+              onClick={() => handleToggleExpand(route?.label)}
             
-              className={`item ${pathname === route?.link  && 'active'} ${route.label.toLowerCase()===pathname.split('/')[2]&& 'active'}  `}
+              className={`item   ${routeLabel === currentLabel  && 'active'}   `}
             >
               <div className='item-left'>
                 
@@ -64,7 +64,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
                 >
                   {route?.icon}
                 </div>
-                <p  className={`${isAnimating ? "hidden" :"" }  ${pathname === route?.link && 'active'} item-label `}>{!collapseSidebar ? t(`${route?.label}`) : null}</p>
+                <p  className={`${isAnimating ? "hidden" :"" }  ${routeLabel === currentLabel && 'active'} item-label `}>{!collapseSidebar ? t(`${route?.label}`) : null}</p>
               </div>  
               <div className={`expendIcon ${isExpanded ? "rotate-expendIcon" : ''}`}>
                 <svg  className={` ${isAnimating ? 'hidden-icon' : "  "}`}  focusable="false"  aria-hidden="true" viewBox="0 0 24 24" data-testid="ChevronRightIcon"><path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg>

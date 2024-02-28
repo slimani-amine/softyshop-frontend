@@ -11,6 +11,7 @@ import {
   InputNumber,
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
+import { log } from "console";
 const { TextArea } = Input;
 
 interface AddProductFormProps {
@@ -21,12 +22,15 @@ const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
   const [form] = Form.useForm();
 
   const handleFinish = (values: any) => {
+    console.log(values)
     onFinish(values);
+    console.log(values)
     form.resetFields();
   };
 
   const handleFileChange = (info: any) => {
     const fileList = [...info.fileList];
+    console.log(fileList)
     const imageUrlList = fileList.map((file: any) => file.response?.imageUrl);
     form.setFieldsValue({ images: imageUrlList });
   };

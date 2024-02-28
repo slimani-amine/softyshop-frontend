@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import MainLayout from "@src/modules/shared/layout/MainLayout/MainLayout";
 import AuthGuard from "@src/modules/shared/guards/AuthGuard";
 import { RouteProps } from "react-router-dom";
@@ -17,15 +16,15 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: "/vendor/categories",
-    component: lazy(() => import("../features/category_list/CategoryList")),
+    path: "/vendor/store",
+    component: lazy(() => import("../feature/bookStore_list/bookStoreList")),
     layout: MainLayout,
   },
   {
     exact: true,
     guard: AuthGuard,
-    path: "/vendor/categories/create",
-    component: lazy(() => import("../features/category_create/CategoryCreate")),
+    path: "/vendor/store/create",
+    component: lazy(() => import("../feature/bookStore_create/bookStoreCreate")),
     layout: MainLayout,
   },
 ];
