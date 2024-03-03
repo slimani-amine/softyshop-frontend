@@ -69,6 +69,7 @@ const Input: React.FC<IInputProps> = ({
             className={`${isFocused ? 'legend-label' : ''}`}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            onChange={formik.handleChange}
             type={
               type === 'password'
                 ? showPassword
