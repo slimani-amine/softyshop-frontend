@@ -1,45 +1,52 @@
-import { useEffect, useRef, useState } from 'react'
-import Sidebar from '../../components/Sidebar/Sidebar'
-import Navbar from '../../components/Navbar/Navbar'
-import {  useAnimation } from './context/animationContext'
-import { isAsExpression } from 'typescript'
+import { useEffect, useRef, useState } from 'react';
+import Sidebar from '../../components/Sidebar/Sidebar';
+import Navbar from '../../components/Navbar/Navbar';
+import { useAnimation } from './context/animationContext';
+// import { isAsExpression } from 'typescript';
+import { useNavigate } from 'react-router-dom';
 interface MainLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
-  const menuRef = useRef<HTMLDivElement>(null)
-  const {isAnimating} = useAnimation();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const { isAnimating } = useAnimation();
 
-  const [showSidebar, setShowSidebar] = useState(false)
-  const [collapseSidebar, setCollapseSidebar] = useState(false)
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [collapseSidebar, setCollapseSidebar] = useState(false);
 
   useEffect(() => {
     const handler = (e: MouseEvent | React.MouseEvent) => {
       if (!menuRef?.current?.contains(e?.target as Node)) {
-        setShowSidebar(false)
+        setShowSidebar(false);
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handler)
+    document.addEventListener('mousedown', handler);
 
     return () => {
-      document.removeEventListener('mousedown', handler)
-    }
-  })
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+  const navigate = useNavigate();
 
   return (
-
     <div className="main-layout">
       <div
-        className={`main-layout-sidebar ${showSidebar ? 'main-layout-toggle-mobile-sidebar' : ''}  `}
+        className={`main-layout-sidebar ${
+          showSidebar ? 'main-layout-toggle-mobile-sidebar' : ''
+        }  `}
       >
         <Sidebar collapseSidebar={collapseSidebar} />
       </div>
-  
+
       {showSidebar ? <span className="main-layout-shadow"></span> : null}
-  
-      <div className={`main-layout-content ${showSidebar ? 'main-layout-disable-events' : ''} ${isAnimating ? '' : ""}`}>
+
+      <div
+        className={`main-layout-content ${
+          showSidebar ? 'main-layout-disable-events' : ''
+        } ${isAnimating ? '' : ''}`}
+      >
         <div className="main-layout-navbar">
           <Navbar
             setShowSidebar={setShowSidebar}
@@ -47,12 +54,17 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             collapseSidebar={collapseSidebar}
           />
         </div>
-   
-        <div className={`main-layout-outlet ${isAnimating?"main-layout-outlet-animate":""}`}>{children}</div>
+        <div
+          onClick={() => navigate('/register')}
+          className={`main-layout-outlet ${
+            isAnimating ? 'main-layout-outlet-animate' : ''
+          }`}
+        >
+          {children}
+        </div>
       </div>
     </div>
-  
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

@@ -13,5 +13,5 @@ const routes = [
   ...categoryRoutes,
   ...homeRoutes,
 ];
-
+console.log(authRoutes);
 export default routes;

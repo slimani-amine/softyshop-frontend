@@ -1,13 +1,13 @@
-import Button from '@src/modules/shared/components/Button/Button'
-import { useAppDispatch } from '@src/modules/shared/store'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { register } from '../../data/authThunk'
-import Input from '@src/modules/shared/components/Input/Input'
-import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { PATH } from '../../routes/paths'
+import Button from '@src/modules/shared/components/Button/Button';
+import { useAppDispatch } from '@src/modules/shared/store';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { register } from '../../data/authThunk';
+import Input from '@src/modules/shared/components/Input/Input';
+import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { PATH } from '../../routes/paths';
 
 const initialValues = {
   firstName: '',
@@ -19,13 +19,13 @@ const initialValues = {
   phone: null,
   age: null,
   birthDate: null,
-}
+};
 
 const Register = () => {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const [submitting, setSubmitting] = useState(false)
+  const [submitting, setSubmitting] = useState(false);
 
   const formik = useFormik({
     initialValues,
@@ -42,31 +42,34 @@ const Register = () => {
         .test(
           'no-special-chars',
           'Email contains disallowed characters',
-          (value: string | undefined) => !value || /^[^<>()\\/[\]{}\s]+@[^\s]+$/.test(value)
+          (value: string | undefined) =>
+            !value || /^[^<>()\\/[\]{}\s]+@[^\s]+$/.test(value)
         )
         .required('Email is required'),
-      password: Yup.string().required('Password is required').min(6, 'Password is too short!'),
+      password: Yup.string()
+        .required('Password is required')
+        .min(6, 'Password is too short!'),
       verify_password: Yup.string()
         .required('Confirm password is required')
         .oneOf([Yup.ref('password')], 'Passwords must match'),
     }),
     onSubmit: (values) => {
-      setSubmitting(true)
-      const changedValues = getChangedValues(values, initialValues)
+      setSubmitting(true);
+      const changedValues = getChangedValues(values, initialValues);
       dispatch(register(changedValues))
         .unwrap()
         .then(() => {
-          console.log('Account created successfully')
-          navigate(PATH.LOGIN)
+          console.log('Account created successfully');
+          navigate(PATH.LOGIN);
         })
         .catch((err) => {
-          alert(err?.message || 'something-went-wrong')
+          alert(err?.message || 'something-went-wrong');
         })
         .finally(() => {
-          setSubmitting(false)
-        })
+          setSubmitting(false);
+        });
     },
-  })
+  });
 
   return (
     <div className="register-module">
@@ -91,14 +94,14 @@ const Register = () => {
           required={true}
         />
 
-        <Input
+        {/* <Input
           name="username"
           formik={formik}
           variant="secondary"
           placeholder="Enter your username"
           label="Username"
           required={true}
-        />
+        /> */}
 
         <Input
           name="email"
@@ -137,7 +140,7 @@ const Register = () => {
         </Link>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
