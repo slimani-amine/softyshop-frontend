@@ -12,13 +12,13 @@ import { PATH } from '../../routes/paths';
 const initialValues = {
   firstName: '',
   lastName: '',
-  username: '',
+  // username: '',
   email: '',
   password: '',
   verify_password: '',
-  phone: null,
-  age: null,
-  birthDate: null,
+  // phone: null,
+  // age: null,
+  // birthDate: null,
 };
 
 const Register = () => {
@@ -32,7 +32,7 @@ const Register = () => {
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required('FirstName is required'),
       lastName: Yup.string().required('LastName is required'),
-      username: Yup.string().required('Username is required'),
+      // username: Yup.string().required('Username is required'),
       email: Yup.string()
         .email('Invalid email address')
         .matches(
@@ -74,7 +74,7 @@ const Register = () => {
   return (
     <div className="register-module">
       <form className="register-card-container" onSubmit={formik.handleSubmit}>
-        <h1 className="title">Register</h1>
+        <h1 className="title">Sign Up</h1>
 
         <Input
           name="firstName"
@@ -133,7 +133,7 @@ const Register = () => {
           required={true}
         />
 
-        <Button label={'Register'} type={'submit'} loading={submitting} />
+        <Button label={'Sign Up'} type={'submit'} loading={submitting} />
 
         <Link to={PATH.LOGIN} className="link">
           Already a member?
