@@ -4,7 +4,6 @@ import dashboardRoutes from "../../dashboard/routes/routes";
 import productRoutes from "../../products/routes/routes"
 import categoryRoutes from '../../categories/routes/routes'
 import bookstoreRoutes from '../../bookStores/routes/routes'
-
 const routes = [
   ...sharedRoutes,
   ...authRoutes,

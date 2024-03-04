@@ -9,6 +9,8 @@ type RouteConfig = {
   component: React.ComponentType<any>;
   guard?: React.ComponentType<any> | typeof Fragment | any;
   layout?: React.ComponentType<any> | typeof Fragment;
+  roles?: string[]
+  
 } & RouteProps;
 
 const routes: RouteConfig[] = [
@@ -16,16 +18,18 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: "/vendor/store",
+    path: "/vendor/stores",
     component: lazy(() => import("../feature/bookStore_list/bookStoreList")),
     layout: MainLayout,
+    roles:['ADMIN','VENDOR']
   },
   {
     exact: true,
     guard: AuthGuard,
-    path: "/vendor/store/create",
+    path: "/vendor/stores/create",
     component: lazy(() => import("../feature/bookStore_create/bookStoreCreate")),
     layout: MainLayout,
+    roles : ['ADMIN','VENDOR']
   },
 ];
 

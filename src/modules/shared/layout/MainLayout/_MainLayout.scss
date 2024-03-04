@@ -1,9 +1,11 @@
+
 .main-layout {
   height: 100vh;
   display: flex;
   padding: 0px;
   background-color: #f6f9fc;
   gap: 0px;
+  overflow: hidden;
 
   .main-layout-sidebar {
     height: 100%;
@@ -27,7 +29,7 @@
     .main-layout-outlet-animate{
       transform: translateX(-90px);
     }
-
+    
     .main-layout-outlet {
       
       transition: 0.2s ease-in;

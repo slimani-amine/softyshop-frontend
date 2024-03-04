@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import Navbar from '../../components/Navbar/Navbar'
 import {  useAnimation } from './context/animationContext'
-import { isAsExpression } from 'typescript'
 interface MainLayoutProps {
   children: React.ReactNode
 }
@@ -48,7 +47,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           />
         </div>
    
-        <div className={`main-layout-outlet ${isAnimating?"main-layout-outlet-animate":""}`}>{children}</div>
+          <div className={`main-layout-outlet ${isAnimating?"main-layout-outlet-animate":""}`}>{children}</div>
       </div>
     </div>
   

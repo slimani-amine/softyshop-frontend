@@ -1,7 +1,6 @@
 import { FC } from "react";
 import {
   Form,
-  Select,
   Button as ButtonAnt,
   Upload,
   Divider,
@@ -13,7 +12,6 @@ import {
 
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
-import { CheckboxGroupProps } from "antd/es/checkbox";
 
 
 interface AddCategoryFormProps {
@@ -40,7 +38,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ onFinish }) => {
       <div className="container-add-Product">
         <Form form={form} onFinish={handleFinish}>
           <Row gutter={[16, 0]} className="name-Product">
-            <Col span={11}>
+            <Col span={22}>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
@@ -55,26 +53,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ onFinish }) => {
                 />
               </Form.Item>
             </Col>
-            <Col span={11}>
-              <Form.Item
-                name="Category"
-                className="Category"
-                style={{ marginBottom: 0 }}
-                rules={[
-                  {
-                    required: true,
-                    message: "Category field must have at least 1 items",
-                  },
-                ]}
-              >
-                <Select
-                  size="large"
-                  placeholder="Category"
-                  className="input-custom"
-                  options={[{ value: "sample", label: <span>sample</span> }]}
-                />
-              </Form.Item>
-            </Col>
+         
           </Row>
           <Form.Item
             className="upload-images"

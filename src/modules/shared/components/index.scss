@@ -6,4 +6,6 @@
 @use './Input/Input';
 @use './LazyLoad/LazyLoad';
 @use './Search/Search';
-@use './SearchFilter/SearchFilter'
+@use './SearchFilter/SearchFilter';
+@use './Map/Map.scss';
+@use './DynamicInput/DynamicInput.scss'

@@ -11,7 +11,6 @@ import {
   InputNumber,
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
-import { log } from "console";
 const { TextArea } = Input;
 
 interface AddProductFormProps {
@@ -87,6 +86,7 @@ const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
               listType="picture"
               accept="image/*"
               multiple
+              maxCount={1}
               onChange={handleFileChange}
               beforeUpload={() => false}
             >

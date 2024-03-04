@@ -10,6 +10,7 @@ type RouteConfig = {
   component: React.ComponentType<any>
   guard?: React.ComponentType<any> | typeof Fragment | any
   layout?: React.ComponentType<any> | typeof Fragment
+  roles?:string[]
 } & RouteProps
 
 const routes: RouteConfig[] = [
@@ -20,6 +21,7 @@ const routes: RouteConfig[] = [
     path: '/vendor/products',
     component: lazy(() => import('../features/product_list/ProductList')),
     layout: MainLayout,
+    roles : ['ADMIN','VENDOR']
   },
 
   {
@@ -28,6 +30,7 @@ const routes: RouteConfig[] = [
     path: '/vendor/products/create',
     component: lazy(() => import('../features/create_product/CreateProduct')),
     layout: MainLayout,
+    roles : ['ADMIN','VENDOR']
   },
 ]
 
