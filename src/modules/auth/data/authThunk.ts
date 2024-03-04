@@ -23,10 +23,14 @@ export const register = createAsyncThunk(
   'auth/register',
   async (query: RegisterPayload, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`/api/auth/register`, query);
+      // const response = await axiosInstance.post(`/api/auth/register`, query);
+      const response = await axiosInstance.post(
+        `http://localhost:3001/users`,
+        query
+      );
 
       if (response.status === 201) {
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
       }
 
