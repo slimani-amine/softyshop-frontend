@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../routes/paths';
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const initialValues = {
   firstName: '',
@@ -18,7 +19,7 @@ const initialValues = {
   password: '',
   verifyPassword: '',
   phoneNumber: null,
-  role: 'customer',
+  role: '',
   // age: null,
   // birthDate: null,
 };
@@ -59,17 +60,17 @@ const Register = () => {
     onSubmit: (values) => {
       setSubmitting(true);
       values.role = role;
-      console.log(values);
+      // console.log(role);
       const changedValues = getChangedValues(values, initialValues);
       dispatch(register(changedValues))
         .unwrap()
         .then(() => {
-          console.log('Account created successfully');
+          toast.success('Account created successfully');
           // console.log(changedValues);
           navigate(PATH.LOGIN);
         })
         .catch((err) => {
-          alert(err?.message || 'something-went-wrong');
+          toast.error(err?.message || 'something-went-wrong');
         })
         .finally(() => {
           setSubmitting(false);
