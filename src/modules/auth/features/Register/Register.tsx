@@ -12,7 +12,7 @@ import { PATH } from '../../routes/paths';
 const initialValues = {
   firstName: '',
   lastName: '',
-  // username: '',
+  username: '',
   email: '',
   password: '',
   verify_password: '',
@@ -55,6 +55,11 @@ const Register = () => {
     }),
     onSubmit: (values) => {
       setSubmitting(true);
+      values.username =
+        values.firstName.replace(' ', '_') +
+        '_' +
+        values.lastName.replace(' ', '_');
+      console.log(values);
       const changedValues = getChangedValues(values, initialValues);
       dispatch(register(changedValues))
         .unwrap()
@@ -84,7 +89,7 @@ const Register = () => {
           formik={formik}
           variant="secondary"
           placeholder="Enter your firstname"
-          label="Firstname"
+          label="First Name"
           required={true}
         />
 
@@ -93,7 +98,7 @@ const Register = () => {
           formik={formik}
           variant="secondary"
           placeholder="Enter your lastname"
-          label="Lastname"
+          label="Last Name"
           required={true}
         />
 
