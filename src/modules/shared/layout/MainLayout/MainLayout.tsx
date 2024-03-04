@@ -1,3 +1,4 @@
+import { PATH } from '@src/modules/auth/routes/paths';
 import { useEffect, useRef, useState } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Navbar from '../../components/Navbar/Navbar';
@@ -55,7 +56,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           />
         </div>
         <div
-          onClick={() => navigate('/role')}
+          onClick={() => navigate(PATH.ROLE)}
           className={`main-layout-outlet ${
             isAnimating ? 'main-layout-outlet-animate' : ''
           }`}

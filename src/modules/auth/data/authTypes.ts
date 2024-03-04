@@ -10,7 +10,7 @@ export interface RegisterPayload {
   email: string;
   password: string;
   verify_password: string;
-  // phone?: string | null
+  phoneNumber?: string | null;
   // age?: number | null
   // birthDate?: string | null
 }

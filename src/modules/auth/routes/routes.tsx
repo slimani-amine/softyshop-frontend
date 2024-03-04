@@ -19,7 +19,7 @@ const routes: RouteConfig[] = [
     exact: true,
     path: PATH.ROOT,
     // guard: GuestGuard,
-    component: () => <Navigate to="/login" />,
+    component: () => <Navigate to="/home" />,
   },
   {
     exact: true,

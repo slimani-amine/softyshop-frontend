@@ -8,6 +8,7 @@ import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesForm
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../routes/paths';
+import { useSelector } from 'react-redux';
 
 const initialValues = {
   firstName: '',
@@ -16,13 +17,15 @@ const initialValues = {
   email: '',
   password: '',
   verifyPassword: '',
-  // phone: null,
+  phoneNumber: null,
+  role: 'customer',
   // age: null,
   // birthDate: null,
 };
 
 const Register = () => {
   const dispatch = useAppDispatch();
+  const { role } = useSelector((state: any) => state.role);
   const navigate = useNavigate();
 
   const [submitting, setSubmitting] = useState(false);
@@ -55,17 +58,14 @@ const Register = () => {
     }),
     onSubmit: (values) => {
       setSubmitting(true);
-      // values.username =
-      //   values.firstName.replace(' ', '_') +
-      //   '_' +
-      //   values.lastName.replace(' ', '_');
-      // console.log(values);
+      values.role = role;
+      console.log(values);
       const changedValues = getChangedValues(values, initialValues);
       dispatch(register(changedValues))
         .unwrap()
         .then(() => {
           console.log('Account created successfully');
-          console.log(changedValues);
+          // console.log(changedValues);
           navigate(PATH.LOGIN);
         })
         .catch((err) => {
@@ -103,14 +103,14 @@ const Register = () => {
           required={true}
         />
 
-        {/* <Input
-          name="username"
+        <Input
+          name="phoneNumber"
           formik={formik}
           variant="secondary"
-          placeholder="Enter your username"
-          label="Username"
+          placeholder="Enter phone number"
+          label="Phone Number"
           required={true}
-        /> */}
+        />
 
         <Input
           name="email"
