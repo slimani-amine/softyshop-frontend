@@ -7,8 +7,13 @@ export const login = createAsyncThunk(
   'auth/login',
   async (query: LoginPayload, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`/api/auth/login`, query);
+      // const response = await axiosInstance.post(`/api/auth/login`, query);
+      const response = await axiosInstance.post(
+        `http://localhost:3001/users`,
+        query
+      );
       if (response.status === 200) {
+        console.log(response.data);
         return response.data;
       }
 

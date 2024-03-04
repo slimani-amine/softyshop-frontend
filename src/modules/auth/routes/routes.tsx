@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import GuestLayout from '@src/modules/shared/layout/GuestLayout/GuestLayout';
-import GuestGuard from '../../shared/guards/GuestGuard';
+// import GuestGuard from '../../shared/guards/GuestGuard';
 import { Navigate, RouteProps } from 'react-router-dom';
 import { Fragment, lazy } from 'react';
 import { PATH } from './paths';
@@ -18,7 +18,7 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     path: PATH.ROOT,
-    guard: GuestGuard,
+    // guard: GuestGuard,
     component: () => <Navigate to="/login" />,
   },
   {
@@ -33,6 +33,13 @@ const routes: RouteConfig[] = [
     // guard: GuestGuard,
     path: PATH.REGISTER,
     component: lazy(() => import('../features/Register/Register')),
+    layout: GuestLayout,
+  },
+  {
+    exact: true,
+    // guard: GuestGuard,
+    path: PATH.ROLE,
+    component: lazy(() => import('../features/Role/Role')),
     layout: GuestLayout,
   },
 ];

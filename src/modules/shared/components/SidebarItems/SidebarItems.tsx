@@ -54,7 +54,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
             data-testid="ChevronLeftIcon"
           >
             <path
-              stroke-width="1"
+              strokeWidth="1"
               d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
             ></path>
           </svg>

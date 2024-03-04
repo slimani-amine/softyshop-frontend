@@ -12,10 +12,10 @@ import { PATH } from '../../routes/paths';
 const initialValues = {
   firstName: '',
   lastName: '',
-  username: '',
+  // username: '',
   email: '',
   password: '',
-  verify_password: '',
+  verifyPassword: '',
   // phone: null,
   // age: null,
   // birthDate: null,
@@ -49,22 +49,23 @@ const Register = () => {
       password: Yup.string()
         .required('Password is required')
         .min(6, 'Password is too short!'),
-      verify_password: Yup.string()
+      verifyPassword: Yup.string()
         .required('Confirm password is required')
         .oneOf([Yup.ref('password')], 'Passwords must match'),
     }),
     onSubmit: (values) => {
       setSubmitting(true);
-      values.username =
-        values.firstName.replace(' ', '_') +
-        '_' +
-        values.lastName.replace(' ', '_');
-      console.log(values);
+      // values.username =
+      //   values.firstName.replace(' ', '_') +
+      //   '_' +
+      //   values.lastName.replace(' ', '_');
+      // console.log(values);
       const changedValues = getChangedValues(values, initialValues);
       dispatch(register(changedValues))
         .unwrap()
         .then(() => {
           console.log('Account created successfully');
+          console.log(changedValues);
           navigate(PATH.LOGIN);
         })
         .catch((err) => {
@@ -132,7 +133,7 @@ const Register = () => {
         />
 
         <Input
-          name="verify_password"
+          name="verifyPassword"
           formik={formik}
           variant="secondary"
           placeholder="Enter your confirm password"

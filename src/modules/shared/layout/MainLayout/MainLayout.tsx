@@ -55,7 +55,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           />
         </div>
         <div
-          onClick={() => navigate('/register')}
+          onClick={() => navigate('/role')}
           className={`main-layout-outlet ${
             isAnimating ? 'main-layout-outlet-animate' : ''
           }`}
