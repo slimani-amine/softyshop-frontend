@@ -95,6 +95,9 @@ const Input: React.FC<IInputProps> = ({
           />
         )}
       </div>
+      {formik.touched[name] && formik.errors[name] ? (
+        <p className="error-message">{formik.errors[name]}</p>
+      ) : null}
     </div>
   );
 };

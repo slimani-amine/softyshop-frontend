@@ -1,6 +1,6 @@
 import Button from '@src/modules/shared/components/Button/Button';
 import { useAppDispatch } from '@src/modules/shared/store';
-import { useFormik } from 'formik';
+import { useFormik, validateYupSchema } from 'formik';
 import * as Yup from 'yup';
 import { register } from '../../data/authThunk';
 import Input from '@src/modules/shared/components/Input/Input';
@@ -34,9 +34,11 @@ const Register = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object().shape({
-      firstName: Yup.string().required('FirstName is required'),
-      lastName: Yup.string().required('LastName is required'),
-      // username: Yup.string().required('Username is required'),
+      firstName: Yup.string().required('First name is required'),
+      lastName: Yup.string().required('Last name is required'),
+      phoneNumber: Yup.string()
+        .required('Phone number is required')
+        .matches(/^([9527]\d{7})$/g, 'Invalid phone number'),
       email: Yup.string()
         .email('Invalid email address')
         .matches(
@@ -78,9 +80,9 @@ const Register = () => {
     },
   });
 
-  // {
-  //   console.log(formik);
-  // }
+  {
+    console.log(formik);
+  }
   return (
     <div className="register-module">
       <form className="register-card-container" onSubmit={formik.handleSubmit}>
