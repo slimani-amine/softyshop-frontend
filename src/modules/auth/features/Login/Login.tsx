@@ -35,7 +35,11 @@ const Login = () => {
           console.log('welcome');
         })
         .catch((err) => {
-          alert(err?.message || 'something-went-wrong');
+          if (
+            err.message !==
+            "Cannot destructure property 'accessToken' of 'action.payload.payload' as it is undefined."
+          )
+            alert(err?.message || 'something-went-wrong');
         })
         .finally(() => {
           setSubmitting(false);

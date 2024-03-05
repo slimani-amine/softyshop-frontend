@@ -21,7 +21,7 @@ function Role() {
           Are you willing to buy books or sell some?
         </h1>
         <div className="buttons">
-          <Button label={'Customer'} onClick={() => handleRole('customer')} />
+          <Button label={'Customer'} onClick={() => handleRole('user')} />
           <Button label={'Vendor'} onClick={() => handleRole('vendor')} />
         </div>
       </div>

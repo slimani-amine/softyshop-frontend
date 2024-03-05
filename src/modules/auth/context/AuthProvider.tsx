@@ -1,59 +1,59 @@
-import { useEffect } from 'react'
-import jwtDecode from 'jwt-decode'
-import axiosInstance from '../utils/axios'
-import { useSelector, useDispatch } from 'react-redux'
-import { clearTokens, getTokens } from '../utils/token'
-import useIsMountedRef from '../hook/useIsMountedRef'
-import { initialise } from '../data/authSlice'
-import { RootState } from '@src/modules/shared/store'
-import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad'
+import { useEffect } from 'react';
+import jwtDecode from 'jwt-decode';
+import axiosInstance from '../utils/axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearTokens, getTokens } from '../utils/token';
+import useIsMountedRef from '../hook/useIsMountedRef';
+import { initialise } from '../data/authSlice';
+import { RootState } from '@src/modules/shared/store';
+import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
 
 interface AuthProviderProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 interface JwtPayload {
-  exp: number
+  exp: number;
 }
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const isMounted = useIsMountedRef()
+  const isMounted = useIsMountedRef();
 
-  const { isInitialised } = useSelector((state: RootState) => state.auth)
-  const dispatch = useDispatch()
+  const { isInitialised } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   const isValidToken = (token: string) => {
-    const decoded: JwtPayload = jwtDecode(token)
-    const currentTime = Date.now() / 1000
-    return decoded.exp > currentTime
-  }
+    const decoded: JwtPayload = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    return decoded.exp > currentTime;
+  };
 
   useEffect(() => {
     if (!isMounted.current) {
-      return
+      return;
     }
 
     async function fetchUser() {
-      const { refresh_token } = getTokens()
+      const { refresh_token } = getTokens();
       if (refresh_token && isValidToken(refresh_token)) {
-        const response = await axiosInstance.get('/api/auth/me')
-        const user = response.data.payload
-        dispatch(initialise({ isAuthenticated: true, user }))
+        const response = await axiosInstance.get('/api/auth/me');
+        const user = response.data.payload;
+        dispatch(initialise({ isAuthenticated: true, user }));
       } else {
-        dispatch(initialise({ isAuthenticated: true, user: null }))
-        clearTokens()
+        dispatch(initialise({ isAuthenticated: true, user: null }));
+        clearTokens();
       }
     }
 
-    fetchUser()
+    fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   if (!isInitialised) {
-    return <LazyLoad />
+    return <LazyLoad />;
   }
 
-  return <>{children}</>
-}
+  return <>{children}</>;
+};
 
-export default AuthProvider
+export default AuthProvider;

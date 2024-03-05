@@ -88,7 +88,7 @@ const Input: React.FC<IInputProps> = ({
         </div>
         {type === 'password' && (
           <img
-            src={showPassword ? eyeOn : eyeOff}
+            src={showPassword ? eyeOff : eyeOn}
             alt="eye-icon"
             className="eye-icon"
             onClick={() => setShowPassword(!showPassword)}

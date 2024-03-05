@@ -54,7 +54,10 @@ const Register = () => {
         .required('Email is required'),
       password: Yup.string()
         .required('Password is required')
-        .min(6, 'Password is too short!'),
+        .matches(
+          /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/,
+          'Password must include an upper case letter, a lower case letter and a special character! It has to be 8 characters long at least.'
+        ),
       verifyPassword: Yup.string()
         .required('Confirm password is required')
         .oneOf([Yup.ref('password')], 'Passwords must match'),
@@ -80,9 +83,9 @@ const Register = () => {
     },
   });
 
-  {
-    console.log(formik);
-  }
+  // {
+  //   console.log(formik);
+  // }
   return (
     <div className="register-module">
       <form className="register-card-container" onSubmit={formik.handleSubmit}>
