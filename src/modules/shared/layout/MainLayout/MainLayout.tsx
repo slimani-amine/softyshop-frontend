@@ -5,11 +5,15 @@ import Navbar from '../../components/Navbar/Navbar';
 import { useAnimation } from './context/animationContext';
 // import { isAsExpression } from 'typescript';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../store';
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  console.log(isAuthenticated);
+
   const menuRef = useRef<HTMLDivElement>(null);
   const { isAnimating } = useAnimation();
 
@@ -56,7 +60,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           />
         </div>
         <div
-          onClick={() => navigate(PATH.ROLE)}
+          onClick={() => {
+            if (isAuthenticated) return;
+            navigate(PATH.ROLE);
+          }}
           className={`main-layout-outlet ${
             isAnimating ? 'main-layout-outlet-animate' : ''
           }`}

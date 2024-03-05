@@ -1,12 +1,13 @@
 import Button from '@src/modules/shared/components/Button/Button';
+import { useAppSelector } from '@src/modules/shared/store';
 import { useAppDispatch } from '@src/modules/shared/store';
-import { useFormik, validateYupSchema } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { register } from '../../data/authThunk';
 import Input from '@src/modules/shared/components/Input/Input';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { PATH } from '../../routes/paths';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
@@ -25,9 +26,20 @@ const initialValues = {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  console.log(isAuthenticated);
+
+  // useEffect(
+  //   function () {
+  //     if (isAuthenticated && pathname === '/register') navigate('/home');
+  //   },
+  //   [pathname, isAuthenticated]
+  // );
+
   const dispatch = useAppDispatch();
   const { role } = useSelector((state: any) => state.role);
-  const navigate = useNavigate();
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -72,7 +84,7 @@ const Register = () => {
         .then(() => {
           toast.success('Account created successfully');
           // console.log(changedValues);
-          navigate(PATH.LOGIN);
+          navigate('/home');
         })
         .catch((err) => {
           toast.error(err?.message || 'something-went-wrong');

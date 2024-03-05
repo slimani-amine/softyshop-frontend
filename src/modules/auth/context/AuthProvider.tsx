@@ -7,6 +7,8 @@ import useIsMountedRef from '../hook/useIsMountedRef';
 import { initialise } from '../data/authSlice';
 import { RootState } from '@src/modules/shared/store';
 import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
+// import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../data/authThunk';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -29,19 +31,38 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   useEffect(() => {
-    if (!isMounted.current) {
-      return;
-    }
+    // if (!isMounted.current) {
+    //   return;
+    // }
 
     async function fetchUser() {
-      const { refreshToken } = getTokens();
-      if (refreshToken && isValidToken(refreshToken)) {
-        const response = await axiosInstance.get('/api/auth/me');
-        const user = response.data.payload;
+      //   const { accessToken } = getTokens();
+
+      const accessToken = localStorage.getItem('accessToken');
+      console.log({
+        accessToken,
+        test: accessToken ? isValidToken(accessToken) : null,
+      });
+
+      if (accessToken && isValidToken(accessToken)) {
+        //  const response = await axiosInstance.get(`${BASE_URL}api/users/me`);
+        //  console.log({ response });
+
+        //  const user = response?.data?.payload;
+
+        const user = {
+          email: 'string',
+          isVerified: true,
+          firstName: 'string',
+          lastName: 'string',
+          picture: 'string',
+          role: 'admin',
+        };
+
         dispatch(initialise({ isAuthenticated: true, user }));
       } else {
-        dispatch(initialise({ isAuthenticated: true, user: null }));
-        clearTokens();
+        dispatch(initialise({ isAuthenticated: false, user: null }));
+        // clearTokens();
       }
     }
 

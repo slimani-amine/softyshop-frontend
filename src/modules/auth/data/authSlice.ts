@@ -44,7 +44,7 @@ const authSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
       const { accessToken, refreshToken, user } = action.payload.data;
-      console.log(action.payload);
+      // console.log(action.payload);
       setTokens(accessToken, refreshToken);
       state.isAuthenticated = true;
       state.user = user;
@@ -63,7 +63,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.status = 'succeeded';
-      clearTokens();
+      // clearTokens();
     });
     builder.addCase(logout.rejected, (state, action: PayloadAction<any>) => {
       state.error = action?.payload;

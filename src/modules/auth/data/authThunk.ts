@@ -4,7 +4,7 @@ import axiosInstance from '../utils/axios';
 import { LoginPayload, RegisterPayload } from './authTypes';
 import { clearTokens, setTokens } from '../utils/token';
 // const BASE_URL = 'http://192.168.3.27:3000/v1/';
-const BASE_URL = 'https://43b0-41-227-28-226.ngrok-free.app/v1/';
+export const BASE_URL = 'https://43b0-41-227-28-226.ngrok-free.app/v1/';
 export const login = createAsyncThunk(
   'auth/login',
   async (query: LoginPayload, { rejectWithValue }) => {
@@ -61,7 +61,6 @@ export const logout = createAsyncThunk(
       const response = await axiosInstance.get(`${BASE_URL}auth/logout`);
 
       if (response.status === 200) {
-        const accessToken = response.data.data.accessToken;
         clearTokens();
         return response.data;
       }
