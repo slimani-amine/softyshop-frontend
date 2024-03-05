@@ -43,7 +43,8 @@ const authSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
-      const { accessToken, refreshToken, user } = action.payload.payload;
+      const { accessToken, refreshToken, user } = action.payload.data;
+      console.log(action.payload);
       setTokens(accessToken, refreshToken);
       state.isAuthenticated = true;
       state.user = user;

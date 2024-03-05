@@ -34,8 +34,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     async function fetchUser() {
-      const { refresh_token } = getTokens();
-      if (refresh_token && isValidToken(refresh_token)) {
+      const { refreshToken } = getTokens();
+      if (refreshToken && isValidToken(refreshToken)) {
         const response = await axiosInstance.get('/api/auth/me');
         const user = response.data.payload;
         dispatch(initialise({ isAuthenticated: true, user }));

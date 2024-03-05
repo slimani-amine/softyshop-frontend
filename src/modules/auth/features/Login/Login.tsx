@@ -6,8 +6,9 @@ import { login } from '../../data/authThunk';
 import Input from '@src/modules/shared/components/Input/Input';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../routes/paths';
+import toast from 'react-hot-toast';
 
 const initialValues = {
   email: '',
@@ -17,7 +18,7 @@ const initialValues = {
 const Login = () => {
   const dispatch = useAppDispatch();
   const [submitting, setSubmitting] = useState(false);
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object().shape({
@@ -32,14 +33,11 @@ const Login = () => {
       dispatch(login(changedValues))
         .unwrap()
         .then(() => {
-          console.log('welcome');
+          toast.success('Welcome to SoftyShop!');
+          navigate('/home');
         })
         .catch((err) => {
-          if (
-            err.message !==
-            "Cannot destructure property 'accessToken' of 'action.payload.payload' as it is undefined."
-          )
-            alert(err?.message || 'something-went-wrong');
+          toast.error(err?.message || 'something-went-wrong');
         })
         .finally(() => {
           setSubmitting(false);
@@ -53,6 +51,7 @@ const Login = () => {
         <h1 className="title">Login</h1>
 
         <Input
+          defaultValue="fadi@benromdhan.com"
           name="email"
           formik={formik}
           variant="secondary"
@@ -62,6 +61,7 @@ const Login = () => {
         />
 
         <Input
+          defaultValue="Fadi@123"
           name="password"
           formik={formik}
           variant="secondary"

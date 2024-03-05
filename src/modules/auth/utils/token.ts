@@ -1,21 +1,21 @@
 export const getTokens = () => {
   return {
-    access_token: localStorage.getItem('access_token') || null,
-    refresh_token: localStorage.getItem('refresh_token') || null,
+    accessToken: localStorage.getItem('accessToken') || null,
+    refreshToken: localStorage.getItem('refreshToken') || null,
   };
 };
 
 export const setTokens = (
-  access_token: string,
-  refresh_token?: string | null
+  accessToken: string,
+  refreshToken?: string | null
 ) => {
-  localStorage.setItem('access_token', access_token);
-  if (refresh_token) {
-    localStorage.setItem('refresh_token', refresh_token);
+  localStorage.setItem('accessToken', accessToken);
+  if (refreshToken) {
+    localStorage.setItem('refreshToken', refreshToken);
   }
 };
 
 export const clearTokens = () => {
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('refresh_token');
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
 };
