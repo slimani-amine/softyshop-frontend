@@ -56,8 +56,6 @@ export const renderRoutes = (routes: RouteConfig[] = []) => (
           
         }
       })}
-
-    
     </Routes>
   </Suspense>
 )

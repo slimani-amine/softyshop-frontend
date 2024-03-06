@@ -22,7 +22,7 @@ const routes: RouteConfig[] = [
     path: '/dashboard',
     component: lazy(() => import('../features/Test')),
     layout: MainLayout,
-    roles : ["ADMIN"],
+    roles : ["ADMIN","VENDOR"],
   },
 ]
 

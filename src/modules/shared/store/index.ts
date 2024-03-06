@@ -8,7 +8,6 @@ export const store = configureStore({
   devTools: VITE_APP_ENABLE_REDUX_DEVTOOLS,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({}).concat([]),
 })
-
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppDispatch>()
