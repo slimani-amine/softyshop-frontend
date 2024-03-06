@@ -17,12 +17,9 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
   const { pathname } = useLocation();
   const { t } = useTranslation('sidebar');
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
-  const [activeChild, setActiveChild] = useState<string | null>(null);
   const [activeParent, setActiveParent] = useState<string | null>(null);
 
   const handleToggleExpand = (label: string) => {
-    console.log(label);
-    console.log(expandedItems);
     if (expandedItems.includes(label)) {
       setExpandedItems(expandedItems.filter((item) => item !== label));
     } else {
@@ -33,6 +30,8 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
   const handleChildClick = (link: string) => {
     setActiveParent(link);
   };
+
+  const Current_User = localStorage.getItem('Current_User') || '';
 
   return (
     <div className="sidebar-items">
@@ -54,7 +53,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
             data-testid="ChevronLeftIcon"
           >
             <path
-              strokeWidth="1"
+              stroke-width="1"
               d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
             ></path>
           </svg>
@@ -64,17 +63,16 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
         Admin
       </span>
       {SIDEBARITEMS?.map((route, index) => {
-        const isExpanded = expandedItems.includes(route?.link);
+        const isExpanded = expandedItems.includes(route?.label);
         const routeLabel = route.label.toLowerCase();
         const currentLabel = activeParent?.split('/')[2]?.toLowerCase();
-        return (
+        const roles = route.roles;
+        return roles?.includes(Current_User) ? (
           <React.Fragment key={index}>
             <Link
               to={route?.link}
-              onClick={() => handleToggleExpand(route?.link)}
-              className={`item ${pathname === route?.link && 'active'} ${
-                route.label.toLowerCase() === pathname.split('/')[2] && 'active'
-              }  `}
+              onClick={() => handleToggleExpand(route?.label)}
+              className={`item   ${routeLabel === currentLabel && 'active'}   `}
             >
               <div className="item-left">
                 <div
@@ -87,7 +85,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
                 </div>
                 <p
                   className={`${isAnimating ? 'hidden' : ''}  ${
-                    pathname === route?.link && 'active'
+                    routeLabel === currentLabel && 'active'
                   } item-label `}
                 >
                   {!collapseSidebar ? t(`${route?.label}`) : null}
@@ -128,17 +126,16 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
                         pathname === child.link
                           ? 'icon-child-active'
                           : 'icon-child'
-                      }  `}
+                      }`}
                     ></div>
                     {!collapseSidebar ? t(`${child.label} `) : null}
                   </Link>
                 ))}
             </div>
           </React.Fragment>
-        );
+        ) : null;
       })}
     </div>
   );
 };
-
 export default SidebarItems;

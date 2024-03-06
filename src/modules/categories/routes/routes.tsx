@@ -10,6 +10,7 @@ type RouteConfig = {
   component: React.ComponentType<any>;
   guard?: React.ComponentType<any> | typeof Fragment | any;
   layout?: React.ComponentType<any> | typeof Fragment;
+  roles : string[];
 } & RouteProps;
 
 const routes: RouteConfig[] = [
@@ -20,14 +21,25 @@ const routes: RouteConfig[] = [
     path: "/vendor/categories",
     component: lazy(() => import("../features/category_list/CategoryList")),
     layout: MainLayout,
+    roles: ["ADMIN"],
   },
   {
     exact: true,
     guard: AuthGuard,
     path: "/vendor/categories/create",
-    component: lazy(() => import("../features/category_list/CategoryList")),
+    component: lazy(() => import("../features/category_create/CategoryCreate")),
     layout: MainLayout,
+    roles: ["ADMIN"]
   },
+  {
+    exact: true,
+    guard: AuthGuard,
+    path: "/vendor/Categories/edit",
+    component: lazy(() => import("../features/category_edit/CategoryEdit")),
+    layout: MainLayout,
+    roles: ["ADMIN"],
+  },
+
 ];
 
 export default routes;

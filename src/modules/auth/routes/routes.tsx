@@ -12,6 +12,7 @@ type RouteConfig = {
   component: React.ComponentType<any>;
   guard?: React.ComponentType<any> | typeof Fragment | any;
   layout?: React.ComponentType<any> | typeof Fragment;
+  roles: string[];
 } & RouteProps;
 
 const routes: RouteConfig[] = [
@@ -20,9 +21,12 @@ const routes: RouteConfig[] = [
     exact: true,
     path: PATH.ROOT,
     guard: AuthGuard,
+    roles: ['VENDOR', 'ADMIN'],
     component: () => <Navigate to="/home" />,
   },
   {
+    roles: ['VENDOR', 'ADMIN'],
+
     exact: true,
     guard: GuestGuard,
     path: PATH.LOGIN,
@@ -30,6 +34,8 @@ const routes: RouteConfig[] = [
     layout: GuestLayout,
   },
   {
+    roles: ['VENDOR', 'ADMIN'],
+
     exact: true,
     guard: GuestGuard,
     path: PATH.REGISTER,
@@ -37,6 +43,8 @@ const routes: RouteConfig[] = [
     layout: GuestLayout,
   },
   {
+    roles: ['VENDOR', 'ADMIN'],
+
     exact: true,
     guard: GuestGuard,
     path: PATH.ROLE,

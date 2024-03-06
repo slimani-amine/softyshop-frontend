@@ -1,0 +1,91 @@
+.parent-container{
+    width:740px !important;
+    margin-left:20%;
+   
+    
+}
+.add-btn{
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 5px 32px;
+  border: 1px solid rgb(78, 151, 253);
+  background-color: transparent;
+  margin-bottom: 40px;
+  transition: all 0.2s ease;
+  span {
+    color: rgb(78, 151, 253);
+  }
+  &:hover{
+    background-color: #f0f0f07c;
+  }
+
+}
+.input{
+    background-color: red;
+    &:focus{
+    border: 1px solid black;}
+}
+
+.create-shop-container{
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 24px;
+}
+.map{
+    height: 500px;
+    width: 500px;
+}
+.upload-images {
+    cursor: default;
+    .ant-upload {
+      display: flex;
+      align-items: center;
+      justify-content: center ;
+
+      background-color: #f6f9fc;
+      cursor: default;
+      width: 100% !important;
+      border-radius: 8px;
+    }
+    .ant-upload-text {
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      color: rgb(125, 135, 156) !important;
+    }
+    .icon-drag {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      .divider {
+        width: 100px;
+        min-width: 100px;
+      }
+      .or {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgb(218, 225, 231);
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+    }
+    .size-img {
+      font-size: 12px;
+      font-weight: 400;
+      color: #7d879c;
+    }
+    .btn-select {
+      padding: 5px 32px;
+      border: 1px solid rgb(78, 151, 253);
+      background-color: #f6f9fc;
+      margin-bottom: 40px;
+      span {
+        color: rgb(78, 151, 253);
+      }
+    }
+  }
+  .form-shop{
+    display: flex;
+    flex-direction: column;
+    gap:10px
+  }

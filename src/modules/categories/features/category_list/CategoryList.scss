@@ -4,6 +4,14 @@
     fill: #7d879c;
   }
 }
+.ant-table-column-sorters{
+  width: fit-content;
+  display: flex;
+  gap: 10px;
+}
+.ant-switch-checked{
+  background-color: #2196f3 !important;
+}
 .ant-table-thead {
   tr {
     th[aria-label="Name"] {
@@ -29,7 +37,24 @@
     }
   }
 }
+.icon-action{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease ;
+  cursor: pointer;
+  &:hover{
+    background-color: rgba(94, 94, 94, 0.177);
+    svg{
+      fill: #4da1e6a9;
+    }
+  }
+}
 .Product-List {
+
   .name-column {
     display: flex;
     justify-content: flex-start;

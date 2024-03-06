@@ -1,0 +1,133 @@
+.title {
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .input-custom {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    &::placeholder {
+    }
+    .ant-upload-list-item-container {
+      background-color: red !important;
+    }
+    .ant-upload-list-item {
+      width: 50px !important;
+    }
+  }
+  .ant-checkbox{
+    width: 20px;
+    margin-right: 10px !important;
+  }
+  .feutured{
+    span{
+        font-size: 16px;
+        
+    }}
+    .ant-checkbox-checked{
+         .ant-checkbox-inner{
+
+            background-color: #2196f3;
+            border:2px solid #2196f3 !important;
+            
+        }
+        
+
+    }
+    .ant-checkbox-inner{
+        height: 20px !important;
+        width: 20px !important;
+        border: 2px solid  black !important;
+        border-radius: 2px !important;
+        
+       
+       }
+    
+
+  .ant-select-selector {
+    height: 54px !important;
+    display: flex;
+    align-items: center;
+  }
+  .add-new-Product {
+    overflow-y: hidden;
+  }
+  .container-add-Product {
+    background-color: rgb(255, 255, 255);
+    color: rgb(43, 52, 69);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    box-shadow: rgba(3, 0, 71, 0.09) 0px 1px 3px;
+    overflow: hidden;
+    border-radius: 8px;
+    padding: 48px;
+    .name-Product {
+      margin-bottom: 40px;
+      width: 1240px;
+    }
+    .mui-input {
+      border: 1px solid #ced4da;
+      padding: 10px;
+      border-radius: 5px;
+      width: 100%;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+  
+    .mui-input:focus,
+    .mui-input.focused {
+      border-color: #80bdff;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  
+    .upload-images {
+      cursor: default;
+      .ant-upload {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+  
+        background-color: #f6f9fc;
+        cursor: default;
+        width: 100% !important;
+        border-radius: 8px;
+      }
+      .ant-upload-text {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        color: rgb(125, 135, 156) !important;
+      }
+      .icon-drag {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        .divider {
+          width: 100px;
+          min-width: 100px;
+        }
+        .or {
+          font-size: 12px;
+          font-weight: 400;
+          color: rgb(218, 225, 231);
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+      }
+      .size-img {
+        font-size: 12px;
+        font-weight: 400;
+        color: #7d879c;
+      }
+      .btn-select {
+        padding: 5px 32px;
+        border: 1px solid rgb(78, 151, 253);
+        background-color: #f6f9fc;
+        margin-bottom: 40px;
+        span {
+          color: rgb(78, 151, 253);
+        }
+      }
+    }
+  }
+  

@@ -4,14 +4,14 @@ import dashboardRoutes from '../../dashboard/routes/routes';
 import productRoutes from '../../products/routes/routes';
 import categoryRoutes from '../../categories/routes/routes';
 import homeRoutes from '../../customer/home/routes/routes';
-
+import bookstoreRoutes from '../../bookStores/routes/routes';
 const routes = [
   ...sharedRoutes,
   ...authRoutes,
   ...dashboardRoutes,
   ...productRoutes,
   ...categoryRoutes,
-  ...homeRoutes,
+  ...bookstoreRoutes,
 ];
 
 export default routes;

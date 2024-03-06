@@ -3,7 +3,6 @@
   background-color: #2b3445;
   border-radius: 0px;
   padding: 5px 18px 18px 18px;
-
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -162,13 +161,15 @@
   }
   
     .children_expanded{
-      max-height: 200px !important;
+      height: 132px ;
       overflow: hidden;
-      transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease;
       .active-child{ background-color: #323a4c;
         color: rgb(78, 151, 253);
+        transition: 0.2s  ease;
 
       }
+      
   
       
       
@@ -176,7 +177,7 @@
       .child-item{
         .icon-child-active{
           display: flex;
-          transition: 1s 0.1s  ease ;
+          transition: 0.2s ease ;
           justify-content: space-between;
           height: 3px;
           position: relative;
@@ -184,7 +185,8 @@
           width: 3px;
           background-color: rgb(78, 151, 253);
           border-radius: 50%;
-        &::after{
+          &::after{
+          transition: 0.2s   ease ;               
           content: "";
           position: absolute;
           top: 50%;
@@ -205,10 +207,8 @@
           width: 3px;
           background-color: white;
           border-radius: 50%;
-          transition: 0.1s ease ;
-        }
-        transition: all 0.2s ease;
-
+          transition: 0.1s ease}
+        transition: all 0.2s  ease;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -224,25 +224,18 @@
         display: flex;
         align-items: center;
         overflow: hidden;
-        &:hover {
-          background-color: #323a4c;
-          color: rgb(78, 151, 253);
-
-          .icon_color {
-            color: white;
-          }
-        }
+    
       }
 
     }
     .children{
-      max-height: 0;
-      overflow: hidden;
-      transition: 0.2s ease;
+      height: 0;
+      transition:all 0.2s ease;
     }
   .active {
     background-color: #323a4c;
     color: rgb(78, 151, 253) !important;
+    transition: 0.2s  ease;
 
     &:hover {
       background-color: #323a4c;
@@ -279,10 +272,8 @@
       &:first-child{
       fill: rgb(13, 150, 213)
     };
-  
       &:last-child{
         fill: rgb(226, 227, 229);
-      
     };
 
   }  

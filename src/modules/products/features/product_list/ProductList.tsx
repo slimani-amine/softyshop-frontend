@@ -3,7 +3,8 @@ import { Table, Space, Button as AntButton, Switch } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useNavigate } from "react-router-dom";
-
+import { useProductsQuery } from "../../data/productSlice";
+import { RootState } from "@src/modules/shared/store";
 interface Product {
   id: string;
   name: string;
@@ -118,7 +119,7 @@ const columns = [
   },
 ];
 
-const data: Product[] = [
+const datas: Product[] = [
   {
     id: "#5645461",
     name: "Product 1",
@@ -158,8 +159,16 @@ const data: Product[] = [
 ];
 
 export default function ProductList() {
-  const [Products, setProducts] = useState<Product[]>(data);
+  const [Products, setProducts] = useState<Product[]>(datas);
   const navigate = useNavigate();
+  const { data: products, isLoading, error, refetch } = useProductsQuery();
+
+  console.log(products,"real data")
+  const prod = (state:RootState)=>state.products
+  console.log(prod)
+  
+
+  
 
   const handleNavigate = () => {
     navigate("/vendor/Products/create");
