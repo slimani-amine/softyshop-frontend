@@ -8,6 +8,7 @@ import bookstoreRoutes from '../../bookStores/routes/routes';
 const routes = [
   ...sharedRoutes,
   ...authRoutes,
+  ...homeRoutes,
   ...dashboardRoutes,
   ...productRoutes,
   ...categoryRoutes,
