@@ -6,10 +6,7 @@ import * as Yup from 'yup';
 import { register } from '../../data/authThunk';
 import Input from '@src/modules/shared/components/Input/Input';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
-import {
-  // useEffect,
-  useState,
-} from 'react';
+import { useState } from 'react';
 import {
   Link,
   // , useLocation
