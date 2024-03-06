@@ -5,8 +5,15 @@ import * as Yup from 'yup';
 import { login } from '../../data/authThunk';
 import Input from '@src/modules/shared/components/Input/Input';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
-import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  //  useEffect,
+  useState,
+} from 'react';
+import {
+  Link,
+  //  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { PATH } from '../../routes/paths';
 import toast from 'react-hot-toast';
 
@@ -17,7 +24,7 @@ const initialValues = {
 
 const Login = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   console.log(isAuthenticated);
   // useEffect(
@@ -82,7 +89,7 @@ const Login = () => {
         />
         <Button label={'Login'} type={'submit'} loading={submitting} />
 
-        <Link to={PATH.REGISTER} className="link">
+        <Link to={PATH.ROLE} className="link">
           Create Account?
         </Link>
       </form>

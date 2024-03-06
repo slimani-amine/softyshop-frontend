@@ -60,10 +60,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           />
         </div>
         <div
-          onClick={() => {
-            if (isAuthenticated) return;
-            navigate(PATH.ROLE);
-          }}
+          // onClick={() => {
+          //   if (isAuthenticated) return;
+          //   navigate(PATH.ROLE);
+          // }}
           className={`main-layout-outlet ${
             isAnimating ? 'main-layout-outlet-animate' : ''
           }`}
