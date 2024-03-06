@@ -60,6 +60,7 @@ export const logout = createAsyncThunk(
     try {
       const response = await axiosInstance.get(`${BASE_URL}auth/logout`);
 
+      console.log(response);
       if (response.status === 200) {
         clearTokens();
         return response.data;

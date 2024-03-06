@@ -63,7 +63,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.status = 'succeeded';
-      // clearTokens();
+      clearTokens();
     });
     builder.addCase(logout.rejected, (state, action: PayloadAction<any>) => {
       state.error = action?.payload;

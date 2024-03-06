@@ -67,7 +67,7 @@ const Login = () => {
           variant="secondary"
           placeholder="Enter your email"
           label="Email"
-          // required={true}
+          required={true}
         />
 
         <Input
@@ -78,7 +78,7 @@ const Login = () => {
           placeholder="Enter your password"
           label="Password"
           type="password"
-          // required={true}
+          required={true}
         />
         <Button label={'Login'} type={'submit'} loading={submitting} />
 

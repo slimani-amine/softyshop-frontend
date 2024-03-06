@@ -31,9 +31,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   useEffect(() => {
-    // if (!isMounted.current) {
-    //   return;
-    // }
+    if (!isMounted.current) {
+      return;
+    }
 
     async function fetchUser() {
       //   const { accessToken } = getTokens();
