@@ -1,38 +1,56 @@
-import Button from '@src/modules/shared/components/Button/Button'
-import { useAppDispatch } from '@src/modules/shared/store'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { register } from '../../data/authThunk'
-import Input from '@src/modules/shared/components/Input/Input'
-import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { PATH } from '../../routes/paths'
+import Button from '@src/modules/shared/components/Button/Button';
+import { useAppSelector } from '@src/modules/shared/store';
+import { useAppDispatch } from '@src/modules/shared/store';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { register } from '../../data/authThunk';
+import Input from '@src/modules/shared/components/Input/Input';
+import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { PATH } from '../../routes/paths';
+import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const initialValues = {
   firstName: '',
   lastName: '',
-  username: '',
+  // username: '',
   email: '',
   password: '',
-  verify_password: '',
-  phone: null,
-  age: null,
-  birthDate: null,
-}
+  verifyPassword: '',
+  phoneNumber: null,
+  role: '',
+  // age: null,
+  // birthDate: null,
+};
 
 const Register = () => {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  console.log(isAuthenticated);
 
-  const [submitting, setSubmitting] = useState(false)
+  // useEffect(
+  //   function () {
+  //     if (isAuthenticated && pathname === '/register') navigate('/home');
+  //   },
+  //   [pathname, isAuthenticated]
+  // );
+
+  const dispatch = useAppDispatch();
+  const { role } = useSelector((state: any) => state.role);
+
+  const [submitting, setSubmitting] = useState(false);
 
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object().shape({
-      firstName: Yup.string().required('FirstName is required'),
-      lastName: Yup.string().required('LastName is required'),
-      username: Yup.string().required('Username is required'),
+      firstName: Yup.string().required('First name is required'),
+      lastName: Yup.string().required('Last name is required'),
+      phoneNumber: Yup.string()
+        .required('Phone number is required')
+        .matches(/^([9527]\d{7})$/g, 'Invalid phone number'),
       email: Yup.string()
         .email('Invalid email address')
         .matches(
@@ -42,43 +60,55 @@ const Register = () => {
         .test(
           'no-special-chars',
           'Email contains disallowed characters',
-          (value: string | undefined) => !value || /^[^<>()\\/[\]{}\s]+@[^\s]+$/.test(value)
+          (value: string | undefined) =>
+            !value || /^[^<>()\\/[\]{}\s]+@[^\s]+$/.test(value)
         )
         .required('Email is required'),
-      password: Yup.string().required('Password is required').min(6, 'Password is too short!'),
-      verify_password: Yup.string()
+      password: Yup.string()
+        .required('Password is required')
+        .matches(
+          /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!.-/]).{8,}$/,
+          'Password must include an upper case letter, a lower case letter and a special character! It has to be 8 characters long at least.'
+        ),
+      verifyPassword: Yup.string()
         .required('Confirm password is required')
         .oneOf([Yup.ref('password')], 'Passwords must match'),
     }),
     onSubmit: (values) => {
-      setSubmitting(true)
-      const changedValues = getChangedValues(values, initialValues)
+      setSubmitting(true);
+      values.role = role;
+      // console.log(role);
+      const changedValues = getChangedValues(values, initialValues);
       dispatch(register(changedValues))
         .unwrap()
         .then(() => {
-          console.log('Account created successfully')
-          navigate(PATH.LOGIN)
+          toast.success('Account created successfully');
+          // console.log(changedValues);
+          navigate('/home');
         })
         .catch((err) => {
-          alert(err?.message || 'something-went-wrong')
+          toast.error(err?.message || 'something-went-wrong');
         })
         .finally(() => {
-          setSubmitting(false)
-        })
+          setSubmitting(false);
+        });
     },
-  })
+  });
 
+  // {
+  //   console.log(formik);
+  // }
   return (
     <div className="register-module">
       <form className="register-card-container" onSubmit={formik.handleSubmit}>
-        <h1 className="title">Register</h1>
+        <h1 className="title">Sign Up</h1>
 
         <Input
           name="firstName"
           formik={formik}
           variant="secondary"
           placeholder="Enter your firstname"
-          label="Firstname"
+          label="First Name"
           required={true}
         />
 
@@ -87,16 +117,16 @@ const Register = () => {
           formik={formik}
           variant="secondary"
           placeholder="Enter your lastname"
-          label="Lastname"
+          label="Last Name"
           required={true}
         />
 
         <Input
-          name="username"
+          name="phoneNumber"
           formik={formik}
           variant="secondary"
-          placeholder="Enter your username"
-          label="Username"
+          placeholder="Enter phone number"
+          label="Phone Number"
           required={true}
         />
 
@@ -121,7 +151,7 @@ const Register = () => {
         />
 
         <Input
-          name="verify_password"
+          name="verifyPassword"
           formik={formik}
           variant="secondary"
           placeholder="Enter your confirm password"
@@ -130,14 +160,14 @@ const Register = () => {
           required={true}
         />
 
-        <Button label={'Register'} type={'submit'} loading={submitting} />
+        <Button label={'Sign Up'} type={'submit'} loading={submitting} />
 
         <Link to={PATH.LOGIN} className="link">
           Already a member?
         </Link>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
