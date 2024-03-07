@@ -55,7 +55,7 @@ function EnterNewPassword() {
       dispatch(enterNewPassword({ newPassword, token }))
         .unwrap()
         .then(() => {
-          toast.success('Email sent!');
+          toast.success('Password has been reset!');
           navigate(PATH.LOGIN);
         })
         .catch((err: any) => {
