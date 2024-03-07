@@ -11,8 +11,8 @@ import NotificationIcon from '../../assets/icons/navbar/bell.png';
 //eslint-ignore-next-line
 import { useAnimation } from '../../layout/mainLayout/context/animationContext';
 interface INavbarProps {
-  setShowSidebar: React.Dispatch<React.gSetStateAction<boolean>>;
-  setCollapseSidebar: React.Dispatch<React.gSetStateAction<boolean>>;
+  setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+  setCollapseSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   collapseSidebar: boolean;
 }
 

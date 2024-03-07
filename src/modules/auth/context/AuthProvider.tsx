@@ -41,9 +41,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       const accessToken: string | null = localStorage.getItem('accessToken');
 
       if (accessToken && isValidToken(accessToken)) {
-        const response = await axiosInstance.get(
-          `http://192.168.3.27:3000/v1/api/users/me`
-        );
+        const response = await axiosInstance.get(`${BASE_URL}api/users/me`);
 
         const user = response?.data?.data;
         console.log(user.role);

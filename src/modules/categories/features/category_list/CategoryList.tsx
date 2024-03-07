@@ -57,6 +57,7 @@ export default function CategoryList() {
   const handleNavigate = () => {
     navigate('/vendor/Categories/create');
   };
+  //disable-eslint-next-line
   const handleSwitchChange = (id: string) => (checked: boolean) => {
     setCategories((prevCategorys: Category[]) =>
       prevCategorys.map((Category: Category) =>

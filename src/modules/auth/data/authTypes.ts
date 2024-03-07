@@ -14,3 +14,7 @@ export interface RegisterPayload {
   // age?: number | null
   // birthDate?: string | null
 }
+
+export interface resetPasswordPayload {
+  email: string;
+}
