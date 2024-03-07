@@ -1,8 +1,8 @@
 import Button from '@src/modules/shared/components/Button/Button';
-import {
-  // useLocation,
-  useNavigate,
-} from 'react-router-dom';
+// import {
+//   useLocation,
+//   useNavigate,
+// } from 'react-router-dom';
 // import { PATH } from '@src/modules/auth/routes/paths';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { initialStateType, setRole } from '../../data/roleSlice';
@@ -13,14 +13,14 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
-import { login } from '../../data/authThunk';
+import { resetPassword } from '../../data/authThunk';
 import toast from 'react-hot-toast';
 
 const initialValues = {
   email: '',
 };
 function ResetPassword() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const { pathname } = useLocation();
   const [submitting, setSubmitting] = useState(false);
   const dispatch = useAppDispatch();
@@ -31,9 +31,10 @@ function ResetPassword() {
       email: Yup.string().required('Email is required'),
     }),
     onSubmit: (values) => {
+      // console.log('hola');
       setSubmitting(true);
       const changedValues = getChangedValues(values, initialValues);
-      dispatch(login(changedValues))
+      dispatch(resetPassword(changedValues))
         .unwrap()
         .then(() => {
           toast.success('Email sent!');
@@ -49,7 +50,7 @@ function ResetPassword() {
 
   // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   // console.log(isAuthenticated);
-
+  // console.log(formik);
   return (
     <div className="reset-module">
       <div className="reset-card-container">
@@ -58,7 +59,7 @@ function ResetPassword() {
           Forgot your password? Don't worry! Please hand us your email and we
           will reset it for you.
         </h1>
-        <form className="reset-form">
+        <form className="reset-form" onSubmit={formik.handleSubmit}>
           <Input
             defaultValue="fadi@benromdhan.com"
             name="email"
@@ -68,7 +69,7 @@ function ResetPassword() {
             label="Email"
             required={true}
           />
-          <Button label={'Continue'} />
+          <Button label={'Continue'} type={'submit'} loading={submitting} />
         </form>
       </div>
     </div>

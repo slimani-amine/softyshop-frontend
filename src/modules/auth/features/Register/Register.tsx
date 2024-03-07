@@ -1,5 +1,5 @@
 import Button from '@src/modules/shared/components/Button/Button';
-import { useAppSelector } from '@src/modules/shared/store';
+// import { useAppSelector } from '@src/modules/shared/store';
 import { useAppDispatch } from '@src/modules/shared/store';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -32,7 +32,7 @@ const initialValues = {
 const Register = () => {
   const navigate = useNavigate();
   // const { pathname } = useLocation();
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   // console.log(isAuthenticated);
 
   // useEffect(
