@@ -1,5 +1,8 @@
 import Button from '@src/modules/shared/components/Button/Button';
-import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import {
+  useAppDispatch,
+  //  useAppSelector
+} from '@src/modules/shared/store';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { login } from '../../data/authThunk';
@@ -16,6 +19,7 @@ import {
 } from 'react-router-dom';
 import { PATH } from '../../routes/paths';
 import toast from 'react-hot-toast';
+import jwtDecode from 'jwt-decode';
 
 const initialValues = {
   email: '',
@@ -25,8 +29,8 @@ const initialValues = {
 const Login = () => {
   const navigate = useNavigate();
   // const { pathname } = useLocation();
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated);
+  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  // console.log(isAuthenticated);
   // useEffect(
   //   function () {
   //     if (isAuthenticated && pathname === '/login') navigate('/home');
@@ -57,6 +61,10 @@ const Login = () => {
           toast.error(err?.message || 'something-went-wrong');
         })
         .finally(() => {
+          const accessToken: any = localStorage.getItem('accessToken');
+          const decoded: any = jwtDecode(accessToken);
+          const role = decoded.role;
+          console.log(role);
           setSubmitting(false);
         });
     },

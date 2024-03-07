@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
 import axiosInstance from '../utils/axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearTokens, getTokens } from '../utils/token';
+// import { clearTokens, getTokens } from '../utils/token';
 import useIsMountedRef from '../hook/useIsMountedRef';
 import { initialise } from '../data/authSlice';
 import { RootState } from '@src/modules/shared/store';
@@ -36,28 +36,23 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     async function fetchUser() {
-      //   const { accessToken } = getTokens();
+      // const { accessToken } = getTokens();
 
-      const accessToken = localStorage.getItem('accessToken');
-      // console.log({
-      //   accessToken,
-      //   test: accessToken ? isValidToken(accessToken) : null,
-      // });
+      const accessToken: string | null = localStorage.getItem('accessToken');
 
       if (accessToken && isValidToken(accessToken)) {
-        //  const response = await axiosInstance.get(`${BASE_URL}api/users/me`);
-        //  console.log({ response });
+        const response = await axiosInstance.get(`${BASE_URL}api/users/me`);
 
-        //  const user = response?.data?.payload;
+        const user = response?.data?.payload;
 
-        const user = {
-          email: 'string',
-          isVerified: true,
-          firstName: 'string',
-          lastName: 'string',
-          picture: 'string',
-          role: 'admin',
-        };
+        // const user = {
+        //   email: 'string',
+        //   isVerified: true,
+        //   firstName: 'string',
+        //   lastName: 'string',
+        //   picture: 'string',
+        //   role: 'admin',
+        // };
 
         dispatch(initialise({ isAuthenticated: true, user }));
       } else {
