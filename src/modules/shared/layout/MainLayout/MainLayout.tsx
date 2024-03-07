@@ -1,18 +1,18 @@
-import { PATH } from '@src/modules/auth/routes/paths';
+// import { PATH } from '@src/modules/auth/routes/paths';
 import { useEffect, useRef, useState } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Navbar from '../../components/Navbar/Navbar';
 import { useAnimation } from './context/animationContext';
 // import { isAsExpression } from 'typescript';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store';
+// import { useAppSelector } from '../../store';
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated);
+  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  // console.log(isAuthenticated);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const { isAnimating } = useAnimation();

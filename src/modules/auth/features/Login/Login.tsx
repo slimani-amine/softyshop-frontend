@@ -88,10 +88,15 @@ const Login = () => {
           required={true}
         />
         <Button label={'Login'} type={'submit'} loading={submitting} />
-
-        <Link to={PATH.ROLE} className="link">
-          Create Account?
-        </Link>
+        <div className="links">
+          <Link to={PATH.ROLE} className="link">
+            Create Account?
+          </Link>
+          <p>||</p>
+          <Link to={PATH.RESET} className="link">
+            Forgot Password?
+          </Link>
+        </div>
       </form>
     </div>
   );

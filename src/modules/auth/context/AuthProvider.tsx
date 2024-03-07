@@ -39,10 +39,10 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       //   const { accessToken } = getTokens();
 
       const accessToken = localStorage.getItem('accessToken');
-      console.log({
-        accessToken,
-        test: accessToken ? isValidToken(accessToken) : null,
-      });
+      // console.log({
+      //   accessToken,
+      //   test: accessToken ? isValidToken(accessToken) : null,
+      // });
 
       if (accessToken && isValidToken(accessToken)) {
         //  const response = await axiosInstance.get(`${BASE_URL}api/users/me`);
