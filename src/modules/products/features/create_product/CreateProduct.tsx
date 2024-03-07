@@ -1,4 +1,7 @@
 import { FC } from "react";
+import { RootState } from "@src/modules/shared/store";
+
+
 import {
   Form,
   Select,
@@ -12,14 +15,18 @@ import {
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 const { TextArea } = Input;
+import { useCategoriesQuery } from "@src/modules/categories/service/categoryApi";
 
 interface AddProductFormProps {
   onFinish: (values: any) => void;
 }
 
 const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
+  const {data :fetchedCatgeories,isLoading } = useCategoriesQuery()
+  const categories = fetchedCatgeories?.data || []
+  const selectOptions =categories.map((cat:any)=>({label : cat.name , value : cat.id}))
+  
   const [form] = Form.useForm();
-
   const handleFinish = (values: any) => {
     console.log(values)
     onFinish(values);
@@ -33,6 +40,7 @@ const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
     const imageUrlList = fileList.map((file: any) => file.response?.imageUrl);
     form.setFieldsValue({ images: imageUrlList });
   };
+  
 
   return (
     <div className="add-new-Product">
@@ -69,9 +77,10 @@ const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
               >
                 <Select
                   size="large"
-                  placeholder="Product"
+                  placeholder="Category"
                   className="input-custom"
-                  options={[{ value: "sample", label: <span>sample</span> }]}
+                  options={selectOptions}
+
                 />
               </Form.Item>
             </Col>

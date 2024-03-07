@@ -1,10 +1,12 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Table, Space, Button as AntButton, Switch } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useProductsQuery } from "../../data/productSlice";
 import { RootState } from "@src/modules/shared/store";
+import { useSelector } from "react-redux";
+import { ProductsApi } from "../../data/productSlice";
 interface Product {
   id: string;
   name: string;
@@ -48,10 +50,10 @@ const columns = [
     title: "Brand",
     dataIndex: "brand",
     key: "brand",
-    sorter: (a: Product, b: Product) => a.brand.localeCompare(b.brand),
+    //sorter: (a: Product, b: Product) => a.brand.localeCompare(b.brand),
     render: (record: Product) => (
       <div className="">
-        <img src={record.brand} alt="" />
+        <img src='rfezf' alt="" />
       </div>
     ),
   },
@@ -158,14 +160,38 @@ const datas: Product[] = [
   },
 ];
 
-export default function ProductList() {
+export  default  function   ProductList() {
   const [Products, setProducts] = useState<Product[]>(datas);
   const navigate = useNavigate();
-  const { data: products, isLoading, error, refetch } = useProductsQuery();
+  const { data: fetchedProducts, error, isLoading } = useProductsQuery();
+  console.log(fetchedProducts , 'hhefugheru')
+  const products = fetchedProducts?.data.docs || []
 
-  console.log(products,"real data")
-  const prod = (state:RootState)=>state.products
-  console.log(prod)
+  console.log(products)
+  // Update local state when data is fetched successfully
+  useEffect(() => {
+    if (fetchedProducts) {
+      console.log(fetchedProducts)
+    }
+  }, [fetchedProducts]);
+
+  // Handle loading state
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+
+
+
+  if (isLoading) return <div>...... wait</div>
+  console.log(isLoading,"ss")
+
+
+
+
+
+
+  
   
 
   
@@ -182,7 +208,7 @@ export default function ProductList() {
   };
 
   const tableProps = {
-    dataSource: Products,
+    dataSource: products,
     columns: columns,
     headerStyle: { backgroundColor: "lightblue" },
 
@@ -192,11 +218,13 @@ export default function ProductList() {
   };
 
   return (
+    
     <div className="Product-List">
       <h1>Product List</h1>
+      
       <div className="header-Product-list">
         <SeachFilter placeholder={"Search Product.."} />
-        <Button onClick={handleNavigate}>+ Add Product</Button>
+        <Button  className="btn-add-admin" onClick={handleNavigate}>+ Add Product</Button>
       </div>
       <div className="container-Product-List">
         <Table<Product> {...tableProps} />

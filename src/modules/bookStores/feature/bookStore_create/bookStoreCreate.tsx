@@ -2,10 +2,9 @@ import  { FC, useState } from "react";
 import { Form, Button as ButtonAnt, Upload, Divider, Row, Col, Input, message, Space } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { MinusCircleOutlined} from '@ant-design/icons';
-import { isValidPhoneNumber } from 'react-phone-number-input'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-
+import { useCreateStoreMutation } from "../../service/storeApi";
 
 interface AddShopFormProps {
   onFinish: (values: any) => void;
@@ -16,7 +15,9 @@ const AddShopForm: FC<AddShopFormProps> = ({ onFinish }) => {
   const [fields, setFields] = useState<string[]>(['']);
   const initialPosition = [33.892166, 9.561555499999997]; // New York coordinates
   const [position, setPosition] = useState(initialPosition);
-  
+  const [createStore, isLoading] = useCreateStoreMutation(); // Destructure and use the hook
+
+
   const [showPopup, setShowPopup] = useState(false);
   const  MapObject= {
     center: position,
@@ -38,6 +39,7 @@ const AddShopForm: FC<AddShopFormProps> = ({ onFinish }) => {
     console.log(placeName)
     setPosition([lat, lng , placeName]);
     setShowPopup(true);
+   
   };
 
 
@@ -54,11 +56,20 @@ const AddShopForm: FC<AddShopFormProps> = ({ onFinish }) => {
 
 
   const handleSaveClick = async () => {
+    
     try {
       const values = await form.validateFields();
       const objectPost = {...values,positionOfShop:position}
       console.log(objectPost,'ed')
       form.resetFields();
+      const response = createStore({
+        "storeName": objectPost.name,
+        "storePhone": objectPost.phone,
+        "logo": "eufig.png",
+        "position": ["1","2","ezdce"],
+        "socialMediaLinks": ['regerg'] ,
+        
+      })
       message.success('Shop saved successfully');
     } catch (error) {
       console.log(error)        

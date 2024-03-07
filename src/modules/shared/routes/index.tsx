@@ -4,7 +4,7 @@ import { Routes, Route, RouteProps } from 'react-router-dom'
 
 import pages from './routes'
 import LazyLoad from '../components/LazyLoad/LazyLoad'
-const Current_User = "VENDOR"
+const Current_User = "ADMIN"
 localStorage.setItem('Current_User',Current_User)
 type RouteConfig = {
   exact: boolean | null
