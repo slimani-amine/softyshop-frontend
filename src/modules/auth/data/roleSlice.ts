@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface initialStateType {
-  role: string;
+  role: string | null | undefined;
 }
+
 const initialState = { role: 'user' };
 const roleSlice = createSlice({
   name: 'role',

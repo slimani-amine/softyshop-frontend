@@ -18,7 +18,7 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: "/vendor/stores",
+    path: "/stores",
     component: lazy(() => import("../feature/bookStore_list/bookStoreList")),
     layout: MainLayout,
     roles:['ADMIN','VENDOR']
@@ -26,7 +26,7 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: "/vendor/stores/create",
+    path: "/stores/create",
     component: lazy(() => import("../feature/bookStore_create/bookStoreCreate")),
     layout: MainLayout,
     roles : ['ADMIN','VENDOR']

@@ -6,8 +6,12 @@ import * as Yup from 'yup';
 import { register } from '../../data/authThunk';
 import Input from '@src/modules/shared/components/Input/Input';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
-import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import {
+  Link,
+  // , useLocation
+  useNavigate,
+} from 'react-router-dom';
 import { PATH } from '../../routes/paths';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
@@ -27,9 +31,9 @@ const initialValues = {
 
 const Register = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated);
+  // console.log(isAuthenticated);
 
   // useEffect(
   //   function () {
@@ -83,7 +87,6 @@ const Register = () => {
         .unwrap()
         .then(() => {
           toast.success('Account created successfully');
-          // console.log(changedValues);
           navigate('/home');
         })
         .catch((err) => {

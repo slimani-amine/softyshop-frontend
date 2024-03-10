@@ -1,23 +1,13 @@
-import Store from './storeType';
 import { api } from '@src/modules/shared/services/api';
 
 export const VendorApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    stores: builder.query<Store[],  { page: Number, perPage: Number }>({
-      query: ({ page, perPage }) => `api/store?page=${page}&perPage=${perPage}`
+    vendors: builder.query<any,  void>({
+      query: () => `api/users/?role=vendor`
     }),
-    store: builder.query<Store, number>({
-      query: (id) => `api/store/${id}`
-    }),
-    createStore: builder.mutation<Store, Partial<Store>>({
-        query: (newStore) => ({
-          url: 'api/store',
-          method: 'POST',
-          body: newStore,
-        }),
-      }),
+   
   })
 });
 
-export const {useCreateStoreMutation, useStoreQuery , useStoresQuery} = VendorApi
+export const {useVendorsQuery} = VendorApi
 

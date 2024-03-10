@@ -4,6 +4,8 @@ export default interface Store {
     logo  : string ; 
     isPublished: Number,
     socialMediaLinks : string[] ;
-    position : string[] ;
+    location : string[] ;
+    address: string;
     storePhone:string
+    vendor_id:string
 }

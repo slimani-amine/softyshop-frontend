@@ -82,7 +82,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ onFinish }) => {
             </div>
           </Form.Item>
           <Form.Item>
-            <Button type="submit" onClick={handleSaveClick}>Save Category</Button>
+            <Button type="submit" className="add-cat" onClick={handleSaveClick}>Save Category</Button>
           </Form.Item>
         </Form>
       </div>

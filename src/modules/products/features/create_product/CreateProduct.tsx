@@ -23,7 +23,7 @@ interface AddProductFormProps {
 
 const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
   const {data :fetchedCatgeories,isLoading } = useCategoriesQuery()
-  const categories = fetchedCatgeories?.data || []
+  const categories = fetchedCatgeories?.data.docs || []
   const selectOptions =categories.map((cat:any)=>({label : cat.name , value : cat.id}))
   
   const [form] = Form.useForm();

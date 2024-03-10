@@ -51,6 +51,15 @@ const routes: RouteConfig[] = [
     component: lazy(() => import('../features/Role/Role')),
     layout: GuestLayout,
   },
+  {
+    roles: ['VENDOR', 'ADMIN'],
+
+    exact: true,
+    guard: GuestGuard,
+    path: PATH.RESET,
+    component: lazy(() => import('../features/ResetPassword/ResetPassword')),
+    layout: GuestLayout,
+  },
 ];
 
 export default routes;

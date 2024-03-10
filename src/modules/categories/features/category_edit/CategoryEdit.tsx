@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useUpdateCatgoryMutation , useCategoryQuery } from "../../service/categoryApi";
 import {
   Form,
   Button as ButtonAnt,
@@ -22,6 +23,9 @@ interface AddCategoryFormProps {
 
 const EditCategoryForm: FC<AddCategoryFormProps > = ({ onFinish }) => {
   const [form] = Form.useForm();
+  const {data: fetchCategory} = useCategoryQuery(59)
+
+
 
   const handleFinish = (values: any) => {
     onFinish(values);

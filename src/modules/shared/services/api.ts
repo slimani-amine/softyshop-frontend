@@ -2,6 +2,7 @@
 import { FetchArgs, createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 import axiosInstance from '@src/modules/auth/utils/axios'
 import { clearTokens, setTokens } from '@src/modules/auth/utils/token'
+import { CategoryApi } from '@src/modules/categories/service/categoryApi'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: "http://192.168.3.27:3000/v1/",
@@ -46,5 +47,8 @@ const baseQueryWithRetry = staggeredBaseQueryWithBailOut
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithRetry,
-  endpoints: () => ({}),
+  tagTypes : ['Categories','pro'] ,
+  endpoints: () => ({
+
+  }),
 })

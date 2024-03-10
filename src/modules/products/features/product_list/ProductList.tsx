@@ -1,12 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { Table, Space, Button as AntButton, Switch } from "antd";
+import { Table, Space, Button as AntButton, Switch ,Pagination} from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useProductsQuery } from "../../data/productSlice";
-import { RootState } from "@src/modules/shared/store";
-import { useSelector } from "react-redux";
-import { ProductsApi } from "../../data/productSlice";
+
 interface Product {
   id: string;
   name: string;
@@ -16,7 +14,6 @@ interface Product {
   published: boolean;
   imgUrl: string;
 }
-
 const columns = [
   {
     title: "Name",
@@ -25,7 +22,7 @@ const columns = [
     render: (name: string, record: Product) => (
       <div className="name-column">
         <div className="picture-Product">
-          <img height={"30px"} width={"30px"} src={record.imgUrl} alt="" />
+          <img height={"30px"} width={"30px"} src={""} alt="" />
         </div>
         <div className="data-name">
           <h3>{name}</h3>
@@ -36,27 +33,17 @@ const columns = [
     sorter: (a: Product, b: Product) => a.name.localeCompare(b.name),
   },
   {
-    title: "Product",
-    className: "cate",
-    dataIndex: "Product",
-    render: (Product: string) => (
-      <span className="Product-name">{Product}</span>
+    title: "Category",
+    className: "product",
+    dataIndex: "category",
+    render: (category: any) => (
+      <span className="Product-name">{category?.name || 'erf'}</span>
     ),
 
     key: "Product",
     sorter: (a: Product, b: Product) => a.Product.localeCompare(b.Product),
   },
-  {
-    title: "Brand",
-    dataIndex: "brand",
-    key: "brand",
-    //sorter: (a: Product, b: Product) => a.brand.localeCompare(b.brand),
-    render: (record: Product) => (
-      <div className="">
-        <img src='rfezf' alt="" />
-      </div>
-    ),
-  },
+
   {
     title: "Price",
     dataIndex: "price",
@@ -65,12 +52,12 @@ const columns = [
   },
   {
     title: "Published",
-    dataIndex: "published",
+    dataIndex: "published", 
     key: "published",
 
     sorter: (a: Product, b: Product) =>
       (a.published ? 1 : 0) - (b.published ? 1 : 0),
-    render: (published: boolean, record: Product) => (
+    render: (published: boolean, record:any) => (
       <Switch
         checked={published}
         onChange={(checked) => console.log(checked)}
@@ -121,59 +108,19 @@ const columns = [
   },
 ];
 
-const datas: Product[] = [
-  {
-    id: "#5645461",
-    name: "Product 1",
-    Product: "Product A",
-    brand: "Brand X",
-    price: 100,
-    published: true,
-    imgUrl: "/src/modules/shared/assets/images/samsung.png",
-  },
-  {
-    id: "#5645098",
-    name: "Product 2",
-    Product: "Product B",
-    brand: "Brand Y",
-    price: 200,
-    published: false,
-    imgUrl: "/src/modules/shared/assets/images/samsung.png",
-  },
-  {
-    id: "#5645794",
-    name: "Product 1",
-    Product: "Product C",
-    brand: "Brand Z",
-    price: 150,
-    published: false,
-    imgUrl: "/src/modules/shared/assets/images/samsung.png",
-  },
-  {
-    id: "#5645998",
-    name: "Product 2",
-    Product: "Product D",
-    brand: "/src/modules/shared/assets/images/samsung copy.png",
-    price: 150,
-    published: false,
-    imgUrl: "/src/modules/shared/assets/images/samsung.png",
-  },
-];
+
 
 export  default  function   ProductList() {
-  const [Products, setProducts] = useState<Product[]>(datas);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
   const navigate = useNavigate();
-  const { data: fetchedProducts, error, isLoading } = useProductsQuery();
-  console.log(fetchedProducts , 'hhefugheru')
+  
+  const { data: fetchedProducts, error, isLoading } = useProductsQuery({
+    perPage: pageSize,
+    page: currentPage,
+  });  console.log(fetchedProducts , 'hhefugheru')
   const products = fetchedProducts?.data.docs || []
-
   console.log(products)
-  // Update local state when data is fetched successfully
-  useEffect(() => {
-    if (fetchedProducts) {
-      console.log(fetchedProducts)
-    }
-  }, [fetchedProducts]);
 
   // Handle loading state
   if (isLoading) {
@@ -186,7 +133,7 @@ export  default  function   ProductList() {
   if (isLoading) return <div>...... wait</div>
   console.log(isLoading,"ss")
 
-
+console.log( fetchedProducts?.data.meta.totalPages)
 
 
 
@@ -199,18 +146,26 @@ export  default  function   ProductList() {
   const handleNavigate = () => {
     navigate("/vendor/Products/create");
   };
-  const handleSwitchChange = (id: string) => (checked: boolean) => {
-    setProducts((prevProducts: Product[]) =>
-      prevProducts.map((Product: Product) =>
-        Product.id === id ? { ...Product, published: checked } : Product
-      )
-    );
+  const handlePaginationChange = (page: number, pageSize?: number) => {
+    setCurrentPage(page);
+    setPageSize(pageSize || 5); // Update pageSize if changed
+
   };
 
   const tableProps = {
     dataSource: products,
     columns: columns,
     headerStyle: { backgroundColor: "lightblue" },
+    // Set the pageSize in pagination config
+    pagination: {
+      total: fetchedProducts?.data.meta.totalPages * 10  ,
+      current: currentPage,
+      pageSize: pageSize,
+      onChange: handlePaginationChange, // Handle page change event
+      onShowSizeChange: handlePaginationChange,
+     
+      // Handle page size change event
+    },
 
     header: {
       style: { borderRadius: "px" },
@@ -224,7 +179,7 @@ export  default  function   ProductList() {
       
       <div className="header-Product-list">
         <SeachFilter placeholder={"Search Product.."} />
-        <Button  className="btn-add-admin" onClick={handleNavigate}>+ Add Product</Button>
+        <Button  className="add-cat" onClick={handleNavigate}> <span>+</span> Add Product</Button>
       </div>
       <div className="container-Product-List">
         <Table<Product> {...tableProps} />
