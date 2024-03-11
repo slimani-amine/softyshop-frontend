@@ -22,7 +22,7 @@ interface AddProductFormProps {
 }
 
 const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
-  const {data :fetchedCatgeories,isLoading } = useCategoriesQuery()
+  const {data :fetchedCatgeories,isLoading } = useCategoriesQuery({perPage:5,page:1})
   const categories = fetchedCatgeories?.data.docs || []
   const selectOptions =categories.map((cat:any)=>({label : cat.name , value : cat.id}))
   
@@ -180,7 +180,7 @@ const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
             </Col>
           </Row>
           <Form.Item>
-            <Button type="submit">Save Product</Button>
+            <Button className="add-cat" type="submit">Save Product</Button>
           </Form.Item>
         </Form>
       </div>

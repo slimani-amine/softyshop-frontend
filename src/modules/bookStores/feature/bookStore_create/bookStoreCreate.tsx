@@ -6,9 +6,12 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 import 'leaflet/dist/leaflet.css';
 import { useCreateStoreMutation } from "../../service/storeApi";
 import { useVendorsQuery } from "../../service/vendorApi"; 
+import { useSelector } from "react-redux";
+import { RootState } from "@src/modules/shared/store";
 interface AddShopFormProps {
   onFinish: (values: any) => void;
 }
+
 
 const AddShopForm: FC<AddShopFormProps> = () => {
   const [form] = Form.useForm();
@@ -108,6 +111,9 @@ const AddShopForm: FC<AddShopFormProps> = () => {
       return null;
     }
   }
+  const Current_User = useSelector((state: RootState) => state.auth.user?.role.toUpperCase()) 
+  const Email_user   = useSelector((state: RootState) => state.auth.user?.email)
+
 
 
 
@@ -144,14 +150,19 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                   {
                     required: true,
                     message: "Product field must have at least 1 items",
+                  
                   },
                 ]}
               >
                   <Select
                   size="middle"
-                  placeholder="Category"
+                  placeholder="select-vendor"
                   className="input-custom"
-                  options={selectOptions}
+                  options={Current_User === "ADMIN" ? selectOptions : []}
+                  defaultValue = {Current_User ==='ADMIN' ? Email_user: undefined}
+                  disabled = {Current_User !== "ADMIN" ? true : false}
+
+                  
 
                 />
               </Form.Item>

@@ -4,6 +4,7 @@ import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilte
 import Button from "@src/modules/shared/components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useProductsQuery } from "../../data/productSlice";
+import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 
 interface Product {
   id: string;
@@ -120,20 +121,18 @@ export  default  function   ProductList() {
     page: currentPage,
   });  console.log(fetchedProducts , 'hhefugheru')
   const products = fetchedProducts?.data.docs || []
-  console.log(products)
 
   // Handle loading state
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner/>
+    
   }
 
 
 
 
-  if (isLoading) return <div>...... wait</div>
-  console.log(isLoading,"ss")
+  if (isLoading) return <Spinner/>
 
-console.log( fetchedProducts?.data.meta.totalPages)
 
 
 
@@ -144,7 +143,7 @@ console.log( fetchedProducts?.data.meta.totalPages)
   
 
   const handleNavigate = () => {
-    navigate("/vendor/Products/create");
+    navigate("/products/create");
   };
   const handlePaginationChange = (page: number, pageSize?: number) => {
     setCurrentPage(page);
@@ -178,7 +177,9 @@ console.log( fetchedProducts?.data.meta.totalPages)
       <h1>Product List</h1>
       
       <div className="header-Product-list">
-        <SeachFilter placeholder={"Search Product.."} />
+        <SeachFilter placeholder={"Search Product.."} onSearchChange={function (text: string): void {
+          throw new Error("Function not implemented.");
+        } } />
         <Button  className="add-cat" onClick={handleNavigate}> <span>+</span> Add Product</Button>
       </div>
       <div className="container-Product-List">
