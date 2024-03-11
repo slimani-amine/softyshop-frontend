@@ -9,7 +9,7 @@ import { logout } from '@src/modules/auth/data/authThunk';
 import Search from '../Search/Search';
 import NotificationIcon from '../../assets/icons/navbar/bell.png';
 //eslint-ignore-next-line
-import { useAnimation } from '../../layout/mainLayout/context/animationContext';
+import { useAnimation } from '../../layout/MainLayout/context/animationContext';
 interface INavbarProps {
   setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   setCollapseSidebar: React.Dispatch<React.SetStateAction<boolean>>;
