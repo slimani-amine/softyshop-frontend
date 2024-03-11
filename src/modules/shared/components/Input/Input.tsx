@@ -1,7 +1,6 @@
 import { HTMLAttributes, useState } from 'react';
 import eyeOn from './eyeOn.svg';
 import eyeOff from './eyeOff.svg';
-import { log } from 'console';
 
 interface IInputProps extends HTMLAttributes<HTMLInputElement> {
   name: string;
