@@ -1,32 +1,29 @@
-import { Avatar, Dropdown, MenuProps, Space } from 'antd'
+import { Avatar, Dropdown, MenuProps, Space } from 'antd';
 
-import browseIcon from '../../assets/icons/navbar/website.png'
-import { ReactComponent as ProfileIcon } from '../../assets/icons/sidebar/profile.svg'
-import { ReactComponent as SettingsIcon } from '../../assets/icons/navbar/settings.svg'
-import { ReactComponent as LogoutIcon } from '../../assets/icons/navbar/logout.svg'
-import { useAppDispatch } from '../../store'
-import { logout } from '@src/modules/auth/data/authThunk'
-import Search from '../Search/Search'
-import NotificationIcon from '../../assets/icons/navbar/bell.png'
-import { useAnimation } from '../../layout/MainLayout/context/animationContext'
+import browseIcon from '../../assets/icons/navbar/website.png';
+import { ReactComponent as ProfileIcon } from '../../assets/icons/sidebar/profile.svg';
+import { ReactComponent as SettingsIcon } from '../../assets/icons/navbar/settings.svg';
+import { ReactComponent as LogoutIcon } from '../../assets/icons/navbar/logout.svg';
+import { useAppDispatch } from '../../store';
+import { logout } from '@src/modules/auth/data/authThunk';
+import Search from '../Search/Search';
+import NotificationIcon from '../../assets/icons/navbar/bell.png';
+//eslint-ignore-next-line
+import { useAnimation } from '../../layout/mainLayout/context/animationContext';
 interface INavbarProps {
-  setShowSidebar: React.Dispatch<React.gSetStateAction<boolean>>
-  setCollapseSidebar: React.Dispatch<React.gSetStateAction<boolean>>
-  collapseSidebar: boolean
+  setShowSidebar: React.Dispatch<React.gSetStateAction<boolean>>;
+  setCollapseSidebar: React.Dispatch<React.gSetStateAction<boolean>>;
+  collapseSidebar: boolean;
 }
 
 const Navbar: React.FC<INavbarProps> = () => {
   const { isAnimating } = useAnimation();
 
-
-
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const handleLogout = () => {
-    dispatch(logout())
-  }
-
- 
+    dispatch(logout());
+  };
 
   const accountInfoItems: MenuProps['items'] = [
     {
@@ -47,23 +44,37 @@ const Navbar: React.FC<INavbarProps> = () => {
     {
       key: '2',
       label: <p>Profile</p>,
-      icon: <ProfileIcon style={{ stroke: 'black', width: '18px', height: '18px' }} />,
+      icon: (
+        <ProfileIcon
+          style={{ stroke: 'black', width: '18px', height: '18px' }}
+        />
+      ),
     },
     {
       key: '3',
       label: <p>Settings</p>,
-      icon: <SettingsIcon style={{ stroke: 'black', width: '18px', height: '18px' }} />,
+      icon: (
+        <SettingsIcon
+          style={{ stroke: 'black', width: '18px', height: '18px' }}
+        />
+      ),
     },
     {
-      key : '4',
+      key: '4',
       label: <p onClick={handleLogout}>logout</p>,
-      icon: <LogoutIcon style={{ stroke: 'black', width: '18px', height: '18px' }} />,
+      icon: (
+        <LogoutIcon
+          style={{ stroke: 'black', width: '18px', height: '18px' }}
+        />
+      ),
     },
-  ]
+  ];
 
   return (
-    <div className={` ${isAnimating ? '' : ""} navbar `}>
-      <div className={`navbar-left ${isAnimating? "navbar-left-animate" : ""}`}>
+    <div className={` ${isAnimating ? '' : ''} navbar `}>
+      <div
+        className={`navbar-left ${isAnimating ? 'navbar-left-animate' : ''}`}
+      >
         {/*<img
           src={menuIcon}
           alt="menu"
@@ -80,19 +91,20 @@ const Navbar: React.FC<INavbarProps> = () => {
           onClick={() => setCollapseSidebar(!collapseSidebar)}
         />
         <p className="navbar-left-title">{pathname.split('/')[1]}</p>*/}
-        <div className='browse_btn'>
-          <img className='browse_icon' src={browseIcon} alt="" />
+        <div className="browse_btn">
+          <img className="browse_icon" src={browseIcon} alt="" />
           <span>Browse Website</span>
         </div>
       </div>
-      <div className={`navbar-right ${isAnimating? "navbar-right-animate" :""} `}>
+      <div
+        className={`navbar-right ${isAnimating ? 'navbar-right-animate' : ''} `}
+      >
         <Space size={'middle'}>
-          <Search/>
+          <Search />
 
-          <div className='notification'>
-            <div className='point_notifcation'></div>
-            <img className='Icon_notification' src={NotificationIcon} alt="" />
-            
+          <div className="notification">
+            <div className="point_notifcation"></div>
+            <img className="Icon_notification" src={NotificationIcon} alt="" />
           </div>
 
           <Dropdown
@@ -103,16 +115,13 @@ const Navbar: React.FC<INavbarProps> = () => {
             className="navbar-dropdown-cursor"
           >
             <Space>
-              <Avatar size={32} className="navbar-avatar">
-                
-              </Avatar>
+              <Avatar size={32} className="navbar-avatar"></Avatar>
             </Space>
           </Dropdown>
         </Space>
-
       </div>
-      </div>
-  )
-}
+    </div>
+  );
+};
 
-export default Navbar
+export default Navbar;

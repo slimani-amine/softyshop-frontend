@@ -1,45 +1,74 @@
-import Button from '@src/modules/shared/components/Button/Button'
-import { useAppDispatch } from '@src/modules/shared/store'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { login } from '../../data/authThunk'
-import Input from '@src/modules/shared/components/Input/Input'
-import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { PATH } from '../../routes/paths'
+import Button from '@src/modules/shared/components/Button/Button';
+import {
+  useAppDispatch,
+  //  useAppSelector
+} from '@src/modules/shared/store';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { login } from '../../data/authThunk';
+import Input from '@src/modules/shared/components/Input/Input';
+import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
+import {
+  //  useEffect,
+  useState,
+} from 'react';
+import {
+  Link,
+  //  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+import { PATH } from '../../routes/paths';
+import toast from 'react-hot-toast';
+import jwtDecode from 'jwt-decode';
 
 const initialValues = {
-  username: '',
+  email: '',
   password: '',
-}
+};
 
 const Login = () => {
-  const dispatch = useAppDispatch()
-  const [submitting, setSubmitting] = useState(false)
+  const navigate = useNavigate();
+  // const { pathname } = useLocation();
+  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  // console.log(isAuthenticated);
+  // useEffect(
+  //   function () {
+  //     if (isAuthenticated && pathname === '/login') navigate('/home');
+  //   },
+  //   [pathname, isAuthenticated]
+  // );
 
+  const dispatch = useAppDispatch();
+  const [submitting, setSubmitting] = useState(false);
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object().shape({
-      username: Yup.string().required('Username is required'),
-      password: Yup.string().required('Password is required').min(6, 'Password is too short!'),
+      email: Yup.string().required('Email is required'),
+      password: Yup.string()
+        .required('Password is required')
+        .min(6, 'Password is too short!'),
     }),
     onSubmit: (values) => {
-      setSubmitting(true)
-      const changedValues = getChangedValues(values, initialValues)
+      setSubmitting(true);
+      const changedValues = getChangedValues(values, initialValues);
       dispatch(login(changedValues))
         .unwrap()
         .then(() => {
-          console.log('welcome')
+          toast.success('Welcome to SoftyShop!');
+          navigate('/home');
         })
         .catch((err) => {
-          alert(err?.message || 'something-went-wrong')
+          toast.error(err?.message || 'something-went-wrong');
         })
         .finally(() => {
-          setSubmitting(false)
-        })
+          const accessToken: any = localStorage.getItem('accessToken');
+          const decoded: any = jwtDecode(accessToken);
+          const role = decoded.role;
+          console.log(role);
+          setSubmitting(false);
+        });
     },
-  })
+  });
 
   return (
     <div className="login-module">
@@ -47,15 +76,17 @@ const Login = () => {
         <h1 className="title">Login</h1>
 
         <Input
-          name="username"
+          defaultValue="fadi@benromdhan.com"
+          name="email"
           formik={formik}
           variant="secondary"
-          placeholder="Enter your username"
-          label="Username"
+          placeholder="Enter your email"
+          label="Email"
           required={true}
         />
 
         <Input
+          defaultValue="Fadi@123"
           name="password"
           formik={formik}
           variant="secondary"
@@ -65,13 +96,18 @@ const Login = () => {
           required={true}
         />
         <Button label={'Login'} type={'submit'} loading={submitting} />
-
-        <Link to={PATH.REGISTER} className="link">
-          Create Account?
-        </Link>
+        <div className="links">
+          <Link to={PATH.ROLE} className="link">
+            Create Account?
+          </Link>
+          <p>||</p>
+          <Link to={PATH.RESET} className="link">
+            Forgot Password?
+          </Link>
+        </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

@@ -26,6 +26,10 @@
     .link {
       font-size: 12px;
     }
+    .link:hover {
+      text-decoration: underline;
+      color: #e3364e;
+    }
   }
 
   @media only screen and (max-width: 475px) {

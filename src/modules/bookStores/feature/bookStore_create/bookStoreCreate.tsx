@@ -1,22 +1,28 @@
 import  { FC, useState } from "react";
-import { Form, Button as ButtonAnt, Upload, Divider, Row, Col, Input, message, Space } from "antd";
+import { Form, Button as ButtonAnt, Upload, Divider, Row, Col, Input, message, Space, Select } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { MinusCircleOutlined} from '@ant-design/icons';
-import { isValidPhoneNumber } from 'react-phone-number-input'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-
-
+import { useCreateStoreMutation } from "../../service/storeApi";
+import { useVendorsQuery } from "../../service/vendorApi"; 
+import { useSelector } from "react-redux";
+import { RootState } from "@src/modules/shared/store";
 interface AddShopFormProps {
   onFinish: (values: any) => void;
 }
 
-const AddShopForm: FC<AddShopFormProps> = ({ onFinish }) => {
+
+const AddShopForm: FC<AddShopFormProps> = () => {
   const [form] = Form.useForm();
   const [fields, setFields] = useState<string[]>(['']);
   const initialPosition = [33.892166, 9.561555499999997]; // New York coordinates
   const [position, setPosition] = useState(initialPosition);
-  
+  const [createStore, isLoading] = useCreateStoreMutation(); // Destructure and use the hook
+  const {data : fetchedVendors , isError} = useVendorsQuery()
+  const vendors = fetchedVendors?.data.docs
+  const selectOptions =vendors?.map((cat:any)=>({label : cat.email , value : cat.id}))
+  console.log(vendors);
   const [showPopup, setShowPopup] = useState(false);
   const  MapObject= {
     center: position,
@@ -38,6 +44,7 @@ const AddShopForm: FC<AddShopFormProps> = ({ onFinish }) => {
     console.log(placeName)
     setPosition([lat, lng , placeName]);
     setShowPopup(true);
+   
   };
 
 
@@ -54,11 +61,24 @@ const AddShopForm: FC<AddShopFormProps> = ({ onFinish }) => {
 
 
   const handleSaveClick = async () => {
+    
     try {
       const values = await form.validateFields();
       const objectPost = {...values,positionOfShop:position}
-      console.log(objectPost,'ed')
+      console.log(objectPost)
+      console.log(objectPost.positionOfShop[2])
       form.resetFields();
+      const response = createStore({
+        "storeName": objectPost.name,
+        "storePhone": objectPost.phone,
+        "logo": objectPost.images,
+        "location": objectPost.positionOfShop.splice(0,2),
+        "address" :  objectPost.positionOfShop[2],
+        "socialMediaLinks": objectPost.data ,
+        "vendor_id" : objectPost.vendor.toString()
+        
+      })
+      console.log(response)
       message.success('Shop saved successfully');
     } catch (error) {
       console.log(error)        
@@ -69,7 +89,6 @@ const AddShopForm: FC<AddShopFormProps> = ({ onFinish }) => {
 
   const handleFileChange = (info: any) => {
     const fileList = [...info.fileList];
-    console.log(fileList)
   };
   async function getPlaceName(latitude:string, longitude:string) {
     const apiUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
@@ -92,6 +111,9 @@ const AddShopForm: FC<AddShopFormProps> = ({ onFinish }) => {
       return null;
     }
   }
+  const Current_User = useSelector((state: RootState) => state.auth.user?.role.toUpperCase()) 
+  const Email_user   = useSelector((state: RootState) => state.auth.user?.email)
+
 
 
 
@@ -115,6 +137,36 @@ const AddShopForm: FC<AddShopFormProps> = ({ onFinish }) => {
                   />
                 </Form.Item>
               </Col>
+             
+           
+            </Row>
+            <Row>
+            <Col span={24}>
+              <Form.Item
+                name="vendor"
+                className="select-vendor"
+                style={{ marginBottom:'10px' , }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Product field must have at least 1 items",
+                  
+                  },
+                ]}
+              >
+                  <Select
+                  size="middle"
+                  placeholder="select-vendor"
+                  className="input-custom"
+                  options={Current_User === "ADMIN" ? selectOptions : []}
+                  defaultValue = {Current_User ==='ADMIN' ? Email_user: undefined}
+                  disabled = {Current_User !== "ADMIN" ? true : false}
+
+                  
+
+                />
+              </Form.Item>
+            </Col>
             </Row>
             <Row gutter={[16, 0]} className="number-Shop">
               <Col span={24}>
@@ -189,7 +241,7 @@ const AddShopForm: FC<AddShopFormProps> = ({ onFinish }) => {
       </Form.Item>           
        </Form.Item>
             <Form.Item>
-              <Button type="button" onClick={handleSaveClick}>Save Shop</Button>
+              <Button type="button" className="add-cat" onClick={handleSaveClick}>Save Shop</Button>
             </Form.Item>
           </Form>
         </div>
