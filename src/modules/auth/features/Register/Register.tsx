@@ -1,5 +1,4 @@
 import Button from '@src/modules/shared/components/Button/Button';
-// import { useAppSelector } from '@src/modules/shared/store';
 import { useAppDispatch } from '@src/modules/shared/store';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -19,29 +18,15 @@ import toast from 'react-hot-toast';
 const initialValues = {
   firstName: '',
   lastName: '',
-  // username: '',
   email: '',
   password: '',
   verifyPassword: '',
   phoneNumber: null,
   role: '',
-  // age: null,
-  // birthDate: null,
 };
 
 const Register = () => {
   const navigate = useNavigate();
-  // const { pathname } = useLocation();
-  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  // console.log(isAuthenticated);
-
-  // useEffect(
-  //   function () {
-  //     if (isAuthenticated && pathname === '/register') navigate('/home');
-  //   },
-  //   [pathname, isAuthenticated]
-  // );
-
   const dispatch = useAppDispatch();
   const { role } = useSelector((state: any) => state.role);
 

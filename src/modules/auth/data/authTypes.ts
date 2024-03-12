@@ -11,8 +11,6 @@ export interface RegisterPayload {
   password: string;
   verify_password: string;
   phoneNumber?: string | null;
-  // age?: number | null
-  // birthDate?: string | null
 }
 
 export interface resetPasswordPayload {

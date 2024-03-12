@@ -1,12 +1,5 @@
 import Button from '@src/modules/shared/components/Button/Button';
-import {
-  //   useLocation,
-  useNavigate,
-} from 'react-router-dom';
-// import { PATH } from '@src/modules/auth/routes/paths';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { initialStateType, setRole } from '../../data/roleSlice';
-// import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@src/modules/shared/store';
 import Input from '@src/modules/shared/components/Input/Input';
 import { useFormik } from 'formik';
@@ -24,10 +17,8 @@ const initialValues = {
 };
 function EnterNewPassword() {
   const navigate = useNavigate();
-  // const { pathname } = useLocation();
 
   const { token } = useParams() as any;
-  // console.log(token);
   const [submitting, setSubmitting] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -45,10 +36,8 @@ function EnterNewPassword() {
         .required('confirm password is required'),
     }),
     onSubmit: (values) => {
-      // console.log('hola');
       setSubmitting(true);
       const changedValues = getChangedValues(values, initialValues);
-      // console.log(changedValues);
       const { password: newPassword } = changedValues;
       console.log(newPassword, token);
 

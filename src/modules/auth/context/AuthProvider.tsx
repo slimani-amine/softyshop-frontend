@@ -7,7 +7,6 @@ import useIsMountedRef from '../hook/useIsMountedRef';
 import { initialise } from '../data/authSlice';
 import { RootState } from '@src/modules/shared/store';
 import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
-// import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../data/authThunk';
 
 interface AuthProviderProps {
@@ -45,7 +44,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
         const user = response?.data?.data;
         console.log(user.role);
-        // console.log(response);
         // const user = {
         //   email: 'string',
         //   isVerified: true,

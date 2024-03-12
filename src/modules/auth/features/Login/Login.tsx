@@ -1,22 +1,12 @@
 import Button from '@src/modules/shared/components/Button/Button';
-import {
-  useAppDispatch,
-  //  useAppSelector
-} from '@src/modules/shared/store';
+import { useAppDispatch } from '@src/modules/shared/store';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { login } from '../../data/authThunk';
 import Input from '@src/modules/shared/components/Input/Input';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
-import {
-  //  useEffect,
-  useState,
-} from 'react';
-import {
-  Link,
-  //  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../routes/paths';
 import toast from 'react-hot-toast';
 import jwtDecode from 'jwt-decode';
@@ -28,15 +18,6 @@ const initialValues = {
 
 const Login = () => {
   const navigate = useNavigate();
-  // const { pathname } = useLocation();
-  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  // console.log(isAuthenticated);
-  // useEffect(
-  //   function () {
-  //     if (isAuthenticated && pathname === '/login') navigate('/home');
-  //   },
-  //   [pathname, isAuthenticated]
-  // );
 
   const dispatch = useAppDispatch();
   const [submitting, setSubmitting] = useState(false);

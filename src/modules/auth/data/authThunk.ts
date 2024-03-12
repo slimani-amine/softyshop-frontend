@@ -17,18 +17,14 @@ export const login = createAsyncThunk(
     try {
       // const response = await axiosInstance.post(`/api/auth/login`, query);
       const response = await axiosInstance.post(`${AUTH_URL}auth/login`, query);
-      // console.log(query);
 
       if (response.status === 200) {
         // const accessToken = response.data.data.accessToken;
-        // console.log(accessToken);
         // setTokens(accessToken);
         return response.data;
       }
-      // console.log(response);
       throw new Error(response.statusText);
     } catch (err: any) {
-      // console.log(err);
       return rejectWithValue(err);
     }
   }
@@ -37,10 +33,7 @@ export const login = createAsyncThunk(
 export const register = createAsyncThunk(
   'auth/register',
   async (query: RegisterPayload, { rejectWithValue }) => {
-    // console.log(query);
-
     try {
-      // const response = await axiosInstance.post(`/api/auth/register`, query);
       const response = await axiosInstance.post(
         `${AUTH_URL}auth/register`,
         query
@@ -49,7 +42,6 @@ export const register = createAsyncThunk(
       if (response.status === 201) {
         // const accessToken = response.data.data.accessToken;
         // setTokens(accessToken);
-        // console.log(response.data);
         return response.data;
       }
 
@@ -66,7 +58,6 @@ export const logout = createAsyncThunk(
     try {
       const response = await axiosInstance.get(`${AUTH_URL}auth/logout`);
 
-      // console.log(response);
       if (response.status === 200) {
         clearTokens();
         return response.data;
