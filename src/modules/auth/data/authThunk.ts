@@ -8,19 +8,17 @@ import {
   resetPasswordPayload,
 } from './authTypes';
 import { clearTokens } from '../utils/token';
-// const BASE_URL = 'http://192.168.3.27:3000/v1/';
-export const AUTH_URL = 'https://55b8-41-227-28-226.ngrok-free.app/v1/';
+
+export const AUTH_URL = 'https://1371-196-203-25-82.ngrok-free.app/v1/';
 export const BASE_URL = 'http://192.168.3.27:3000/v1/';
+
 export const login = createAsyncThunk(
   'auth/login',
   async (query: LoginPayload, { rejectWithValue }) => {
     try {
-      // const response = await axiosInstance.post(`/api/auth/login`, query);
       const response = await axiosInstance.post(`${AUTH_URL}auth/login`, query);
 
       if (response.status === 200) {
-        // const accessToken = response.data.data.accessToken;
-        // setTokens(accessToken);
         return response.data;
       }
       throw new Error(response.statusText);
