@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import AuthGuard from '@src/modules/shared/guards/AuthGuard';
+// import AuthGuard from '@src/modules/shared/guards/AuthGuard';
 import { RouteProps } from 'react-router-dom';
 import { Fragment, lazy } from 'react';
 import GuestGuard from '@src/modules/shared/guards/GuestGuard';
@@ -18,7 +18,7 @@ const routes: RouteConfig[] = [
   //AuthGuard Routes
   {
     exact: true,
-    guard: AuthGuard,
+    guard: GuestGuard,
     path: '/home',
     component: lazy(() => import('../features/Home')),
     layout: GuestLayout,
