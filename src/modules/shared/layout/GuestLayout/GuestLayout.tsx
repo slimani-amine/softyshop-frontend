@@ -1,11 +1,9 @@
-import { Fragment } from 'react'
-
 interface MainLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const GuestLayout = ({ children }: MainLayoutProps) => {
-  return <Fragment>{children}</Fragment>
-}
+  return <div className="guest-layout">{children}</div>;
+};
 
-export default GuestLayout
+export default GuestLayout;

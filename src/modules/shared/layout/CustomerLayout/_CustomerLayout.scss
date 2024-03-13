@@ -1,0 +1,32 @@
+.customer-layout {
+  background-color: #f6f9fc;
+  .header-and-nav {
+    background-color: #fff;
+    border-bottom: 1px #f0f0f0 solid;
+  }
+
+  .sidebar-and-outlet {
+    max-width: 1600px;
+    margin: 0 auto;
+    margin-bottom: 377px+24px;
+  }
+
+  .outlet {
+    height: auto;
+    margin-left: 376px;
+    min-height: 396px;
+    height: max-content;
+    max-height: fit-content;
+    padding: 24px 0 0 24px;
+  }
+  .sidebar-container {
+    padding: 24px 0 0 24px;
+  }
+  .footer-container {
+    background-color: #222a35;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-top: 24px;
+  }
+}

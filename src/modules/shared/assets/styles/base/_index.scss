@@ -19,10 +19,14 @@
 }
 
 html {
-  background-color: #f1f5f9;
+  position: relative;
+  min-height: 100dvh;
+  height: fit-content;
+  background-color: #f6f9fc;
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
   overflow-x: hidden;
+  overflow-y: auto;
   font-size: 107.5%;
 
   text-size-adjust: none;
