@@ -52,6 +52,7 @@ const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
+                
                 rules={[
                   { required: true, message: "Please enter Product name" },
                 ]}
@@ -60,6 +61,8 @@ const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
                   size="large"
                   placeholder="Name"
                   className="input-custom"
+                  style={{ color :"blue"}} // Change color based on user role
+
                 />
               </Form.Item>
             </Col>
@@ -117,35 +120,22 @@ const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
             />
           </Form.Item>
           <Row gutter={[16, 0]} className="name-Product">
-            <Col span={11}>
+            <Col span={22}>
               <Form.Item
                 name="stock"
                 style={{ marginBottom: 0 }}
                 rules={[{ required: true, message: "Stock is required!" }]}
               >
-                <Input
-                  size="large"
-                  placeholder="Stock"
-                  name="stock"
+                  <InputNumber
+                  name="RegularPrice"
+                  placeholder="Regular Price"
                   className="input-custom"
+                  size="large"
+                  style={{ width: "100%" }}
                 />
               </Form.Item>
             </Col>
-            <Col span={11}>
-              <Form.Item
-                name="tag"
-                className="tag"
-                style={{ marginBottom: 0 }}
-                rules={[{ required: true, message: "Tags is required!" }]}
-              >
-                <Input
-                  className="input-custom"
-                  size="large"
-                  name="tag"
-                  placeholder="Tag"
-                />
-              </Form.Item>
-            </Col>
+            
           </Row>
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={11}>

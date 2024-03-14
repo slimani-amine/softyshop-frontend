@@ -10,17 +10,8 @@ export const ProductsApi = api.injectEndpoints({
       query: ({ perPage, page }) => `api/products?perPage=${perPage}&page=${page}`,
       providesTags:['pro']
     }),
-    category: builder.query<Product, number>({
-      query: (id) => `api/admin/category/${id}`
-    }),
-    createCategory: builder.mutation<Product, Partial<Product>>({
-        query: (newStore) => ({
-          url: 'api/admin/category',
-          method: 'POST',
-          body: newStore,
-        }),
-        invalidatesTags:['pro']
-      }),
+ 
+
   })
 });
 

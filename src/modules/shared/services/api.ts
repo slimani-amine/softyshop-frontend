@@ -5,7 +5,7 @@ import { clearTokens, setTokens } from '@src/modules/auth/utils/token'
 import { CategoryApi } from '@src/modules/categories/service/categoryApi'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "http://192.168.3.27:3000/v1/",
+    baseUrl: "http://192.168.2.14:3000/v1/",
     // Add headers here
     prepareHeaders: (headers, { getState }) => {
       // You can add any headers you need here
@@ -47,7 +47,7 @@ const baseQueryWithRetry = staggeredBaseQueryWithBailOut
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithRetry,
-  tagTypes : ['Categories','pro'] ,
+  tagTypes : ['Categories','pro' , 'category']  ,
   endpoints: () => ({
 
   }),

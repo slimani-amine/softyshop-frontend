@@ -34,7 +34,7 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: "/categories/edit/:ida",
+    path: "/categories/edit/:id",
     component: lazy(() => import("../features/category_edit/CategoryEdit")),
     layout: MainLayout,
     roles: ["ADMIN"],

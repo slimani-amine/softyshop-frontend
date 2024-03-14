@@ -1,5 +1,6 @@
-import { FC } from "react";
-import { useUpdateCatgoryMutation , useCategoryQuery } from "../../service/categoryApi";
+import { FC, useEffect, useState } from "react";
+import Spinner from "@src/modules/shared/components/Spinner/Spinner";
+import { useUpdateCatgoryMutation, useCategoryQuery } from "../../service/categoryApi";
 import {
   Form,
   Button as ButtonAnt,
@@ -8,28 +9,48 @@ import {
   Row,
   Col,
   Input,
- Checkbox 
-
-
+  Checkbox,
+  message
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
-
+import { useParams } from "react-router-dom";
 
 interface AddCategoryFormProps {
   onFinish: (values: any) => void;
-
 }
 
-
-const EditCategoryForm: FC<AddCategoryFormProps > = ({ onFinish }) => {
+const EditCategoryForm: FC<AddCategoryFormProps> = () => {
   const [form] = Form.useForm();
-  const {data: fetchCategory} = useCategoryQuery(59)
+  const [updateCategory] = useUpdateCatgoryMutation();
+  const { id } = useParams<{ id: string }>(); // Assuming useParams returns an object with 'id' property
+  
+  const { data: fetchCategory, isLoading } = useCategoryQuery(id);
+  if (isLoading) return <Spinner />;
 
+  const initialValues = {
+    name: fetchCategory?.data?.docs[0]?.name || "",
+    images: [],
+    isPublished: fetchCategory?.data?.docs[0]?.isPublished || false
+  };
 
+  const handleFinish = async () => {
+    try {
+      const values = await form.validateFields();
+      console.log(values,'fg')
+      await updateCategory({
+        id: id,
+        data: {
+          name: values.name,
+          icon: "",
+          isPublished: values.isPublished === "on" ? true : false,
 
-  const handleFinish = (values: any) => {
-    onFinish(values);
-    form.resetFields();
+        }
+      });
+      message.success(`Category of id:${id} updated`);
+      form.resetFields();
+    } catch (error) {
+      console.error("Error updating category:", error);
+    }
   };
 
   const handleFileChange = (info: any) => {
@@ -38,18 +59,22 @@ const EditCategoryForm: FC<AddCategoryFormProps > = ({ onFinish }) => {
     form.setFieldsValue({ images: imageUrlList });
   };
 
+  const handleCheckboxChange = (e: any) => {
+    form.setFieldsValue({ isPublished: e.target.checked });
+  };
+
   return (
     <div className="add-new-Product">
       <h1 className="title">Edit Category</h1>
       <div className="container-add-Product">
-        <Form form={form} onFinish={handleFinish}>
+        <Form form={form} initialValues={initialValues}>
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { required: true, message: "Please enter Category name" },
+                  { required: true, message: "Please enter Category name" }
                 ]}
               >
                 <Input
@@ -59,23 +84,22 @@ const EditCategoryForm: FC<AddCategoryFormProps > = ({ onFinish }) => {
                 />
               </Form.Item>
             </Col>
-         
           </Row>
           <Form.Item
             className="upload-images"
             name="images"
-            rules={[{ required: true, message: "Picture of Category!" }]}
           >
             <Upload.Dragger
               className="drag-images"
               listType="picture"
               accept="image/*"
-              maxCount={1} // set maxCount to 1 for single image
-
+              maxCount={1}
               onChange={handleFileChange}
               beforeUpload={() => false}
             >
-              <p className="ant-upload-text">Drag & drop Category image here</p>
+              <p className="ant-upload-text">
+                Drag & drop Category image here
+              </p>
               <div className="icon-drag">
                 <Divider className="divider" />
                 <p className="or">OR</p>
@@ -85,13 +109,16 @@ const EditCategoryForm: FC<AddCategoryFormProps > = ({ onFinish }) => {
               <p className="size-img">Upload 280*280 image</p>
             </Upload.Dragger>
           </Form.Item>
-          <Form.Item>
-            <div className="feutured"><Checkbox  /> <span>Featured category</span></div>
-
+      
+          <Form.Item name="isPublished">
+            <div className="feutured">
+              <Checkbox defaultChecked={initialValues.isPublished}/> <span>Featured category</span>
+            </div>
           </Form.Item>
-        
           <Form.Item>
-            <Button type="submit">Save Category</Button>
+            <Button className="add-cat" onClick={handleFinish} type="submit">
+              Save Category
+            </Button>
           </Form.Item>
         </Form>
       </div>

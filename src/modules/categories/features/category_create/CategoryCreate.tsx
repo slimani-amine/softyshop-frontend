@@ -6,30 +6,31 @@ interface AddCategoryFormProps {
   onFinish: (values: any) => void;
 }
 
-const AddCategoryForm: FC<AddCategoryFormProps> = ({ onFinish }) => {
+const AddCategoryForm: FC<AddCategoryFormProps> = () => {
   const [form] = Form.useForm();
   const [createCategory] = useCreateCategoryMutation()
   const handleSaveClick = async () => {
-    
     try {
-      const values = await form.validateFields();
-      const objectPost = {...values}
-      console.log(objectPost , 'ttttttttttt')
-      console.log(objectPost,'ed')
-      console.log(objectPost.isPublished ==="on")
+      const values = await form.validateFields(); // Validate form fields
+      const objectPost = { ...values };
+      
+      // Create category
+      const response = await createCategory({
+        name: objectPost.name,
+        icon: 'hhhhh',
+        isPublished: objectPost.isPublished === "on" ? true : false,
+      });
+  
+      // Reset form fields and validation status
       form.resetFields();
-      const response = createCategory({
-        "name" : objectPost.name,
-        "icon" : 'hhhhh',
-        "isPublished": objectPost.isPublished ==="on" ? true :false,     
-      })
-      message.success('Shop saved successfully');
+      message.success('Category saved successfully');
     } catch (error) {
-      console.log(error)        
-      console.error('Error saving shop', error);
-      message.error('Error saving shop');
+      console.error('Error saving category', error);
+      message.error('Error saving category');
     }
   };
+  
+  
 
   const handleFileChange = (info: any) => {
     const fileList = [...info.fileList];

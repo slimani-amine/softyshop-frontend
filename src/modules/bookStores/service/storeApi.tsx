@@ -6,12 +6,15 @@ export const StoreApi = api.injectEndpoints({
     stores: builder.query<any,  { page: Number, perPage: Number }>({
       query: ({ page, perPage }) => `api/stores?page=${page}&perPage=${perPage}`
     }),
+    my_stores: builder.query<any, void>({
+      query: () => `api/stores/my-stores`
+    }),
     store: builder.query<Store, number>({
       query: (id) => `api/store/${id}`
     }),
     createStore: builder.mutation<Store, Partial<Store>>({
         query: (newStore) => ({
-          url: 'api/store',
+          url: 'api/stores',
           method: 'POST',
           body: newStore,
         }),
@@ -19,5 +22,5 @@ export const StoreApi = api.injectEndpoints({
   })
 });
 
-export const {useCreateStoreMutation, useStoreQuery , useStoresQuery} = StoreApi
+export const {useCreateStoreMutation, useStoreQuery , useStoresQuery , useMy_storesQuery} = StoreApi
 

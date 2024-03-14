@@ -9,8 +9,8 @@ import {
 } from './authTypes';
 import { clearTokens } from '../utils/token';
 // const BASE_URL = 'http://192.168.3.27:3000/v1/';
-export const AUTH_URL = 'https://55b8-41-227-28-226.ngrok-free.app/v1/';
-export const BASE_URL = 'http://192.168.3.27:3000/v1/';
+export const AUTH_URL = 'https://1371-196-203-25-82.ngrok-free.app/v1/';
+export const BASE_URL = 'http://192.168.2.14:3000/v1/';
 export const login = createAsyncThunk(
   'auth/login',
   async (query: LoginPayload, { rejectWithValue }) => {

@@ -16,7 +16,7 @@ type RouteConfig = {
 } & RouteProps;
 
 export const renderRoutes = (routes: RouteConfig[] = []) => {
- const Current_User= useSelector((state: RootState) => state.auth.user?.role.toUpperCase()) || "vendor";
+ const Current_User= useSelector((state: RootState) => state.auth.user?.role.toLocaleUpperCase()) || "vendor";
  console.log(Current_User)
 return(
   <Suspense fallback={<LazyLoad />}>
@@ -27,8 +27,12 @@ return(
         const Layout = route?.layout || Fragment;
         const roles = route?.roles;
         const allowedRoles = roles && roles.includes(Current_User);
+        console.log(Current_User)
+        console.log(allowedRoles)
 
-        if (allowedRoles) {
+        
+
+        if (true) {
           return (
             <Route
               key={index}

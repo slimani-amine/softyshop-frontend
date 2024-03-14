@@ -5,23 +5,24 @@ import { api } from '@src/modules/shared/services/api';
 export const CategoryApi = api.injectEndpoints({
   endpoints: (builder) => ({
     categories: builder.query<any,  { perPage: number; page: number }>({
-      query: ({perPage,page}) => `api/admin/category?perPage=${perPage}&page=${page}`,
+      query: ({perPage,page}) => `api/admin/categories?perPage=${perPage}&page=${page}`,
       providesTags:  ['Categories']
    
 
   }),
    
-    category: builder.query<Category, number>({
-      query: (id:any) => `api/admin/category/${id}`
+    category: builder.query<any, any>({
+      query: (id) => `api/admin/categories?search=id:${id}`,
+      providesTags : ['category']
     }),
     createCategory: builder.mutation<Category, any>({
         query: (newStore) => ({
-          url: 'api/admin/category',
+          url: 'api/admin/categories',
           method: 'POST',
           body: newStore,
           
         }),
-        invalidatesTags : ['Categories'],
+        invalidatesTags: ['Categories'],
       
     
     
@@ -29,7 +30,7 @@ export const CategoryApi = api.injectEndpoints({
       }),
     deleteCategory: builder.mutation<any,Number>({
       query:(id)=>({
-        url : `api/admin/category/${id}`,
+        url : `api/admin/categories/${id}`,
         method : 'DELETE'
       }) ,
       invalidatesTags : ['Categories'],
@@ -37,16 +38,17 @@ export const CategoryApi = api.injectEndpoints({
 
     })
   ,
-    UpdateCatgory : builder.mutation<Category ,{ id: number; data: any }>({
+    UpdateCatgory : builder.mutation<Category ,{ id: any; data: any }>({
       query: ({ id, data }) => ({
-        url: `api/admin/category/${id}`,
+        url: `api/admin/categories/${id}`,
         method: 'PATCH',
         body: data
+        
       }),
-      invalidatesTags: ['Categories']}),
+      invalidatesTags: ['Categories' , 'category']}),
     
     searchCategories: builder.query<any,string>({
-      query: (subName) => `api/admin/category?perPage=4&page:1&search=name:${subName}`,
+      query: (subName) => `api/admin/categories?perPage=4&page:1&search=name:${subName}`,
       providesTags:  ['Categories']
 
     })
