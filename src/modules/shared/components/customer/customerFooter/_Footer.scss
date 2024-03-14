@@ -1,7 +1,76 @@
 .footer {
+  display: flex;
+  align-items: baseline;
+  color: white;
   height: 377.5px;
   max-width: 1600px;
   margin: 0 auto;
   color: #fff;
-  padding: 80px 24px;
+  padding: 80px 0;
+  .column {
+    display: inline-block;
+    color: inherit;
+    padding: 0 0 0 24px;
+    max-width: 510px;
+    // min-height: 220.2px;
+    .column-title {
+      color: white;
+      margin-bottom: 12px;
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+    .column-text {
+      list-style: none;
+      color: #aeb4be;
+      font-size: 14px;
+      font-weight: 300;
+      padding: 5px 0;
+    }
+    .first-column {
+      max-width: 510px;
+    }
+    .logo {
+      margin-bottom: 3px;
+    }
+    .first-column-text {
+      margin-bottom: 20px;
+    }
+    .stores-imgs {
+      background-color: #161d2c;
+      display: inline-block;
+      border-radius: 5px;
+    }
+    .google-play {
+      margin-right: 18px;
+    }
+  }
+  .second-column,
+  .third-column,
+  .fourth-column {
+    transform: translate(0, -45px);
+  }
+  .second-column {
+    max-width: 236px;
+    width: 100%;
+  }
+  .third-column {
+    max-width: 370px;
+    width: 100%;
+  }
+  .fourth-column {
+    .phone-number {
+      margin-bottom: 16px;
+    }
+  }
+  .footer-icons {
+    display: block;
+
+    .social-media-icons {
+      background-color: #1a212a;
+      border-radius: 100px;
+      margin-right: 12px;
+    }
+  }
 }

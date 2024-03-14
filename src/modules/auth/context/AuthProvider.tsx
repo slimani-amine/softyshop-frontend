@@ -43,7 +43,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         const response = await axiosInstance.get(`${BASE_URL}api/users/me`);
 
         const user = response?.data?.data;
-        console.log(user.role);
+        // console.log(user.role);
         // const user = {
         //   email: 'string',
         //   isVerified: true,
