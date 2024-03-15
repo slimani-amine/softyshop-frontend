@@ -4,4 +4,10 @@
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 24px 0 24px;
+  .navigation-elements {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 22px;
+  }
 }
