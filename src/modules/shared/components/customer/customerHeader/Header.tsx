@@ -9,7 +9,13 @@ function Header() {
       <div className="logo-wrapper">
         <img src={Logo} alt="" />
       </div>
-      <MagnifyingGlass1 />
+      <div className="middle-component">
+        <div className="magnifyingGlassIcon">
+          <MagnifyingGlass1 />
+          <span className="divider"></span>
+        </div>
+      </div>
+
       <div className="icons">
         <div className="profile-icon-wrapper">
           <ProfileIcon1 className="profile-icon" />

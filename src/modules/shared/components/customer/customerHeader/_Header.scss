@@ -15,6 +15,26 @@
       width: 100%;
     }
   }
+  .middle-component {
+    max-width: 670px;
+    width: 100%;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    background-color: #f3f5f9;
+    border-radius: 4px;
+    .magnifyingGlassIcon {
+      padding-right: 3px;
+      display: flex;
+      align-items: center;
+      .divider {
+        height: 15px;
+        border-right: solid 1px #dae1e7;
+        transform: translate(0, 1px);
+        margin-left: 2px;
+      }
+    }
+  }
   .icons {
     position: relative;
     display: flex;

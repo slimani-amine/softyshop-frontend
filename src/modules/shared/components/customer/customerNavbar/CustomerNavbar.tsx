@@ -1,4 +1,4 @@
-import { ReactComponent as ChevronDownBlack } from '../../../assets/icons/customerLayout/Navbar/chevron-down-black.svg';
+// import { ReactComponent as ChevronDownBlack } from '../../../assets/icons/customerLayout/Navbar/chevron-down-black.svg';
 import { ReactComponent as ChevronRightBlack } from '../../../assets/icons/customerLayout/Navbar/chevron-right-black.svg';
 import { ReactComponent as CategoriesIcon } from '../../../assets/icons/customerLayout/Navbar/categories-icon.svg';
 import NavigationElement from './components/navigationElements/NavigationElement';
