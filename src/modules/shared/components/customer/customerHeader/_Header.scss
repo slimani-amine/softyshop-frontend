@@ -1,7 +1,66 @@
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 80px;
   background-color: #fff;
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 24px 0 24px;
+  .logo-wrapper {
+    max-width: 105px;
+    height: 50px;
+    cursor: pointer;
+    .logo {
+      width: 100%;
+    }
+  }
+  .icons {
+    position: relative;
+    display: flex;
+    gap: 12px;
+    .profile-icon-wrapper {
+      max-width: 30px;
+      height: 30px;
+    }
+    .profile-icon {
+      border-radius: 100px;
+    }
+    .profile-icon:hover {
+      background-color: #f6f6f6;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+    .shopping-bag-icon-wrapper {
+      max-width: 40px;
+      height: 40px;
+      border-radius: 100px;
+      transition: all 0.3s ease-in-out;
+    }
+    .shopping-bag-icon-wrapper:hover {
+      background-color: #f6f6f6;
+      cursor: pointer;
+    }
+    // .shopping-bag-icon {
+    //
+    // }
+    .cart-items-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100px;
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background-color: #d23e57;
+      width: 20px;
+      height: 20px;
+      p {
+        color: #fff;
+        transform: translate(0, 2px);
+        font-weight: 300;
+        font-size: 0.75rem;
+      }
+    }
+  }
 }
