@@ -1,13 +1,36 @@
 .customer-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #fff;
   height: 59px;
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 24px 0 24px;
+  .categories {
+    background-color: #f6f9fc;
+    max-width: 278px;
+    width: 100%;
+    height: 36.5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // gap: 2px;
+    .icon-and-title {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      .categories-title {
+        font-size: 14px;
+        font-weight: 600;
+        transform: translate(0, 1px);
+      }
+    }
+  }
   .navigation-elements {
     display: flex;
     align-items: center;
-    justify-content: end;
-    gap: 22px;
+    // justify-content: end;
+    gap: 32px;
   }
 }

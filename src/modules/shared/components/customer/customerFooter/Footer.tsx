@@ -28,20 +28,38 @@ function Footer() {
       <div className="column second-column">
         <h6 className="column-title">About us</h6>
         <ul>
-          <li className="column-text">Careers</li>
-          <li className="column-text">Our Stores</li>
-          <li className="column-text">Our Cares</li>
-          <li className="column-text">Terms & Conditions</li>
-          <li className="column-text">Privacy Policy</li>
+          <li className="column-text">
+            <a href="#"> Careers</a>
+          </li>
+          <li className="column-text">
+            <a href="#"> Our Stores</a>
+          </li>
+          <li className="column-text">
+            <a href="#"> Our Cares</a>
+          </li>
+          <li className="column-text">
+            <a href="#"> Terms & Conditions</a>
+          </li>
+          <li className="column-text">
+            <a href="#"> Privacy Policy</a>
+          </li>
         </ul>
       </div>
       <div className="column third-column">
         <h6 className="column-title">Customer care</h6>
         <ul>
-          <li className="column-text">Help center</li>
-          <li className="column-text">Track your order</li>
-          <li className="column-text">Corporate & Bulk purchasing</li>
-          <li className="column-text">Returns and Refunds</li>
+          <li className="column-text">
+            <a href="#"> Help center</a>
+          </li>
+          <li className="column-text">
+            <a href="#"> Track your order</a>
+          </li>
+          <li className="column-text">
+            <a href="#"> Corporate & Bulk purchasing</a>
+          </li>
+          <li className="column-text">
+            <a href="#"> Returns and Refunds</a>
+          </li>
         </ul>
       </div>
       <div className="column fourth-column">

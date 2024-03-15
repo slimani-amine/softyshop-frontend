@@ -42,8 +42,21 @@
       display: inline-block;
       border-radius: 5px;
     }
+    .stores-imgs {
+      cursor: pointer;
+    }
     .google-play {
       margin-right: 18px;
+    }
+    ul {
+      li {
+        a {
+          color: inherit;
+        }
+        a:hover {
+          color: #f6f9fc;
+        }
+      }
     }
   }
   .second-column,
@@ -71,6 +84,12 @@
       background-color: #1a212a;
       border-radius: 100px;
       margin-right: 12px;
+    }
+
+    .social-media-icons:hover {
+      cursor: pointer;
+      background-color: #212833;
+      transition: all ease-in-out 0.2s;
     }
   }
 }
