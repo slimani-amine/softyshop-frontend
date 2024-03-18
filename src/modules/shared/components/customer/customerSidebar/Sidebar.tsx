@@ -15,7 +15,7 @@ function Sidebar() {
             <a href="#">Bath Preparations</a>
           </li>
           <li>
-            <a href="#">Eye Makup Preparation</a>
+            <a href="#">Eye Makeup Preparation</a>
           </li>
           <li>
             <a href="#">Fragrence</a>

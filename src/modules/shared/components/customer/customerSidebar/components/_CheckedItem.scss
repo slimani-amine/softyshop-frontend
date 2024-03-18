@@ -1,6 +1,9 @@
 .checked-item {
   font-size: 14px;
-  // font-family: '__Open_Sans_af7b73', '__Open_Sans_Fallback_af7b73';
   font-weight: 400;
   line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
 }
