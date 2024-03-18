@@ -1,8 +1,9 @@
 import { ReactComponent as ShoppingBagIcon1 } from '../../../assets/icons/customerLayout/Header/shoppingBag.svg';
-
 import { ReactComponent as ProfileIcon1 } from '../../../assets/icons/customerLayout/Header/profileIcon.svg';
 import { ReactComponent as MagnifyingGlass1 } from '../../../assets/icons/customerLayout/Header/MagnifyingGlass.svg';
+import { ReactComponent as ChevronDownBlack } from '../../../assets/icons/customerLayout/Navbar/chevron-down-black.svg';
 import Logo from '../../../assets/icons/customerLayout/Header/logo-complete.svg';
+import Search from './components/Search';
 function Header() {
   return (
     <div className="header">
@@ -13,6 +14,13 @@ function Header() {
         <div className="magnifyingGlassIcon">
           <MagnifyingGlass1 />
           <span className="divider"></span>
+        </div>
+        <div>
+          <Search />
+        </div>
+        <div className="categories">
+          <p>All Categories</p>
+          <ChevronDownBlack />
         </div>
       </div>
 
