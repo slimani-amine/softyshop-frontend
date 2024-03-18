@@ -3,7 +3,7 @@ import fiveStars from '../../../assets/icons/customerLayout/Sidebar/5-stars.png'
 import fourStars from '../../../assets/icons/customerLayout/Sidebar/4-stars.png';
 import threeStars from '../../../assets/icons/customerLayout/Sidebar/3-stars.png';
 import twoStars from '../../../assets/icons/customerLayout/Sidebar/2-stars.png';
-import oneStar from '../../../assets/icons/customerLayout/Sidebar/1-star.png';
+import oneStar from '../../../assets/icons/customerLayout/Sidebar/1-stars.png';
 
 function Sidebar() {
   return (

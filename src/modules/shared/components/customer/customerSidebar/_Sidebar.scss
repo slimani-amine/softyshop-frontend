@@ -42,10 +42,17 @@
       border-radius: 6px;
       text-indent: 10px;
       height: 38px;
-      width: 114px;
+      width: 135px;
+      padding-right: 15px;
     }
     input::placeholder {
       color: #cbcbcb;
+    }
+    input:hover {
+      border: black 1px solid;
+    }
+    input:focus {
+      border: #d23e57 2px solid;
     }
   }
   .price {
