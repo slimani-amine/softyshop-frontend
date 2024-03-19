@@ -39,13 +39,13 @@ const Login = () => {
           navigate('/home');
         })
         .catch((err) => {
-          toast.error(err?.message || 'something-went-wrong');
+          toast.error(err?.message || 'something went wrong');
         })
         .finally(() => {
-          const accessToken: any = localStorage.getItem('accessToken');
-          const decoded: any = jwtDecode(accessToken);
-          const role = decoded.role;
-          console.log(role);
+          // const accessToken: any = localStorage.getItem('accessToken');
+          // const decoded: any = jwtDecode(accessToken);
+          // const role = decoded.role;
+          // console.log(role);
           setSubmitting(false);
         });
     },
@@ -57,7 +57,7 @@ const Login = () => {
         <h1 className="title">Login</h1>
 
         <Input
-          defaultValue="fadi@benromdhan.com"
+          defaultValue=""
           name="email"
           formik={formik}
           variant="secondary"
@@ -67,7 +67,7 @@ const Login = () => {
         />
 
         <Input
-          defaultValue="Fadi@123"
+          defaultValue=""
           name="password"
           formik={formik}
           variant="secondary"

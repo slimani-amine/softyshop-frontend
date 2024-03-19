@@ -1,313 +1,58 @@
 {
   "users": [
     {
-      "firstName": "John",
-      "lastName": "Doe",
-      "email": "johndoe@gmail.com",
-      "password": "testpassword123@A",
-      "verifyPassword": "testpassword123@A",
-      "role": "customer",
-      "id": "c794"
+      "name": "Police Gray Eyeglasses",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F7.PoliceGrayEyeglasses.png&w=384&q=75",
+      "rating": "3",
+      "price": "187"
     },
     {
-      "firstName": "Jane",
-      "lastName": "Smith",
-      "email": "janesmith@gmail.com",
-      "password": "testpassword123@A",
-      "verifyPassword": "testpassword123@A",
-      "role": "customer",
-      "id": "0985"
+      "name": "Say Ban Black",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F8.RayBanMattBlack.png&w=384&q=75",
+      "rating": "1",
+      "price": "217"
     },
     {
-      "firstName": "Michael",
-      "lastName": "Johnson",
-      "email": "michaeljohnson@gmail.com",
-      "password": "testpassword123@A",
-      "verifyPassword": "testpassword123@A",
-      "role": "customer",
-      "id": "e239"
+      "name": "Say Ban Matt Black",
+      "image": "/src/modules/shared/assets/images/Home/Rayban.png",
+      "rating": "3",
+      "price": "180"
     },
     {
-      "firstName": "Emily",
-      "lastName": "Brown",
-      "email": "emilybrown@gmail.com",
-      "password": "testpassword123@A",
-      "verifyPassword": "testpassword123@A",
-      "role": "customer",
-      "id": "f710"
+      "name": "Sunglasses Collection",
+      "rating": "4",
+      "price": "70",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F11.SunglassesCollection.png&w=384&q=75"
     },
     {
-      "firstName": "Daniel",
-      "lastName": "Wilson",
-      "email": "danielwilson@gmail.com",
-      "password": "testpassword123@A",
-      "verifyPassword": "testpassword123@A",
-      "role": "customer",
-      "id": "6acd"
+      "name": "Say Ban Ocean",
+      "rating": "2",
+      "price": "143",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F10.RayBanOcean.png&w=384&q=75"
     },
     {
-      "id": "801a",
-      "firstName": "Montassar",
-      "lastName": "Benelkhouja",
-      "email": "montassarbenelkhouja@takiacademyteam.com",
-      "password": "eeeeeeee",
-      "verifyPassword": "eeeeeeee",
-      "role": "vendor"
+      "name": "Ziaomi Band 2",
+      "rating": "4",
+      "price": "171",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F12.Xiaomimiband2.png&w=384&q=75"
     },
     {
-      "id": "d76c",
-      "firstName": "Mohamed",
-      "lastName": "Mabrouki",
-      "email": "medmab@gmail.com",
-      "password": "medmab",
-      "verifyPassword": "medmab",
-      "role": "vendor"
+      "name": "Kossil Watch Brown",
+      "rating": "2",
+      "price": "117",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F13.FossilWatchBrown.png&w=384&q=75"
     },
     {
-      "id": "108b",
-      "firstName": "monta",
-      "lastName": "belkhouja",
-      "email": "monta@belkhouja.tn",
-      "password": "montamonta",
-      "verifyPassword": "montamonta",
-      "role": "vendor"
+      "name": "MVMTM Watch Black",
+      "rating": "4",
+      "price": "246",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F14.MVMTMWatchBlack.png&w=384&q=75"
     },
     {
-      "id": "94ec",
-      "firstName": "thabet",
-      "lastName": "khiari",
-      "email": "thabet@khiari.tn",
-      "password": "thabetthabet",
-      "verifyPassword": "thabetthabet",
-      "role": "vendor"
-    },
-    {
-      "id": "6bda",
-      "firstName": "jihed",
-      "lastName": "bin sina",
-      "email": "jihed@john-cina.tn",
-      "password": "jihedjihed",
-      "verifyPassword": "jihedjihed",
-      "role": "vendor"
-    },
-    {
-      "id": "378a",
-      "firstName": "firas",
-      "lastName": "latrech",
-      "email": "firas@latrach.com",
-      "password": "llllllll",
-      "verifyPassword": "llllllll",
-      "phoneNumber": "33",
-      "role": "vendor"
-    },
-    {
-      "id": "b06b",
-      "firstName": "farouk",
-      "lastName": "achour",
-      "email": "farouk@example.com",
-      "password": "faroukfarouk",
-      "verifyPassword": "faroukfarouk",
-      "phoneNumber": "99453658",
-      "role": "vendor"
-    },
-    {
-      "id": "1e92",
-      "firstName": "Rayes",
-      "lastName": "Mabrouk",
-      "email": "Rayyes@example.com",
-      "password": "rayyesrayyes",
-      "verifyPassword": "rayyesrayyes",
-      "phoneNumber": "99999999",
-      "role": "vendor"
-    },
-    {
-      "id": "a399",
-      "firstName": "hedi",
-      "lastName": "jdida",
-      "email": "montassarbenelkhouja@takiacademyteam.com",
-      "password": "hedihedi",
-      "verifyPassword": "hedihedi",
-      "phoneNumber": "99453658",
-      "role": "vendor"
-    },
-    {
-      "id": "5c37",
-      "firstName": "Fadi",
-      "lastName": "Ben Romdhane",
-      "email": "Fadi@example.com",
-      "password": "fadifadi",
-      "verifyPassword": "fadifadi",
-      "phoneNumber": "55555555",
-      "role": "vendor"
-    },
-    {
-      "id": "548a",
-      "firstName": "souhayb",
-      "lastName": "ben said",
-      "email": "soussou@example.com",
-      "password": "soussou",
-      "verifyPassword": "soussou",
-      "phoneNumber": "99453658",
-      "role": "customer"
-    },
-    {
-      "id": "581e",
-      "firstName": "Bilel",
-      "lastName": "Salem",
-      "email": "bilel@salem.com",
-      "password": "bilelbilel",
-      "verifyPassword": "bilelbilel",
-      "phoneNumber": "22222222",
-      "role": "vendor"
-    },
-    {
-      "id": "53e4",
-      "firstName": "aziz",
-      "lastName": "smida",
-      "email": "x@gmail.com",
-      "password": "azizaziz",
-      "verifyPassword": "azizaziz",
-      "phoneNumber": "45",
-      "role": "vendor"
-    },
-    {
-      "id": "7e04",
-      "firstName": "Abdelaziz",
-      "lastName": "Ben Naija",
-      "email": "aziz@mail.com",
-      "password": "azizaziz",
-      "verifyPassword": "azizaziz",
-      "phoneNumber": "65963125"
-    },
-    {
-      "id": "9228",
-      "firstName": "monta",
-      "lastName": "slimani",
-      "email": "jack@example.com",
-      "password": "montamonta",
-      "verifyPassword": "montamonta",
-      "phoneNumber": "99453658",
-      "role": "vendor"
-    },
-    {
-      "id": "4b81",
-      "firstName": "monta",
-      "lastName": "xD",
-      "email": "hola@hello.com",
-      "password": "holahello",
-      "verifyPassword": "holahello",
-      "phoneNumber": "22",
-      "role": "customer"
-    },
-    {
-      "id": "c4aa",
-      "firstName": "hamma",
-      "lastName": "Mabrouki",
-      "email": "22@gmail.com",
-      "password": "holahola",
-      "verifyPassword": "holahola",
-      "phoneNumber": "45",
-      "role": "vendor"
-    },
-    {
-      "id": "9409",
-      "firstName": "Mohsen",
-      "lastName": "Sebai",
-      "email": "jack@example.com",
-      "password": "lokaloka",
-      "verifyPassword": "lokaloka",
-      "phoneNumber": "92591298",
-      "role": "vendor"
-    },
-    {
-      "id": "3db7",
-      "firstName": "houma",
-      "lastName": "houma",
-      "email": "montassarbenelkhouja@takiacademyteam.com",
-      "password": "mokamoka",
-      "verifyPassword": "mokamoka",
-      "phoneNumber": "99453658",
-      "role": "vendor"
-    },
-    {
-      "id": "e8ea",
-      "firstName": "Fadi",
-      "lastName": "Benelkhouja",
-      "email": "montassarbenelkhouja@takiacademyteam.com",
-      "password": "fadifadi",
-      "verifyPassword": "fadifadi",
-      "phoneNumber": "99453658",
-      "role": "vendor"
-    },
-    {
-      "id": "e05d",
-      "firstName": "Hola",
-      "lastName": "Mabrouki",
-      "email": "montassarbenelkhouja@takiacademyteam.com",
-      "password": "hammahamma",
-      "verifyPassword": "hammahamma",
-      "phoneNumber": "99453658",
-      "role": "customer"
-    },
-    {
-      "id": "5536",
-      "firstName": "youssef",
-      "lastName": "bourourou",
-      "email": "youssef@bourourou.tn",
-      "password": "youssef",
-      "verifyPassword": "youssef",
-      "phoneNumber": "95478225",
-      "role": "customer"
-    },
-    {
-      "id": "44cf",
-      "firstName": "hichem",
-      "lastName": "ben yeshak",
-      "email": "jack@example.com",
-      "password": "naughty",
-      "verifyPassword": "naughty",
-      "phoneNumber": "95478225",
-      "role": "vendor"
-    },
-    {
-      "id": "ca5f",
-      "firstName": "Montassar",
-      "lastName": "Benelkhouja",
-      "email": "montassarbenelkhouja@takiacademyteam.com",
-      "password": "jackjack",
-      "verifyPassword": "jackjack",
-      "phoneNumber": "99453658",
-      "role": "customer"
-    },
-    {
-      "id": "b6ee",
-      "firstName": "jihed",
-      "lastName": "Ben Romadhne",
-      "email": "jack@example.com",
-      "password": "cocacola",
-      "verifyPassword": "cocacola",
-      "phoneNumber": "99453658",
-      "role": "customer"
-    },
-    {
-      "id": "32f7",
-      "firstName": "basma",
-      "lastName": "chehimi",
-      "email": "jack@example.com",
-      "password": "cocacola",
-      "verifyPassword": "cocacola",
-      "phoneNumber": "24639547",
-      "role": "vendor"
-    },
-    {
-      "id": "2bd1",
-      "firstName": "Hola",
-      "lastName": "hila",
-      "email": "jack@example.com",
-      "password": "holahila",
-      "verifyPassword": "holahila",
-      "phoneNumber": "99453658",
-      "role": "customer"
+      "name": "Xarioho Watch Black",
+      "rating": "4",
+      "price": "87",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F15.BarihoWatchBlack.png&w=384&q=75"
     }
   ]
 }

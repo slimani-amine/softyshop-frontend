@@ -8,7 +8,7 @@
   .sidebar-and-outlet {
     max-width: 1600px;
     margin: 0 auto;
-    // margin-bottom: 10dvh;
+    margin-bottom: 10dvh;
   }
 
   .outlet {
@@ -20,7 +20,8 @@
     padding: 0 24px 0 0;
   }
   .sidebar-container {
-    padding: 24px 0 0 24px;
+    height: fit-content;
+    padding: 36px 0 0 24px;
   }
   .footer-container {
     background-color: #222a35;

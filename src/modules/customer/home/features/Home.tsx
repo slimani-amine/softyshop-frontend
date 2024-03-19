@@ -1,23 +1,37 @@
 import Product from '../components/Product';
-import glasses from '../../../shared/assets/images/Home/Rayban.png';
+import { useEffect, useState } from 'react';
 
 function Home() {
-  const name: string = 'Say Ban Black';
-  const image: string = glasses;
-  const rating: string = '3';
-  const price: number = 180;
+  const fake_URL = 'http://localhost:3001/users';
+  const [Products, setProducts] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${fake_URL}`);
+        const data = await response.json();
+        setProducts(data);
+      } catch (err: string | unknown) {
+        console.log(err);
+        return err;
+      }
+    };
+
+    fetchData();
+  }, [fake_URL]);
+
+  console.log(Products);
   return (
     <div className="home">
-      <Product name={name} rating={rating} price={price} image={image} />
-      <Product name={name} rating={rating} price={price} image={image} />
-      <Product name={name} rating={rating} price={price} image={image} />
-      <Product name={name} rating={rating} price={price} image={image} />
-      <Product name={name} rating={rating} price={price} image={image} />
-      <Product name={name} rating={rating} price={price} image={image} />
-      <Product name={name} rating={rating} price={price} image={image} />
-      <Product name={name} rating={rating} price={price} image={image} />
-      <Product name={name} rating={rating} price={price} image={image} />
+      {Products?.map(({ name, image, rating, price }, index) => (
+        <Product
+          key={index}
+          name={name}
+          rating={rating}
+          price={price}
+          image={image}
+        />
+      ))}
     </div>
   );
 }

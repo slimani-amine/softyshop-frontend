@@ -1,4 +1,7 @@
-import { ReactComponent as AddToCart } from '../../../shared/assets/icons/addToCart.svg';
+import { useState } from 'react';
+import { ReactComponent as AddToCart } from '../../../shared/assets/icons/home/addToCart.svg';
+import { ReactComponent as View } from '../../../shared/assets/icons/home/view.svg';
+import { ReactComponent as Wish } from '../../../shared/assets/icons/home/wish.svg';
 
 function Product({
   name,
@@ -11,9 +14,21 @@ function Product({
   price: number;
   image: string;
 }) {
+  const [showIcons, setShowIcons] = useState(false);
+
   return (
-    <div className="card">
+    <div
+      onMouseEnter={() => setShowIcons(true)}
+      onMouseLeave={() => setShowIcons(false)}
+      className="card"
+    >
       <img width={336.75} height={336.75} src={image} className="image" />
+      {showIcons && (
+        <>
+          <View className="icons view" />
+          <Wish className="icons wish" />
+        </>
+      )}
       <div className="product-info-and-buttons">
         <div className="product-info">
           <p className="name"> {name}</p>
