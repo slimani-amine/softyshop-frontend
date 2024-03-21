@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Product from '../home/components/Product';
+import Product from '../home/components/Product/Product';
 
 function AllProducts() {
   const fake_URL = 'http://localhost:3001/users';

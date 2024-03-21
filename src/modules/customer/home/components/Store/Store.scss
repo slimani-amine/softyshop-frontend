@@ -1,0 +1,90 @@
+.card {
+  position: relative;
+  background-color: #fff;
+  width: 337px;
+  box-shadow: 0px 1px 3px rgba(3, 0, 71, 0.09);
+  border-radius: 8px;
+  margin: 0 0 24px 24px;
+  transition: all 5s ease-in-out;
+  .image {
+    padding: 36px;
+    cursor: pointer;
+  }
+  .icons {
+    position: absolute;
+    border-radius: 100px;
+    transition: all 0.3s ease-in-out;
+  }
+  .icons:hover {
+    background-color: #f6f6f6;
+    cursor: pointer;
+    // transition: all 0.3s ease-in-out;
+  }
+  .view {
+    top: 10px;
+    right: 13px;
+  }
+  .wish {
+    top: 45px;
+    right: 12px;
+  }
+  .product-info-and-buttons {
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    .product-info {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 8px;
+      .name {
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 700;
+        color: #373f50;
+      }
+      .address-title {
+        display: inline;
+      }
+      .address {
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .rating {
+        transform: translate(-3px, 2px);
+      }
+
+      .contacts {
+        // width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .phone-number {
+          font-size: 14px;
+          font-weight: 600;
+          color: #d23f57;
+          white-space: nowrap;
+        }
+      }
+    }
+    .buttons {
+      display: flex;
+      align-items: end;
+      .add {
+        cursor: pointer;
+        border: 0.5px solid #e99fab;
+        border-radius: 6px;
+        transition: all 0.5s;
+      }
+      .add:hover {
+        background-color: #fdf8f9;
+        border: 0.5px solid #d23f57;
+      }
+      .icons {
+        fill: black;
+      }
+    }
+  }
+}

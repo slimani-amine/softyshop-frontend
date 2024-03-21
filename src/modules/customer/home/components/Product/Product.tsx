@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { ReactComponent as AddToCart } from '../../../shared/assets/icons/home/addToCart.svg';
-import { ReactComponent as View } from '../../../shared/assets/icons/home/view.svg';
-import { ReactComponent as Wish } from '../../../shared/assets/icons/home/wish.svg';
+import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/home/addToCart.svg';
+import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
+import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
 
 function Product({
   name,

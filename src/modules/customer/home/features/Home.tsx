@@ -1,19 +1,20 @@
-import Product from '../components/Product';
+import Product from '../components/Product/Product';
 import { useEffect, useState } from 'react';
+import Store from '../components/Store/Store';
 // import { fetchStores } from '../../data/storeSlice';
 // import { useAppDispatch } from '@src/modules/shared/store';
 
 function Home() {
-  const fake_URL = 'http://localhost:3001/users';
+  const fake_URL = 'http://localhost:3002/stores';
   // const dispatch = useAppDispatch();
-  const [Products, setProducts] = useState([]);
+  const [Stores, setStores] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${fake_URL}`);
         const data = await response.json();
-        setProducts(data);
+        setStores(data);
       } catch (err: string | unknown) {
         console.log(err);
         return err;
@@ -38,13 +39,13 @@ function Home() {
   // console.log(Products);
   return (
     <div className="home">
-      {Products?.map(({ name, image, rating, price }, index) => (
-        <Product
+      {Stores?.map(({ name, logo, phoneNumber, address }, index) => (
+        <Store
           key={index}
           name={name}
-          rating={rating}
-          price={price}
-          image={image}
+          address={address}
+          phoneNumber={phoneNumber}
+          logo={logo}
         />
       ))}
     </div>

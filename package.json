@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,css,scss}\"",
     "prepare": "husky install",
-    "json-server": "json-server --watch users.json -p 3001"
+    "json-server": "json-server --watch ./json/users.json -p 3001",
+    "json-server-stores": "json-server --watch ./json/stores.json -p 3002"
   },
   "dependencies": {
     "@mui/icons-material": "^5.15.10",
