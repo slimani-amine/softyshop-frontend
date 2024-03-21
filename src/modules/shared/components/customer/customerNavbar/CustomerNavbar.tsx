@@ -2,6 +2,7 @@
 import { ReactComponent as ChevronRightBlack } from '../../../assets/icons/customerLayout/Navbar/chevron-right-black.svg';
 import { ReactComponent as CategoriesIcon } from '../../../assets/icons/customerLayout/Navbar/categories-icon.svg';
 import NavigationElement from './components/navigationElements/NavigationElement';
+import { Link } from 'react-router-dom';
 
 function CustomerNavbar() {
   return (
@@ -24,8 +25,9 @@ function CustomerNavbar() {
         <option value="goldfish">Music</option>
       </select> */}
       <div className="navigation-elements">
-        <NavigationElement>Home</NavigationElement>
-        <NavigationElement>Mega Menu</NavigationElement>
+        <Link to="/home">Home</Link>
+        <Link to="/products">All Products</Link>
+
         <NavigationElement>Full Screen Menu</NavigationElement>
         <NavigationElement>Pages</NavigationElement>
         <NavigationElement>User Account</NavigationElement>

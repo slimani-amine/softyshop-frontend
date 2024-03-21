@@ -19,8 +19,8 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: GuestGuard,
-    path: '/home',
-    component: lazy(() => import('../features/Home')),
+    path: '/products',
+    component: lazy(() => import('./AllProducts')),
     layout: CustomerLayout,
     roles: ['ADMIN', 'VENDOR'],
   },

@@ -5,6 +5,7 @@ import productRoutes from '../../products/routes/routes';
 import categoryRoutes from '../../categories/routes/routes';
 import homeRoutes from '../../customer/home/routes/routes';
 import bookstoreRoutes from '../../bookStores/routes/routes';
+import allProductsRoutes from '../../customer/allProducts/routes';
 const routes = [
   ...sharedRoutes,
   ...authRoutes,
@@ -13,6 +14,7 @@ const routes = [
   ...productRoutes,
   ...categoryRoutes,
   ...bookstoreRoutes,
+  ...allProductsRoutes,
 ];
 
 export default routes;
