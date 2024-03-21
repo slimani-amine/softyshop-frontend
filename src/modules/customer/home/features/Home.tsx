@@ -1,8 +1,11 @@
 import Product from '../components/Product';
 import { useEffect, useState } from 'react';
+import { fetchStores } from '../../data/storeSlice';
+import { useAppDispatch } from '@src/modules/shared/store';
 
 function Home() {
   const fake_URL = 'http://localhost:3001/users';
+  const dispatch = useAppDispatch();
   const [Products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -20,7 +23,15 @@ function Home() {
     fetchData();
   }, [fake_URL]);
 
-  console.log(Products);
+  useEffect(
+    function () {
+      dispatch(fetchStores());
+      // console.log('Hello');
+    },
+    [dispatch]
+  );
+
+  // console.log(Products);
   return (
     <div className="home">
       {Products?.map(({ name, image, rating, price }, index) => (
