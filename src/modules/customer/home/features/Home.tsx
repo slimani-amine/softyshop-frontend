@@ -1,4 +1,4 @@
-import Product from '../components/Product/Product';
+// import supabase from '../../../../../json/supabase';
 import { useEffect, useState } from 'react';
 import Store from '../components/Store/Store';
 // import { fetchStores } from '../../data/storeSlice';
@@ -8,7 +8,7 @@ function Home() {
   const fake_URL = 'http://localhost:3002/stores';
   // const dispatch = useAppDispatch();
   const [Stores, setStores] = useState([]);
-
+  // console.log(supabase);
   useEffect(() => {
     const fetchData = async () => {
       try {
