@@ -26,7 +26,7 @@ function CustomerNavbar() {
       </select> */}
       <div className="navigation-elements">
         <Link to="/home">Home</Link>
-        <Link to="/products">All Products</Link>
+        <Link to="/products">All Books</Link>
 
         <NavigationElement>Full Screen Menu</NavigationElement>
         <NavigationElement>Pages</NavigationElement>

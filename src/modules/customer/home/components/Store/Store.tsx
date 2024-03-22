@@ -35,12 +35,12 @@ function Store({
         className="card"
       >
         <img width={336.75} height={336.75} src={logo} className="image" />
-        {showIcons && (
+        {/* {showIcons && (
           <>
             <View className="icons view" />
             <Wish className="icons wish" />
           </>
-        )}
+        )} */}
         <div className="product-info-and-buttons">
           <div className="store-info">
             <p className="name"> {name}</p>
