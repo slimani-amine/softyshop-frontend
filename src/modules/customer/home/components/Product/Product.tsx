@@ -22,7 +22,9 @@ function Product({
       onMouseLeave={() => setShowIcons(false)}
       className="card"
     >
-      <img width={336.75} height={336.75} src={image} className="image" />
+      <div className="image-wrapper">
+        <img width={336.75} height={336.75} src={image} className="image" />
+      </div>
       {showIcons && (
         <>
           <View className="icons view" />

@@ -97,6 +97,15 @@
 @media (max-width: 92.625em) {
   .card {
     width: 25rem;
+    .image-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      .image {
+        width: 20rem;
+        margin: 0 auto;
+      }
+    }
   }
 }
 
@@ -117,6 +126,15 @@
 @media (max-width: 70.9375em) {
   .card {
     width: 25rem;
+    .image-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      .image {
+        width: 20rem;
+        margin: 0 auto;
+      }
+    }
   }
 }
 
