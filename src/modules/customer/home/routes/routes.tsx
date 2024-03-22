@@ -24,6 +24,14 @@ const routes: RouteConfig[] = [
     layout: CustomerLayout,
     roles: ['ADMIN', 'VENDOR'],
   },
+  {
+    exact: true,
+    guard: GuestGuard,
+    path: '/home/:storeId',
+    component: lazy(() => import('../../storeDetails/storeDetails')),
+    layout: CustomerLayout,
+    roles: ['ADMIN', 'VENDOR'],
+  },
 ];
 
 export default routes;

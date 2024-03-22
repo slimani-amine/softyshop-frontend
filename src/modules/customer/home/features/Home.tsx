@@ -1,18 +1,16 @@
-// import supabase from '../../../../../json/supabase';
 import { useEffect, useState } from 'react';
 import Store from '../components/Store/Store';
 // import { fetchStores } from '../../data/storeSlice';
 // import { useAppDispatch } from '@src/modules/shared/store';
 
 function Home() {
-  const fake_URL = 'http://localhost:3002/stores';
+  const FAKE_URL = 'http://localhost:3001/stores';
   // const dispatch = useAppDispatch();
   const [Stores, setStores] = useState([]);
-  // console.log(supabase);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${fake_URL}`);
+        const response = await fetch(`${FAKE_URL}`);
         const data = await response.json();
         setStores(data);
       } catch (err: string | unknown) {
@@ -22,7 +20,7 @@ function Home() {
     };
 
     fetchData();
-  }, [fake_URL]);
+  }, [FAKE_URL]);
 
   // useEffect(
   //   function () {
@@ -39,15 +37,33 @@ function Home() {
   // console.log(Products);
   return (
     <div className="home">
-      {Stores?.map(({ name, logo, phoneNumber, address }, index) => (
-        <Store
-          key={index}
-          name={name}
-          address={address}
-          phoneNumber={phoneNumber}
-          logo={logo}
-        />
-      ))}
+      {Stores?.map(
+        (
+          {
+            name,
+            logo,
+            phoneNumber,
+            address,
+            id,
+            isPublished,
+            location,
+            socialMediaLinks,
+          },
+          index
+        ) => (
+          <Store
+            key={index}
+            id={id}
+            name={name}
+            address={address}
+            phoneNumber={phoneNumber}
+            logo={logo}
+            isPublished={isPublished}
+            location={location}
+            socialMediaLinks={socialMediaLinks}
+          />
+        )
+      )}
     </div>
   );
 }

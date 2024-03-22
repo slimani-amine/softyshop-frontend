@@ -1,0 +1,148 @@
+{
+  "stores": [
+    {
+      "id": 1,
+      "name": "sotfyboook",
+      "logo": "https://cdn-icons-png.flaticon.com/512/5900/5900097.png",
+      "phoneNumber": "29191726",
+      "isPublished": 1,
+      "location": "[33.02881464063997,11.849956512451174]",
+      "address": "Zelten, An Nouqat al Khams, Libye",
+      "socialMediaLinks": "[\"www.facebook.com\",\"www.instagram.com\"]"
+    },
+    {
+      "id": 2,
+      "name": "softgbeli",
+      "logo": "https://cdn-icons-png.flaticon.com/512/5900/5900097.png",
+      "phoneNumber": "29191726",
+      "isPublished": 1,
+      "location": "[35.571331599581654,10.186729431152346]",
+      "address": "El Makhsouma,Kairouan Sud, Tunisie",
+      "socialMediaLinks": "[\"www.facebook.com\"]"
+    },
+    {
+      "id": 3,
+      "name": "dejje",
+      "logo": "https://cdn-icons-png.flaticon.com/512/5900/5900097.png",
+      "phoneNumber": "29191726",
+      "isPublished": 1,
+      "location": "[34.79209631514749,10.704030990600586]",
+      "address": "Merkez Wali, Gremda, Délégation Sfax Sud, Tunisie",
+      "socialMediaLinks": "[\"www.twiiter.com\",\"www.yahoo.com\"]"
+    },
+    {
+      "id": 4,
+      "name": "Karamel_Shop",
+      "logo": "https://cdn-icons-png.flaticon.com/512/5900/5900097.png",
+      "phoneNumber": "25225606",
+      "isPublished": 1,
+      "location": "[36.852365823387,10.331895276904108]",
+      "address": "Rue Sana Bayoussef, Carthage Plage, Carthage, Tunisie",
+      "socialMediaLinks": "[\"www.jumia.com\",\"www.bengo.tn\",\"www.class.com\"]"
+    },
+    {
+      "id": 5,
+      "name": "aminbook",
+      "logo": "https://cdn-icons-png.flaticon.com/512/5900/5900097.png",
+      "phoneNumber": "29191726",
+      "isPublished": 0,
+      "location": "[35.777261651781885,10.824183225631716]",
+      "address": "Er-Rbat, Délégation Monastir, Tunisie",
+      "socialMediaLinks": "[\"www.twiiter.com\",\"www.instagram.com\"]"
+    },
+    {
+      "id": 6,
+      "name": "zfeafv",
+      "logo": "https://cdn-icons-png.flaticon.com/512/5900/5900097.png",
+      "phoneNumber": "29191726",
+      "isPublished": 0,
+      "location": "[33.946777683283706,9.445152282714846]",
+      "address": "Bou Attouch,El Hamma, Gouvernorat Gabès, Tunisie",
+      "socialMediaLinks": "[\"www.instagram/AAAZZ.com\"]"
+    },
+    {
+      "id": 7,
+      "name": "TakiBooks1",
+      "logo": "https://cdn-icons-png.flaticon.com/512/5900/5900097.png",
+      "phoneNumber": "25252555",
+      "isPublished": 0,
+      "location": "[35.8357248,10.6088238]",
+      "address": "Softylines DEV",
+      "socialMediaLinks": "[\"www.facebook.com\",\"www.facebook.com\"]"
+    }
+  ],
+  "products": [
+    {
+      "id": 9,
+      "name": "Police Gray Eyeglasses",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F7.PoliceGrayEyeglasses.png&w=384&q=75",
+      "rating": "3",
+      "price": "187",
+      "storeId": 1
+    },
+    {
+      "id": 8,
+      "name": "Say Ban Black",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F8.RayBanMattBlack.png&w=384&q=75",
+      "rating": "1",
+      "price": "217",
+      "storeId": 2
+    },
+    {
+      "id": 7,
+      "name": "Say Ban Matt Black",
+      "image": "/src/modules/shared/assets/images/Home/Rayban.png",
+      "rating": "3",
+      "price": "180",
+      "storeId": 2
+    },
+    {
+      "id": 6,
+      "name": "Sunglasses Collection",
+      "rating": "4",
+      "price": "70",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F11.SunglassesCollection.png&w=384&q=75",
+      "storeId": 3
+    },
+    {
+      "id": 5,
+      "name": "Say Ban Ocean",
+      "rating": "2",
+      "price": "143",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F10.RayBanOcean.png&w=384&q=75",
+      "storeId": 4
+    },
+    {
+      "id": 4,
+      "name": "Ziaomi Band 2",
+      "rating": "4",
+      "price": "171",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F12.Xiaomimiband2.png&w=384&q=75",
+      "storeId": 5
+    },
+    {
+      "id": 3,
+      "name": "Kossil Watch Brown",
+      "rating": "2",
+      "price": "117",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F13.FossilWatchBrown.png&w=384&q=75",
+      "storeId": 6
+    },
+    {
+      "id": 2,
+      "name": "MVMTM Watch Black",
+      "rating": "4",
+      "price": "246",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F14.MVMTMWatchBlack.png&w=384&q=75",
+      "storeId": 7
+    },
+    {
+      "id": 1,
+      "name": "Xarioho Watch Black",
+      "rating": "4",
+      "price": "87",
+      "image": "https://bazaar.ui-lib.com/_next/image?url=%2Fassets%2Fimages%2Fproducts%2FFashion%2FAccessories%2F15.BarihoWatchBlack.png&w=384&q=75",
+      "storeId": 1
+    }
+  ]
+}

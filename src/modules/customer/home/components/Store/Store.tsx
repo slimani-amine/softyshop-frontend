@@ -4,15 +4,17 @@ import { ReactComponent as View } from '../../../../shared/assets/icons/home/vie
 import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
 import { ReactComponent as Facebook } from '../../../../shared/assets/icons/home/facebook.svg';
 import { ReactComponent as Instagram } from '../../../../shared/assets/icons/customerLayout/Footer/instagram.svg';
+import { Link } from 'react-router-dom';
 
 function Store({
-  // id,
+  id,
   name,
   logo,
   phoneNumber,
-  // isPublished,
-  // location,
-  address, // socialMediaLinks,
+  isPublished,
+  location,
+  address,
+  socialMediaLinks,
 }: {
   id: number;
   name: string;
@@ -26,31 +28,33 @@ function Store({
   const [showIcons, setShowIcons] = useState(false);
 
   return (
-    <div
-      onMouseEnter={() => setShowIcons(true)}
-      onMouseLeave={() => setShowIcons(false)}
-      className="card"
-    >
-      <img width={336.75} height={336.75} src={logo} className="image" />
-      {showIcons && (
-        <>
-          <View className="icons view" />
-          <Wish className="icons wish" />
-        </>
-      )}
-      <div className="product-info-and-buttons">
-        <div className="product-info">
-          <p className="name"> {name}</p>
-          {/* <div className="address">
+    <Link to={`${id}`}>
+      <div
+        onMouseEnter={() => setShowIcons(true)}
+        onMouseLeave={() => setShowIcons(false)}
+        className="card"
+      >
+        <img width={336.75} height={336.75} src={logo} className="image" />
+        {showIcons && (
+          <>
+            <View className="icons view" />
+            <Wish className="icons wish" />
+          </>
+        )}
+        <div className="product-info-and-buttons">
+          <div className="store-info">
+            <p className="name"> {name}</p>
+            {/* <div className="address">
             <p className="address-title">Location:</p> {address}
           </div> */}
-          <div className="contacts">
-            <p className="phone-number">Phone Number: {phoneNumber}</p>
-            {/* <Facebook /> */}
+            <div className="contacts">
+              <p className="phone-number">Phone Number: {phoneNumber}</p>
+              {/* <Facebook /> */}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
