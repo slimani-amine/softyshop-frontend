@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/home/addToCart.svg';
 import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
 import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
+import { useAppDispatch } from '@src/modules/shared/store';
+import { addToCart } from '@src/modules/customer/data/cartSlice';
 
 function Product({
   name,
@@ -14,7 +16,12 @@ function Product({
   price: number;
   image: string;
 }) {
+  const dispatch = useAppDispatch();
   const [showIcons, setShowIcons] = useState(false);
+
+  function handleAddToCart() {
+    dispatch(addToCart(name));
+  }
 
   return (
     <div
@@ -43,7 +50,12 @@ function Product({
           <p className="price"> ${price}.00</p>
         </div>
         <div className="buttons">
-          <AddToCart className="add" />
+          <AddToCart
+            onClick={() => {
+              handleAddToCart();
+            }}
+            className="add"
+          />
         </div>
       </div>
     </div>
