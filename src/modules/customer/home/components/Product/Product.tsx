@@ -7,7 +7,7 @@ import { addToCart } from '@src/modules/customer/data/cartSlice';
 
 function Product({
   name,
-  rating,
+  // rating,
   price,
   image,
 }: {
@@ -42,10 +42,10 @@ function Product({
         <div className="product-info">
           <p className="name"> {name}</p>
           <div>
-            <img
+            {/* <img
               className="rating"
               src={`/src/modules/shared/assets/icons/customerLayout/Sidebar/${rating}-stars.png`}
-            />
+            /> */}
           </div>
           <p className="price"> ${price}.00</p>
         </div>

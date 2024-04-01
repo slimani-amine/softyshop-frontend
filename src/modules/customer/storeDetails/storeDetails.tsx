@@ -1,73 +1,59 @@
 import { useEffect, useState } from 'react';
 import Product from '../home/components/Product/Product';
 import { useParams } from 'react-router-dom';
+import { BASE_URL } from '@src/modules/auth/data/authThunk';
 
 function storeDetails() {
-  const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
+  // const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
   const { storeId } = useParams();
   // console.log(storeId);
 
-  const [stores, setStores] = useState<
+  const [products, setProducts] = useState([
     {
-      id: string;
-      address: string;
-      isPublished: number;
-      location: string;
-      logo: string;
-      name: string;
-      phoneNumber: string;
-      socialMediaLinks: string;
-      products: [
-        {
-          id: number;
-          name: string;
-          image: string;
-          rating: string;
-          price: string;
-        },
-      ];
-    }[]
-  >([]);
+      id: 0,
+      name: '',
+      image: '',
+      rating: '',
+      price: '',
+    },
+  ]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${FAKE_URL}`);
-        const data = await response.json();
-        setStores(data);
-      } catch (err: string | unknown) {
-        console.log(err);
-        return err;
-      }
-    };
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        try {
+          // const response = await fetch(`${FAKE_URL}`);
+          const response = await fetch(
+            `${BASE_URL}api/stores/${storeId}/products`
+          );
+          const data = await response.json();
+          // console.log(data.data);
+          setProducts(data.data);
+        } catch (err: string | unknown) {
+          console.log(err);
+          return err;
+        }
+      };
 
-    fetchData();
-  }, [FAKE_URL]);
-  // console.log(
-  //   stores.map((store) => {
-  //     if (store.id == storeId) console.log('I am Here');
-  //   })
-  // );
+      fetchData();
+    },
+    // [FAKE_URL]
+    [BASE_URL]
+  );
+  console.log(products);
   return (
     <div className="home">
-      {stores
-        ?.filter((store) => {
-          // console.log('hola');
-          return store.id == storeId;
-        })
-        .map((store) =>
-          store.products.map(({ name, image, rating, price }, index) => {
-            return (
-              <Product
-                key={index}
-                name={name}
-                rating={rating}
-                price={Number(price)}
-                image={image}
-              />
-            );
-          })
-        )}
+      {products.map(({ name, image, rating, price }, index) => {
+        return (
+          <Product
+            key={index}
+            name={name}
+            rating={rating}
+            price={Number(price)}
+            image={image}
+          />
+        );
+      })}
     </div>
   );
 }

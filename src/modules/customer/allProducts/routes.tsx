@@ -1,7 +1,7 @@
 import { RouteProps } from 'react-router-dom';
 import { Fragment, lazy } from 'react';
-// import AuthGuard from '@src/modules/shared/guards/AuthGuard';
-import GuestGuard from '@src/modules/shared/guards/GuestGuard';
+import AuthGuard from '@src/modules/shared/guards/AuthGuard';
+// import GuestGuard from '@src/modules/shared/guards/GuestGuard';
 // import GuestLayout from '@src/modules/shared/layout/GuestLayout/GuestLayout';
 import CustomerLayout from '@src/modules/shared/layout/CustomerLayout/CustomerLayout';
 
@@ -18,7 +18,7 @@ const routes: RouteConfig[] = [
   //AuthGuard Routes
   {
     exact: true,
-    guard: GuestGuard,
+    guard: AuthGuard,
     path: '/products',
     component: lazy(() => import('./AllProducts')),
     layout: CustomerLayout,
