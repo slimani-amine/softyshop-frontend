@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/home/addToCart.svg';
-import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
-import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
-import { ReactComponent as Facebook } from '../../../../shared/assets/icons/home/facebook.svg';
-import { ReactComponent as Instagram } from '../../../../shared/assets/icons/customerLayout/Footer/instagram.svg';
+// import { useState } from 'react';
+// import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/home/addToCart.svg';
+// import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
+// import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
+// import { ReactComponent as Facebook } from '../../../../shared/assets/icons/home/facebook.svg';
+// import { ReactComponent as Instagram } from '../../../../shared/assets/icons/customerLayout/Footer/instagram.svg';
 import { Link } from 'react-router-dom';
 
 function Store({
@@ -25,13 +25,13 @@ function Store({
   address: string;
   socialMediaLinks: string;
 }) {
-  const [showIcons, setShowIcons] = useState(false);
+  // const [showIcons, setShowIcons] = useState(false);
 
   return (
     <Link to={`${id}`}>
       <div
-        onMouseEnter={() => setShowIcons(true)}
-        onMouseLeave={() => setShowIcons(false)}
+        // onMouseEnter={() => setShowIcons(true)}
+        // onMouseLeave={() => setShowIcons(false)}
         className="card"
       >
         <div className="image-wrapper">

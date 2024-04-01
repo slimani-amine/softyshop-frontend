@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import Product from '../home/components/Product/Product';
-import { useParams } from 'react-router-dom';
+import {
+  // useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 
 function storeDetails() {
   // const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
+  // const navigate = useNavigate();
   const { storeId } = useParams();
   // console.log(storeId);
 
@@ -43,19 +47,34 @@ function storeDetails() {
   console.log(products);
   return (
     <div className="home">
-      {products.map(({ name, image, rating, price }, index) => {
-        return (
-          <Product
-            key={index}
-            name={name}
-            rating={rating}
-            price={Number(price)}
-            image={image}
-          />
-        );
-      })}
+      {products.map(
+        (
+          {
+            id,
+            name,
+            image,
+            //  rating
+            price,
+          },
+          index
+        ) => {
+          return (
+            <Product
+              // onClick={() => {
+              //   console.log('hello');
+              //   navigate(`products/${id}`);
+              // }}
+              id={id}
+              key={index}
+              name={name}
+              // rating={rating}
+              price={Number(price)}
+              image={image}
+            />
+          );
+        }
+      )}
     </div>
   );
 }
-
 export default storeDetails;

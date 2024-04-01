@@ -4,15 +4,18 @@ import { ReactComponent as View } from '../../../../shared/assets/icons/home/vie
 import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
 import { useAppDispatch } from '@src/modules/shared/store';
 import { addToCart } from '@src/modules/customer/data/cartSlice';
+import { Link } from 'react-router-dom';
 
 function Product({
+  id,
   name,
   // rating,
   price,
   image,
 }: {
+  id: number;
   name: string;
-  rating: string;
+  // rating: string;
   price: number;
   image: string;
 }) {
@@ -24,41 +27,43 @@ function Product({
   }
 
   return (
-    <div
-      onMouseEnter={() => setShowIcons(true)}
-      onMouseLeave={() => setShowIcons(false)}
-      className="card"
-    >
-      <div className="image-wrapper">
-        <img width={336.75} height={336.75} src={image} className="image" />
-      </div>
-      {showIcons && (
-        <>
-          <View className="icons view" />
-          <Wish className="icons wish" />
-        </>
-      )}
-      <div className="product-info-and-buttons">
-        <div className="product-info">
-          <p className="name"> {name}</p>
-          <div>
-            {/* <img
+    <Link to={`${id}`}>
+      <div
+        onMouseEnter={() => setShowIcons(true)}
+        onMouseLeave={() => setShowIcons(false)}
+        className="card"
+      >
+        <div className="image-wrapper">
+          <img width={336.75} height={336.75} src={image} className="image" />
+        </div>
+        {showIcons && (
+          <>
+            <View className="icons view" />
+            <Wish className="icons wish" />
+          </>
+        )}
+        <div className="product-info-and-buttons">
+          <div className="product-info">
+            <p className="name"> {name}</p>
+            <div>
+              {/* <img
               className="rating"
               src={`/src/modules/shared/assets/icons/customerLayout/Sidebar/${rating}-stars.png`}
             /> */}
+            </div>
+            <p className="price"> ${price}.00</p>
           </div>
-          <p className="price"> ${price}.00</p>
-        </div>
-        <div className="buttons">
-          <AddToCart
-            onClick={() => {
-              handleAddToCart();
-            }}
-            className="add"
-          />
+          <div className="buttons">
+            <AddToCart
+              onClick={() => {
+                handleAddToCart();
+              }}
+              className="add"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

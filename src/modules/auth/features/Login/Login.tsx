@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../routes/paths';
 import toast from 'react-hot-toast';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 
 const initialValues = {
   email: '',
@@ -40,6 +40,7 @@ const Login = () => {
         })
         .catch((err) => {
           toast.error(err?.message || 'something went wrong');
+          setSubmitting(false);
         })
         .finally(() => {
           // const accessToken: any = localStorage.getItem('accessToken');

@@ -5,7 +5,7 @@ import { BASE_URL } from '@src/modules/auth/data/authThunk';
 // import { useAppDispatch } from '@src/modules/shared/store';
 
 function Home() {
-  const FAKE_URL = 'http://localhost:3001/stores';
+  // const FAKE_URL = 'http://localhost:3001/stores';
   // const dispatch = useAppDispatch();
   const [Stores, setStores] = useState([]);
   useEffect(

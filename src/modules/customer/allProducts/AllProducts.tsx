@@ -3,7 +3,7 @@ import Product from '../home/components/Product/Product';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 
 function AllProducts() {
-  const fake_URL = 'http://localhost:3001/products';
+  // const fake_URL = 'http://localhost:3001/products';
   // const dispatch = useAppDispatch();
   const [Products, setProducts] = useState([]);
 
@@ -30,15 +30,27 @@ function AllProducts() {
   console.log(Products);
   return (
     <div className="home">
-      {Products?.map(({ name, image, rating, price }, index) => (
-        <Product
-          key={index}
-          name={name}
-          rating={rating}
-          price={price}
-          image={image}
-        />
-      ))}
+      {Products?.map(
+        (
+          {
+            id,
+            name,
+            image,
+            //  rating
+            price,
+          },
+          index
+        ) => (
+          <Product
+            id={id}
+            key={index}
+            name={name}
+            // rating={rating}
+            price={price}
+            image={image}
+          />
+        )
+      )}
     </div>
   );
 }

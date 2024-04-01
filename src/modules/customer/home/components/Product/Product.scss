@@ -6,9 +6,13 @@
   // border-radius: 8px;
   // margin: 0 0 24px 24px;
   // transition: all 5s ease-in-out;
-  .image {
-    cursor: pointer;
+  .image-wrapper {
+    height: 336.75px;
+    .image {
+      cursor: pointer;
+    }
   }
+
   .icons {
     position: absolute;
     border-radius: 100px;
