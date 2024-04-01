@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 function storeDetails() {
   const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
   const { storeId } = useParams();
-  console.log(storeId);
+  // console.log(storeId);
 
   const [stores, setStores] = useState<
     {
@@ -43,11 +43,11 @@ function storeDetails() {
 
     fetchData();
   }, [FAKE_URL]);
-  console.log(
-    stores.map((store) => {
-      if (store.id == storeId) console.log('I am Here');
-    })
-  );
+  // console.log(
+  //   stores.map((store) => {
+  //     if (store.id == storeId) console.log('I am Here');
+  //   })
+  // );
   return (
     <div className="home">
       {stores
@@ -57,7 +57,6 @@ function storeDetails() {
         })
         .map((store) =>
           store.products.map(({ name, image, rating, price }, index) => {
-            console.log('hola');
             return (
               <Product
                 key={index}
