@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Navbar from '../../components/Navbar/Navbar';
 import { useAnimation } from './context/animationContext';
+// import { isAsExpression } from 'typescript';
+import { useNavigate } from 'react-router-dom';
+// import { useAppSelector } from '../../store';
 interface MainLayoutProps {
   children: React.ReactNode;
 }
@@ -26,6 +29,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       document.removeEventListener('mousedown', handler);
     };
   });
+  const navigate = useNavigate();
 
   return (
     <div className="main-layout">

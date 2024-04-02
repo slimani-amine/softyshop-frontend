@@ -24,8 +24,8 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: '/vendor/products',
-    component: lazy(() => import('../features/product_list/ProductList')),
+    path: '/products',
+    component: lazy(() => import('../features/productList/ProductList')),
     layout: MainLayout,
     roles: ['ADMIN', 'VENDOR'],
   },
@@ -33,8 +33,8 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: '/vendor/products/create',
-    component: lazy(() => import('../features/create_product/CreateProduct')),
+    path: '/products/create',
+    component: lazy(() => import('../features/productCreate/CreateProduct')),
     layout: MainLayout,
     roles: ['ADMIN', 'VENDOR'],
   },

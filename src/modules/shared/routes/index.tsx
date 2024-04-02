@@ -2,10 +2,10 @@
 import { Suspense, Fragment } from 'react';
 import { Routes, Route, RouteProps } from 'react-router-dom';
 
-import pages from './routes';
-import LazyLoad from '../components/LazyLoad/LazyLoad';
-const Current_User = 'VENDOR';
-localStorage.setItem('Current_User', Current_User);
+import pages from './routes'
+import LazyLoad from '../components/LazyLoad/LazyLoad'
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 type RouteConfig = {
   exact: boolean | null;
   path: string;
@@ -15,7 +15,10 @@ type RouteConfig = {
   roles?: string[];
 } & RouteProps;
 
-export const renderRoutes = (routes: RouteConfig[] = []) => (
+export const renderRoutes = (routes: RouteConfig[] = []) => {
+ const Current_User= useSelector((state: RootState) => state.auth.user?.role.toLocaleUpperCase()) || "vendor";
+ console.log(Current_User)
+return(
   <Suspense fallback={<LazyLoad />}>
     <Routes>
       {routes.map((route, index) => {
@@ -24,9 +27,12 @@ export const renderRoutes = (routes: RouteConfig[] = []) => (
         const Layout = route?.layout || Fragment;
         const roles = route?.roles;
         const allowedRoles = roles && roles.includes(Current_User);
-        // console.log(allowedRoles)
+        console.log(Current_User)
+        console.log(allowedRoles)
 
-        if (allowedRoles) {
+        
+
+        if (true) {
           return (
             <Route
               key={index}
@@ -52,7 +58,7 @@ export const renderRoutes = (routes: RouteConfig[] = []) => (
       })}
     </Routes>
   </Suspense>
-);
+);}
 
 const routes: RouteConfig[] = [...pages];
 

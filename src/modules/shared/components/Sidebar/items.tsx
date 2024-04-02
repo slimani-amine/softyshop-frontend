@@ -5,6 +5,7 @@ import { ReactComponent as ProductIcon } from "../../assets/icons/sidebar/Produc
 import { ReactComponent as CatergoryIcon } from "../../assets/icons/sidebar/catergory.svg";
 import { ReactComponent as BrandIcon } from "../../assets/icons/sidebar/brand.svg";
 import { ReactComponent as StoreIcon } from "../../assets/icons/sidebar/bookstore.svg";
+import { ReactComponent as VendorIcon } from "../../assets/icons/sidebar/vendor.svg";
 
 export const SIDEBARITEMS = [
   {
@@ -14,90 +15,48 @@ export const SIDEBARITEMS = [
     roles: ["ADMIN" , "VENDOR"]
   },
   {
-    link: "",
+    link: "/products",
     label: "Products",
     icon: <ProductIcon />,
     roles : ["ADMIN" , "VENDOR"],
-    children: [
-      {
-        link: "/vendor/Products",
-        label: "Product List",
-        icon: "'",
-        roles: ["ADMIN" , "VENDOR"]
-
-      },
-      {
-        link: "/vendor/Products/create",
-        label: "Create Product",
-        icon: "",
-        roles: ["ADMIN" , "VENDOR"]
-      },
-      {
-        link: "/vendor/Products/",
-        label: "Product Review",
-        icon: "",
-        roles: ["ADMIN" , "VENDOR"]
-      },
-    ],
+    
   },
   {
-    link: "",
+    link: "/categories",
     label: "Categories",
     icon: <CatergoryIcon />,
     roles : ["ADMIN"],
-    children: [
-      {
-        link: "/vendor/Categories",
-        label: "Categories List",
-        icon: "'",
-        roles: ["ADMIN"]
-      },
-      {
-        link: "/vendor/Categories/create",
-        label: "Create Category",
-        icon: "",
-        roles: ["ADMIN"]
-      },
-      {
-        link: "/vendor",
-        label: "Product Review",
-        icon: "",
-        roles: ["ADMIN"]
-      },
-    ],
+   
   },
+
   {
-    link: "",
+    link:  "/stores",
     label: "Stores",
     icon: <StoreIcon />,
     roles : ["ADMIN","VENDOR"],
-    children: [
-      {
-        link: "/vendor/stores",
-        label: "Stores List",
-        icon: "'",
-        roles: ["ADMIN"]
-      },
-      {
-        link: "/vendor/stores/create",
-        label: "Create Store",
-        icon: "",
-        roles: ["ADMIN"]
-      },
-      {
-        link: "/vendor//",
-        label: "Product Review",
-        icon: "",
-        roles: ["ADMIN"]
-      },
-    ],
+    
   },
+  {
+    link: "/vendors",
+    label: "Vendors",
+    icon: <VendorIcon />,
+    roles : ["ADMIN"],
+   
+  },
+  {
+    link: "/brands",
+    label: "Brands",
+    icon: <VendorIcon />,
+    roles : ["VENDOR"],
+  },
+
 
   
   {
-    link: "/brand",
-    label: "Brands",
+    link: "/creators",
+    label: "Creators",
     icon: <BrandIcon />,
+    roles : ["VENDOR"]
    
   },
 

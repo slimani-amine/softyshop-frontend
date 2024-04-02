@@ -20,3 +20,11 @@ export interface enterNewPasswordPayload {
   newPassword: string | null;
   token: string | null;
 }
+
+export interface resetPasswordPayload {
+  email: string;
+}
+export interface enterNewPasswordPayload {
+  newPassword: string | null;
+  token: string | null;
+}

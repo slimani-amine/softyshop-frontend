@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import SearchIcon from '../../assets/icons/navbar/search.png';
 
-export default function Search({ placeholder }: { placeholder: string }) {
+export default function Search({ placeholder , onSearchChange }: { placeholder: string , onSearchChange : (text : string) =>void }) {
   const [searchText, setSearchText] = useState('');
 
   const handleSearchChange = (e: any) => {
     setSearchText(e.target.value);
+    onSearchChange(e.target.value)
+    console.log(`Search text: ${e.target.value}`);
+
     // You can add more logic here to handle the search text changes
   };
 

@@ -4,6 +4,44 @@
     fill: #7d879c;
   }
 }
+.add-cat{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 160px; 
+  height: 45px;
+  gap: 10px;
+  background-color: #4E97FD ;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 16px rgba(43, 52, 69, 0.1);
+  padding: 2px 5px;
+  font-size: 14px;
+  font-weight: 400;
+  span{
+    font-size: 22px;
+    font-weight: 600;
+    color : white
+  }
+  &:hover{
+    background-color:#256dd1 !important ;
+  }
+}
+.icon-category{
+  height: 20px;
+  width: 300px;
+
+}
+.img-cteagory{
+  height: 50px;
+  width: 50px;
+  border-radius: 10px;
+}
+.action-category{
+  width: 300px;
+}
 .ant-table-column-sorters{
   width: fit-content;
   display: flex;
@@ -15,7 +53,7 @@
 .ant-table-thead {
   tr {
     th[aria-label="Name"] {
-      width: 381px;
+      width: 260px;
     }
 
     th {
@@ -75,6 +113,7 @@
   .header-Product-list {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
   }
 }

@@ -6,6 +6,10 @@ import categoryRoutes from '../../categories/routes/routes';
 import homeRoutes from '../../customer/home/routes/routes';
 import bookstoreRoutes from '../../bookStores/routes/routes';
 import allProductsRoutes from '../../customer/allProducts/routes';
+import vendorRoutes from '../../vendores/routes/routes';
+import creatorRoutes from '../../creators/routes/routes';
+import brandRoutes from '../../brands/routes/routes';
+
 const routes = [
   ...sharedRoutes,
   ...authRoutes,
@@ -15,6 +19,9 @@ const routes = [
   ...categoryRoutes,
   ...bookstoreRoutes,
   ...allProductsRoutes,
+  ...vendorRoutes,
+  ...creatorRoutes,
+  ...brandRoutes,
 ];
 
 export default routes;

@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import logo from '../../../shared/assets/icons/sidebar/logo.svg';
 import miniLogo from '../../../shared/assets/icons/sidebar/petit-logo.svg';
 import { useAnimation } from '../../layout/MainLayout/context/animationContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 interface ISidebarItemsProps {
   collapseSidebar: boolean;
@@ -27,11 +29,11 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
     }
   };
 
-  const handleChildClick = (link: string) => {
-    setActiveParent(link);
-  };
+  
 
-  const Current_User = localStorage.getItem('Current_User') || '';
+  const Current_User= useSelector((state: RootState) => state.auth.user?.role.toUpperCase()) || "vendor";
+  console.log("role in all" , Current_User)
+
 
   return (
     <div className="sidebar-items">
@@ -60,24 +62,25 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
         </div>
       </div>
       <span className={`${isAnimating ? 'hidden-admin' : ''} admin`}>
-        Admin
+        {Current_User}
       </span>
       {SIDEBARITEMS?.map((route, index) => {
-        const isExpanded = expandedItems.includes(route?.label);
-        const routeLabel = route.label.toLowerCase();
-        const currentLabel = activeParent?.split('/')[2]?.toLowerCase();
+        const routeLink = route.link
+        const path = pathname
+        const paths = path.split('/')
+        const link = routeLink.slice(1)
         const roles = route.roles;
         return roles?.includes(Current_User) ? (
           <React.Fragment key={index}>
             <Link
               to={route?.link}
               onClick={() => handleToggleExpand(route?.label)}
-              className={`item   ${routeLabel === currentLabel && 'active'}   `}
+              className={`item   ${ paths.includes(link) && 'active'}   `}
             >
               <div className="item-left">
                 <div
                   className={` link-icon-stroke-color  ${
-                    routeLabel === currentLabel &&
+                    paths.includes(link) &&
                     'link-icon-stroke-color-active'
                   }`}
                 >
@@ -85,29 +88,15 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
                 </div>
                 <p
                   className={`${isAnimating ? 'hidden' : ''}  ${
-                    routeLabel === currentLabel && 'active'
+                    paths.includes(link) && 'active'
                   } item-label `}
                 >
                   {!collapseSidebar ? t(`${route?.label}`) : null}
                 </p>
               </div>
-              <div
-                className={`expendIcon ${
-                  isExpanded ? 'rotate-expendIcon' : ''
-                }`}
-              >
-                <svg
-                  className={` ${isAnimating ? 'hidden-icon' : '  '}`}
-                  focusable="false"
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  data-testid="ChevronRightIcon"
-                >
-                  <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
-                </svg>
-              </div>
+        
             </Link>
-            <div
+            {/*<div
               className={`${isExpanded ? 'children_expanded' : 'children'}  `}
             >
               {isExpanded &&
@@ -131,7 +120,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
                     {!collapseSidebar ? t(`${child.label} `) : null}
                   </Link>
                 ))}
-            </div>
+                    </div>*/}
           </React.Fragment>
         ) : null;
       })}
