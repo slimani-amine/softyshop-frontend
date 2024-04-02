@@ -47,7 +47,7 @@ export const SIDEBARITEMS = [
     link: "/brands",
     label: "Brands",
     icon: <VendorIcon />,
-    roles : ["VENDOR"],
+    roles : ["VENDOR","ADMIN"],
   },
 
 
@@ -64,10 +64,12 @@ export const SIDEBARITEMS = [
     link: "/settings",
     label: "Settings",
     icon: <CatergoryIcon />,
+    roles : ["VENDOR"]
   },
   {
     link: "/profile",
     label: "Profile",
     icon: <ProfileIcon />,
+    roles : ["VENDOR"]
   },
 ];

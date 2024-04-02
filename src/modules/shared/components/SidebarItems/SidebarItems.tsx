@@ -66,11 +66,13 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
       </span>
       {SIDEBARITEMS?.map((route, index) => {
         const routeLink = route.link;
+        console.log(route,'route simple')
         const path = pathname;
         const paths = path.split('/');
         const link = routeLink.slice(1);
         const roles = route.roles;
-        return roles?.includes(Current_User) ? (
+        console.log(roles?.includes(Current_User),'connnnt')
+        return roles?.includes(Current_User.toLocaleUpperCase()) ? (
           <React.Fragment key={index}>
             <Link
               to={route?.link}

@@ -1,5 +1,5 @@
 import { Avatar, Dropdown, MenuProps, Space } from 'antd';
-
+import { useNavigate } from 'react-router-dom';
 import browseIcon from '../../assets/icons/navbar/website.png';
 import { ReactComponent as ProfileIcon } from '../../assets/icons/sidebar/profile.svg';
 import { ReactComponent as SettingsIcon } from '../../assets/icons/navbar/settings.svg';
@@ -18,13 +18,16 @@ interface INavbarProps {
 
 const Navbar: React.FC<INavbarProps> = () => {
   const { isAnimating } = useAnimation();
-
+  const navigate = useNavigate()
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
     dispatch(logout());
   };
-
+  const handleNavigate=()=>{
+    navigate('/books')
+    
+  }
   const accountInfoItems: MenuProps['items'] = [
     {
       key: '1',
@@ -91,7 +94,7 @@ const Navbar: React.FC<INavbarProps> = () => {
           onClick={() => setCollapseSidebar(!collapseSidebar)}
         />
         <p className="navbar-left-title">{pathname.split('/')[1]}</p>*/}
-        <div className="browse_btn">
+        <div className="browse_btn" onClick={handleNavigate}>
           <img className="browse_icon" src={browseIcon} alt="" />
           <span>Browse Website</span>
         </div>
