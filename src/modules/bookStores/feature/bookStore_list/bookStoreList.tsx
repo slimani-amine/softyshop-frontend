@@ -1,32 +1,64 @@
-import { Space, Switch, Table } from "antd";
+import { Checkbox, Modal, Space, Switch, Table, message } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
-import { useStoreQuery, useStoresQuery , useMy_storesQuery } from "../../service/storeApi";
-import { useState } from "react";
-import Search from "@src/modules/shared/components/Search/Search";
+import { useStoreQuery,useDeleteStoresMutation,usePublishStoreMutation, useStoresQuery , useMyStoresQuery, useDeleteStoreMutation , useUpdateStoreMutation, useSearchStoresQuery } from "../../service/storeApi";
+import { SetStateAction, useEffect, useState } from "react";
+import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
+import { debounce } from 'lodash';
+
 export default function bookStoreList() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
+  const [nameStore, setNameStore] = useState<string>('');
+  const [ stores, setStores] = useState<Array<any>>([]);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 5 });
-  const handleTableChange = (pagination: any) => {
-    setPagination(pagination);
-    console.log(pagination);
+
+  const Current_User= useSelector((state: RootState) => state.auth.user?.role.toLocaleUpperCase()) 
+  const Current_id  = useSelector((state: RootState) => state.auth.user?.id)
+  console.log(Current_id)
+  const { data: fetchedSearchStores } = useSearchStoresQuery({subName :nameStore ,role: Current_User || "ADMIN" , id:Current_id||""});
+
+
+  
+  const handlePaginationChange = (page: number, pageSize?: number) => {
+    setCurrentPage(page);
+    setPageSize(pageSize || 5); // Update pageSize if changed
+    console.log(stores)
   };
 
 
-  const Current_User= useSelector((state: RootState) => state.auth.user?.role.toLocaleUpperCase()) 
-  let fetchedData; 
 
-  if (Current_User === "ADMIN") {
+  let fetchedData: { data: { docs: SetStateAction<any[]>; }; }; 
+  const [publishStore]=usePublishStoreMutation()
+  const isAdmin = Current_User === "ADMIN"
+  console.log(isAdmin)
+  if (isAdmin) {
     const { data : fetchedStores } = useStoresQuery({
-        page: pagination.current,
-        perPage: pagination.pageSize,
+        page: currentPage,
+        perPage: pageSize,
     });
-    fetchedData = fetchedStores; 
+    fetchedData = fetchedStores;
+    
+    
   } else {
-    const { data: fetchedMyStores } = useMy_storesQuery();
+    const { data: fetchedMyStores } = useMyStoresQuery();
     fetchedData = fetchedMyStores; 
+
   }
+  useEffect(() => {
+    if (nameStore && fetchedSearchStores) {
+      setStores(fetchedSearchStores.data?.docs);
+    } else {
+      if (fetchedData) {
+        console.log(!fetchedData?.data, 'ooo');
+        setStores(fetchedData?.data?.docs);
+      }
+    }
+  }, [nameStore, fetchedSearchStores, currentPage, pageSize]);
+  
   interface Store {
     id: Number;
     name: string;
@@ -35,14 +67,66 @@ export default function bookStoreList() {
     socialMediaLinks: string[];
     position: string[];
   }
-
+  const handleSearchChange =debounce ( (searchText: string) => {
+    console.log('Search text for category mlist:', searchText);
+    setNameStore(searchText);
+  },500);
   const navigate = useNavigate();
+  const Navigate = (id:string)=>{
+    navigate(`/stores/edit/${id}`)
+  }
 
   const handleNavigate = () => {
     navigate("/stores/create");
   };
+  const [deleteStore] = useDeleteStoreMutation();
+  const [deleteStores] = useDeleteStoresMutation()
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State to manage modal visibility
+  const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null); // State to store category ID for deletion
+
+  /*const handleDelete = async (categoryId :Number) => {
+    console.log(categoryId)
+    try {
+      await deleteStore(categoryId).unwrap();
+      message.success('Category deleted!');
+      setDeleteModalVisible(false); // Close the modal after successful deletion
+    } catch (error) {
+      // Handle error
+    }
+    
+  };*/
+  const handleDelete = async () => {
+    try {
+      await deleteStores(selectedRowIds).unwrap();
+      message.success('Category deleted!');
+      setDeleteModalVisible(false); // Close the modal after successful deletion
+    } catch (error) {
+      // Handle error
+    }
+  };
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
+    const checked = e.target.checked;
+    console.log(selectedRowIds)
+    setSelectedRowIds(prevIds => {
+      if (checked) {
+        return [...prevIds, id]; // Add ID to the selected IDs array
+      } else {
+        return prevIds.filter(rowId => rowId !== id); // Remove ID from the selected IDs array
+      }
+    });
+  };  
 
   const columns = [
+    {
+      title: "Select",
+      dataIndex: "id",
+      render: (_: any, record: any) => (
+        <Checkbox
+          checked={selectedRowIds.includes(record.id)}
+          onChange={(e:any) => handleCheckboxChange(e , record.id)}
+        />
+      ),
+    },
     {
       title: "Name",
       dataIndex: "name",
@@ -80,18 +164,30 @@ export default function bookStoreList() {
       dataIndex: "address",
       key: "position",
       render: (position: string) => {
-        return <div className="position-column">{position}</div>;
+        return <div className="position-column" >{position}</div>;
       },
     },
+    
     {
       title: "Published",
-      dataIndex: "published",
+      dataIndex: "published", 
       key: "published",
-
-      sorter: (a: Store, b: Store) =>
+  
+      sorter: (a:Store, b: Store) =>
         (a.isPublished ? 1 : 0) - (b.isPublished ? 1 : 0),
-      render: (isPublished: boolean, record: any) => (
-        <Switch checked={record.isPublished} />
+      render: (isPublished: boolean, record:any) => (  
+        <Switch
+        checked={record.isPublished}
+        onClick={() => {
+          if (isAdmin) { // Assuming isAdmin is a boolean indicating whether the user is an admin
+            publishStore({
+              id: record.id, // Pass the category ID
+              isPublished: !record.isPublished // Pass the updated data
+            });
+          }
+        }}
+        disabled={!isAdmin} // Disable the switch if the user is not an admin
+      />
       ),
     },
     {
@@ -136,44 +232,28 @@ export default function bookStoreList() {
               </g>
             </svg>
           </div>
-          <div className="icon-action">
-            <svg
-              viewBox="64 64 896 896"
-              focusable="false"
-              data-icon="eye"
-              width="18px"
-              height="18px"
-              fill="#7D879C"
-              aria-hidden="true"
-            >
-              <path d="M396 512a112 112 0 10224 0 112 112 0 10-224 0zm546.2-25.8C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM508 688c-97.2 0-176-78.8-176-176s78.8-176 176-176 176 78.8 176 176-78.8 176-176 176z"></path>
-            </svg>
-          </div>
-          <div className="icon-action" onClick={() => {}}>
-            <svg
-              width="18px"
-              height="18Px"
-              fill="#7D879C"
-              viewBox="64 64 896 896"
-              focusable="false"
-              data-icon="delete"
-              aria-hidden="true"
-            >
-              <path d="M864 256H736v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zm-200 0H360v-72h304v72z"></path>
-            </svg>
-          </div>
+          
+        
         </Space>
       ),
     },
   ];
 
+
   const tableProps = {
-    dataSource: fetchedData?.data.docs,
+    dataSource: stores,
     columns: columns,
     headerStyle: { backgroundColor: "lightblue" },
-    ...pagination,
+    pagination: {
+      total: 7 ,
+      current: currentPage,
+      pageSize: pageSize,
+      onChange: handlePaginationChange, // Handle page change event
+      onShowSizeChange: handlePaginationChange,
+     
+      // Handle page size change event
+    },
 
-    onChange: handleTableChange,
 
     header: {
       style: { borderRadius: "px" },
@@ -181,17 +261,33 @@ export default function bookStoreList() {
   };
   return (
     <div className="Product-List">
-      <h1>Shopes List</h1>
+      <h1>Stores List</h1>
       <div className="header-Product-list">
-        <Search placeholder={"Search Category.."} />
+      <SeachFilter placeholder={"Search Store ..."} onSearchChange={handleSearchChange}
+        />
         <Button className="add-cat" onClick={handleNavigate}>
-          {" "}
           <span>+</span> Add Store
         </Button>
+       
+
       </div>
       <div className="container-Product-List">
+      <div className="container-btn">
+        <Button size="sm"  disabled={selectedRowIds.length === 0} variant={selectedRowIds.length === 0 ?'dark':'primary'} onClick={handleDelete}>deleted</Button>
+        </div>
         <Table {...tableProps} />
       </div>
+           {/* Delete Category Modal */}
+           <Modal
+            title="Confirm Deletion"
+            visible={deleteModalVisible}
+            onOk={() => handleDelete()}
+            onCancel={() => setDeleteModalVisible(false)}
+            okText="Delete"
+            cancelText="Cancel"
+            >
+        <p>Are you sure you want to delete this category?</p>
+      </Modal>
     </div>
   );
 }

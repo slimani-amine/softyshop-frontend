@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '../utils/axios';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../utils/axios";
 import {
   LoginPayload,
   RegisterPayload,
   enterNewPasswordPayload,
   resetPasswordPayload,
-} from './authTypes';
-import { clearTokens } from '../utils/token';
+} from "./authTypes";
+import { clearTokens } from "../utils/token";
 // const BASE_URL = 'http://192.168.3.27:3000/v1/';
-export const AUTH_URL = 'https://1371-196-203-25-82.ngrok-free.app/v1/';
-export const BASE_URL = 'http://192.168.2.14:3000/v1/';
+export const AUTH_URL = "https://538a-196-203-25-82.ngrok-free.app/v1/";
+export const BASE_URL = "http://192.168.3.38:3001/v1/";
 export const login = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (query: LoginPayload, { rejectWithValue }) => {
     try {
       // const response = await axiosInstance.post(`/api/auth/login`, query);
@@ -35,7 +35,7 @@ export const login = createAsyncThunk(
 );
 
 export const register = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (query: RegisterPayload, { rejectWithValue }) => {
     // console.log(query);
 
@@ -61,7 +61,7 @@ export const register = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk(
-  'auth/logout',
+  "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`${AUTH_URL}auth/logout`);
@@ -80,7 +80,7 @@ export const logout = createAsyncThunk(
 );
 
 export const resetPassword = createAsyncThunk(
-  'auth/reset',
+  "auth/reset",
   async (query: resetPasswordPayload, { rejectWithValue }) => {
     try {
       // console.log(query);
@@ -102,7 +102,7 @@ export const resetPassword = createAsyncThunk(
 );
 
 export const enterNewPassword = createAsyncThunk(
-  'auth/enterNewPassword',
+  "auth/enterNewPassword",
   async (query: enterNewPasswordPayload, { rejectWithValue }) => {
     try {
       console.log(query);

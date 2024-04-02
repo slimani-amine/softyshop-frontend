@@ -1,4 +1,3 @@
-import { url } from 'inspector';
 import Category  from './type';
 import { api } from '@src/modules/shared/services/api';
 
@@ -7,9 +6,14 @@ export const CategoryApi = api.injectEndpoints({
     categories: builder.query<any,  { perPage: number; page: number }>({
       query: ({perPage,page}) => `api/admin/categories?perPage=${perPage}&page=${page}`,
       providesTags:  ['Categories']
-   
+      }),
 
-  }),
+    allCategories : builder.query<any,  void>({
+      query: () => `api/admin/categories`,
+      providesTags:  ['Categories']
+      }),
+
+
    
     category: builder.query<any, any>({
       query: (id) => `api/admin/categories?search=id:${id}`,
@@ -27,6 +31,17 @@ export const CategoryApi = api.injectEndpoints({
     
     
         
+      }),
+      
+      deleteCategories: builder.mutation<any,string[]>({
+        query:(ids)=>({
+          url : `api/admin/categories`,
+          method : 'DELETE',
+          body : {"ids" :ids }
+        }) ,
+        invalidatesTags : ['Categories'],
+  
+  
       }),
     deleteCategory: builder.mutation<any,Number>({
       query:(id)=>({
@@ -48,11 +63,11 @@ export const CategoryApi = api.injectEndpoints({
       invalidatesTags: ['Categories' , 'category']}),
     
     searchCategories: builder.query<any,string>({
-      query: (subName) => `api/admin/categories?perPage=4&page:1&search=name:${subName}`,
+      query: (subName) => `api/admin/categories?search=name:${subName}`,
       providesTags:  ['Categories']
 
     })
   })
 });
 
-export const {useUpdateCatgoryMutation, useCreateCategoryMutation,useSearchCategoriesQuery ,  useCategoryQuery , useCategoriesQuery , useDeleteCategoryMutation} = CategoryApi
+export const {useAllCategoriesQuery,useUpdateCatgoryMutation,useDeleteCategoriesMutation, useCreateCategoryMutation,useSearchCategoriesQuery ,  useCategoryQuery , useCategoriesQuery , useDeleteCategoryMutation} = CategoryApi

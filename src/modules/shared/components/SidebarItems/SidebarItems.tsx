@@ -65,22 +65,22 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
         {Current_User}
       </span>
       {SIDEBARITEMS?.map((route, index) => {
-        const isExpanded = expandedItems.includes(route?.label);
         const routeLink = route.link
         const path = pathname
-        const currentLabel = activeParent?.split('/')[2]?.toLowerCase();
+        const paths = path.split('/')
+        const link = routeLink.slice(1)
         const roles = route.roles;
         return roles?.includes(Current_User) ? (
           <React.Fragment key={index}>
             <Link
               to={route?.link}
               onClick={() => handleToggleExpand(route?.label)}
-              className={`item   ${routeLink === path && 'active'}   `}
+              className={`item   ${ paths.includes(link) && 'active'}   `}
             >
               <div className="item-left">
                 <div
                   className={` link-icon-stroke-color  ${
-                    routeLink ===path &&
+                    paths.includes(link) &&
                     'link-icon-stroke-color-active'
                   }`}
                 >
@@ -88,7 +88,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
                 </div>
                 <p
                   className={`${isAnimating ? 'hidden' : ''}  ${
-                    routeLink === path && 'active'
+                    paths.includes(link) && 'active'
                   } item-label `}
                 >
                   {!collapseSidebar ? t(`${route?.label}`) : null}

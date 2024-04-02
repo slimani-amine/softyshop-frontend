@@ -5,7 +5,7 @@ import { RouteProps } from 'react-router-dom';
 import { Fragment, lazy } from 'react';
 
 type RouteConfig = {
-  exact: boolean | null;
+exact: boolean | null;
   path: string;
   component: React.ComponentType<any>;
   guard?: React.ComponentType<any> | typeof Fragment | any;

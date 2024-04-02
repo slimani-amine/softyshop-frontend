@@ -31,6 +31,14 @@ const routes: RouteConfig[] = [
     layout: MainLayout,
     roles : ['ADMIN','VENDOR']
   },
+  {
+    exact: true,
+    guard: AuthGuard,
+    path: "/stores/edit/:id",
+    component: lazy(() => import("../feature/bookStore_edit/bookStoreEdit")),
+    layout: MainLayout,
+    roles : ['ADMIN','VENDOR']
+  }
 ];
 
 export default routes;

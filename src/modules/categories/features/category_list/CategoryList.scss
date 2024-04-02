@@ -53,7 +53,7 @@
 .ant-table-thead {
   tr {
     th[aria-label="Name"] {
-      width: 381px;
+      width: 260px;
     }
 
     th {
@@ -113,6 +113,7 @@
   .header-Product-list {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
   }
 }

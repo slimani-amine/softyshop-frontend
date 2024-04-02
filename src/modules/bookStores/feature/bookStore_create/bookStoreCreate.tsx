@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import getPlaceName from "@src/modules/shared/utils/getPlace";
 import {
   Form,
   Button as ButtonAnt,
@@ -22,9 +23,11 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useCreateStoreMutation } from "../../service/storeApi";
-import { useVendorsQuery } from "../../service/vendorApi";
+import { useAllvendorsQuery } from "../../../vendores/services/vendorApi";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
+import { handleFileChange } from "@src/modules/shared/utils/upload";
+
 interface AddShopFormProps {
   onFinish: (values: any) => void;
 }
@@ -32,17 +35,25 @@ interface AddShopFormProps {
 const AddShopForm: FC<AddShopFormProps> = () => {
   const [form] = Form.useForm();
   const [fields, setFields] = useState<string[]>([""]);
+  const [files, setFile] = useState<any>(null);
+  const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
+
   const initialPosition = [33.892166, 9.561555499999997]; // New York coordinates
   const [position, setPosition] = useState(initialPosition);
   const [createStore, isLoading] = useCreateStoreMutation(); // Destructure and use the hook
+  
   const Current_User= useSelector((state: RootState) => state.auth.user?.role.toLocaleUpperCase()) 
+  const Id_user = useSelector((state: RootState) => state?.auth?.user?.id)
+  console.log(Id_user)
   console.log(Current_User)
   let vendors = []; // Initialize vendors outside the condition to avoid undefined errors
 
   if (Current_User === "ADMIN") {
-      const { data: fetchedVendors, isError } = useVendorsQuery();
+      const { data: fetchedVendors, isError } = useAllvendorsQuery();
       vendors = fetchedVendors?.data.docs;
   }
+  console.log(Current_User === "ADMIN")
+  console.log(vendors)
   
   const selectOptions = vendors?.map((cat: any) => ({
       label: cat.email,
@@ -93,11 +104,11 @@ const AddShopForm: FC<AddShopFormProps> = () => {
       const response = createStore({
         name: objectPost.name,
         phoneNumber: objectPost.phone,
-        logo: objectPost.images,
+        logo: selectedFileUrl,
         location: objectPost.positionOfShop.splice(0, 2),
         address: plc,
         socialMediaLinks: objectPost.data,
-        vendor_id: objectPost.vendor.toString(),
+        vendor_id: "a0986058-3833-4a2a-b898-6a4f582d379e",
       });
       console.log(response);
       message.success("Shop saved successfully");
@@ -108,30 +119,8 @@ const AddShopForm: FC<AddShopFormProps> = () => {
     }
   };
 
-  const handleFileChange = (info: any) => {
-    const fileList = [...info.fileList];
-  };
-  async function getPlaceName(latitude: string, longitude: string) {
-    const apiUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
-
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-
-      if (response.ok) {
-        const placeName = data.display_name;
-        console.log(`The place is: ${placeName}`);
-        setPosition([latitude, longitude, placeName]);
-        return placeName;
-      } else {
-        console.error(`Error fetching data: ${response.statusText}`);
-        return null;
-      }
-    } catch (error) {
-      console.error(`Error fetching data: `);
-      return null;
-    }
-  }
+ 
+ 
 
   const Email_user = useSelector((state: RootState) => state.auth.user?.email);
   console.log(Email_user)
@@ -159,18 +148,13 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 </Form.Item>
               </Col>
             </Row>
-            <Row>
+            <Row gutter={[22, 0]} className="name-shop">
               <Col span={24}>
                 <Form.Item
                   name="vendor"
                   className="select-vendor"
-                  style={{ marginBottom: "10px" }}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Product field must have at least 1 items",
-                    },
-                  ]}
+                  style={{ marginBottom: "20px" }}
+                
                 >
                   <Select
                     size="middle"
@@ -188,7 +172,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
             <Row gutter={[16, 0]} className="number-Shop">
               <Col span={24}>
                 <Form.Item
-                  name="phone"
+                  name="phone"  
                   style={{ marginBottom: 0 }}
                   rules={[
                     { required: true, message: "Please enter Shop name" },
@@ -226,7 +210,13 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 accept="image/*"
                 multiple
                 maxCount={1}
-                onChange={handleFileChange}
+                onChange={(e: any) =>
+                  handleFileChange(
+                    e,
+                    setFile,
+                    setSelectedFileUrl,
+                  )
+                }
                 beforeUpload={() => false}
               >
                 <p className="ant-upload-text">Drag & drop Shop image here</p>

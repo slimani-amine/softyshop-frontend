@@ -14,18 +14,26 @@ import {
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useParams } from "react-router-dom";
+import { handleFileChange } from "@src/modules/shared/utils/upload";
+
 
 interface AddCategoryFormProps {
   onFinish: (values: any) => void;
 }
 
 const EditCategoryForm: FC<AddCategoryFormProps> = () => {
+  const [files, setFile] = useState<any>(null);
+  const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
-  const [updateCategory] = useUpdateCatgoryMutation();
+  const [updateCategory  ] = useUpdateCatgoryMutation();
   const { id } = useParams<{ id: string }>(); // Assuming useParams returns an object with 'id' property
   
   const { data: fetchCategory, isLoading } = useCategoryQuery(id);
+  const category = fetchCategory?.data?.docs[0]
+  console.log(category,11)
+  
   if (isLoading) return <Spinner />;
+  
 
   const initialValues = {
     name: fetchCategory?.data?.docs[0]?.name || "",
@@ -37,15 +45,20 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
     try {
       const values = await form.validateFields();
       console.log(values,'fg')
+      console.log({
+        name: values.name,
+        icon: "",
+        isPublished: values.isPublished === "on" ? true : false,
+      },"0000000000000000000000000")
       await updateCategory({
         id: id,
         data: {
           name: values.name,
-          icon: "",
+          icon: selectedFileUrl,
           isPublished: values.isPublished === "on" ? true : false,
-
         }
       });
+
       message.success(`Category of id:${id} updated`);
       form.resetFields();
     } catch (error) {
@@ -53,15 +66,18 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
     }
   };
 
-  const handleFileChange = (info: any) => {
-    const fileList = [...info.fileList];
-    const imageUrlList = fileList.map((file: any) => file.response?.imageUrl);
-    form.setFieldsValue({ images: imageUrlList });
-  };
+ 
 
-  const handleCheckboxChange = (e: any) => {
-    form.setFieldsValue({ isPublished: e.target.checked });
-  };
+  console.log(category,'iufhgui')
+  const defaultFileList = [
+    {
+      uid: "-1",
+      name: "Current Image",
+      status: "done",
+      url: category.icon,
+      
+    } as any,
+  ];
 
   return (
     <div className="add-new-Product">
@@ -90,11 +106,18 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
             name="images"
           >
             <Upload.Dragger
+            defaultFileList={defaultFileList}
               className="drag-images"
               listType="picture"
               accept="image/*"
               maxCount={1}
-              onChange={handleFileChange}
+              onChange={(e: any) =>
+                handleFileChange(
+                  e,
+                  setFile,
+                  setSelectedFileUrl,
+                )
+              }
               beforeUpload={() => false}
             >
               <p className="ant-upload-text">
