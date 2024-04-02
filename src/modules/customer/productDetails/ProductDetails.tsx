@@ -16,6 +16,7 @@ function ProductDetails() {
       category_id: 0,
       availability: 0,
       store_id: 0,
+      stockNumber: 0,
     },
   ]);
   useEffect(() => {
@@ -67,7 +68,9 @@ function ProductDetails() {
 
           <h2 className="price">${theProduct.price}</h2>
           <p className="stock">
-            Stock {theProduct.availability === 1 ? 'Available' : 'Unavailable'}
+            Stock {theProduct.availability === 1 ? 'Available' : 'Unavailable'}:{' '}
+            {theProduct.availability === 1 &&
+              `${theProduct.stockNumber} Books Remaining`}
           </p>
           <Button label={'Add To Cart'} />
           <p className="store">
