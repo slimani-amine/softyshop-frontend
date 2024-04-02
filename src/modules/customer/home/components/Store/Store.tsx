@@ -50,7 +50,7 @@ function Store({
             <p className="address-title">Location:</p> {address}
           </div> */}
             <div className="contacts">
-              <p className="phone-number">Phone Number: {phoneNumber}</p>
+              {/* <p className="phone-number">Phone Number: {phoneNumber}</p> */}
               {/* <Facebook /> */}
             </div>
           </div>

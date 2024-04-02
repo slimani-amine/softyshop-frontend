@@ -51,7 +51,7 @@ function Product({
               src={`/src/modules/shared/assets/icons/customerLayout/Sidebar/${rating}-stars.png`}
             /> */}
             </div>
-            <p className="price"> ${price}.00</p>
+            <p className="price"> ${price}</p>
           </div>
           <div className="buttons">
             <AddToCart

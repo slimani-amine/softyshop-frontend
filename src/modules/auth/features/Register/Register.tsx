@@ -56,8 +56,8 @@ const Register = () => {
       password: Yup.string()
         .required('Password is required')
         .matches(
-          /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!.-/]).{8,}$/,
-          'Password must include an upper case letter, a lower case letter and a special character! It has to be 8 characters long at least.'
+          /^(?=.*\S).{8,}$/,
+          'Password must be 8 characters long at least.'
         ),
       verifyPassword: Yup.string()
         .required('Confirm password is required')

@@ -3,8 +3,15 @@ import { ReactComponent as ChevronRightBlack } from '../../../assets/icons/custo
 import { ReactComponent as CategoriesIcon } from '../../../assets/icons/customerLayout/Navbar/categories-icon.svg';
 import NavigationElement from './components/navigationElements/NavigationElement';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '@src/modules/shared/store';
+import { logout } from '@src/modules/auth/data/authThunk';
 
 function CustomerNavbar() {
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <div className="customer-navbar">
       <div className="categories">
@@ -27,11 +34,12 @@ function CustomerNavbar() {
       <div className="navigation-elements">
         <Link to="/home">Home</Link>
         <Link to="/products">All Books</Link>
-
-        <NavigationElement>Full Screen Menu</NavigationElement>
         <NavigationElement>Pages</NavigationElement>
         <NavigationElement>User Account</NavigationElement>
         <NavigationElement>Vendor Account</NavigationElement>
+        <p onClick={handleLogout} className="logout">
+          logout
+        </p>
       </div>
     </div>
   );
