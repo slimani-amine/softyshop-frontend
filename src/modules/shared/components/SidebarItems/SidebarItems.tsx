@@ -29,11 +29,11 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
     }
   };
 
-  
-
-  const Current_User= useSelector((state: RootState) => state.auth.user?.role.toUpperCase()) || "vendor";
-  console.log("role in all" , Current_User)
-
+  const Current_User =
+    useSelector((state: RootState) => state.auth.user?.role.toUpperCase()) ||
+    'vendor';
+  console.log('role in all', Current_User);
+  console.log(SIDEBARITEMS, 'sideeeszfshfuidshuhuidfhviu');
 
   return (
     <div className="sidebar-items">
@@ -65,23 +65,22 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
         {Current_User}
       </span>
       {SIDEBARITEMS?.map((route, index) => {
-        const routeLink = route.link
-        const path = pathname
-        const paths = path.split('/')
-        const link = routeLink.slice(1)
+        const routeLink = route.link;
+        const path = pathname;
+        const paths = path.split('/');
+        const link = routeLink.slice(1);
         const roles = route.roles;
         return roles?.includes(Current_User) ? (
           <React.Fragment key={index}>
             <Link
               to={route?.link}
               onClick={() => handleToggleExpand(route?.label)}
-              className={`item   ${ paths.includes(link) && 'active'}   `}
+              className={`item   ${paths.includes(link) && 'active'}   `}
             >
               <div className="item-left">
                 <div
                   className={` link-icon-stroke-color  ${
-                    paths.includes(link) &&
-                    'link-icon-stroke-color-active'
+                    paths.includes(link) && 'link-icon-stroke-color-active'
                   }`}
                 >
                   {route?.icon}
@@ -94,7 +93,6 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
                   {!collapseSidebar ? t(`${route?.label}`) : null}
                 </p>
               </div>
-        
             </Link>
             {/*<div
               className={`${isExpanded ? 'children_expanded' : 'children'}  `}

@@ -7,7 +7,7 @@ import oneStar from '../../../assets/icons/customerLayout/Sidebar/1-stars.png';
 
 function Sidebar() {
   return (
-    <div className="sidebar">
+    <div className="sidebar-customer">
       <div className="categories sidebar-chunk">
         <h5 className="categories-title sidebar-chunk-title">Categories</h5>
         <ul className="list categories-list">
