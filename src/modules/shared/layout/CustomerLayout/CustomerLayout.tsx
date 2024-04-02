@@ -22,7 +22,6 @@ function CustomerLayout({ children }: MainLayoutProps) {
         <div className="sidebar-container">
           <Sidebar />
         </div>
-
         <div className="outlet">{children}</div>
       </div>
       <div className="footer-container">

@@ -33,7 +33,7 @@ function CustomerNavbar() {
       </select> */}
       <div className="navigation-elements">
         <Link to="/home">Home</Link>
-        <Link to="/products">All Books</Link>
+        <Link to="/books">All Books</Link>
         <NavigationElement>Pages</NavigationElement>
         <NavigationElement>User Account</NavigationElement>
         <NavigationElement>Vendor Account</NavigationElement>
