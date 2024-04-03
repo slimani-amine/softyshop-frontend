@@ -5,12 +5,32 @@ import {
   useParams,
 } from 'react-router-dom';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
+import { ReactComponent as PhoneIcon } from '../../shared/assets/icons/store/phone.svg';
+import { ReactComponent as LocationIcon } from '../../shared/assets/icons/store/location.svg';
+import { ReactComponent as FacebookIcon } from '../../shared/assets/icons/store/facebook.svg';
+import { ReactComponent as XIcon } from '../../shared/assets/icons/store/x.svg';
+import { ReactComponent as YoutubeIcon } from '../../shared/assets/icons/store/youtube.svg';
+import { ReactComponent as InstagramIcon } from '../../shared/assets/icons/store/instagram.svg';
+import Button from '@src/modules/shared/components/Button/Button';
 
 function storeDetails() {
   // const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
   // const navigate = useNavigate();
   const { storeId } = useParams();
-  const [store, setStore] = useState({});
+  const [store, setStore] = useState({
+    id: 0,
+    name: '',
+    phoneNumber: 0,
+    logo: '',
+    isPublished: false,
+    location: '',
+    address: '',
+    socialMediaLinks: '',
+    deletedAt: null,
+    createdAt: '',
+    updatedAt: '',
+    user: null,
+  });
 
   const [products, setProducts] = useState([
     {
@@ -69,7 +89,46 @@ function storeDetails() {
   // console.log(products);
   return (
     <div className="home">
-      <div className="store-card-identification">I am a store</div>
+      <div className="store-card-identification">
+        <div className="background-image"></div>
+        <div className="photo-and-info">
+          <div className="store-profile-photo-wrapper">
+            <img
+              className="store-profile-photo"
+              src={store.logo}
+              height={110}
+              width={110}
+              alt=""
+            />
+          </div>
+          <div className="store-info">
+            <div className="store-name-and-media">
+              <h2 className="store-name">{store.name}</h2>
+              <div className="social-media">
+                <FacebookIcon />
+                <XIcon />
+                <YoutubeIcon />
+                <InstagramIcon />
+              </div>
+            </div>
+            <div className="store-contact">
+              <div className="store-phone-and-location">
+                <div className="store-location">
+                  <LocationIcon className="location-icon" />{' '}
+                  <p className="location">{store.address}</p>
+                </div>
+                <div className="store-location">
+                  <PhoneIcon className="phoneIcon" />{' '}
+                  <p className="location">(+216) {store.phoneNumber}</p>
+                </div>
+              </div>
+              <div className="contact-button">
+                <Button label={'Contact Vendor'} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="books">
         {products.map(
           (
