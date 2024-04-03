@@ -12,11 +12,10 @@ function ProductDetails() {
       image: '',
       rating: '',
       price: 0,
-      brand_id: 0,
-      category_id: 0,
-      availability: 0,
-      store_id: 0,
-      stockNumber: 0,
+      brand: { id: 0, name: '' },
+      category: { id: 0, name: '' },
+      store: { id: 0, name: '' },
+      availability: false,
     },
   ]);
   useEffect(() => {
@@ -24,7 +23,8 @@ function ProductDetails() {
       try {
         // const response = await fetch(`${fake_URL}`);
         const response = await fetch(
-          `${BASE_URL}api/products?search=id:${productId}`
+          // `${BASE_URL}api/products?search=id:${productId}`
+          `${BASE_URL}api/products?id=${productId}`
         );
         const data = await response.json();
         setProduct(data.data.docs);
@@ -38,6 +38,7 @@ function ProductDetails() {
     fetchData();
   }, [BASE_URL]);
   const theProduct = product[0];
+  // console.log(product);
   console.log(theProduct);
 
   return (
@@ -56,11 +57,12 @@ function ProductDetails() {
           <h1 className="product-name">{theProduct.name}</h1>
           <div className="brand-and-category">
             <p className="brand">
-              <span className="brand-title">Brand:</span> {theProduct.brand_id}
+              <span className="brand-title">Brand:</span>{' '}
+              {theProduct?.brand?.name}
             </p>
             <p className="brand">
               <span className="brand-title">category:</span>{' '}
-              {theProduct.category_id}
+              {theProduct?.category?.name}
             </p>
           </div>
 
@@ -68,13 +70,12 @@ function ProductDetails() {
 
           <h2 className="price">${theProduct.price}</h2>
           <p className="stock">
-            Stock {theProduct.availability === 1 ? 'Available' : 'Unavailable'}:{' '}
-            {theProduct.availability === 1 &&
-              `${theProduct.stockNumber} Books Remaining`}
+            Stock {theProduct.availability ? 'Available' : 'Unavailable'}
           </p>
           <Button label={'Add To Cart'} />
           <p className="store">
-            <span className="store-title">Sold By:</span> {theProduct.store_id}{' '}
+            <span className="store-title">Sold By:</span>{' '}
+            {theProduct?.store?.name}
           </p>
         </div>
       </div>
