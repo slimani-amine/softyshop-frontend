@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 
 function ProductDetails() {
   const { productId } = useParams();
+
   const [product, setProduct] = useState([
     {
       id: 0,
@@ -16,8 +17,10 @@ function ProductDetails() {
       category: { id: 0, name: '' },
       store: { id: 0, name: '' },
       availability: false,
+      stockNumber: 0,
     },
   ]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,7 +42,9 @@ function ProductDetails() {
   }, [BASE_URL]);
   const theProduct = product[0];
   // console.log(product);
-  console.log(theProduct);
+  // console.log(theProduct);
+
+  // console.log(theProduct.store.id);
 
   return (
     <>
@@ -70,7 +75,10 @@ function ProductDetails() {
 
           <h2 className="price">${theProduct.price}</h2>
           <p className="stock">
-            Stock {theProduct.availability ? 'Available' : 'Unavailable'}
+            Stock{' '}
+            {theProduct?.availability
+              ? `Available: (${theProduct?.stockNumber} books remaining)`
+              : 'Unavailable'}
           </p>
           <Button label={'Add To Cart'} />
           <p className="store">

@@ -15,7 +15,7 @@ function Home() {
           // const response = await fetch(`${FAKE_URL}`);
           const response = await fetch(`${BASE_URL}api/stores`);
           const data = await response.json();
-          console.log(data);
+          // console.log(data);
           setStores(data?.data?.docs);
         } catch (err: string | unknown) {
           console.log(err);
