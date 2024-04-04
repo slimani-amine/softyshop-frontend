@@ -9,8 +9,8 @@ import {
 } from './authTypes';
 import { clearTokens } from '../utils/token';
 
-export const AUTH_URL = 'https://70da-196-203-25-82.ngrok-free.app/v1/';
-export const BASE_URL = 'http://192.168.3.38:3001/v1/';
+export const AUTH_URL = import.meta.env.VITE_APP_AUTH_URL;
+export const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
 export const login = createAsyncThunk(
   'auth/login',

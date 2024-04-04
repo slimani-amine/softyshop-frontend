@@ -1,9 +1,12 @@
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 import Button from '@src/modules/shared/components/Button/Button';
+import { useAppDispatch } from '@src/modules/shared/store';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { addToCart } from '../data/cartSlice';
 
 function ProductDetails() {
+  const dispatch = useAppDispatch();
   const { productId } = useParams();
 
   const [product, setProduct] = useState([
@@ -46,6 +49,10 @@ function ProductDetails() {
 
   // console.log(theProduct.store.id);
 
+  function handleAddToCart() {
+    dispatch(addToCart(theProduct));
+  }
+
   return (
     <>
       <div className="product-details">
@@ -80,7 +87,7 @@ function ProductDetails() {
               ? `Available: (${theProduct?.stockNumber} books remaining)`
               : 'Unavailable'}
           </p>
-          <Button label={'Add To Cart'} />
+          <Button onClick={handleAddToCart} label={'Add To Cart'} />
           <p className="store">
             <span className="store-title">Sold By:</span>{' '}
             {theProduct?.store?.name}

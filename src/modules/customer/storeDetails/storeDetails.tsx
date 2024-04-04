@@ -62,7 +62,7 @@ function storeDetails() {
     [BASE_URL]
   );
 
-  console.log(store);
+  // console.log(store);
 
   useEffect(
     () => {

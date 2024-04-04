@@ -27,7 +27,9 @@ function AllProducts() {
     // [fake_URL]
     [BASE_URL]
   );
-  console.log(Products);
+
+  // console.log(Products);
+
   return (
     <div className="home">
       {Products?.map(
