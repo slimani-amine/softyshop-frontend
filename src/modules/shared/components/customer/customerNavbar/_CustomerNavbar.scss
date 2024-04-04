@@ -28,14 +28,13 @@
       }
     }
   }
-  .logout {
-    cursor: pointer;
-  }
   .navigation-elements {
     display: flex;
     align-items: center;
     gap: 32px;
-    // justify-content: end;
-    // font-family: __Open_Sans_af7b73, __Open_Sans_Fallback_af7b73;
+
+    .all-customer-books {
+      margin-right: 24px;
+    }
   }
 }

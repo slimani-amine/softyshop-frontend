@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/home/addToCart.svg';
 import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
 import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
 // import { useAppDispatch } from '@src/modules/shared/store';
 // import { addToCart } from '@src/modules/customer/data/cartSlice';
 import { Link } from 'react-router-dom';
+// import { addToCart } from '@src/modules/customer/data/cartSlice';
+// import { useAppDispatch } from '@src/modules/shared/store';
+// import { BASE_URL } from '@src/modules/auth/data/authThunk';
 
 function Product({
   id,
@@ -20,19 +23,44 @@ function Product({
   images: string;
 }) {
   // const dispatch = useAppDispatch();
+  // const [product, setProduct] = useState([]);
   const [showIcons, setShowIcons] = useState(false);
 
-  // function handleAddToCart() {
-  //   dispatch(addToCart(name));
-  // }
-  const lastImage = images.length && JSON.parse(images)[2];
+  const lastImage = images.length && JSON.parse(images)[0];
+
+  function handleAddToCart() {
+    // useEffect(() => {
+    //   console.log('hola');
+    //   const fetchData = async () => {
+    //     try {
+    //       // const response = await fetch(`${fake_URL}`);
+    //       const response = await fetch(
+    //         // `${BASE_URL}api/products?search=id:${productId}`
+    //         `${BASE_URL}api/products?id=${id}`
+    //       );
+    //       const data = await response.json();
+    //       setProduct(data.data.docs);
+    //     } catch (err: string | unknown) {
+    //       console.log(err);
+    //       return err;
+    //     }
+    //   };
+
+    //   fetchData();
+    // }, [BASE_URL]);
+    // const theProduct = product[0];
+
+    // dispatch(addToCart(theProduct));
+    console.log('hola');
+  }
+
   return (
-    <Link to={`${id}`}>
-      <div
-        onMouseEnter={() => setShowIcons(true)}
-        onMouseLeave={() => setShowIcons(false)}
-        className="card"
-      >
+    <div
+      onMouseEnter={() => setShowIcons(true)}
+      onMouseLeave={() => setShowIcons(false)}
+      className="card"
+    >
+      <Link to={`${id}`}>
         <div className="image-wrapper">
           <img
             width={336.75}
@@ -41,13 +69,15 @@ function Product({
             className="image"
           />
         </div>
-        {showIcons && (
-          <>
-            <View className="icons view" />
-            <Wish className="icons wish" />
-          </>
-        )}
-        <div className="product-info-and-buttons">
+      </Link>
+      {showIcons && (
+        <>
+          <View className="icons view" />
+          <Wish className="icons wish" />
+        </>
+      )}
+      <div className="product-info-and-buttons">
+        <Link to={`${id}`}>
           <div className="product-info">
             <p className="name"> {name}</p>
             <div>
@@ -58,17 +88,17 @@ function Product({
             </div>
             <p className="price"> ${price}</p>
           </div>
-          <div className="buttons">
-            <AddToCart
-              // onClick={() => {
-              //   handleAddToCart();
-              // }}
-              className="add"
-            />
-          </div>
+        </Link>
+        <div className="buttons">
+          <AddToCart
+            onClick={() => {
+              handleAddToCart();
+            }}
+            className="add"
+          />
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 

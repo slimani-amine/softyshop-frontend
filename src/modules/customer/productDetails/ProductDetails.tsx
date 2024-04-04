@@ -57,7 +57,7 @@ function ProductDetails() {
     <>
       <div className="product-details">
         <div className="image-wrapper">
-          <img width={400} height={400} className="" src={images[2]} alt="" />
+          <img width={400} height={400} className="" src={images[0]} alt="" />
         </div>
         <div className="product-info">
           <h1 className="product-name">{theProduct.name}</h1>

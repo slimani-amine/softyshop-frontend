@@ -5,6 +5,7 @@ import NavigationElement from './components/navigationElements/NavigationElement
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '@src/modules/shared/store';
 import { logout } from '@src/modules/auth/data/authThunk';
+import Button from '../../Button/Button';
 
 function CustomerNavbar() {
   const dispatch = useAppDispatch();
@@ -33,13 +34,16 @@ function CustomerNavbar() {
       </select> */}
       <div className="navigation-elements">
         <Link to="/home">Home</Link>
-        <Link to="/books">All Books</Link>
-        <NavigationElement>Pages</NavigationElement>
+        <Link to="/books" className="all-customer-books">
+          All Books
+        </Link>
+        {/* <NavigationElement>Pages</NavigationElement>
         <NavigationElement>User Account</NavigationElement>
-        <NavigationElement>Vendor Account</NavigationElement>
-        <p onClick={handleLogout} className="logout">
+        <NavigationElement>Vendor Account</NavigationElement> */}
+        <Button label={'Logout'} onClick={handleLogout}></Button>
+        {/* <p  className="logout">
           logout
-        </p>
+        </p> */}
       </div>
     </div>
   );
