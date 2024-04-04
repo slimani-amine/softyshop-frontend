@@ -36,7 +36,7 @@ function storeDetails() {
     {
       id: 0,
       name: '',
-      image: '',
+      images: '',
       rating: '',
       price: '',
     },
@@ -70,7 +70,7 @@ function storeDetails() {
         try {
           // const response = await fetch(`${FAKE_URL}`);
           const response = await fetch(
-            `${BASE_URL}api/stores/${storeId}/products?page=3`
+            `${BASE_URL}api/stores/${storeId}/products?page=1`
           );
           const data = await response.json();
           // console.log(data.data);
@@ -105,10 +105,18 @@ function storeDetails() {
             <div className="store-name-and-media">
               <h2 className="store-name">{store.name}</h2>
               <div className="social-media">
-                <FacebookIcon />
-                <XIcon />
-                <YoutubeIcon />
-                <InstagramIcon />
+                <a href="#">
+                  <FacebookIcon className="icon" />
+                </a>
+                <a href="#">
+                  <XIcon className="icon" />
+                </a>
+                <a href="#">
+                  <YoutubeIcon className="icon" />
+                </a>
+                <a href="#">
+                  <InstagramIcon className="icon" />
+                </a>
               </div>
             </div>
             <div className="store-contact">
@@ -135,7 +143,7 @@ function storeDetails() {
             {
               id,
               name,
-              image,
+              images,
               //  rating
               price,
             },
@@ -152,7 +160,7 @@ function storeDetails() {
                 name={name}
                 // rating={rating}
                 price={Number(price)}
-                image={image}
+                images={images}
               />
             );
           }

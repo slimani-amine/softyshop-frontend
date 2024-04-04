@@ -13,7 +13,7 @@ function ProductDetails() {
     {
       id: 0,
       name: '',
-      image: '',
+      images: '',
       rating: '',
       price: 0,
       brand: { id: 0, name: '' },
@@ -44,10 +44,10 @@ function ProductDetails() {
     fetchData();
   }, [BASE_URL]);
   const theProduct = product[0];
-  // console.log(product);
-  // console.log(theProduct);
 
-  // console.log(theProduct.store.id);
+  console.log(theProduct);
+  const images = theProduct.images.length && JSON.parse(theProduct?.images);
+  console.log(images);
 
   function handleAddToCart() {
     dispatch(addToCart(theProduct));
@@ -57,13 +57,7 @@ function ProductDetails() {
     <>
       <div className="product-details">
         <div className="image-wrapper">
-          <img
-            width={400}
-            height={400}
-            className=""
-            src={theProduct.image}
-            alt=""
-          />
+          <img width={400} height={400} className="" src={images[2]} alt="" />
         </div>
         <div className="product-info">
           <h1 className="product-name">{theProduct.name}</h1>

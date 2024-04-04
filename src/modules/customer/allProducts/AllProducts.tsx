@@ -37,7 +37,7 @@ function AllProducts() {
           {
             id,
             name,
-            image,
+            images,
             //  rating
             price,
           },
@@ -49,7 +49,7 @@ function AllProducts() {
             name={name}
             // rating={rating}
             price={price}
-            image={image}
+            images={images}
           />
         )
       )}

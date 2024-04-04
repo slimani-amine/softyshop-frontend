@@ -62,6 +62,9 @@
           .social-media {
             display: flex;
             gap: 8px;
+            .icon {
+              cursor: pointer;
+            }
           }
         }
         .store-contact {
