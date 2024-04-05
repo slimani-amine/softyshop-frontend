@@ -28,35 +28,20 @@ function Store({
   // const [showIcons, setShowIcons] = useState(false);
 
   return (
-    <Link to={`${id}`}>
-      <div
-        // onMouseEnter={() => setShowIcons(true)}
-        // onMouseLeave={() => setShowIcons(false)}
-        className="card"
-      >
+    <div className="card">
+      <Link to={`${id}`}>
         <div className="image-wrapper">
           <img width={336.75} height={336.75} src={logo} className="image" />
         </div>
-        {/* {showIcons && (
-          <>
-            <View className="icons view" />
-            <Wish className="icons wish" />
-          </>
-        )} */}
+
         <div className="product-info-and-buttons">
           <div className="store-info">
             <p className="name"> {name}</p>
-            {/* <div className="address">
-            <p className="address-title">Location:</p> {address}
-          </div> */}
-            <div className="contacts">
-              {/* <p className="phone-number">Phone Number: {phoneNumber}</p> */}
-              {/* <Facebook /> */}
-            </div>
+            <div className="contacts"></div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }
 

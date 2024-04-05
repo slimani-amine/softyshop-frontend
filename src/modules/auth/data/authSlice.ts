@@ -40,10 +40,12 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
+      // console.log(2);
       state.error = null;
       state.status = 'loading';
     });
     builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
+      // console.log(3);
       const { accessToken, refreshToken, user } = action.payload.data;
       // console.log(action.payload);
       setTokens(accessToken, refreshToken);

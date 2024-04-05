@@ -16,6 +16,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (query: LoginPayload, { rejectWithValue }) => {
     try {
+      // console.log(1);
       const response = await axiosInstance.post(`${AUTH_URL}auth/login`, query);
 
       if (response.status === 200) {

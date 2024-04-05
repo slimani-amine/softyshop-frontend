@@ -4,7 +4,19 @@ import { ReactComponent as MagnifyingGlass1 } from '../../../assets/icons/custom
 import { ReactComponent as ChevronDownBlack } from '../../../assets/icons/customerLayout/Navbar/chevron-down-black.svg';
 import Logo from '../../../assets/icons/customerLayout/Header/logo-complete.svg';
 import Search from './components/Search';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import { getCart } from '@src/modules/customer/data/cartThunk';
+
 function Header() {
+  const dispatch = useAppDispatch();
+  (async function () {
+    dispatch(getCart());
+  })();
+
+  const myCartItems = useAppSelector((state) => state.cart.cartItems);
+  // const cartId = useAppSelector((state) => state.cart.cartId);
+  // console.log(`cartId: ${cartId}`);
+
   return (
     <div className="header">
       <div className="logo-wrapper">
@@ -33,7 +45,7 @@ function Header() {
         </div>
 
         <span className="cart-items-number">
-          <p>3</p>
+          <p>{myCartItems}</p>
         </span>
       </div>
     </div>

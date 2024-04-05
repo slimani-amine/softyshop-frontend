@@ -3,7 +3,7 @@ import Button from '@src/modules/shared/components/Button/Button';
 import { useAppDispatch } from '@src/modules/shared/store';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { addToCart } from '../data/cartSlice';
+// import { addToCart } from '../data/cartSlice';
 
 function ProductDetails() {
   const dispatch = useAppDispatch();
@@ -45,13 +45,13 @@ function ProductDetails() {
   }, [BASE_URL]);
   const theProduct = product[0];
 
-  console.log(theProduct);
+  // console.log(theProduct);
   const images = theProduct.images.length && JSON.parse(theProduct?.images);
-  console.log(images);
+  // console.log(images);
 
-  function handleAddToCart() {
-    dispatch(addToCart(theProduct));
-  }
+  // function handleAddToCart() {
+  //   dispatch(addToCart(theProduct));
+  // }
 
   return (
     <>
@@ -81,7 +81,10 @@ function ProductDetails() {
               ? `Available: (${theProduct?.stockNumber} books remaining)`
               : 'Unavailable'}
           </p>
-          <Button onClick={handleAddToCart} label={'Add To Cart'} />
+          <Button
+            //  onClick={handleAddToCart}
+            label={'Add To Cart'}
+          />
           <p className="store">
             <span className="store-title">Sold By:</span>{' '}
             {theProduct?.store?.name}
