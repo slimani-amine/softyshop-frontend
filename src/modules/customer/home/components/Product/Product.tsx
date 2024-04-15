@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/home/addToCart.svg';
+import { ReactComponent as RemoveFromCart } from '../../../../shared/assets/icons/home/removeFromCart.svg';
 import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
 import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
 
@@ -67,6 +68,19 @@ function Product({
     setIsLoading(false);
   }
 
+  async function handleRemoveFromCart() {
+    const quantity: any = cart?.find((item: any) => item.product.id == id)
+      ?.quantity;
+    console.log(quantity);
+    if (quantity < 1) return;
+    setIsLoading(true);
+    Promise.all([
+      await dispatch(addToCart({ quantity: quantity - 1, productId: id + '' })),
+      dispatch(getCart()),
+    ]);
+    setIsLoading(false);
+  }
+
   // console.log(myCart);
 
   return (
@@ -105,6 +119,12 @@ function Product({
           </div>
         </Link>
         <button className="buttons" disabled={loading}>
+          <RemoveFromCart
+            className="add"
+            onClick={() => {
+              handleRemoveFromCart();
+            }}
+          />
           <AddToCart
             onClick={() => {
               handleAddToCart();

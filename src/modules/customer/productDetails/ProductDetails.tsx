@@ -1,8 +1,10 @@
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 import Button from '@src/modules/shared/components/Button/Button';
-import { useAppDispatch } from '@src/modules/shared/store';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { addToCart, getCart } from '@src/modules/customer/data/cartThunk';
+
 // import { addToCart } from '../data/cartSlice';
 
 function ProductDetails() {
@@ -45,13 +47,25 @@ function ProductDetails() {
   }, [BASE_URL]);
   const theProduct = product[0];
 
-  // console.log(theProduct);
   const images = theProduct.images.length && JSON.parse(theProduct?.images);
-  // console.log(images);
 
-  // function handleAddToCart() {
-  //   dispatch(addToCart(theProduct));
-  // }
+  const [loading, setIsLoading] = useState(false);
+  const cart = useAppSelector((state) => state.cart.cart);
+
+  async function handleAddToCart() {
+    const quantity: any = cart?.find(
+      (item: any) => item.product.id == theProduct.id
+    )?.quantity;
+    console.log(quantity);
+    setIsLoading(true);
+    Promise.all([
+      await dispatch(
+        addToCart({ quantity: quantity + 1, productId: theProduct.id + '' })
+      ),
+      dispatch(getCart()),
+    ]);
+    setIsLoading(false);
+  }
 
   return (
     <>
@@ -84,7 +98,8 @@ function ProductDetails() {
               : 'Unavailable'}
           </p>
           <Button
-            //  onClick={handleAddToCart}
+            onClick={handleAddToCart}
+            disabled={loading}
             label={'Add To Cart'}
           />
           <p className="store">

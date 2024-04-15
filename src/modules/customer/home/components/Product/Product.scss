@@ -58,6 +58,7 @@
       background-color: #fff;
       display: flex;
       align-items: end;
+      flex-direction: column;
       .add {
         cursor: pointer;
         border: 0.5px solid #e99fab;
