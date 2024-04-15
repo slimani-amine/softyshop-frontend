@@ -24,6 +24,7 @@ function Product({
 }) {
   const dispatch = useAppDispatch();
   const [showIcons, setShowIcons] = useState(false);
+  const [loading, setIsLoading] = useState(false);
 
   const lastImage = images.length && JSON.parse(images)[0];
 
@@ -58,10 +59,12 @@ function Product({
     const quantity: any = cart?.find((item: any) => item.product.id == id)
       ?.quantity;
     console.log(quantity);
+    setIsLoading(true);
     Promise.all([
       await dispatch(addToCart({ quantity: quantity + 1, productId: id + '' })),
       dispatch(getCart()),
     ]);
+    setIsLoading(false);
   }
 
   // console.log(myCart);
@@ -101,14 +104,14 @@ function Product({
             <p className="price"> ${price}</p>
           </div>
         </Link>
-        <div className="buttons">
+        <button className="buttons" disabled={loading}>
           <AddToCart
             onClick={() => {
               handleAddToCart();
             }}
             className="add"
           />
-        </div>
+        </button>
       </div>
     </div>
   );
