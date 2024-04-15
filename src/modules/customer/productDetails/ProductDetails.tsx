@@ -78,7 +78,9 @@ function ProductDetails() {
           <p className="stock">
             Stock{' '}
             {theProduct?.availability
-              ? `Available: (${theProduct?.stockNumber} books remaining)`
+              ? `Available: (${theProduct?.stockNumber} ${
+                  theProduct?.stockNumber == 1 ? 'book' : 'books'
+                }  remaining)`
               : 'Unavailable'}
           </p>
           <Button

@@ -67,6 +67,10 @@
         background-color: #fdf8f9;
         border: 0.5px solid #d23f57;
       }
+      .add:active {
+        opacity: 0.5;
+        transition: all 0.1s;
+      }
     }
   }
 }

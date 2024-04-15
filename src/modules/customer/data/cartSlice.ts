@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCart } from './cartThunk';
+import { getCart, addToCart } from './cartThunk';
 import { StateType } from './cartTypes';
 
 const initialState: StateType = {
@@ -43,8 +43,30 @@ const cartSlice = createSlice({
       state.cartItems = state.cart.length;
       state.cartAmount = payload.payload[0].totalAmount;
       state.cartQuantity = payload.payload[0].totalQuantity;
+
+      console.log(state.status);
     });
     builder.addCase(getCart.rejected, (state, action) => {
+      state.error = action?.payload;
+      state.status = 'failed';
+      // console.log(state.status);
+    });
+    builder.addCase(addToCart.pending, (state) => {
+      state.error = null;
+      state.status = 'loading';
+      // console.log(state.status);
+    });
+    builder.addCase(addToCart.fulfilled, (state, payload) => {
+      state.status = 'succeeded';
+      // console.log(`payload: ${payload.payload}`);
+      // console.log(state.status);
+      // state.cartId = payload.payload[0].id;
+      // state.cart = payload.payload[1];
+      // state.cartItems = state.cart.length;
+      // state.cartAmount = payload.payload[0].totalAmount;
+      // state.cartQuantity = payload.payload[0].totalQuantity;
+    });
+    builder.addCase(addToCart.rejected, (state, action) => {
       state.error = action?.payload;
       state.status = 'failed';
       // console.log(state.status);

@@ -49,12 +49,19 @@ function Product({
   // const theProduct = product[0];
 
   // dispatch(addToCart(theProduct));
+  const cart = useAppSelector((state) => state.cart.cart);
+  // const cartId = useAppSelector((state) => state.cart.cartId);
+  // console.log(`cartId: ${cartId}`);
 
-  const cartId = useAppSelector((state) => state.cart.cartId);
-  console.log(`cartId: ${cartId}`);
-
-  function handleAddToCart() {
-    dispatch(addToCart({ quantity: 1, productId: id }));
+  // console.log(cart);
+  async function handleAddToCart() {
+    const quantity: any = cart?.find((item: any) => item.product.id == id)
+      ?.quantity;
+    console.log(quantity);
+    Promise.all([
+      await dispatch(addToCart({ quantity: quantity + 1, productId: id + '' })),
+      dispatch(getCart()),
+    ]);
   }
 
   // console.log(myCart);

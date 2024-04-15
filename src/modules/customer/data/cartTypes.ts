@@ -11,6 +11,7 @@ export interface ItemType {
   reviews: string[];
   stockNumber: number;
   store: { id: number; name: string };
+  quantity: number;
 }
 export interface StateType {
   cartId: number;
@@ -23,5 +24,5 @@ export interface StateType {
 }
 export interface addToCartPayload {
   quantity: number;
-  productId: number;
+  productId: string;
 }
