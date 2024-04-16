@@ -52,6 +52,13 @@ export const SIDEBARITEMS = [
     roles : ["VENDOR","ADMIN"]
    
   },
+  {
+    link:  "/orders/create",
+    label: "Create Order",
+    icon: <StoreIcon />,
+    roles : ["ADMIN","VENDOR"],
+    
+  },
 
 
 ];

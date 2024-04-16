@@ -26,7 +26,7 @@ export default function CategoryList() {
   const [pageSize, setPageSize] = useState(5);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
-  const [nameCategory, setNameCategory] = useState<string>('');
+  const [nameCategory, setNameCategory] = useState<string>('a');
   const { data: fetchedCategories } = useCategoriesQuery({
     perPage: pageSize,
     page: currentPage,
