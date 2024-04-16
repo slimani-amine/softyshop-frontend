@@ -24,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           gutter={12}
           containerStyle={{ margin: '8px' }}
           toastOptions={{
-            success: { duration: 3000 },
+            success: { duration: 4000 },
             error: { duration: 5000 },
             style: {
               fontSize: '16px',
