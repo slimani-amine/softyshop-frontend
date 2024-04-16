@@ -4,9 +4,8 @@ import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { addToCart, getCart } from '@src/modules/customer/data/cartThunk';
-import { ReactComponent as AddToCart } from '../../shared/assets/icons/home/addToCart.svg';
-import { ReactComponent as RemoveFromCart } from '../../shared/assets/icons/home/removeFromCart.svg';
-import { setQuarter } from 'date-fns';
+import { ReactComponent as AddToCart } from '../../shared/assets/icons/home/add-product-details.svg';
+import { ReactComponent as RemoveFromCart } from '../../shared/assets/icons/home/removeProductDetails.svg';
 
 // import { addToCart } from '../data/cartSlice';
 
