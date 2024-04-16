@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import { Form, Button as ButtonAnt, Upload, Divider, Row, Col, Input, message, Select, Space } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
 import {useAllvendorsQuery } from "@src/modules/vendores/services/vendorApi";
 import { MinusCircleOutlined } from "@ant-design/icons";
-import getPlaceName from "@src/modules/shared/utils/getPlace";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
 
 
@@ -22,6 +21,7 @@ interface EditShopFormProps {
 
 const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
   const [files, setFile] = useState<any>(null);
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const { id } = useParams<{ id: string }>();
   const [form] = Form.useForm();
@@ -56,7 +56,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
         handleClick(lat, lng);
       }
     });
-  
+    console.log(map)
     return null;
   };
 
@@ -79,6 +79,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
     
       const response = await updateStore({ id: fetchedStore.data.id, data});
       message.success("Shop updated successfully");
+      console.log(response)
       onFinish();
     } catch (error) {
       console.error("Error updating shop", error);

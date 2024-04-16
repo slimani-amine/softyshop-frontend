@@ -1,11 +1,9 @@
-.parent-container-order{
-    width:1000px !important;
-}
+
 .create-order-container{
     background-color: #fff;
     border-radius: 8px;
     padding: 24px;
-    width: 1600px !important;
+    width: 1200px !important;
 }
 .ant-select-selector{
     height: 40px !important;
@@ -13,6 +11,7 @@
 .form-content{
     display: flex;
     gap: 40px;
+    
 }
 .order-item {
     width: 280px;
@@ -21,7 +20,7 @@
     position: relative;
     margin-bottom: 20px;
     align-items: center;
-    border-bottom: rgba(0, 0, 0, 0.328) solid 1px ;
+    border-bottom: #34548068 solid 1px ;
     gap: 30px;
     img{
         height: 40px;
@@ -72,3 +71,7 @@
     }
     
 }
+.label-order{
+font-size: 16px !important;
+padding-bottom: 30px !important;
+font-weight: 600;}

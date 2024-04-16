@@ -1,10 +1,10 @@
-import { Table, Space, Button as AntButton, message, Modal, Switch, Checkbox } from "antd";
+import { Table, Space, message, Checkbox } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react"; // Import useState hook for managing modal state
 import { debounce } from "lodash";
-import {useCreatorsQuery,useAllCreatorsQuery, useSearchCreatorQuery,useUpdateCreatorMutation,useDeleteCreatorMutation ,useDeleteCreatorsMutation,useCreateCreatorMutation,useCreatorQuery}  from "../../service/creatorApi";
+import {useCreatorsQuery, useSearchCreatorQuery ,useDeleteCreatorsMutation}  from "../../service/creatorApi";
 
 
 export default function CreatorsList() {
@@ -13,16 +13,14 @@ export default function CreatorsList() {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
   
-  const [namecreator, setNamecreator] = useState<string>('');
+  const [namecreator, setNamecreator] = useState<string>('a');
   const { data: fetchedcreators } = useCreatorsQuery({
     perPage: pageSize,
     page: currentPage,
   });;
   const [deletecreators] = useDeleteCreatorsMutation()
-  const [deletecreator] = useDeleteCreatorMutation();
-  const [updatecreator] = useUpdateCreatorMutation()
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State to manage modal visibility
-  const [deletecreatorId, setDeletecreatorId] = useState<number | null>(null); // State to store creator ID for deletion
+  
+ 
   const { data: fetchedSearchcreators } = useSearchCreatorQuery(namecreator);
   const [creators, setcreators] = useState<Array<any>>([]);
   const handlePaginationChange = (page: number, pageSize?: number) => {
@@ -59,7 +57,6 @@ export default function CreatorsList() {
     try {
       await deletecreators(selectedRowIds).unwrap();
       message.success('creator deleted!');
-      setDeleteModalVisible(false); // Close the modal after successful deletion
     } catch (error) {
       // Handle error
     }

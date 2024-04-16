@@ -19,7 +19,7 @@ export const renderRoutes = (routes: RouteConfig[] = []) => {
   const Current_User =
     useSelector(
       (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
-    ) || 'vendor';
+    ) || 'admin';
   //  console.log(Current_User)
   return (
     <Suspense fallback={<LazyLoad />}>
@@ -31,7 +31,7 @@ export const renderRoutes = (routes: RouteConfig[] = []) => {
           const roles = route?.roles;
           const allowedRoles = roles && roles.includes(Current_User);
           // console.log(Current_User)
-          // console.log(allowedRoles)
+           console.log(allowedRoles)
 
           if (true) {
             return (

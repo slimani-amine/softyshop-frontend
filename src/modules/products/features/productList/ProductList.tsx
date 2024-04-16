@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from "react";
-import { Table, Space, Button as AntButton, Switch, Pagination, Checkbox, Select } from "antd";
+import {  useState } from "react";
+import { Table, Space, Switch, Checkbox, Select } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
-import { useNavigate } from "react-router-dom";
-import { useProductsQuery , useDeleteProductsMutation, useMyProductsQuery  } from "../../service/productApi";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useProductsQuery , useDeleteProductsMutation } from "../../service/productApi";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
@@ -23,7 +23,7 @@ interface Product {
 export default function ProductList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
-  const [selectedStore, setSelectedStore] = useState<string>();
+  const [, setSelectedStore] = useState<string>();
 
   const [pageSize, setPageSize] = useState(5);
   const navigate = useNavigate();
@@ -44,11 +44,11 @@ export default function ProductList() {
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
-
-  const { data: fetchedProducts, error, isLoading } = useProductsQuery({
+  const { data: fetchedProducts, isLoading } = useProductsQuery({
     perPage: pageSize,
     page: currentPage,
   });
+  console.log(fetchedProducts , 'fetcheddddd products')
   // get stores base to ROLE
   let stores = [];
   if (Current_User === "VENDOR") {
@@ -65,13 +65,12 @@ export default function ProductList() {
   }));
   ////////////////////////////////////////////////////////
 
-  const { data: fetchedProductsOfStore } = useMyProductsQuery({
-    id: selectedStore,
-    perPage: pageSize,
-    page: currentPage,
-  });
-  const productsnew =fetchedProductsOfStore?.data
-
+  // const { data: fetchedProductsOfStore } = useMyProductsQuery({
+  //   id: selectedStore,
+  //   perPage: pageSize,
+  //   page: currentPage,
+  // });
+  
   console.log(fetchedProducts);
   const products = fetchedProducts?.data.docs || [];
   console.log(products , 'producst')
@@ -143,7 +142,7 @@ export default function ProductList() {
       key: "published",
 
       sorter: (a: Product, b: Product) => (a.published ? 1 : 0) - (b.published ? 1 : 0),
-      render: (published: boolean, record: any) => (
+      render: (published: boolean) => (
         <Switch
           checked={published}
           onChange={(checked) => console.log(checked)}
@@ -154,7 +153,7 @@ export default function ProductList() {
     {
       title: "Action",
       key: "action",
-      render: () => (
+      render: (record : any) => (
         <Space size="middle">
           <div className="icon-action" onClick={() => Navigate(record?.id)}>
             <svg
@@ -194,12 +193,12 @@ export default function ProductList() {
   ];
 
   const tableProps = {
-    dataSource: productsnew,
+    dataSource: fetchedProducts?.data?.docs,
     columns: columns,
     headerStyle: { backgroundColor: "lightblue" },
     // Set the pageSize in pagination config
     pagination: {
-      total: fetchedProducts?.data.meta.totalPages,
+      total: 5,
       current: currentPage,
       pageSize: pageSize,
       onChange: handlePaginationChange, // Handle page change event
@@ -220,7 +219,7 @@ export default function ProductList() {
       <div className="header-Product-list">
         <SeachFilter
           placeholder={"Search Product.."}
-          onSearchChange={function (text: string): void {
+          onSearchChange={function (_text: string): void {
             throw new Error("Function not implemented.");
           }}
         />
