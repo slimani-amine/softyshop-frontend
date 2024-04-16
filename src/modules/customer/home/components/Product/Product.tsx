@@ -3,14 +3,14 @@ import {
   useState,
 } from 'react';
 import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/home/addToCart.svg';
-import { ReactComponent as RemoveFromCart } from '../../../../shared/assets/icons/home/removeFromCart.svg';
+//import { ReactComponent as RemoveFromCart } from '../../../../shared/assets/icons/home/removeFromCart.svg';
 import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
 import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 // import { addToCart } from '@src/modules/customer/data/cartSlice';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { BASE_URL } from '@src/modules/auth/data/authThunk';
+//import { BASE_URL } from '@src/modules/auth/data/authThunk';
 import { addToCart, getCart } from '@src/modules/customer/data/cartThunk';
 
 function Product({

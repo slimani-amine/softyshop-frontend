@@ -171,14 +171,13 @@ const OrderForm: FC<OrderFormProps> = () => {
               <Form.Item>
               <Row gutter={[4, 0]} className="name-Shop">
                 <Col span={3}>
-              <label className="label-order" htmlFor="products-search" >phoneNumber: </label>
+              <label className="label-order" htmlFor="products-search" >Adress: </label>
               <Form.Item
                 name="phoneNumber"
                 style={{ marginBottom: 0 , width:"280px"  }}
                 rules={[
-                  { required: true, message: "Please enter phone number" },
+                  { required: true, message: "Please enter adress" },
                   { min: 8, message: "Phone number must be at least 8 characters long" },
-                  { pattern: /^\d+$/, message: "Phone number must contain only numbers" }
                 ]}              >
                 <Input size="small" placeholder="Phone Number" className="input-custom" />
               </Form.Item>
