@@ -6,7 +6,7 @@ import {
   Row,
   Col,
   Input,
-  Checkbox,
+
   message,
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
@@ -22,6 +22,7 @@ const UpdateVendorForm: FC = () => {
   const [form] = Form.useForm();
   const { id } = useParams<{ id: string }>(); // Assuming useParams returns an object with 'id' property
   const [files, setFile] = useState<any>(null);
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [updateVendor, isError] = useUpdateVendorMutation();
   const { data: fetchVendor, isLoading } = useVendorQuery(id);
@@ -57,6 +58,7 @@ const UpdateVendorForm: FC = () => {
           picture: selectedFileUrl,
         },
       });
+      console.log(response)
       if (isError) {
         // Handle error if isError is true
         console.log(isError);

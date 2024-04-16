@@ -18,6 +18,7 @@ interface AddCategoryFormProps {
 
 const AddCategoryForm: FC<AddCategoryFormProps> = () => {
   const [files, setFile] = useState<any>(null);
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [createCategory] = useCreateCategoryMutation();
@@ -33,6 +34,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
         icon: selectedFileUrl,
         isPublished: objectPost.isPublished === 'on' ? true : false,
       });
+      console.log(response)
 
       // Reset form fields and validation status
       form.resetFields();

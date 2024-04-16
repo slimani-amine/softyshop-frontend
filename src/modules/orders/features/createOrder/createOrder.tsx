@@ -1,8 +1,6 @@
 import { FC, useState } from "react";
 import {
-  Form,
-  Button as ButtonAnt,
-
+  Form,  
   Row,
   Col,
   Input,
@@ -16,7 +14,7 @@ import SearchSpecific from "@src/modules/shared/components/SearchSpecific/Search
 
 import FormItem from "antd/es/form/FormItem";
 
-import { useProductsQuery } from "@src/modules/products/service/productApi";
+import {useProductsQuery } from "@src/modules/products/service/productApi";
 import {useUsersQuery} from "@src/modules/vendores/services/vendorApi"
 
 
@@ -26,10 +24,9 @@ interface OrderFormProps {
 
 const OrderForm: FC<OrderFormProps> = () => {
   const [form] = Form.useForm();
-  const [fields, setFields] = useState<string[]>([""]);
 
-  const [pageSize, setPageSize] = useState(5);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(5);
+  const [currentPage] = useState(1);
   const [products, setProducts] = useState<string[]>([]);
 
  
@@ -41,7 +38,7 @@ const OrderForm: FC<OrderFormProps> = () => {
   const users_option = allUsers?.map((user:any)=>({label : user.email , value:user.id}))
 
   console.log(fetchedUsers)
-  const { data: fetchedProducts, error, isLoading } = useProductsQuery({
+  const { data: fetchedProducts} = useProductsQuery({
     perPage: pageSize,
     page: currentPage,
   });
@@ -55,15 +52,13 @@ const OrderForm: FC<OrderFormProps> = () => {
 
  
 
-  const removeField = (index: number) => {
-    const newFields = [...fields];
-    newFields.splice(index, 1);
-    setFields(newFields);
-  };
+ 
+  
 
   const handleSaveClick = async () => {
     try {
       const values = await form.validateFields();
+      console.log(values)
      
       form.resetFields();
      
@@ -90,21 +85,16 @@ const OrderForm: FC<OrderFormProps> = () => {
   const Onchange = (value: string) => {
     const product = getProductById(value);
     // Check if the product already exists in the list
-    if (!products.find((prod) => prod.id === product.id)) {
+    if (!products.find((prod:any) => prod.id === product.id)) {
       setProducts([...products, product]);
     }
   };
-interface Product {
-  imageUrl: string;
-  name : String,
-  price : Number,
-  images : string
-}
+
 
   return (
     <div className="">
       <div className="parent-container-order">
-        <h1 className="title">Add New Order</h1>
+        <h1 className="title">Create Order</h1>
         <div className="create-order-container">
             
           <Form form={form} className="form-shop">
@@ -113,14 +103,14 @@ interface Product {
               <FormItem name='products-search'>
               <Row gutter={[3, 0]} className="name-Shop">
                 <Col span={3}>
-                  <label htmlFor="products-search" >Product:</label>
+                  <label className="label-order" htmlFor="products-search" >Product:</label>
                   <SearchSpecific options={products_option}  onChange={ Onchange}  />
                 </Col>
               </Row>
               </FormItem>
             
                 <Form.Item className="product-selected">
-                {products.map((product,index) => {
+                {products.map((product : any,index) => {
                       const imagesArray = JSON.parse(product.images);
 
                       console.log(imagesArray)
@@ -147,29 +137,60 @@ interface Product {
               <Form.Item>
               <Row gutter={[4, 0]} className="name-Shop">
                 <Col span={3}>
-              <label htmlFor="products-search" >Email: </label>
+              <label className="label-order" htmlFor="products-search" >Email: </label>
 
-              <SearchSpecific options={users_option} onChange={function (value: string): void {
+              <SearchSpecific options={users_option} onChange={function (_value: string): void {
+                
                     throw new Error("Function not implemented.");
                   } }  />
                   </Col>
-                  <Col span={3}>
-                  <Form.Item
+               
+                </Row>
+              </Form.Item>
+              <Form.Item>
+              <Row gutter={[4, 0]} className="name-Shop">
+                <Col span={3}>
+              <label className="label-order" htmlFor="products-search" >phoneNumber: </label>
+              <Form.Item
                 name="phoneNumber"
-                style={{ marginBottom: 0 }}
+                style={{ marginBottom: 0 , width:"280px"  }}
                 rules={[
                   { required: true, message: "Please enter phone number" },
                   { min: 8, message: "Phone number must be at least 8 characters long" },
                   { pattern: /^\d+$/, message: "Phone number must contain only numbers" }
                 ]}              >
-                <Input size="large" placeholder="Phone Number" className="input-custom" />
+                <Input size="small" placeholder="Phone Number" className="input-custom" />
               </Form.Item>
-
+              
 
               
                   </Col>
-                  </Row>
+               
+                </Row>
               </Form.Item>
+              <Form.Item>
+              <Row gutter={[4, 0]} className="name-Shop">
+                <Col span={3}>
+              <label className="label-order" htmlFor="products-search" >phoneNumber: </label>
+              <Form.Item
+                name="phoneNumber"
+                style={{ marginBottom: 0 , width:"280px"  }}
+                rules={[
+                  { required: true, message: "Please enter phone number" },
+                  { min: 8, message: "Phone number must be at least 8 characters long" },
+                  { pattern: /^\d+$/, message: "Phone number must contain only numbers" }
+                ]}              >
+                <Input size="small" placeholder="Phone Number" className="input-custom" />
+              </Form.Item>
+              
+
+              
+                  </Col>
+               
+                </Row>
+              </Form.Item>
+
+              
               
 
             </div>

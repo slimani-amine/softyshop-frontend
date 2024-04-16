@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Form, Upload, Divider, Row, Col, Input, Checkbox, message } from "antd";
+import { Form, Upload, Divider, Row, Col, Input, message } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useCreateVendorMutation } from "../../services/vendorApi";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
@@ -7,19 +7,17 @@ import { handleFileChange } from "@src/modules/shared/utils/upload";
 const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
   const [form] = Form.useForm();
   const [createVendor] = useCreateVendorMutation();
-  const [generatedPassword, setGeneratedPassword] = useState<string>('');
+  const [, setGeneratedPassword] = useState<string>('');
   const [files, setFile] = useState<any>(null);
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
-  const [isVerified, setIsVerified] = useState(false); // Assuming initially it's false
-  const handleCheckboxChange = (e:any) => {
-    setIsVerified(e.target.checked);
-  };
+
+
   const handleSaveClick = async () => {
     try {
       const values = await form.validateFields();
       const objectPost = { ...values };
       console.log(objectPost,'object post')
-      console.log(isVerified)
       const response = await createVendor({
         "firstName": objectPost.name,
         "lastName": objectPost.lastName,
@@ -30,7 +28,7 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
         "password": objectPost.password,
         "verifyPassword": objectPost.password,
       });
-
+      console.log(response)
       form.resetFields();
       message.success('Vendor saved successfully');
     } catch (error) {
@@ -41,6 +39,7 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
 
   const handleGeneratePassword = () => {
     const generatedPassword = generatePassword();
+    console.log(generatePassword)
     form.setFieldsValue({ password: generatedPassword });
     setGeneratedPassword(generatedPassword);
   };

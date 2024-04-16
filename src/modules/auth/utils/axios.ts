@@ -1,3 +1,4 @@
+import { AUTH_URL } from '../data/authThunk';
 import { clearTokens, getTokens, setTokens } from './token';
 import axios from 'axios';
 
@@ -34,7 +35,7 @@ axiosInstance.interceptors.response.use(
       previousRequest.sent = true;
       try {
         const { refreshToken } = getTokens();
-        const response = await axios.get(baseURL + '/api/auth/refresh', {
+        const response = await axios.get(AUTH_URL + '/api/auth/refresh', {
           headers: {
             Authorization: `Bearer ${refreshToken}`,
           },

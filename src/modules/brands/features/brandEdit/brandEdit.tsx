@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 import { useUpdateBrandMutation, useBrandQuery } from "../../service/brandApi";
 import {
@@ -21,6 +21,7 @@ interface AddBrandFormProps {
 
 const EditBrandForm: FC<AddBrandFormProps> = () => {
   const [files, setFile] = useState<any>(null);
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [updateBrand] = useUpdateBrandMutation();

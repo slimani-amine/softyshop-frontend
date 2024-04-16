@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import Spinner from '@src/modules/shared/components/Spinner/Spinner';
 import {
   useUpdateCatgoryMutation,
@@ -25,6 +25,7 @@ interface AddCategoryFormProps {
 
 const EditCategoryForm: FC<AddCategoryFormProps> = () => {
   const [files, setFile] = useState<any>(null);
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [updateCategory] = useUpdateCatgoryMutation();

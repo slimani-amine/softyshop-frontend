@@ -28,8 +28,8 @@ interface AddProductFormProps {
   onFinish: (values: any) => void;
 }
 
-const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
-  const { data: fetchedCatgeories, isLoading } = useAllCategoriesQuery();
+const AddProductForm: FC<AddProductFormProps> = () => {
+  const { data: fetchedCatgeories} = useAllCategoriesQuery();
   const categories = fetchedCatgeories?.data.docs || [];
   const selectOptionsCategories = categories.map((cat: any) => ({
     label: cat.name,
@@ -52,7 +52,7 @@ const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
 
   const [files, setFile] = useState<any>(null);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
-
+  console.log(files)
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
@@ -100,6 +100,7 @@ const AddProductForm: FC<AddProductFormProps> = ({ onFinish }) => {
         id: values.store,
         newProduct: product,
       });
+      console.log(response)
       form.resetFields();
     } catch (error) {
       console.error('Error saving product', error);

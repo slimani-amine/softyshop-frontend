@@ -10,11 +10,7 @@ function Store({
   id,
   name,
   logo,
-  phoneNumber,
-  isPublished,
-  location,
-  address,
-  socialMediaLinks,
+ 
 }: {
   id: number;
   name: string;
