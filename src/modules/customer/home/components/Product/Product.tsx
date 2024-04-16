@@ -3,7 +3,7 @@ import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/hom
 import { ReactComponent as RemoveFromCart } from '../../../../shared/assets/icons/home/removeFromCart.svg';
 import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
 import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
-
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 // import { addToCart } from '@src/modules/customer/data/cartSlice';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
@@ -66,6 +66,7 @@ function Product({
       dispatch(getCart()),
     ]);
     setIsLoading(false);
+    toast.success('Product successfully added to cart.');
   }
 
   async function handleRemoveFromCart() {
@@ -119,12 +120,12 @@ function Product({
           </div>
         </Link>
         <button className="buttons" disabled={loading}>
-          <RemoveFromCart
+          {/* <RemoveFromCart
             className="add"
             onClick={() => {
               handleRemoveFromCart();
             }}
-          />
+          /> */}
           <AddToCart
             onClick={() => {
               handleAddToCart();

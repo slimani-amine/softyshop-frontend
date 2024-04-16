@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { addToCart, getCart } from '@src/modules/customer/data/cartThunk';
 import { ReactComponent as AddToCart } from '../../shared/assets/icons/home/addToCart.svg';
 import { ReactComponent as RemoveFromCart } from '../../shared/assets/icons/home/removeFromCart.svg';
+import { setQuarter } from 'date-fns';
 
 // import { addToCart } from '../data/cartSlice';
 
@@ -54,11 +55,17 @@ function ProductDetails() {
   const [loading, setIsLoading] = useState(false);
   const cart = useAppSelector((state) => state.cart.cart);
 
-  let quantity: any = cart?.find(
-    (item: any) => item.product.id == theProduct.id
-  )?.quantity;
+  const [quantity, setQuantity] = useState<number>(0);
 
-  if (quantity == undefined) quantity = 0;
+  useEffect(
+    function () {
+      setQuantity(
+        cart?.find((item: any) => item.product.id == theProduct.id)?.quantity ||
+          0
+      );
+    },
+    [setQuantity, cart]
+  );
 
   async function handleAddToCart() {
     console.log(quantity);
