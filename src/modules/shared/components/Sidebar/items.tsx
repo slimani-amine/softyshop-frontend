@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { ReactComponent as ProductIcon } from "../../assets/icons/sidebar/Product.svg";
+import { ReactComponent as ProductIcon } from "../../assets/icons/sidebar/product.svg";
 import { ReactComponent as CatergoryIcon } from "../../assets/icons/sidebar/catergory.svg";
 import { ReactComponent as BrandIcon } from "../../assets/icons/sidebar/brand.svg";
 import { ReactComponent as StoreIcon } from "../../assets/icons/sidebar/bookstore.svg";
