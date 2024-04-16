@@ -3,21 +3,21 @@ import {
   createApi,
   fetchBaseQuery,
   retry,
-} from "@reduxjs/toolkit/query/react";
-import axiosInstance from "@src/modules/auth/utils/axios";
-import { clearTokens, setTokens } from "@src/modules/auth/utils/token";
-import { CategoryApi } from "@src/modules/categories/service/categoryApi";
+} from '@reduxjs/toolkit/query/react';
+import axiosInstance from '@src/modules/auth/utils/axios';
+import { clearTokens, setTokens } from '@src/modules/auth/utils/token';
+import { CategoryApi } from '@src/modules/categories/service/categoryApi';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://192.168.3.38:3001/v1/",
+  baseUrl: 'http://192.168.3.39:3001/v1/',
   // Add headers here
   prepareHeaders: (headers, { getState }) => {
     // You can add any headers you need here
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem('accessToken');
     if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
+      headers.set('Authorization', `Bearer ${token}`);
     }
-    headers.set("Content-Type", "application/json");
+    headers.set('Content-Type', 'application/json');
     return headers;
   },
 });
@@ -29,14 +29,14 @@ const staggeredBaseQueryWithBailOut = retry(
     if (result.error) {
       if (result.error.status === 401) {
         try {
-          const response = await axiosInstance.get("/auth/refresh");
+          const response = await axiosInstance.get('/auth/refresh');
           const { accessToken } = response.data.payload;
           setTokens(accessToken);
 
           const retryResult = await baseQuery(args, api, extraOptions);
           return retryResult;
         } catch (err) {
-          window.location.replace("/");
+          window.location.replace('/');
           return result;
         }
       }
@@ -50,20 +50,20 @@ const staggeredBaseQueryWithBailOut = retry(
 const baseQueryWithRetry = staggeredBaseQueryWithBailOut;
 
 export const api = createApi({
-  reducerPath: "api",
+  reducerPath: 'api',
   baseQuery: baseQueryWithRetry,
   tagTypes: [
-    "Categories",
-    "brands",
-    "brand",
-    "products",
-    "creators",
-    "creator",
-    "category",
-    "stores",
-    "store",
-    "vendors",
-    "vendor",
+    'Categories',
+    'brands',
+    'brand',
+    'products',
+    'creators',
+    'creator',
+    'category',
+    'stores',
+    'store',
+    'vendors',
+    'vendor',
   ],
   endpoints: () => ({}),
 });

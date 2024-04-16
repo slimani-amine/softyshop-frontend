@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState } from 'react';
 import {
   Form,
   Upload,
@@ -8,10 +8,10 @@ import {
   Input,
   Checkbox,
   message,
-} from "antd";
-import Button from "@src/modules/shared/components/Button/Button";
-import { useCreateCategoryMutation } from "../../service/categoryApi";
-import { handleFileChange } from "@src/modules/shared/utils/upload";
+} from 'antd';
+import Button from '@src/modules/shared/components/Button/Button';
+import { useCreateCategoryMutation } from '../../service/categoryApi';
+import { handleFileChange } from '@src/modules/shared/utils/upload';
 interface AddCategoryFormProps {
   onFinish: (values: any) => void;
 }
@@ -24,22 +24,22 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
   const handleSaveClick = async () => {
     try {
       console.log(selectedFileUrl);
-      
+
       const values = await form.validateFields(); // Validate form fields
       const objectPost = { ...values };
       // Create category
       const response = await createCategory({
         name: objectPost.name,
         icon: selectedFileUrl,
-        isPublished: objectPost.isPublished === "on" ? true : false,
+        isPublished: objectPost.isPublished === 'on' ? true : false,
       });
 
       // Reset form fields and validation status
       form.resetFields();
-      message.success("Category saved successfully");
+      message.success('Category saved successfully');
     } catch (error) {
-      console.error("Error saving category", error);
-      message.error("Error saving category");
+      console.error('Error saving category', error);
+      message.error('Error saving category');
     }
   };
 
@@ -60,7 +60,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
                 name="name"
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { required: true, message: "Please enter Category name" },
+                  { required: true, message: 'Please enter Category name' },
                 ]}
               >
                 <Input
@@ -74,7 +74,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
           <Form.Item
             className="upload-images"
             name="images"
-            rules={[{ required: true, message: "Picture of Category!" }]}
+            rules={[{ required: true, message: 'Picture of Category!' }]}
           >
             <Upload.Dragger
               className="drag-images"
@@ -82,11 +82,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
               accept="image/*"
               maxCount={1} // set maxCount to 1 for single image
               onChange={(e: any) =>
-                handleFileChange(
-                  e,
-                  setFile,
-                  setSelectedFileUrl,
-                )
+                handleFileChange(e, setFile, setSelectedFileUrl)
               }
               beforeUpload={() => false}
             >
@@ -102,7 +98,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
           </Form.Item>
           <Form.Item name="isPublished">
             <div className="feutured">
-              <Checkbox /> <span>Featured category</span>
+              <Checkbox /> <span>Publish category</span>
             </div>
           </Form.Item>
           <Form.Item>
