@@ -57,8 +57,8 @@ function Product({
 
   // console.log(cart);
   async function handleAddToCart() {
-    const quantity: any = cart?.find((item: any) => item.product.id == id)
-      ?.quantity;
+    const quantity: any =
+      cart?.find((item: any) => item.product.id == id)?.quantity || 0;
     console.log(quantity);
     setIsLoading(true);
     Promise.all([
