@@ -5,10 +5,10 @@ import {
   retry,
 } from '@reduxjs/toolkit/query/react';
 import axiosInstance from '@src/modules/auth/utils/axios';
-import {  setTokens } from '@src/modules/auth/utils/token';
+import { setTokens } from '@src/modules/auth/utils/token';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://192.168.3.39:3001/v1/',
+  baseUrl: import.meta.env.VITE_APP_BASE_URL,
   // Add headers here
   prepareHeaders: (headers) => {
     // You can add any headers you need here

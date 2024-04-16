@@ -1,7 +1,7 @@
 @forward './shared';
 @forward './auth';
 @forward './dashboard';
-@forward './Products';
+@forward './products';
 @forward './categories';
 @forward './bookStores/index.scss';
 @forward './customer/home/index.scss';
@@ -9,4 +9,4 @@
 @forward './customer/productDetails/ProductDetails.scss';
 @forward './bookStores/index.scss';
 @forward './vendores/index.scss';
-@forward './orders/index.scss'
+@forward './orders/index.scss';
