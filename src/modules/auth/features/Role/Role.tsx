@@ -11,7 +11,7 @@ import { useAppSelector } from '@src/modules/shared/store';
 
 function Role() {
   const dispatch = useDispatch();
-  const role: string = useSelector((state: initialStateType) => state.role);
+  const role: any = useSelector((state: initialStateType) => state.role);
   const navigate = useNavigate();
   // const { pathname } = useLocation();
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
