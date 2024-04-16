@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { addToCart, getCart } from '@src/modules/customer/data/cartThunk';
+import { ReactComponent as AddToCart } from '../../shared/assets/icons/home/addToCart.svg';
+import { ReactComponent as RemoveFromCart } from '../../shared/assets/icons/home/removeFromCart.svg';
 
 // import { addToCart } from '../data/cartSlice';
 
@@ -52,15 +54,29 @@ function ProductDetails() {
   const [loading, setIsLoading] = useState(false);
   const cart = useAppSelector((state) => state.cart.cart);
 
+  const quantity: any = cart?.find(
+    (item: any) => item.product.id == theProduct.id
+  )?.quantity;
+
   async function handleAddToCart() {
-    const quantity: any = cart?.find(
-      (item: any) => item.product.id == theProduct.id
-    )?.quantity;
     console.log(quantity);
     setIsLoading(true);
     Promise.all([
       await dispatch(
         addToCart({ quantity: quantity + 1, productId: theProduct.id + '' })
+      ),
+      dispatch(getCart()),
+    ]);
+    setIsLoading(false);
+  }
+
+  async function handleRemoveFromCart() {
+    console.log(quantity);
+    if (quantity < 1) return;
+    setIsLoading(true);
+    Promise.all([
+      await dispatch(
+        addToCart({ quantity: quantity - 1, productId: theProduct.id + '' })
       ),
       dispatch(getCart()),
     ]);
@@ -97,11 +113,33 @@ function ProductDetails() {
                 }  remaining)`
               : 'Unavailable'}
           </p>
-          <Button
-            onClick={handleAddToCart}
-            disabled={loading}
-            label={'Add To Cart'}
-          />
+          {quantity == 0 && (
+            <Button
+              onClick={handleAddToCart}
+              disabled={loading}
+              label={'Add To Cart'}
+            />
+          )}
+          {quantity > 0 && (
+            <div className="buttons-product-details">
+              <RemoveFromCart
+                className="add-product-details"
+                onClick={() => {
+                  handleRemoveFromCart();
+                }}
+              />
+              <p className="quantity">
+                {quantity <= 9 ? `0${quantity}` : quantity}
+              </p>
+              <AddToCart
+                onClick={() => {
+                  handleAddToCart();
+                }}
+                className="add-product-details"
+              />
+            </div>
+          )}
+
           <p className="store">
             <span className="store-title">Sold By:</span>{' '}
             {theProduct?.store?.name}
