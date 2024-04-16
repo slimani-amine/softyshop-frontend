@@ -54,9 +54,11 @@ function ProductDetails() {
   const [loading, setIsLoading] = useState(false);
   const cart = useAppSelector((state) => state.cart.cart);
 
-  const quantity: any = cart?.find(
+  let quantity: any = cart?.find(
     (item: any) => item.product.id == theProduct.id
   )?.quantity;
+
+  if (quantity == undefined) quantity = 0;
 
   async function handleAddToCart() {
     console.log(quantity);
