@@ -13,13 +13,11 @@ import { addToCart, getCart } from '@src/modules/customer/data/cartThunk';
 function Product({
   id,
   name,
-  // rating,
   price,
   images,
 }: {
   id: number;
   name: string;
-  // rating: string;
   price: number;
   images: string;
 }) {
