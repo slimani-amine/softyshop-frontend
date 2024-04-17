@@ -33,7 +33,7 @@ const cartSlice = createSlice({
       state.cartAmount = payload.payload[0].totalAmount;
       state.cartQuantity = payload.payload[0].totalQuantity;
 
-      console.log(state.cart);
+      // console.log(state.cart);
     });
     builder.addCase(getCart.rejected, (state, action) => {
       state.error = action?.payload;

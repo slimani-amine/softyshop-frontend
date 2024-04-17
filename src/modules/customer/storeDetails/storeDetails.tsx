@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import Product from '../home/components/Product/Product';
-import {
-  // useNavigate,
-  useParams,
-} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 import { ReactComponent as PhoneIcon } from '../../shared/assets/icons/store/phone.svg';
 import { ReactComponent as LocationIcon } from '../../shared/assets/icons/store/location.svg';
@@ -13,10 +10,13 @@ import { ReactComponent as YoutubeIcon } from '../../shared/assets/icons/store/y
 import { ReactComponent as InstagramIcon } from '../../shared/assets/icons/store/instagram.svg';
 import Button from '@src/modules/shared/components/Button/Button';
 import { ProductType } from '../data/dataTypes';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import { settProducts } from '../data/productSlice';
 
 function storeDetails() {
   // const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
-  // const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
   const { storeId } = useParams();
   const [store, setStore] = useState({
     id: 0,
@@ -91,7 +91,18 @@ function storeDetails() {
     // [FAKE_URL]
     [BASE_URL]
   );
-  // console.log(products);
+
+  dispatch(settProducts(products));
+  const cart = useAppSelector((state) => state.cart.cart);
+  const theProducts = useAppSelector((state) => state.product.products);
+
+  theProducts.map(function (product) {
+    return cart.filter(function (item) {
+      console.log(item.product.id, product.id);
+      return item.product.id == product.id;
+    });
+  });
+  // console.log(cart, products);
   return (
     <div className="home">
       <div className="store-card-identification">

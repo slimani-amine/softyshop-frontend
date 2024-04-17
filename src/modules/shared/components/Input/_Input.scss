@@ -1,7 +1,6 @@
 @use '../../assets/styles/base';
 @use '../../assets/styles/abstracts' as *;
 
-
 .input-form {
   width: 100%;
 
@@ -37,16 +36,16 @@
     background-color: transparent;
     border-radius: 2px;
     width: 100%;
-    .input-field p{
+    .input-field p {
       position: absolute;
       top: -40px;
       left: 0px;
       background-color: rgb(255, 255, 255);
       z-index: 3;
       font-size: 16px;
-    
-    
-      
+    }
+    input {
+      width: 350px;
     }
 
     .input {
@@ -77,7 +76,6 @@
     md: 10px 0,
     lg: 14px 0,
     xl: 18px 0,
-    
   );
 
   @each $key, $value in $size {
