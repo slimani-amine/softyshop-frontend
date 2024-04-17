@@ -3,7 +3,7 @@ import { Form, Upload, Divider, Row, Col, Input, message } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useCreateVendorMutation } from "../../services/vendorApi";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
-
+import { useNavigate } from "react-router-dom";
 const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
   const [form] = Form.useForm();
   const [createVendor] = useCreateVendorMutation();
@@ -12,6 +12,7 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
 
+  const navigate = useNavigate()
 
   const handleSaveClick = async () => {
     try {
@@ -28,9 +29,20 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
         "password": objectPost.password,
         "verifyPassword": objectPost.password,
       });
-      console.log(response)
-      form.resetFields();
-      message.success('Vendor saved successfully');
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Product saved successfully!");
+        console.log(response.data);
+        navigate("/vendors")
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save product. Please try again.");
+        console.error('Error saving product', response.error);
+    } else {
+        // Handle unexpected response format
+        message.error("Unexpected response from server. Please try again later.");
+    }
     } catch (error) {
       console.error('Error saving vendor', error);
       message.error('Error saving vendor');

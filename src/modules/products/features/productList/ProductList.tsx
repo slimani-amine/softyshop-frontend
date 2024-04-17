@@ -1,13 +1,13 @@
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import { Table, Space, Switch, Checkbox, Select } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useProductsQuery , useDeleteProductsMutation } from "../../service/productApi";
+import { useProductsQuery , useDeleteProductsMutation , useMyProductsQuery} from "../../service/productApi";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
-import { useAllStoresQuery, useMyStoresQuery } from "@src/modules/bookStores/service/storeApi";
+import { useAllStoresQuery, useMyStoresQuery  } from "@src/modules/bookStores/service/storeApi";
 
 interface Product {
   id: string;
@@ -16,16 +16,19 @@ interface Product {
   brand: string;
   price: number;
   published: boolean;
-  imgUrl: string;
+  images: string;
 }
 
 
 export default function ProductList() {
+
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
-  const [, setSelectedStore] = useState<string>();
-
+  const [selectedStore, setSelectedStore] = useState<string>();
   const [pageSize, setPageSize] = useState(5);
+  const [ , setProducts] =  useState<Array<any>>([]);
+  const [nameProduct] = useState<string>('a');
+
   const navigate = useNavigate();
   const [deleteProducts] = useDeleteProductsMutation();
   const handleCheckboxChange = (
@@ -44,12 +47,36 @@ export default function ProductList() {
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
-  const { data: fetchedProducts, isLoading } = useProductsQuery({
-    perPage: pageSize,
-    page: currentPage,
-  });
+
+const { data: fetchedProducts, isLoading } = selectedStore
+    ? useMyProductsQuery({
+        id: selectedStore,
+        perPage: pageSize,
+        page: currentPage,
+        name:""
+      })
+    : useProductsQuery({
+        perPage: pageSize,
+        page: currentPage,
+        name:""
+      });
+    
+  useEffect(()=>{
+    if (nameProduct){
+      setProducts(fetchedProducts?.data.docs)
+    }
+    else{
+      setProducts(fetchedProducts?.data.docs)
+
+      
+    }
+
+
+  } , [])
   console.log(fetchedProducts , 'fetcheddddd products')
+  
   // get stores base to ROLE
+  //const total = fetchedProducts?.data?.meta.totalRecords
   let stores = [];
   if (Current_User === "VENDOR") {
     const { data: fetechedMyStores } = useMyStoresQuery();
@@ -72,8 +99,7 @@ export default function ProductList() {
   // });
   
   console.log(fetchedProducts);
-  const products = fetchedProducts?.data.docs || [];
-  console.log(products , 'producst')
+  
   // Handle loading state
   if (isLoading) {
     return <Spinner />;
@@ -107,17 +133,21 @@ export default function ProductList() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (name: string, record: Product) => (
+      render: (name: string, record: Product) => {
+        const imgUrl  = record.images.replace(/"/g, '');
+        console.log(imgUrl)
+
+        return(
         <div className="name-column">
           <div className="picture-Product">
-            <img height={"30px"} width={"30px"} src={record.imgUrl} alt="" />
+            <img height={"30px"} width={"30px"} src={imgUrl} alt="" />
           </div>
           <div className="data-name">
             <h3>{name}</h3>
             <span>{record.id}</span>
           </div>
-        </div>
-      ),
+        </div>)
+      },
       sorter: (a: Product, b: Product) => a.name.localeCompare(b.name),
     },
     {
@@ -198,7 +228,7 @@ export default function ProductList() {
     headerStyle: { backgroundColor: "lightblue" },
     // Set the pageSize in pagination config
     pagination: {
-      total: 5,
+      total: 30,
       current: currentPage,
       pageSize: pageSize,
       onChange: handlePaginationChange, // Handle page change event
@@ -210,6 +240,8 @@ export default function ProductList() {
   };
   const handleSelectChange = (value: any) => {
     setSelectedStore(value);
+    console.log(selectedStore)
+
   };
 
   return (

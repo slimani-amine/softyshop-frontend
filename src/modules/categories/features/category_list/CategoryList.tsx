@@ -23,10 +23,10 @@ import { debounce } from 'lodash';
 
 export default function CategoryList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
-  const [nameCategory, setNameCategory] = useState<string>('a');
+  const [nameCategory, setNameCategory] = useState<string>('');
   const { data: fetchedCategories } = useCategoriesQuery({
     perPage: pageSize,
     page: currentPage,

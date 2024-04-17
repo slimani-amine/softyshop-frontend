@@ -5,7 +5,6 @@ import {
   usePublishStoreMutation,
   useStoresQuery,
   useMyStoresQuery,
-  
   useSearchStoresQuery,
 } from '../../service/storeApi';
 import { SetStateAction, useEffect, useState } from 'react';
@@ -14,12 +13,13 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '@src/modules/shared/store';
 import { debounce } from 'lodash';
+import Spinner from '@src/modules/shared/components/Spinner/Spinner';
 
 export default function bookStoreList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(20);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
-  const [nameStore, setNameStore] = useState<string>('a');
+  const [nameStore, setNameStore] = useState<string>('');
   const [stores, setStores] = useState<Array<any>>([]);
 
   const Current_User = useSelector(
@@ -33,6 +33,7 @@ export default function bookStoreList() {
     id: Current_id || '',
   });
 
+
   const handlePaginationChange = (page: number, pageSize?: number) => {
     setCurrentPage(page);
     setPageSize(pageSize || 5); // Update pageSize if changed
@@ -44,23 +45,28 @@ export default function bookStoreList() {
   const isAdmin = Current_User === 'ADMIN';
   console.log(isAdmin, 'verification role ');
   if (isAdmin) {
-    const { data: fetchedStores } = useStoresQuery({
+    console.log("oke")
+    const { data: fetchedStores,isLoading} = useStoresQuery({
       page: currentPage,
       perPage: pageSize,
     });
     fetchedData = fetchedStores;
+    isLoading ? <Spinner/> : null
+    
   } else {
-    const { data: fetchedMyStores } = useMyStoresQuery();
+    console.log("object")
+    const { data: fetchedMyStores,isLoading } = useMyStoresQuery();
     fetchedData = fetchedMyStores;
+    isLoading ? <Spinner/> : null
+
+
   }
+  
   useEffect(() => {
     if (nameStore && fetchedSearchStores) {
       setStores(fetchedSearchStores.data?.docs);
     } else {
-      if (fetchedData) {
-        console.log(!fetchedData?.data, 'ooo');
-        setStores(fetchedData?.data?.docs);
-      }
+      setStores(fetchedData?.data?.docs || []); // Set stores based on admin or user query
     }
   }, [nameStore, fetchedSearchStores, currentPage, pageSize]);
 
@@ -100,9 +106,21 @@ export default function bookStoreList() {
   };*/
   const handleDelete = async () => {
     try {
-      await deleteStores(selectedRowIds).unwrap();
-      message.success('Category deleted!');
-      setDeleteModalVisible(false); // Close the modal after successful deletion
+      const response = await deleteStores(selectedRowIds).unwrap();
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Store deleted successfully!");
+        console.log(response.data);
+        
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to Delete Store. Please try again.");
+        console.error('Error saving product', response.error);
+    } else {
+        // Handle unexpected response format
+        message.error("Unexpected response from server. Please try again later.");
+    }
     } catch (error) {
       // Handle error
     }

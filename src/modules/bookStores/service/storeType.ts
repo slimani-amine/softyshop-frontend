@@ -8,4 +8,5 @@ export default interface Store {
   address: string;
   phoneNumber: string;
   vendor_id: string;
+  cover:string
 }

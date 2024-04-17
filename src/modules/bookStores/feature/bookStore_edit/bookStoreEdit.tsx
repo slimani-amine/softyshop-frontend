@@ -4,7 +4,7 @@ import Button from "@src/modules/shared/components/Button/Button";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useStoreQuery, useUpdateStoreMutation } from "../../service/storeApi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
@@ -20,6 +20,8 @@ interface EditShopFormProps {
 }
 
 const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
+  const navigate = useNavigate()
+
   const [files, setFile] = useState<any>(null);
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
@@ -78,6 +80,20 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
       }
     
       const response = await updateStore({ id: fetchedStore.data.id, data});
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Store updated successfully!");
+        console.log(response.data);
+        navigate("/stores")
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save Store. Please try again.");
+        console.error('Error saving Store', response.error);
+    } else {
+        // Handle unexpected response format
+        message.error("Unexpected response from server. Please try again later.");
+    }
       message.success("Shop updated successfully");
       console.log(response)
       onFinish();

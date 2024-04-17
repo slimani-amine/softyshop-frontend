@@ -12,11 +12,15 @@ import {
 import Button from '@src/modules/shared/components/Button/Button';
 import { useCreateCategoryMutation } from '../../service/categoryApi';
 import { handleFileChange } from '@src/modules/shared/utils/upload';
+import { useNavigate } from 'react-router-dom';
 interface AddCategoryFormProps {
   onFinish: (values: any) => void;
 }
 
+
 const AddCategoryForm: FC<AddCategoryFormProps> = () => {
+  const navigate = useNavigate()
+
   const [files, setFile] = useState<any>(null);
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
@@ -34,11 +38,24 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
         icon: selectedFileUrl,
         isPublished: objectPost.isPublished === 'on' ? true : false,
       });
-      console.log(response)
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Product saved successfully!");
+        form.resetFields();
+
+        navigate("/categories")
+
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save product. Please try again.");
+        console.error('Error saving product', response.error);
+    } else {
+        message.error("Unexpected response from server. Please try again later.");
+    }
 
       // Reset form fields and validation status
-      form.resetFields();
-      message.success('Category saved successfully');
+     
     } catch (error) {
       console.error('Error saving category', error);
       message.error('Error saving category');
