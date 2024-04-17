@@ -6,7 +6,6 @@ import {
   Row,
   Col,
   Input,
-  Checkbox,
   message,
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
@@ -18,6 +17,7 @@ interface AddBrandFormProps {
 
 const AddBrandForm: FC<AddBrandFormProps> = () => {
   const [files, setFile] = useState<any>(null);
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [createBrand] = useCreateBrandMutation();
@@ -32,6 +32,7 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
         name: objectPost.name,
         logo: selectedFileUrl,
       });
+      console.log(response)
 
       // Reset form fields and validation status
       form.resetFields();

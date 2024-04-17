@@ -1,7 +1,7 @@
 import {
   Table,
   Space,
-  Button as AntButton,
+
   message,
   Modal,
   Switch,
@@ -14,7 +14,6 @@ import {
   useUpdateCatgoryMutation,
   useDeleteCategoriesMutation,
   useCategoriesQuery,
-  useDeleteCategoryMutation,
   useSearchCategoriesQuery,
 } from '../../service/categoryApi';
 
@@ -27,16 +26,14 @@ export default function CategoryList() {
   const [pageSize, setPageSize] = useState(5);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
-  const [nameCategory, setNameCategory] = useState<string>('');
+  const [nameCategory, setNameCategory] = useState<string>('a');
   const { data: fetchedCategories } = useCategoriesQuery({
     perPage: pageSize,
     page: currentPage,
   });
   const [deleteCategories] = useDeleteCategoriesMutation();
-  const [deleteCategory] = useDeleteCategoryMutation();
   const [updateCategory] = useUpdateCatgoryMutation();
   const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State to manage modal visibility
-  const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null); // State to store category ID for deletion
   const { data: fetchedSearchCategories } =
     useSearchCategoriesQuery(nameCategory);
   const [categories, setCategories] = useState<Array<any>>([]);
@@ -142,7 +139,8 @@ export default function CategoryList() {
 
       sorter: (a: Category, b: Category) =>
         (a.isPublished ? 1 : 0) - (b.isPublished ? 1 : 0),
-      render: (isPublished: boolean, record: any) => (
+       render: (_isPublished: boolean, record: any) => (
+        
         <Switch
           checked={record.isPublished}
           onClick={() => {

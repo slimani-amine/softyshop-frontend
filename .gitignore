@@ -8,6 +8,7 @@ logs
 **/*.backup.*
 **/*.back.*
 
+
 bower_components
 
 *.sublime*

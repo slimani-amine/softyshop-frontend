@@ -1,8 +1,8 @@
-import { Table, Space, Button as AntButton, message, Modal, Switch, Checkbox } from "antd";
+import { Table, Space, message, Modal, Checkbox } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useNavigate } from "react-router-dom";
-import {useUpdateBrandMutation, useBrandsQuery, useDeleteBrandsMutation , useSearchBrandsQuery} from  "../../service/brandApi";
+import { useBrandsQuery, useDeleteBrandsMutation , useSearchBrandsQuery} from  "../../service/brandApi";
 
 import { useEffect, useState } from "react"; // Import useState hook for managing modal state
 import Brand from "../../service/type";
@@ -16,16 +16,16 @@ export default function BrandList() {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
   
-  const [nameBrand, setNameBrand] = useState<string>('');
+  const [nameBrand, setNameBrand] = useState<string>('a');
   const { data: fetchedBrands } = useBrandsQuery({
     perPage: pageSize,
     page: currentPage,
   });;
   const [deleteBrands] = useDeleteBrandsMutation()
-  const [deleteBrand] = useDeleteBrandsMutation();
-  const [updateBrand] = useUpdateBrandMutation()
+  // const [deleteBrand] = useDeleteBrandsMutation();
+  // const [updateBrand] = useUpdateBrandMutation()
   const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State to manage modal visibility
-  const [deleteBrandId, setDeleteBrandId] = useState<number | null>(null); // State to store Brand ID for deletion
+  // const [deleteBrandId, setDeleteBrandId] = useState<number | null>(null); // State to store Brand ID for deletion
   const { data: fetchedSearchBrands } = useSearchBrandsQuery(nameBrand);
   const [Brands, setBrands] = useState<Array<any>>([]);
   const handlePaginationChange = (page: number, pageSize?: number) => {

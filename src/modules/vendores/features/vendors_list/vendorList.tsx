@@ -2,9 +2,6 @@ import {
   Table,
   Space,
   Button as AntButton,
-  message,
-  Modal,
-  Switch,
   Checkbox,
 } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
@@ -18,7 +15,7 @@ import {
 import { useEffect, useState } from "react"; // Import useState hook for managing modal state
 import Vendor from "../../services/type";
 import { debounce } from "lodash";
-
+console.log(AntButton)
 export default function CategoryList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);

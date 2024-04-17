@@ -1,5 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { UseLazyQuery } from '@reduxjs/toolkit/dist/query/react/buildHooks';
+import React, { useState, useEffect } from 'react';
 import { useAllvendorsQuery } from '@src/modules/vendores/services/vendorApi';
 import { Select } from 'antd';
 interface Option {
@@ -9,22 +8,21 @@ interface Option {
 const LazyLoadSelect: React.FC = () => {
     const [options, setOptions] = useState<Option[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const selectRef = useRef<HTMLSelectElement>(null);
-    const [fetchOptions, { data: newOptions = [], loading: queryLoading }] = useLazyQuery(useAllvendorsQuery);
+    const [, { data: newOptions = [], loading: queryLoading }] = useLazyQuery(useAllvendorsQuery);
   
     useEffect(() => {
       setOptions(prevOptions => [...prevOptions, ...newOptions]);
       setLoading(queryLoading);
     }, [newOptions, queryLoading]);
   
-    const handleScroll = useCallback(() => {
-      if (selectRef.current) {
-        const { scrollTop, clientHeight, scrollHeight } = selectRef.current;
-        if (scrollHeight - scrollTop === clientHeight && !loading) {
-          fetchOptions();
-        }
-      }
-    }, [fetchOptions, loading]);
+    // const handleScroll = useCallback(() => {
+    //   if (selectRef.current) {
+    //     const { scrollTop, clientHeight, scrollHeight } = selectRef.current;
+    //     if (scrollHeight - scrollTop === clientHeight && !loading) {
+    //       fetchOptions();
+    //     }
+    //   }
+    // }, [fetchOptions, loading]);
   
     return (
         
@@ -42,6 +40,6 @@ const LazyLoadSelect: React.FC = () => {
   
   export default LazyLoadSelect;
 
-function useLazyQuery(selectOptionsQuery: any): [any, { data?: never[] | undefined; loading: any; }] {
+function useLazyQuery(_selectOptionsQuery: any): [any, { data?: never[] | undefined; loading: any; }] {
     throw new Error('Function not implemented.');
 }

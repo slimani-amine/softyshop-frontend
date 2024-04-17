@@ -19,7 +19,6 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
   const { pathname } = useLocation();
   const { t } = useTranslation('sidebar');
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
-  const [activeParent, setActiveParent] = useState<string | null>(null);
 
   const handleToggleExpand = (label: string) => {
     if (expandedItems.includes(label)) {

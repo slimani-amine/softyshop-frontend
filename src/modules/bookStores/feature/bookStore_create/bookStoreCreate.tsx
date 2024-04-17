@@ -37,10 +37,10 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   const [fields, setFields] = useState<string[]>([""]);
   const [files, setFile] = useState<any>(null);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
-
+  console.log(files)
   const initialPosition = [33.892166, 9.561555499999997]; // New York coordinates
   const [position, setPosition] = useState(initialPosition);
-  const [createStore, isLoading] = useCreateStoreMutation(); // Destructure and use the hook
+  const [createStore] = useCreateStoreMutation(); // Destructure and use the hook
   
   const Current_User= useSelector((state: RootState) => state.auth.user?.role.toLocaleUpperCase()) 
   const Id_user = useSelector((state: RootState) => state?.auth?.user?.id)
@@ -49,7 +49,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   let vendors = []; // Initialize vendors outside the condition to avoid undefined errors
 
   if (Current_User === "ADMIN") {
-      const { data: fetchedVendors, isError } = useAllvendorsQuery();
+      const { data: fetchedVendors } = useAllvendorsQuery();
       vendors = fetchedVendors?.data.docs;
   }
   console.log(Current_User === "ADMIN")

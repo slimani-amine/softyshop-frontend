@@ -3,10 +3,7 @@ import { ReactComponent as ChevronRightBlack } from '../../../assets/icons/custo
 import { ReactComponent as CategoriesIcon } from '../../../assets/icons/customerLayout/Navbar/categories-icon.svg';
 // import NavigationElement from './components/navigationElements/NavigationElement';
 import { Link } from 'react-router-dom';
-import {
-  useAppDispatch,
-  //  useAppSelector
-} from '@src/modules/shared/store';
+import { useAppDispatch } from '@src/modules/shared/store';
 import { logout } from '@src/modules/auth/data/authThunk';
 import Button from '../../Button/Button';
 

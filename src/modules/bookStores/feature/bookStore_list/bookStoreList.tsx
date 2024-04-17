@@ -1,13 +1,11 @@
 import { Checkbox, Modal, Space, Switch, Table, message } from 'antd';
 import Button from '@src/modules/shared/components/Button/Button';
 import {
-  useStoreQuery,
   useDeleteStoresMutation,
   usePublishStoreMutation,
   useStoresQuery,
   useMyStoresQuery,
-  useDeleteStoreMutation,
-  useUpdateStoreMutation,
+  
   useSearchStoresQuery,
 } from '../../service/storeApi';
 import { SetStateAction, useEffect, useState } from 'react';
@@ -21,9 +19,8 @@ export default function bookStoreList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
-  const [nameStore, setNameStore] = useState<string>('');
+  const [nameStore, setNameStore] = useState<string>('a');
   const [stores, setStores] = useState<Array<any>>([]);
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 5 });
 
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
@@ -87,10 +84,8 @@ export default function bookStoreList() {
   const handleNavigate = () => {
     navigate('/stores/create');
   };
-  const [deleteStore] = useDeleteStoreMutation();
   const [deleteStores] = useDeleteStoresMutation();
   const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State to manage modal visibility
-  const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null); // State to store category ID for deletion
 
   /*const handleDelete = async (categoryId :Number) => {
     console.log(categoryId)
@@ -142,7 +137,7 @@ export default function bookStoreList() {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (name: string, record: any) => (
+      render: (_name: string, record: any) => (
         <div className="name-column">
           <div className="picture-Product">
             <img height={'30px'} width={'30px'} src={record.logo} alt="" />
@@ -186,7 +181,7 @@ export default function bookStoreList() {
 
       sorter: (a: Store, b: Store) =>
         (a.isPublished ? 1 : 0) - (b.isPublished ? 1 : 0),
-      render: (isPublished: boolean, record: any) => (
+      render: (_isPublished: boolean, record: any) => (
         <Switch
           checked={record.isPublished}
           onClick={() => {
