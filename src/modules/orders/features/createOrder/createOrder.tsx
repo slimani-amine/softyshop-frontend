@@ -41,6 +41,7 @@ const OrderForm: FC<OrderFormProps> = () => {
   const { data: fetchedProducts} = useProductsQuery({
     perPage: pageSize,
     page: currentPage,
+    name:'a'
   });
   const allProducts = fetchedProducts?.data?.docs
   const getProductById = (productId:any) => {

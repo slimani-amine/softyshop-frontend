@@ -27,17 +27,25 @@ import { useAllvendorsQuery } from "../../../vendores/services/vendorApi";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
+import { useNavigate } from "react-router-dom";
 
 interface AddShopFormProps {
   onFinish: (values: any) => void;
 }
 
 const AddShopForm: FC<AddShopFormProps> = () => {
+  const navigate = useNavigate()
+
   const [form] = Form.useForm();
   const [fields, setFields] = useState<string[]>([""]);
   const [files, setFile] = useState<any>(null);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
+  const [cover , setCover] = useState<any>(null)
+  const [selectedCoverUrl, setSelectedCoverUrl] = useState<string>();
+
+  console.log(selectedCoverUrl)
   console.log(files)
+  console.log(cover)
   const initialPosition = [33.892166, 9.561555499999997]; // New York coordinates
   const [position, setPosition] = useState(initialPosition);
   const [createStore] = useCreateStoreMutation(); // Destructure and use the hook
@@ -98,10 +106,9 @@ const AddShopForm: FC<AddShopFormProps> = () => {
       const objectPost = { ...values, positionOfShop: position };
       console.log(objectPost);
       console.log(objectPost.positionOfShop[2]);
-      form.resetFields();
       const plc = objectPost.positionOfShop[2]
       console.log(plc)
-      const response = createStore({
+      const response =await createStore({
         name: objectPost.name,
         phoneNumber: objectPost.phone,
         logo: selectedFileUrl,
@@ -109,9 +116,25 @@ const AddShopForm: FC<AddShopFormProps> = () => {
         address: plc,
         socialMediaLinks: objectPost.data,
         vendor_id: "a0986058-3833-4a2a-b898-6a4f582d379e",
+        cover : selectedCoverUrl
       });
-      console.log(response);
-      message.success("Shop saved successfully");
+
+      console.log(response , "data of response")
+
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Product saved successfully!");
+        form.resetFields();
+        navigate("/stores")
+
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save product. Please try again.");
+        console.error('Error saving product', response.error);
+    } else {
+        message.error("Unexpected response from server. Please try again later.");
+    }
     } catch (error) {
       console.log(error);
       console.error("Error saving shop", error);
@@ -202,7 +225,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
             <Form.Item
               className="upload-images"
               name="images"
-              rules={[{ required: true, message: "Description is required!" }]}
+              rules={[{ required: true, message: "Image is required!" }]}
             >
               <Upload.Dragger
                 className="drag-images"
@@ -251,6 +274,39 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 </Button>
               </Form.Item>
             </Form.Item>
+
+            <Form.Item
+              className="upload-images"
+              name="images"
+              rules={[{ required: true, message: "Cover is required!" }]}
+            >
+              <Upload.Dragger
+                className="drag-images"
+                listType="picture"
+                accept="image/*"
+                multiple
+                maxCount={1}
+                onChange={(e: any) =>
+                  handleFileChange(
+                    e,
+                    setCover,
+                    setSelectedCoverUrl,
+                  )
+                }
+                beforeUpload={() => false}
+              >
+                <p className="ant-upload-text">Drag & drop Shop image here</p>
+                <div className="icon-drag">
+                  <Divider className="divider" />
+                  <p className="or">OR</p>
+                  <Divider className="divider" />
+                </div>
+                <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                <p className="size-img">Upload 280*280 image</p>
+              </Upload.Dragger>
+            </Form.Item>
+
+
             <Form.Item>
               <Button
                 type="button"

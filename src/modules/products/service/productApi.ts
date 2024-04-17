@@ -1,13 +1,13 @@
 import { api } from '@src/modules/shared/services/api';
 export const ProductsApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    products: builder.query<any, { perPage: number; page: number }>({
-      query: ({ perPage, page }) => `api/products?perPage=${perPage}&page=${page}`,
+    products: builder.query<any, { perPage: number; page: number , name :string  }>({
+      query: ({ perPage, page , name  }) => `api/products?perPage=${perPage}&page=${page}${name ? `&name=${name}`:"" }`,
       providesTags:['products']
     }),
-    myProducts: builder.query<any,{id:any , perPage: number; page: number}>({
-      query: ({id,perPage,page}) => ({
-        url: `/api/stores/${id}/products?perPage=${perPage}&page=${page}`,
+    myProducts: builder.query<any,{id:any , perPage: number; page: number , name :string}>({
+      query: ({id,perPage,page,name}) => ({
+        url: `/api/stores/${id}/products?perPage=${perPage}&page=${page}${name ? `&name=${name}`:"" }`,
       
       }),
       providesTags : ["products"]
@@ -22,11 +22,11 @@ export const ProductsApi = api.injectEndpoints({
     }),
     deleteProducts: builder.mutation<any,string[]>({
       query:(ids)=>({
-        url : `api/stores/products`,
+        url : `api/products`,
         method : 'DELETE',
         body : {"ids" :ids }
       }) ,
-      invalidatesTags : ['vendors'],
+      invalidatesTags : ['products'],
 
 
     })

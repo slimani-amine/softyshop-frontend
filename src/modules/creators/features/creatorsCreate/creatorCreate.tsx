@@ -2,12 +2,14 @@ import { FC } from "react";
 import { Form, Row, Col, Input, message } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useCreateCreatorMutation } from "../../service/creatorApi";
+import { useNavigate } from "react-router-dom";
 
 interface AddCreatorFormProps {
   onFinish: (values: any) => void;
 }
 
 const AddCreatorForm: FC<AddCreatorFormProps> = () => {
+  const navigate = useNavigate()
   const [form] = Form.useForm();
   const [createCreator] = useCreateCreatorMutation()
   const handleSaveClick = async () => {
@@ -16,18 +18,31 @@ const AddCreatorForm: FC<AddCreatorFormProps> = () => {
       const objectPost = { ...values };
       
       // Create category
-        await createCreator({
+        const response  = await createCreator({
         name: objectPost.name,
         icon: 'hhhhh',
         isPublished: objectPost.isPublished === "on" ? true : false,
       });
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Creator saved successfully!");
+        form.resetFields();
+
+        navigate("/creators")
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save Creator. Please try again.");
+        console.error('Error saving Creator', response.error);
+    } else {
+        // Handle unexpected response format
+        message.error("Unexpected response from server. Please try again later.");
+    }
   
-      // Reset form fields and validation status
-      form.resetFields();
-      message.success('Creator saved successfully');
+      
     } catch (error) {
-      console.error('Error saving category', error);
-      message.error('Error saving category');
+      console.error('Error saving Creator', error);
+      message.error('Error saving Creator');
     }
   };
   

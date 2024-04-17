@@ -14,17 +14,19 @@ import {
   useVendorQuery,
   useUpdateVendorMutation,
 } from "../../services/vendorApi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
 
 const UpdateVendorForm: FC = () => {
+  const navigate = useNavigate()
+
   const [form] = Form.useForm();
   const { id } = useParams<{ id: string }>(); // Assuming useParams returns an object with 'id' property
   const [files, setFile] = useState<any>(null);
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
-  const [updateVendor, isError] = useUpdateVendorMutation();
+  const [updateVendor] = useUpdateVendorMutation();
   const { data: fetchVendor, isLoading } = useVendorQuery(id);
   const [isVerified, setIsVerified] = useState(false);
   const vendor = fetchVendor?.data?.docs[0];
@@ -59,18 +61,22 @@ const UpdateVendorForm: FC = () => {
         },
       });
       console.log(response)
-      if (isError) {
-        // Handle error if isError is true
-        console.log(isError);
-        console.error("Error updating vendor");
-        message.error("Error updating vendor");
-        return;
-      }
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Vendor updated successfully!");
+        form.resetFields();
+        navigate("/vendors")
 
-      form.resetFields();
-      message.success("Vendor updated successfully");
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to update product. Please try again.");
+        console.error('Error updating product', response.error);
+    } else {
+        message.error("Unexpected response from server. Please try again later.");
+    }
     } catch (error) {
-      console.error("Error saving vendor", error);
+      console.error("Error updating vendor", error);
     }
   };
 

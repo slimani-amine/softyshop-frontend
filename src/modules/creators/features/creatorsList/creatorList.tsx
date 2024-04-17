@@ -18,6 +18,7 @@ export default function CreatorsList() {
     perPage: pageSize,
     page: currentPage,
   });;
+  const total = fetchedcreators?.data?.meta?.totalRecords
   const [deletecreators] = useDeleteCreatorsMutation()
   
  
@@ -132,8 +133,9 @@ export default function CreatorsList() {
       style: { borderRadius: 'px' },
     },
     pagination: {
-      total: 30  ,
+      total: total ,
       current: currentPage,
+
       pageSize: pageSize,
       onChange: handlePaginationChange, // Handle page change event
       onShowSizeChange: handlePaginationChange,

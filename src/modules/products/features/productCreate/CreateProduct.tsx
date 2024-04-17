@@ -12,6 +12,7 @@ import {
   Col,
   Input,
   InputNumber,
+  message,
 } from 'antd';
 import Button from '@src/modules/shared/components/Button/Button';
 const { TextArea } = Input;
@@ -24,11 +25,13 @@ import { useAllBrandsQuery } from '@src/modules/brands/service/brandApi';
 import { useCreateProductMutation } from '../../service/productApi';
 import { useAllCreatorsQuery } from '@src/modules/creators/service/creatorApi';
 import { useSelector } from 'react-redux';
+import {  useNavigate } from 'react-router-dom';
 interface AddProductFormProps {
   onFinish: (values: any) => void;
 }
 
 const AddProductForm: FC<AddProductFormProps> = () => {
+  const navigate = useNavigate()
   const { data: fetchedCatgeories} = useAllCategoriesQuery();
   const categories = fetchedCatgeories?.data.docs || [];
   const selectOptionsCategories = categories.map((cat: any) => ({
@@ -51,7 +54,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
   }));
 
   const [files, setFile] = useState<any>(null);
-  const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
+  const [selectedFileUrl, setSelectedFileUrl] = useState<string[]>([]);
   console.log(files)
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
@@ -82,13 +85,14 @@ const AddProductForm: FC<AddProductFormProps> = () => {
 
   const handleSaveClick = async () => {
     try {
-      console.log(selectedFileUrl);
+      console.log(selectedFileUrl , 'selected files');
+
       const values = await form.validateFields();
 
       console.log(values, 'vallllllluuuuuuuueeeeeeeeesà');
       const product = {
         name: values.name,
-        price: values.price,
+        initialPrice: values.price,
         category_id: values.category,
         discount: values.discount,
         stockNumber: values.stock,
@@ -100,6 +104,21 @@ const AddProductForm: FC<AddProductFormProps> = () => {
         id: values.store,
         newProduct: product,
       });
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Product saved successfully!");
+        console.log(response.data);
+        navigate("/products")
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save product. Please try again.");
+        console.error('Error saving product', response.error);
+    } else {
+        // Handle unexpected response format
+        message.error("Unexpected response from server. Please try again later.");
+    }
+
       console.log(response)
       form.resetFields();
     } catch (error) {

@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { Form, Row, Col, Input, message } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useUpdateCreatorMutation, useCreatorQuery } from "../../service/creatorApi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 
 interface AddCreatorFormProps {
@@ -10,6 +10,7 @@ interface AddCreatorFormProps {
 }
 
 const AddCreatorForm: FC<AddCreatorFormProps> = () => {
+  const navigate = useNavigate()
   const [form] = Form.useForm();
   const { id } = useParams<{ id: string }>(); // Assuming useParams returns an object with 'id' property
   const { data: fetchCreator, isLoading, refetch } = useCreatorQuery(id); // Add refetch function
@@ -31,12 +32,26 @@ const AddCreatorForm: FC<AddCreatorFormProps> = () => {
       const objectPost = { ...values };
       
       // Update creator
-      await updatecreator({
+      const response = await updatecreator({
         id,
         data:{
           name: objectPost.name,
         }
       });
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Product saved successfully!");
+        console.log(response.data);
+        navigate("/vendors")
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save product. Please try again.");
+        console.error('Error saving product', response.error);
+    } else {
+        // Handle unexpected response format
+        message.error("Unexpected response from server. Please try again later.");
+    }
 
       // Reset form fields and validation status
       form.resetFields();
