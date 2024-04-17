@@ -13,9 +13,9 @@ function Header() {
     dispatch(getCart());
   })();
 
-  const myCartItems = useAppSelector((state) => state.cart.cartItems);
+  const myCartItemsNumber = useAppSelector((state) => state.cart.cartItems);
   // const cartId = useAppSelector((state) => state.cart.cartId);
-  // console.log(`cartId: ${cartId}`);
+  // console.log(myCartItemsNumber);
 
   return (
     <div className="header">
@@ -45,7 +45,7 @@ function Header() {
         </div>
 
         <span className="cart-items-number">
-          <p>{myCartItems}</p>
+          <p>{myCartItemsNumber}</p>
         </span>
       </div>
     </div>

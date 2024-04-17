@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { AUTH_URL, BASE_URL } from '@src/modules/auth/data/authThunk';
-import { addToCartPayload } from './cartTypes';
+import { addToCartPayload } from './dataTypes';
 
 export const getCart = createAsyncThunk('cart/getCart', async () => {
   try {

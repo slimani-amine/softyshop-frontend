@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import Product from '../home/components/Product/Product';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
+import { ProductType } from '../data/dataTypes';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import { settProducts } from '../data/productSlice';
 
 function AllProducts() {
   // const fake_URL = 'http://localhost:3001/products';
-  // const dispatch = useAppDispatch();
+  const cart = useAppSelector((state) => state.cart.cart);
   const [Products, setProducts] = useState([]);
+  const dispatch = useAppDispatch();
 
   useEffect(
     () => {
@@ -14,8 +18,11 @@ function AllProducts() {
           // const response = await fetch(`${fake_URL}`);
           const response = await fetch(`${BASE_URL}api/products`);
           const data = await response.json();
-          setProducts(data.data.docs);
-          // setProducts(data);
+          setProducts(
+            data.data.docs.map((product: ProductType) => {
+              return { ...product, quantity: 0 };
+            })
+          );
         } catch (err: string | unknown) {
           console.log(err);
           return err;
@@ -28,7 +35,9 @@ function AllProducts() {
     [BASE_URL]
   );
 
-  // console.log(Products);
+  console.log(Products, cart);
+  dispatch(settProducts(Products));
+  // dispatch(updateQuantity);
 
   return (
     <div className="home">

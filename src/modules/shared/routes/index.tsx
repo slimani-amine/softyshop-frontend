@@ -31,7 +31,7 @@ export const renderRoutes = (routes: RouteConfig[] = []) => {
           const roles = route?.roles;
           const allowedRoles = roles && roles.includes(Current_User);
           // console.log(Current_User)
-           console.log(allowedRoles)
+          console.log(allowedRoles);
 
           if (true) {
             return (

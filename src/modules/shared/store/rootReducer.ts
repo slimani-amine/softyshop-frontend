@@ -4,6 +4,7 @@ import themeReducer from './slices/theme/themeSlice';
 import authReducer from '../../auth/data/authSlice';
 import roleReducer from '../../auth/data/roleSlice';
 import cartReducer from '@src/modules/customer/data/cartSlice';
+import productReducer from '@src/modules/customer/data/productSlice';
 // import storeReducer from '@src/modules/customer/data/storeSlice';
 import { api } from '../services/api';
 
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   role: roleReducer,
   cart: cartReducer,
+  product: productReducer,
   [api.reducerPath]: api.reducer,
 });
 

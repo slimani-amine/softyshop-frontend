@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getCart, addToCart } from './cartThunk';
-import { StateType } from './cartTypes';
+import { initialStateCartType } from './dataTypes';
 
-const initialState: StateType = {
+const initialState: initialStateCartType = {
   cartId: 0,
   cart: [],
   cartItems: 0,
@@ -16,18 +16,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    // addToCart(state, action) {
-    //   if (true) {
-    //     if (!isNaN(action.payload)) {
-    //       console.log(state);
-    //     }
-    //     // state.cart.push(action.payload);
-    //     // state.cartItems++;
-    //     // // console.log({ ...state.cart });
-    //     // state.cart.forEach((item: ItemType) => console.log({ ...item }));
-    //     // console.log('--------------------------------');
-    //   }
-    // },
+    // updateQuantity(state, action) {},
   },
   extraReducers: (builder) => {
     builder.addCase(getCart.pending, (state) => {

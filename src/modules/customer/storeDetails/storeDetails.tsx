@@ -12,6 +12,7 @@ import { ReactComponent as XIcon } from '../../shared/assets/icons/store/x.svg';
 import { ReactComponent as YoutubeIcon } from '../../shared/assets/icons/store/youtube.svg';
 import { ReactComponent as InstagramIcon } from '../../shared/assets/icons/store/instagram.svg';
 import Button from '@src/modules/shared/components/Button/Button';
+import { ProductType } from '../data/dataTypes';
 
 function storeDetails() {
   // const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
@@ -74,7 +75,11 @@ function storeDetails() {
           );
           const data = await response.json();
           // console.log(data.data);
-          setProducts(data.data);
+          setProducts(
+            data.data.map((product: ProductType) => {
+              return { ...product, quantity: 0 };
+            })
+          );
         } catch (err: string | unknown) {
           console.log(err);
           return err;
