@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { AUTH_URL, BASE_URL } from '@src/modules/auth/data/authThunk';
-import { addToCartPayload } from './cartTypes';
+import { addToCartPayload } from './dataTypes';
 
 export const getCart = createAsyncThunk('cart/getCart', async () => {
   try {
@@ -30,7 +30,7 @@ export const addToCart = createAsyncThunk(
   'cart/addToCart',
   async (query: addToCartPayload) => {
     try {
-      console.log(query);
+      // console.log(query);
       const token = localStorage.getItem('accessToken');
       const response = await fetch(`${AUTH_URL}api/shopping/my-cart`, {
         method: 'POST',
@@ -46,7 +46,7 @@ export const addToCart = createAsyncThunk(
       // console.log(response);
       // console.log(token);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       return data.data;
     } catch (error) {

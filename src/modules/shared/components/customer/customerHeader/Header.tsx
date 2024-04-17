@@ -1,6 +1,6 @@
 import { ReactComponent as ShoppingBagIcon1 } from '../../../assets/icons/customerLayout/Header/shoppingBag.svg';
 import { ReactComponent as ProfileIcon1 } from '../../../assets/icons/customerLayout/Header/profileIcon.svg';
-// import { ReactComponent as MagnifyingGlass1 } from '../../../assets/icons/customerLayout/Header/MagnifyingGlass.svg';
+import { ReactComponent as MagnifyingGlass1 } from '../../../assets/icons/customerLayout/Header/magnifyingGlass.svg';
 import { ReactComponent as ChevronDownBlack } from '../../../assets/icons/customerLayout/Navbar/chevron-down-black.svg';
 import Logo from '../../../assets/icons/customerLayout/Header/logo-complete.svg';
 import Search from './components/Search';
@@ -13,9 +13,9 @@ function Header() {
     dispatch(getCart());
   })();
 
-  const myCartItems = useAppSelector((state) => state.cart.cartItems);
+  const myCartItemsNumber = useAppSelector((state) => state.cart.cartItems);
   // const cartId = useAppSelector((state) => state.cart.cartId);
-  // console.log(`cartId: ${cartId}`);
+  // console.log(myCartItemsNumber);
 
   return (
     <div className="header">
@@ -24,7 +24,7 @@ function Header() {
       </div>
       <div className="middle-component">
         <div className="magnifyingGlassIcon">
-          {/* <MagnifyingGlass1 /> */}
+          <MagnifyingGlass1 />
           <span className="divider"></span>
         </div>
         <div>
@@ -45,7 +45,7 @@ function Header() {
         </div>
 
         <span className="cart-items-number">
-          <p>{myCartItems}</p>
+          <p>{myCartItemsNumber}</p>
         </span>
       </div>
     </div>
