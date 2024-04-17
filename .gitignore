@@ -17,5 +17,6 @@ psd
 thumb
 sketch
 node_modules
+dist
 .env
 # End of https://www.toptal.com/developers/gitignore/api/react
