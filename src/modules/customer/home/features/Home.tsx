@@ -3,14 +3,14 @@ import Store from '../components/Store/Store';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 // import { fetchStores } from '../../data/storeSlice';
 import { useAppSelector } from '@src/modules/shared/store';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 function Home() {
   // const FAKE_URL = 'http://localhost:3001/stores';
   // const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const userRole = useAppSelector((state) => state.user);
-  console.log(userRole);
+  // const navigate = useNavigate();
+  const user = useAppSelector((state) => state.user);
+  console.log(user);
   // if (userRole != 'user') navigate('/categories');
   const [Stores, setStores] = useState([]);
   useEffect(
