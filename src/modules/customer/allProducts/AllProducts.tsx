@@ -18,11 +18,13 @@ function AllProducts() {
           const response = await fetch(`${fake_URL}`);
           // const response = await fetch(`${BASE_URL}api/products`);
           const data = await response.json();
-          setProducts(
-            data.data.docs.map((product: ProductType) => {
-              return { ...product, quantity: 0 };
-            })
-          );
+          // setProducts(
+          //   data.data.docs.map((product: ProductType) => {
+          //     return { ...product, quantity: 0 };
+          //   })
+          // );
+          console.log(data);
+          setProducts(data);
         } catch (err: string | unknown) {
           console.log(err);
           return err;
@@ -35,10 +37,11 @@ function AllProducts() {
     // [BASE_URL]
   );
 
-  console.log(Products, cart);
+  // console.log(Products, cart);
+  console.log(Products);
   dispatch(settProducts(Products));
-  const theProducts = useAppSelector((state) => state.product.products);
-  console.log(theProducts);
+  // const theProducts = useAppSelector((state) => state.product.products);
+  // console.log(theProducts);
   // dispatch(updateQuantity);
 
   return (
@@ -48,7 +51,7 @@ function AllProducts() {
           {
             id,
             name,
-            images,
+            image,
             //  rating
             price,
           },
@@ -60,7 +63,7 @@ function AllProducts() {
             name={name}
             // rating={rating}
             price={price}
-            images={images}
+            image={image}
           />
         )
       )}

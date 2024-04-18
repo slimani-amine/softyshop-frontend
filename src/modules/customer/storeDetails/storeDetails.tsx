@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { settProducts } from '../data/productSlice';
 
 function storeDetails() {
-  // const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
+  const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
 
   const dispatch = useAppDispatch();
   const { storeId } = useParams();
@@ -47,8 +47,8 @@ function storeDetails() {
     () => {
       const fetchData = async () => {
         try {
-          // const response = await fetch(`${FAKE_URL}`);
-          const response = await fetch(`${BASE_URL}api/stores/${storeId}`);
+          const response = await fetch(`${FAKE_URL}`);
+          // const response = await fetch(`${BASE_URL}api/stores/${storeId}`);
           const data = await response.json();
           setStore(data.data);
         } catch (err: string | unknown) {
@@ -59,8 +59,8 @@ function storeDetails() {
 
       fetchData();
     },
-    // [FAKE_URL]
-    [BASE_URL]
+    [FAKE_URL]
+    // [BASE_URL]
   );
 
   // console.log(store);
@@ -176,7 +176,7 @@ function storeDetails() {
                 name={name}
                 // rating={rating}
                 price={Number(price)}
-                images={images}
+                image={images}
               />
             );
           }
