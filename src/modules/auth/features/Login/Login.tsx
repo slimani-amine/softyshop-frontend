@@ -6,22 +6,25 @@ import { login } from '../../data/authThunk';
 import Input from '@src/modules/shared/components/Input/Input';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  // , useNavigate
+} from 'react-router-dom';
 import { PATH } from '../../routes/paths';
 import toast from 'react-hot-toast';
-import { useAppSelector } from '@src/modules/shared/store';
-// import jwtDecode from 'jwt-decode';
+
 const initialValues = {
   email: '',
   password: '',
 };
 
 const Login = () => {
-  const { role }: any = useAppSelector((state) => state.role);
-  const navigate = useNavigate();
+  // const { role }: any = useAppSelector((state) => state.role);
+  // const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
   const [submitting, setSubmitting] = useState(false);
+
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object().shape({
@@ -37,10 +40,6 @@ const Login = () => {
         .unwrap()
         .then(() => {
           toast.success('Welcome to SoftyShop!');
-          // toast.success(role);
-          if (role == 'user') navigate('/home');
-          if (role == 'vendor') navigate('/categories');
-
           // navigate('/home');
         })
         .catch((err) => {
