@@ -9,14 +9,15 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../routes/paths';
 import toast from 'react-hot-toast';
+import { useAppSelector } from '@src/modules/shared/store';
 // import jwtDecode from 'jwt-decode';
-
 const initialValues = {
   email: '',
   password: '',
 };
 
 const Login = () => {
+  const { role }: any = useAppSelector((state) => state.role);
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -36,7 +37,11 @@ const Login = () => {
         .unwrap()
         .then(() => {
           toast.success('Welcome to SoftyShop!');
-          navigate('/home');
+          // toast.success(role);
+          if (role == 'user') navigate('/home');
+          if (role == 'vendor') navigate('/categories');
+
+          // navigate('/home');
         })
         .catch((err) => {
           toast.error(err?.message || 'something went wrong');

@@ -72,7 +72,8 @@ const Register = () => {
         .unwrap()
         .then(() => {
           toast.success('Account created successfully');
-          navigate('/home');
+          if (role == 'user') navigate('/home');
+          if (role == 'vendor') navigate('/categories');
         })
         .catch((err) => {
           toast.error(err?.message || 'something-went-wrong');
