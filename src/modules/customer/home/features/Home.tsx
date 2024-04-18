@@ -9,8 +9,9 @@ function Home() {
   // const FAKE_URL = 'http://localhost:3001/stores';
   // const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const userRole = useAppSelector((state) => state.user.role);
-  if (userRole != 'user') navigate('/categories');
+  const userRole = useAppSelector((state) => state.user);
+  console.log(userRole);
+  // if (userRole != 'user') navigate('/categories');
   const [Stores, setStores] = useState([]);
   useEffect(
     () => {
