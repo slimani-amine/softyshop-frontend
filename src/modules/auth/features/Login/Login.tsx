@@ -58,7 +58,7 @@ const Login = () => {
         <h1 className="title">Login</h1>
 
         <Input
-          defaultValue="fadiromdhan5@gmail.com"
+          defaultValue=""
           name="email"
           formik={formik}
           variant="secondary"
@@ -68,7 +68,7 @@ const Login = () => {
         />
 
         <Input
-          defaultValue="fadiFADI6112003@"
+          defaultValue=""
           name="password"
           formik={formik}
           variant="secondary"
