@@ -11,13 +11,16 @@ import { ReactComponent as RemoveFromCart } from '../../shared/assets/icons/home
 
 function ProductDetails() {
   const dispatch = useAppDispatch();
+  const FAKE_URL = 'http://localhost:3001/products';
   const { productId } = useParams();
+  const products = useAppSelector((state) => state.product.products);
 
   const [product, setProduct] = useState([
     {
       id: 0,
       name: '',
       images: '',
+      image: '',
       rating: '',
       price: 0,
       brand: { id: 0, name: '' },
@@ -28,28 +31,32 @@ function ProductDetails() {
     },
   ]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const response = await fetch(`${fake_URL}`);
-        const response = await fetch(
-          // `${BASE_URL}api/products?search=id:${productId}`
-          `${BASE_URL}api/products?id=${productId}`
-        );
-        const data = await response.json();
-        setProduct(data.data.docs);
-        // console.log(data.data.docs);
-      } catch (err: string | unknown) {
-        console.log(err);
-        return err;
-      }
-    };
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`${FAKE_URL}`);
+          // const response = await fetch(
+          //   // `${BASE_URL}api/products?search=id:${productId}`
+          //   // `${BASE_URL}api/products?id=${productId}`
+          // );
+          const data = await response.json();
+          // setProduct(data.data.docs);
+          setProduct(data.filter((product: any) => product.id == productId));
+        } catch (err: string | unknown) {
+          console.log(err);
+          return err;
+        }
+      };
 
-    fetchData();
-  }, [BASE_URL]);
+      fetchData();
+    },
+    [FAKE_URL]
+    // [BASE_URL]
+  );
   const theProduct = product[0];
-
-  const images = theProduct.images.length && JSON.parse(theProduct?.images);
+  console.log(theProduct);
+  // const images = theProduct.images.length && JSON.parse(theProduct?.images);
 
   const [loading, setIsLoading] = useState(false);
   const cart = useAppSelector((state) => state.cart.cart);
@@ -95,7 +102,13 @@ function ProductDetails() {
     <>
       <div className="product-details">
         <div className="image-wrapper">
-          <img width={400} height={400} className="" src={images[0]} alt="" />
+          <img
+            width={400}
+            height={400}
+            className=""
+            src={theProduct.image}
+            alt=""
+          />
         </div>
         <div className="product-info">
           <h1 className="product-name">{theProduct.name}</h1>
