@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Product from '../home/components/Product/Product';
 // import { BASE_URL } from '@src/modules/auth/data/authThunk';
-import { ProductType } from '../data/dataTypes';
+
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { settProducts } from '../data/productSlice';
 
@@ -10,6 +10,7 @@ function AllProducts() {
   const cart = useAppSelector((state) => state.cart.cart);
   const [Products, setProducts] = useState([]);
   const dispatch = useAppDispatch();
+  console.log(cart);
 
   useEffect(
     () => {
@@ -23,7 +24,7 @@ function AllProducts() {
           //     return { ...product, quantity: 0 };
           //   })
           // );
-          console.log(data);
+          // console.log(data);
           setProducts(data);
         } catch (err: string | unknown) {
           console.log(err);
@@ -38,7 +39,7 @@ function AllProducts() {
   );
 
   // console.log(Products, cart);
-  console.log(Products);
+  // console.log(Products);
   dispatch(settProducts(Products));
   // const theProducts = useAppSelector((state) => state.product.products);
   // console.log(theProducts);

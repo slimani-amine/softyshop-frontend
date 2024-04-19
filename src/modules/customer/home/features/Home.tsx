@@ -29,7 +29,7 @@ function Home() {
     [FAKE_URL]
     // [BASE_URL]
   );
-
+  // console.log(Stores);
   // useEffect(
   //   function () {
   //     // localStorage.setItem(

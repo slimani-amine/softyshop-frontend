@@ -6,6 +6,7 @@ export interface ProductType {
   availability: boolean;
   discount: number;
   id: number;
+  image: string;
   images: string;
   initialPrice: number;
   isPublished: boolean;
