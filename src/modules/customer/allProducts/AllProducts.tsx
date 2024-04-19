@@ -35,10 +35,9 @@ function AllProducts() {
     [BASE_URL]
   );
 
-  console.log(Products, cart);
   dispatch(settProducts(Products));
   const theProducts = useAppSelector((state) => state.product.products);
-  console.log(theProducts);
+  console.log(theProducts, cart);
   // dispatch(updateQuantity);
 
   return (

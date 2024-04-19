@@ -8,7 +8,6 @@ import { initialise } from '../data/authSlice';
 import { RootState } from '@src/modules/shared/store';
 import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
 import { BASE_URL } from '../data/authThunk';
-import { saveUser } from '@src/modules/customer/data/userSlice';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -46,7 +45,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         const user = response?.data?.data;
         // console.log(user);
 
-        dispatch(saveUser(user));
+        // dispatch(saveUser(user));
 
         // if (user.role == 'user') navigate('/home');
         // if (user.role == 'vendor') navigate('/categories');
