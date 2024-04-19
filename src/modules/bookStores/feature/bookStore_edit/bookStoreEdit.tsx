@@ -94,7 +94,6 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
         // Handle unexpected response format
         message.error("Unexpected response from server. Please try again later.");
     }
-      message.success("Shop updated successfully");
       console.log(response)
       onFinish();
     } catch (error) {

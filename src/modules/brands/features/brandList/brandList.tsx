@@ -16,7 +16,7 @@ export default function BrandList() {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
   
-  const [nameBrand, setNameBrand] = useState<string>('a');
+  const [nameBrand, setNameBrand] = useState<string>('');
   const { data: fetchedBrands } = useBrandsQuery({
     perPage: pageSize,
     page: currentPage,

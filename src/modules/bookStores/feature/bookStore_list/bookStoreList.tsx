@@ -25,6 +25,7 @@ export default function bookStoreList() {
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
+  console.log(Current_User)
   const Current_id = useSelector((state: RootState) => state.auth.user?.id);
   console.log(Current_id);
   const { data: fetchedSearchStores } = useSearchStoresQuery({
@@ -49,6 +50,8 @@ export default function bookStoreList() {
     const { data: fetchedStores,isLoading} = useStoresQuery({
       page: currentPage,
       perPage: pageSize,
+      id : Current_id,
+      role : Current_User
     });
     fetchedData = fetchedStores;
     isLoading ? <Spinner/> : null

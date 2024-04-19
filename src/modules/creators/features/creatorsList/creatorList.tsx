@@ -13,7 +13,7 @@ export default function CreatorsList() {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
   
-  const [namecreator, setNamecreator] = useState<string>('a');
+  const [namecreator, setNamecreator] = useState<string>('');
   const { data: fetchedcreators } = useCreatorsQuery({
     perPage: pageSize,
     page: currentPage,
