@@ -1,4 +1,3 @@
-import { BASE_URL } from '@src/modules/auth/data/authThunk';
 import Button from '@src/modules/shared/components/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { useEffect, useState } from 'react';
@@ -13,7 +12,7 @@ function ProductDetails() {
   const dispatch = useAppDispatch();
   const FAKE_URL = 'http://localhost:3001/products';
   const { productId } = useParams();
-  const products = useAppSelector((state) => state.product.products);
+  // const products = useAppSelector((state) => state.product.products);
 
   const [product, setProduct] = useState([
     {
