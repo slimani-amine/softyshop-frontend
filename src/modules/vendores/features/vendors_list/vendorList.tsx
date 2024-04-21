@@ -48,7 +48,7 @@ export default function CategoryList() {
   const handleSearchChange = debounce((searchText: string) => {
     console.log("Search text for category list:", searchText);
     setNameVendor(searchText);
-  }, 500);
+  }, 300);
 
   const navigate = useNavigate();
   const Navigate = (id: string) => {

@@ -47,7 +47,7 @@ export default function BrandList() {
   const handleSearchChange = debounce((searchText: string) => {
     console.log('Search text for Brand list:', searchText);
     setNameBrand(searchText);
-  }, 500);
+  }, 200);
 
   /*const handleDelete = async (BrandId :Number) => {
     try {

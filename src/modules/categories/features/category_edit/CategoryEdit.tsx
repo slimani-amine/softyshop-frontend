@@ -16,7 +16,7 @@ import {
   message,
 } from 'antd';
 import Button from '@src/modules/shared/components/Button/Button';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { handleFileChange } from '@src/modules/shared/utils/upload';
 
 interface AddCategoryFormProps {
@@ -24,6 +24,7 @@ interface AddCategoryFormProps {
 }
 
 const EditCategoryForm: FC<AddCategoryFormProps> = () => {
+  const navigate = useNavigate()
   const [files, setFile] = useState<any>(null);
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
@@ -55,7 +56,7 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
         },
         '0000000000000000000000000'
       );
-      await updateCategory({
+      const response = await updateCategory({
         id: id,
         data: {
           name: values.name,
@@ -63,9 +64,23 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
           isPublished: values.isPublished === 'on' ? true : false,
         },
       });
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Category saved successfully!");
+        form.resetFields();
 
-      message.success(`Category of id:${id} updated`);
-      form.resetFields();
+        navigate("/categories")
+
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save product. Please try again.");
+        console.error('Error saving product', response.error);
+    } else {
+        message.error("Unexpected response from server. Please try again later.");
+    }
+
+   
     } catch (error) {
       console.error('Error updating category:', error);
     }
@@ -92,8 +107,15 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
                 name="name"
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { required: true, message: 'Please enter Category name' },
-                ]}
+                  { 
+                      required: true, 
+                      message: 'Please enter Category name' 
+                  },
+                  {
+                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                  }
+              ]}
               >
                 <Input
                   size="large"
@@ -126,12 +148,7 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
             </Upload.Dragger>
           </Form.Item>
 
-          <Form.Item name="isPublished">
-            <div className="feutured">
-              <Checkbox defaultChecked={initialValues.isPublished} />{' '}
-              <span>Publish category</span>
-            </div>
-          </Form.Item>
+      
           <Form.Item>
             <Button className="add-cat" onClick={handleFinish} type="submit">
               Save Category

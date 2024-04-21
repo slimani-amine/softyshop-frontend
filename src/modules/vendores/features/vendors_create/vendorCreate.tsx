@@ -72,8 +72,16 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
-                rules={[{ required: true, message: "Please enter Vendor name" }]}
-              >
+                rules={[
+                  { 
+                      required: true, 
+                      message: 'Please enter vendor name' 
+                  },
+                  {
+                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no spaces'
+                  }
+              ]}                 >
                 <Input size="large" placeholder="Name" className="input-custom" />
               </Form.Item>
             </Col>
@@ -83,8 +91,16 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
               <Form.Item
                 name="lastName"
                 style={{ marginBottom: 0 }}
-                rules={[{ required: true, message: "Please enter Last Name" }]}
-              >
+                rules={[
+                  { 
+                      required: true, 
+                      message: 'Please enter vendor last name' 
+                  },
+                  {
+                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no spaces'
+                  }
+              ]}                      >
                 <Input size="large" placeholder="Last Name" className="input-custom" />
               </Form.Item>
             </Col>
@@ -109,10 +125,15 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
                 name="phoneNumber"
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { required: true, message: "Please enter phone number" },
-                  { min: 8, message: "Phone number must be at least 8 characters long" },
-                  { pattern: /^\d+$/, message: "Phone number must contain only numbers" }
-                ]}              >
+                  { 
+                      required: true, 
+                      message: 'Please enter Shop phone' 
+                  },
+                  {
+                      pattern: /^[2-57-9]\d{7}$/,
+                      message: 'Phone number must be 8 digits and start with 2, 4, 5, 7, or 9'
+                  }
+              ]}            >
                 <Input size="large" placeholder="Phone Number" className="input-custom" />
               </Form.Item>
             </Col>
@@ -122,8 +143,16 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
               <Form.Item
                 name="password"
                 style={{ marginBottom: 0 }}
-                rules={[{ required: true, message: "Please enter password" }]}
-              >
+                rules={[
+                  { 
+                      required: true, 
+                      message: 'Please enter password' 
+                  },
+                  {
+                      min: 6,
+                      message: 'Password must be at least 6 characters long'
+                  }
+              ]}              >
                 <Input.Password size="large" placeholder="Password" className="input-custom" />
               </Form.Item>
             </Col>

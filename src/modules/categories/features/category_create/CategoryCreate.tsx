@@ -79,8 +79,15 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
                 name="name"
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { required: true, message: 'Please enter Category name' },
-                ]}
+                  { 
+                      required: true, 
+                      message: 'Please enter Category name' 
+                  },
+                  {
+                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                  }
+              ]}
               >
                 <Input
                   size="large"

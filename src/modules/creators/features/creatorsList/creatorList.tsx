@@ -43,7 +43,7 @@ export default function CreatorsList() {
   const handleSearchChange = debounce((searchText: string) => {
     console.log('Search text for creator list:', searchText);
     setNamecreator(searchText);
-  }, 500);
+  }, 200);
 
   /*const handleDelete = async (creatorId :Number) => {
     try {
