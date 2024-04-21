@@ -17,18 +17,18 @@ function Product({
   id,
   name,
   price,
-  images,
+  image,
 }: {
   id: number;
   name: string;
   price: number;
-  images: string;
+  image: string;
 }) {
   const dispatch = useAppDispatch();
   const [showIcons, setShowIcons] = useState(false);
   const [loading, setIsLoading] = useState(false);
 
-  const lastImage = images.length && JSON.parse(images)[0];
+  // const lastImage = images.length && JSON.parse(images)[0];
 
   // useEffect(() => {
   //   console.log('hola');
@@ -96,7 +96,8 @@ function Product({
           <img
             width={336.75}
             height={336.75}
-            src={lastImage}
+            // src={lastImage}
+            src={image}
             className="image"
           />
         </div>
