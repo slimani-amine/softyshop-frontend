@@ -43,7 +43,14 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         const response = await axiosInstance.get(`${BASE_URL}api/users/me`);
 
         const user = response?.data?.data;
-        // console.log(user.role);
+        // console.log(user);
+
+        // dispatch(saveUser(user));
+
+        // if (user.role == 'user') navigate('/home');
+        // if (user.role == 'vendor') navigate('/categories');
+
+        // if(user.role == 'user')
         // const user = {
         //   email: 'string',
         //   isVerified: true,
