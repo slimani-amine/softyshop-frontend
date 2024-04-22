@@ -115,7 +115,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
         location: objectPost.positionOfShop.splice(0, 2),
         address: plc,
         socialMediaLinks: objectPost.data,
-        vendor_id: "a0986058-3833-4a2a-b898-6a4f582d379e",
+        vendor_id: objectPost.vendor,
         cover : selectedCoverUrl
       });
 
