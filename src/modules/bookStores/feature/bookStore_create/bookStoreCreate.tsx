@@ -104,7 +104,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
     try {
       const values = await form.validateFields();
       const objectPost = { ...values, positionOfShop: position };
-      console.log(objectPost);
+      console.log(objectPost, "ooookkkkkkkpppp");
       console.log(objectPost.positionOfShop[2]);
       const plc = objectPost.positionOfShop[2]
       console.log(plc)
@@ -115,7 +115,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
         location: objectPost.positionOfShop.splice(0, 2),
         address: plc,
         socialMediaLinks: objectPost.data,
-        vendor_id: "a0986058-3833-4a2a-b898-6a4f582d379e",
+        vendor_id: objectPost.vendor,
         cover : selectedCoverUrl
       });
 
@@ -309,7 +309,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 }
                 beforeUpload={() => false}
               >
-                <p className="ant-upload-text">Drag & drop Shop image here</p>
+                <p className="ant-upload-text">Drag & drop Shop Cover here</p>
                 <div className="icon-drag">
                   <Divider className="divider" />
                   <p className="or">OR</p>

@@ -63,6 +63,9 @@ export const api = createApi({
     'store',
     'vendors',
     'vendor',
+    'address'
+    
+    
   ],
   endpoints: () => ({}),
 });

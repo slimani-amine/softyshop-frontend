@@ -10,7 +10,7 @@ import vendorRoutes from '../../vendores/routes/routes';
 import creatorRoutes from '../../creators/routes/routes';
 import brandRoutes from '../../brands/routes/routes';
 import orderRoutes from '../../orders/routes/routes';
-
+import paymentRoutes from "../../payment/routes/routes"
 const routes = [
   ...sharedRoutes,
   ...authRoutes,
@@ -24,6 +24,7 @@ const routes = [
   ...creatorRoutes,
   ...brandRoutes,
   ...orderRoutes,
+  ...paymentRoutes
 ];
 
 export default routes;

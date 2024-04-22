@@ -58,6 +58,21 @@ const ModalAddress: FC<ModalAddressProps> = ({ visible, onCancel, onAddAddress }
                 message: 'City must contain at least two alphabetical characters and no leading spaces'
             }
         ]}                    >
+          <Input placeholder="State" />
+        </Form.Item>
+        <Form.Item
+          name="state"
+          label="State"
+          rules={[ 
+            { 
+                required: true, 
+                message: 'Please enter City' 
+            },
+            {
+                pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                message: 'City must contain at least two alphabetical characters and no leading spaces'
+            }
+        ]}                    >
           <Input placeholder="City" />
         </Form.Item>
         <Form.Item
