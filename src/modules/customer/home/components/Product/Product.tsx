@@ -91,7 +91,7 @@ function Product({
       onMouseLeave={() => setShowIcons(false)}
       className="card"
     >
-      <Link to={`${id}`}>
+      <Link to={`${id}#`}>
         <div className="image-wrapper">
           <img
             width={336.75}
@@ -109,7 +109,7 @@ function Product({
         </>
       )}
       <div className="product-info-and-buttons">
-        <Link to={`${id}`}>
+        <Link to={`${id}#`}>
           <div className="product-info">
             <p className="name"> {name}</p>
             <div>

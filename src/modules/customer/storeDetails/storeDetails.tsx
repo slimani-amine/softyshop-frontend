@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Product from '../home/components/Product/Product';
+// import Product from '../home/components/Product/Product';
 import { ReactComponent as PhoneIcon } from '../../shared/assets/icons/store/phone.svg';
 import { ReactComponent as LocationIcon } from '../../shared/assets/icons/store/location.svg';
 import { ReactComponent as FacebookIcon } from '../../shared/assets/icons/store/facebook.svg';
@@ -10,9 +10,10 @@ import Button from '@src/modules/shared/components/Button/Button';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { settProducts } from '../data/productSlice';
 import { useParams } from 'react-router-dom';
+import { BASE_URL } from '@src/modules/auth/data/authThunk';
 
 function storeDetails() {
-  const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
+  // const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
 
   const dispatch = useAppDispatch();
   const { storeId } = useParams();
@@ -46,10 +47,12 @@ function storeDetails() {
     () => {
       const fetchData = async () => {
         try {
-          const response = await fetch(`${FAKE_URL}`);
-          // const response = await fetch(`${BASE_URL}api/stores/${storeId}`);
+          // const response = await fetch(`${FAKE_URL}`);
+          const response = await fetch(`${BASE_URL}api/stores/${storeId}`);
           const data = await response.json();
-          setStore(data[Number(storeId) - 1]);
+          // console.log('🚀 ~ fetchData ~ data:', data.data);
+
+          setStore(data.data);
           // setProducts(store.products);
         } catch (err: string | unknown) {
           console.log(err);
@@ -59,51 +62,54 @@ function storeDetails() {
 
       fetchData();
     },
-    [FAKE_URL]
-    // [BASE_URL]
+    // [FAKE_URL]
+    [BASE_URL]
   );
 
-  // console.log(store);
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        try {
+          // const response = await fetch(`${FAKE_URL}`);
+          const response = await fetch(
+            `${BASE_URL}api/stores/${storeId}/products?page=1`
+          );
 
-  // useEffect(
-  //   () => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await fetch(`${FAKE_URL}`);
-  //         // const response = await fetch(
-  //         // `${BASE_URL}api/stores/${storeId}/products?page=1`
-  //         // );
-  //         const data = await response.json();
-  //         console.log(store);
-  //         setProducts(store.products);
-  //         // setProducts(
-  //         //   data.map((product: ProductType) => {
-  //         //     return { ...product, quantity: 0 };
-  //         //   })
-  //         // );
-  //       } catch (err: string | unknown) {
-  //         console.log(err);
-  //         return err;
-  //       }
-  //     };
+          const data = await response.json();
+          console.log('🚀 ~ fetchData ~ data:', data);
 
-  //     fetchData();
-  //   },
-  //   [FAKE_URL]
-  //   // [BASE_URL]
-  // );
+          // console.log(store);
+          // setProducts(store.products);
+          // setProducts(
+          //   data.map((product: ProductType) => {
+          //     return { ...product, quantity: 0 };
+          //   })
+          // );
+        } catch (err: string | unknown) {
+          console.log(err);
+          return err;
+        }
+      };
+
+      fetchData();
+    },
+    // [FAKE_URL]
+    [BASE_URL]
+  );
+  // console.log('🚀 ~ storeDetails ~ store:', store);
 
   dispatch(settProducts(store.products));
-  const cart = useAppSelector((state) => state.cart.cart);
+  // const cart = useAppSelector((state) => state.cart.cart);
   const theProducts = useAppSelector((state) => state.product.products);
+  console.log('🚀 ~ storeDetails ~ theProducts:', theProducts);
 
-  theProducts.map(function (product) {
-    return cart.filter(function (item) {
-      console.log(item.product.id, product.id);
-      return item.product.id == product.id;
-    });
-  });
-  console.log(store.products);
+  // theProducts.map(function (product) {
+  //   return cart.filter(function (item) {
+  //     console.log(item.product.id, product.id);
+  //     return item.product.id == product.id;
+  //   });
+  // });
+  // console.log(store.products);
   return (
     <div className="home">
       <div className="store-card-identification">
@@ -155,7 +161,7 @@ function storeDetails() {
         </div>
       </div>
       <div className="books">
-        {theProducts.map(
+        {/* {theProducts.map(
           (
             {
               id,
@@ -181,7 +187,7 @@ function storeDetails() {
               />
             );
           }
-        )}
+        )} */}
       </div>
     </div>
   );

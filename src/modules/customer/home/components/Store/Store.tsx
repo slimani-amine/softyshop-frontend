@@ -9,9 +9,8 @@ import { Link } from 'react-router-dom';
 function Store({
   id,
   name,
-  logo,
-} // phoneNumber,
-// isPublished,
+  logo, // phoneNumber,
+} // isPublished,
 // location,
 // address,
 // socialMediaLinks,
@@ -29,7 +28,7 @@ function Store({
 
   return (
     <div className="card">
-      <Link to={`${id}`}>
+      <Link to={`${id}#`}>
         <div className="image-wrapper">
           <img width={336.75} height={336.75} src={logo} className="image" />
         </div>
