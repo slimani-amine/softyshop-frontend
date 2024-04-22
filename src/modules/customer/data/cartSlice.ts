@@ -24,14 +24,14 @@ const cartSlice = createSlice({
       state.status = 'loading';
       // console.log(state.status);
     });
-    builder.addCase(getCart.fulfilled, (state, payload) => {
+    builder.addCase(getCart.fulfilled, (state) => {
       state.status = 'succeeded';
 
-      state.cartId = payload.payload[0].id;
-      state.cart = payload.payload[1];
-      state.cartItems = state.cart.length;
-      state.cartAmount = payload.payload[0].totalAmount;
-      state.cartQuantity = payload.payload[0].totalQuantity;
+      // state.cartId = payload.payload[0].id;
+      // state.cart = payload.payload[1];
+      // state.cartItems = state.cart.length;
+      // state.cartAmount = payload.payload[0].totalAmount;
+      // state.cartQuantity = payload.payload[0].totalQuantity;
 
       // console.log(state.cart);
     });
