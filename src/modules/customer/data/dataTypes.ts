@@ -1,3 +1,16 @@
+export interface userType {
+  role: string;
+  cart: { id: number };
+  confirmation_token: any;
+  confirmed_email: boolean;
+  email: string;
+  firstName: string;
+  lastName: string;
+  id: string;
+  isVerified: boolean;
+  phoneNumber: string;
+}
+
 export interface initialStateProductType {
   products: ProductType[];
 }
@@ -6,6 +19,7 @@ export interface ProductType {
   availability: boolean;
   discount: number;
   id: number;
+  image: string;
   images: string;
   initialPrice: number;
   isPublished: boolean;
