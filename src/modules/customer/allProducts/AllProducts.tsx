@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Product from '../home/components/Product/Product';
 // import { BASE_URL } from '@src/modules/auth/data/authThunk';
-import { ProductType } from '../data/dataTypes';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { settProducts } from '../data/productSlice';
 

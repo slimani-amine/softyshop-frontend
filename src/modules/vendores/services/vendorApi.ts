@@ -47,10 +47,15 @@ export const VendorsApi = api.injectEndpoints({
       query: () => `api/users?search=role:vendor`,
       providesTags: ['vendors'],
     }),
+    adressesOfUser: builder.query<any, any>({
+      query: (id) => `api/users/addresses/${id}`,
+     
+    }),
   }),
 });
 
 export const {
+
   useUsersQuery,
   useAllvendorsQuery,
   useCreateVendorMutation,
@@ -59,4 +64,5 @@ export const {
   useVendorsQuery,
   useSearchVendorsQuery,
   useUpdateVendorMutation,
+  useAdressesOfUserQuery
 } = VendorsApi;
