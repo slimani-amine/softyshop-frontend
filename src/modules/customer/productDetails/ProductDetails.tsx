@@ -13,31 +13,31 @@ function ProductDetails() {
   const dispatch = useAppDispatch();
   const { productId } = useParams();
 
-  const [product, setProduct] = useState([
-    {
-      id: 0,
-      name: '',
-      images: '',
-      rating: '',
-      price: 0,
-      brand: { id: 0, name: '' },
-      category: { id: 0, name: '' },
-      store: { id: 0, name: '' },
-      availability: false,
-      stockNumber: 0,
-    },
-  ]);
+  const [product, setProduct] = useState({
+    id: 0,
+    name: '',
+    images: '',
+    rating: '',
+    price: 0,
+    brand: { id: 0, name: '' },
+    category: { id: 0, name: '' },
+    store: { id: 0, name: '' },
+    availability: false,
+    stockNumber: 0,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // const response = await fetch(`${fake_URL}`);
         const response = await fetch(
-          // `${BASE_URL}api/products?search=id:${productId}`
-          `${BASE_URL}api/products?id=${productId}`
+          `${BASE_URL}api/products/${productId}`
+          // `${BASE_URL}api/products?id=${productId}`
         );
+
         const data = await response.json();
-        setProduct(data.data.docs);
+        console.log('🚀 ~ fetchData ~ data.data.docs:', data.data);
+        setProduct(data.data);
         // console.log(data.data.docs);
       } catch (err: string | unknown) {
         console.log(err);
@@ -47,9 +47,9 @@ function ProductDetails() {
 
     fetchData();
   }, [BASE_URL]);
-  const theProduct = product[0];
-  const images = theProduct.images.length && JSON.parse(theProduct?.images);
-  console.log(images);
+
+  const images = product.images.length && JSON.parse(product?.images);
+  console.log('🚀 ~ ProductDetails ~ product:', product);
 
   const [loading, setIsLoading] = useState(false);
   const cart = useAppSelector((state) => state.cart.cart);
@@ -59,8 +59,7 @@ function ProductDetails() {
   useEffect(
     function () {
       setQuantity(
-        cart?.find((item: any) => item.product.id == theProduct.id)?.quantity ||
-          0
+        cart?.find((item: any) => item.product.id == product.id)?.quantity || 0
       );
     },
     [setQuantity, cart]
@@ -71,7 +70,7 @@ function ProductDetails() {
     setIsLoading(true);
     Promise.all([
       await dispatch(
-        addToCart({ quantity: quantity + 1, productId: theProduct.id + '' })
+        addToCart({ quantity: quantity + 1, productId: product.id + '' })
       ),
       dispatch(getCart()),
     ]);
@@ -84,7 +83,7 @@ function ProductDetails() {
     setIsLoading(true);
     Promise.all([
       await dispatch(
-        addToCart({ quantity: quantity - 1, productId: theProduct.id + '' })
+        addToCart({ quantity: quantity - 1, productId: product.id + '' })
       ),
       dispatch(getCart()),
     ]);
@@ -98,26 +97,25 @@ function ProductDetails() {
           <img width={400} height={400} className="" src={images} alt="" />
         </div>
         <div className="product-info">
-          <h1 className="product-name">{theProduct.name}</h1>
+          <h1 className="product-name">{product.name}</h1>
           <div className="brand-and-category">
             <p className="brand">
-              <span className="brand-title">Brand:</span>{' '}
-              {theProduct?.brand?.name}
+              <span className="brand-title">Brand:</span> {product?.brand?.name}
             </p>
             <p className="brand">
               <span className="brand-title">category:</span>{' '}
-              {theProduct?.category?.name}
+              {product?.category?.name}
             </p>
           </div>
 
-          {/* <p className='rate'>theProduct.rate</p> */}
+          {/* <p className='rate'>product.rate</p> */}
 
-          <h2 className="price">${theProduct.price}</h2>
+          <h2 className="price">${product.price}</h2>
           <p className="stock">
             Stock{' '}
-            {theProduct?.availability
-              ? `Available: (${theProduct?.stockNumber} ${
-                  theProduct?.stockNumber == 1 ? 'book' : 'books'
+            {product?.availability
+              ? `Available: (${product?.stockNumber} ${
+                  product?.stockNumber == 1 ? 'book' : 'books'
                 }  remaining)`
               : 'Unavailable'}
           </p>
@@ -149,8 +147,7 @@ function ProductDetails() {
           )}
 
           <p className="store">
-            <span className="store-title">Sold By:</span>{' '}
-            {theProduct?.store?.name}
+            <span className="store-title">Sold By:</span> {product?.store?.name}
           </p>
         </div>
       </div>
