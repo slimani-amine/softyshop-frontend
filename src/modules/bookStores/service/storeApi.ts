@@ -3,8 +3,8 @@ import { api } from '@src/modules/shared/services/api';
 
 export const StoreApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    stores: builder.query<any,  { page: Number, perPage: Number }>({
-      query: ({ page, perPage }) => `api/stores?se?page=${page}&perPage=${perPage}`,
+    stores: builder.query<any,  { page: Number, perPage: Number,id : any,role:string }>({
+      query: ({ page, perPage , role , id }) => `api/stores?page=${page}&perPage=${perPage}&${role==="VENDOR" ? `?search=vendor_id:${id};`:""}`,
       providesTags : ['stores']
     }),
     allStores : builder.query<any,void>({
@@ -67,7 +67,7 @@ export const StoreApi = api.injectEndpoints({
         }),
           invalidatesTags: ['stores'] // Invalidates the store tag after publishing/unpublishing
         }),
-        searchStores: builder.query<any,{subName : string , role:string  , id : string}>({
+    searchStores: builder.query<any,{subName : string , role:string  , id : string}>({
           query: ({subName,role,id}) => `api/stores?search=name:${subName}${role==="VENDOR" ? `;vendor_id:${id};`:""}`,
           providesTags:  ['Categories']
     

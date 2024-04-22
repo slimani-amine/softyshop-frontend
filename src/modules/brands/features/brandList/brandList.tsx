@@ -16,7 +16,7 @@ export default function BrandList() {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
   
-  const [nameBrand, setNameBrand] = useState<string>('a');
+  const [nameBrand, setNameBrand] = useState<string>('');
   const { data: fetchedBrands } = useBrandsQuery({
     perPage: pageSize,
     page: currentPage,
@@ -47,7 +47,7 @@ export default function BrandList() {
   const handleSearchChange = debounce((searchText: string) => {
     console.log('Search text for Brand list:', searchText);
     setNameBrand(searchText);
-  }, 500);
+  }, 200);
 
   /*const handleDelete = async (BrandId :Number) => {
     try {
@@ -163,7 +163,7 @@ export default function BrandList() {
       </div>
       <div className="container-Product-List">
       <div className="container-btn">
-        <Button size="sm"  disabled={selectedRowIds.length === 0} variant={selectedRowIds.length === 0 ?'dark':'primary'} onClick={handleDelete}>deleted</Button>
+        <Button size="sm"  disabled={selectedRowIds.length === 0} variant={selectedRowIds.length === 0 ?'dark':'primary'} onClick={handleDelete}>Deleted</Button>
         </div>
         <Table<Brand> {...tableProps} />
       </div>

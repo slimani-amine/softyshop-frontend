@@ -75,8 +75,16 @@ const AddCreatorForm: FC<AddCreatorFormProps> = () => {
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
-                rules={[{ required: true, message: "Please enter Creator name" }]}
-              >
+                rules={[ 
+                  { 
+                      required: true, 
+                      message: 'Please enter Store name' 
+                  },
+                  {
+                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                  }
+              ]}                          >
                 <Input size="large" placeholder="Name" className="input-custom" />
               </Form.Item>
             </Col>

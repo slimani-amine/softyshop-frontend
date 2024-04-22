@@ -55,11 +55,7 @@ export const BrandApi = api.injectEndpoints({
       invalidatesTags: ['brands' , 'brand']}),
     
     searchBrands: builder.query<any,string>({
-      query: (subName) => `api/brands?search=name:${subName}`,
-      providesTags:  ['brands']
-
-    })
-  })
+      query: (subName) => `api/brands${subName? `?search=name:${subName}`: ""}`,
+      providesTags:  ['brands'] }) })
 });
-
 export const {useAllBrandsQuery,useBrandQuery,useBrandsQuery,useCreateBrandMutation,useDeleteBrandsMutation,useSearchBrandsQuery,useUpdateBrandMutation} = BrandApi

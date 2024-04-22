@@ -6,13 +6,24 @@ interface OrderItemProps {
   name: string;
   price: number;
   image: string;
+  quantity: number;
   onRemove: () => void; // Function to handle product removal
+  onQuantityChange: (quantity: number) => void; // Function to handle quantity change
 }
 
-const OrderItem: React.FC<OrderItemProps> = ({ name, price, image, onRemove }) => {
+const OrderItem: React.FC<OrderItemProps> = ({ name, price, image, quantity, onRemove, onQuantityChange }) => {
   const handleRemove = () => {
     onRemove(); // Call the onRemove function when the close icon is clicked
   };
+
+  const handleQuantityChange = (value: number | null) => {
+    // Ensure value is not null
+    if (value !== null) {
+      // Call the onQuantityChange function with the new quantity
+      onQuantityChange(value);
+    }
+  };
+  
 
   return (
     <div className="order-item">
@@ -20,20 +31,18 @@ const OrderItem: React.FC<OrderItemProps> = ({ name, price, image, onRemove }) =
       <div className="details">
         <h2>{name}</h2>
         <div className='price'>
-          <p>${price.toFixed(2)} X</p>
+          <p>${price} X</p>
           <InputNumber
-            required
+            value={quantity}
             min={0}
-            defaultValue={1}
-            name="stock"
-            placeholder=""
+            onChange={handleQuantityChange} // Pass the handleQuantityChange function directly
             className="input-custom hhh"
             size="small"
-            style={{ width: "50px" , height:"30px" }}
+            style={{ width: "50px", height: "30px" }}
           />
         </div>
       </div>
-      <div className='close-order' onClick={handleRemove}><CloseCircleOutlined/></div>
+      <div className='close-order' onClick={handleRemove}><CloseCircleOutlined /></div>
     </div>
   );
 };

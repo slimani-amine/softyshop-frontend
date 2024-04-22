@@ -94,7 +94,6 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
         // Handle unexpected response format
         message.error("Unexpected response from server. Please try again later.");
     }
-      message.success("Shop updated successfully");
       console.log(response)
       onFinish();
     } catch (error) {
@@ -173,8 +172,16 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
                 <Form.Item
                   name="name"
                   style={{ marginBottom: 0 }}
-                  rules={[{ required: true, message: "Please enter Shop name" }]}
-                >
+                  rules={[ 
+                    { 
+                        required: true, 
+                        message: 'Please enter Store name' 
+                    },
+                    {
+                        pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                        message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                    }
+                ]}                >
                   <Input size="large" placeholder="Name" className="input-custom-small" />
                 </Form.Item>
               </Col>
@@ -184,8 +191,16 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
                 <Form.Item
                   name="phone"
                   style={{ marginBottom: 0 }}
-                  rules={[{ required: true, message: "Please enter Shop phone" }]}
-                >
+                  rules={[
+                    { 
+                        required: true, 
+                        message: 'Please enter Shop phone' 
+                    },
+                    {
+                        pattern: /^[2-57-9]\d{7}$/,
+                        message: 'Phone number must be 8 digits and start with 2, 4, 5, 7, or 9'
+                    }
+                ]}                >
                   <Input size="large" placeholder="Shop Phone" className="input-custom-small" />
                 </Form.Item>
               </Col>

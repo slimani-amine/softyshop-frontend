@@ -54,7 +54,7 @@ export default function CategoryList() {
   const handleSearchChange = debounce((searchText: string) => {
     console.log('Search text for category list:', searchText);
     setNameCategory(searchText);
-  }, 500);
+  }, 200);
 
   /*const handleDelete = async (categoryId :Number) => {
     try {
@@ -238,7 +238,7 @@ export default function CategoryList() {
             variant={selectedRowIds.length === 0 ? 'dark' : 'primary'}
             onClick={handleDelete}
           >
-            deleted
+            Deleted
           </Button>
         </div>
         <Table<Category> {...tableProps} />

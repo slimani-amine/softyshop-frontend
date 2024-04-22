@@ -11,11 +11,14 @@ import {
 import Button from "@src/modules/shared/components/Button/Button";
 import { useCreateBrandMutation } from "../../service/brandApi";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
+import { useNavigate } from "react-router-dom";
 interface AddBrandFormProps {
   onFinish: (values: any) => void;
 }
 
 const AddBrandForm: FC<AddBrandFormProps> = () => {
+  const navigate = useNavigate()
+
   const [files, setFile] = useState<any>(null);
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
@@ -32,6 +35,21 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
         name: objectPost.name,
         logo: selectedFileUrl,
       });
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Store updated successfully!");
+        console.log(response.data);
+        navigate("/stores")
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save Store. Please try again.");
+        console.error('Error saving Store', response.error);
+    } else {
+        // Handle unexpected response format
+        message.error("Unexpected response from server. Please try again later.");
+    }
+      console.log(response)
       console.log(response)
 
       // Reset form fields and validation status
@@ -59,9 +77,16 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
-                rules={[
-                  { required: true, message: "Please enter Brand name" },
-                ]}
+                rules={[ 
+                  { 
+                      required: true, 
+                      message: 'Please enter Store name' 
+                  },
+                  {
+                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                  }
+              ]}            
               >
                 <Input
                   size="large"

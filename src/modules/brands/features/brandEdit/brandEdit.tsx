@@ -12,7 +12,7 @@ import {
   message,
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
 
 interface AddBrandFormProps {
@@ -20,6 +20,7 @@ interface AddBrandFormProps {
 }
 
 const EditBrandForm: FC<AddBrandFormProps> = () => {
+  const navigate = useNavigate()
   const [files, setFile] = useState<any>(null);
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
@@ -42,15 +43,27 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
     try {
       const values = await form.validateFields();
 
-      await updateBrand({
+      const response = await updateBrand({
         id: id,
         data: {
           name: values.name,
           logo: selectedFileUrl,
         },
       });
-
-      message.success(`Brand of id:${id} updated`);
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Brand updated successfully!");
+        console.log(response.data);
+        navigate("/brands")
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save Brand. Please try again.");
+        console.error('Error saving Brand', response.error);
+    } else {
+        // Handle unexpected response format
+        message.error("Unexpected response from server. Please try again later.");
+    }
       form.resetFields();
     } catch (error) {
       console.error("Error updating Brand:", error);
@@ -78,8 +91,16 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
-                rules={[{ required: true, message: "Please enter Brand name" }]}
-              >
+                rules={[ 
+                  { 
+                      required: true, 
+                      message: 'Please enter Store name' 
+                  },
+                  {
+                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                  }
+              ]}                          >
                 <Input
                   size="large"
                   placeholder="Name"

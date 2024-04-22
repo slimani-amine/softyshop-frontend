@@ -137,14 +137,21 @@ const AddProductForm: FC<AddProductFormProps> = () => {
                 name="name"
                 style={{ marginBottom: 20 }}
                 rules={[
-                  { required: true, message: 'Please enter Product name' },
-                ]}
+                  { 
+                      required: true, 
+                      message: 'Please enter Product name' 
+                  },
+                  {
+                      pattern: /^(?!\s)(?=.*[a-zA-Z])[a-zA-Z\s]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                  }
+              ]}
               >
                 <Input
                   size="large"
                   placeholder="Name"
                   className="input-custom"
-                  style={{ color: 'blue' }} // Change color based on user role
+                  style={{ }} // Change color based on user role
                 />
               </Form.Item>
             </Col>

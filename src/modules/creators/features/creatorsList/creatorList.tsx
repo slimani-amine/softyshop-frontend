@@ -13,7 +13,7 @@ export default function CreatorsList() {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
   
-  const [namecreator, setNamecreator] = useState<string>('a');
+  const [namecreator, setNamecreator] = useState<string>('');
   const { data: fetchedcreators } = useCreatorsQuery({
     perPage: pageSize,
     page: currentPage,
@@ -43,7 +43,7 @@ export default function CreatorsList() {
   const handleSearchChange = debounce((searchText: string) => {
     console.log('Search text for creator list:', searchText);
     setNamecreator(searchText);
-  }, 500);
+  }, 200);
 
   /*const handleDelete = async (creatorId :Number) => {
     try {
@@ -153,7 +153,7 @@ export default function CreatorsList() {
       </div>
       <div className="container-Product-List">
       <div className="container-btn">
-        <Button size="sm"  disabled={selectedRowIds.length === 0} variant={selectedRowIds.length === 0 ?'dark':'primary'} onClick={handleDelete}>deleted</Button>
+        <Button size="sm"  disabled={selectedRowIds.length === 0} variant={selectedRowIds.length === 0 ?'dark':'primary'} onClick={handleDelete}>Deleted</Button>
         </div>
         <Table<any> {...tableProps} />
       </div>

@@ -103,8 +103,15 @@ const UpdateVendorForm: FC = () => {
                 name="name"
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { required: true, message: "Please enter Vendor name" },
-                ]}
+                  { 
+                      required: true, 
+                      message: 'Please enter vendor name' 
+                  },
+                  {
+                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no spaces'
+                  }
+              ]}             
               >
                 <Input
                   size="large"
@@ -119,8 +126,16 @@ const UpdateVendorForm: FC = () => {
               <Form.Item
                 name="lastName"
                 style={{ marginBottom: 0 }}
-                rules={[{ required: true, message: "Please enter Last Name" }]}
-              >
+                rules={[
+                  { 
+                      required: true, 
+                      message: 'Please enter vendor last name' 
+                  },
+                  {
+                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no spaces'
+                  }
+              ]}               >
                 <Input
                   size="large"
                   placeholder="Last Name"
@@ -153,16 +168,15 @@ const UpdateVendorForm: FC = () => {
                 name="phoneNumber"
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { required: true, message: "Please enter phone number" },
-                  {
-                    min: 8,
-                    message: "Phone number must be at least 8 characters long",
+                  { 
+                      required: true, 
+                      message: 'Please enter Shop phone' 
                   },
                   {
-                    pattern: /^\d+$/,
-                    message: "Phone number must contain only numbers",
-                  },
-                ]}
+                      pattern: /^[2-57-9]\d{7}$/,
+                      message: 'Phone number must be 8 digits and start with 2, 4, 5, 7, or 9'
+                  }
+              ]}        
               >
                 <Input
                   size="large"
