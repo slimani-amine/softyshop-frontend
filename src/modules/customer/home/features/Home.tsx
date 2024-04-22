@@ -24,7 +24,7 @@ function Home() {
           const response = await fetch(`${BASE_URL}api/stores`);
           const data = await response.json();
           // console.log(data);
-          setStores(data);
+          setStores(data.data.docs);
           //  setStores(data?.data?.docs);
         } catch (err: string | unknown) {
           console.log(err);
@@ -49,8 +49,8 @@ function Home() {
   //   },
   //   [dispatch]
   // );
+  console.log('🚀 ~ Home ~ Stores:', Stores);
 
-  // console.log(Stores);
   return (
     <>
       {user?.role === 'user' && <Navigate to="/home" />}
