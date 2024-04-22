@@ -1,5 +1,5 @@
 import { api } from '@src/modules/shared/services/api';
-import Vendor from './type';
+import {Vendor , Address}  from './type';
 export const VendorsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     users: builder.query<any, { perPage: number; page: number }>({
@@ -51,6 +51,16 @@ export const VendorsApi = api.injectEndpoints({
       query: (id) => `api/users/addresses/${id}`,
      
     }),
+    addAdressOfUser: builder.mutation<any, {body :Address}>({
+      query: (body) =>({
+        url : `api/users/addresses`,
+        method : "POST",
+        body : body
+      })
+      
+
+     
+    }),
   }),
 });
 
@@ -64,5 +74,6 @@ export const {
   useVendorsQuery,
   useSearchVendorsQuery,
   useUpdateVendorMutation,
-  useAdressesOfUserQuery
+  useAdressesOfUserQuery,
+  useAddAdressOfUserMutation
 } = VendorsApi;

@@ -238,7 +238,7 @@ export default function CategoryList() {
             variant={selectedRowIds.length === 0 ? 'dark' : 'primary'}
             onClick={handleDelete}
           >
-            deleted
+            Deleted
           </Button>
         </div>
         <Table<Category> {...tableProps} />

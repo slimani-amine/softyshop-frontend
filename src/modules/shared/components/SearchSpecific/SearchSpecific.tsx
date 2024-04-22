@@ -22,6 +22,7 @@ const SearchSpecific: React.FC<SearchSpecificProps> = ({ options, onChange }) =>
   <Select
     showSearch
     placeholder="Select a person"
+    
     optionFilterProp="children"
     onChange={onChange} // Use the onChange prop
     onSearch={onSearch}

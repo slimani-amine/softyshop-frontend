@@ -13,7 +13,7 @@ import {
   useDeleteVendorMutation,
 } from "../../services/vendorApi";
 import { useEffect, useState } from "react"; // Import useState hook for managing modal state
-import Vendor from "../../services/type";
+import {Vendor} from "../../services/type";
 import { debounce } from "lodash";
 console.log(AntButton)
 export default function CategoryList() {
@@ -211,7 +211,7 @@ export default function CategoryList() {
             variant={selectedRowIds.length === 0 ? "dark" : "primary"}
             onClick={handleDelete}
           >
-            deleted
+            Deleted
           </Button>
         </div>
         <Table<any> {...tableProps} />

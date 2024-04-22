@@ -5,6 +5,7 @@ import {
   Col,
   Input,
   message,
+ 
 } from "antd";
 import OrderItem from "../../components/orderItem/orderItem";
 import Button from "@src/modules/shared/components/Button/Button";
@@ -12,7 +13,8 @@ import SearchSpecific from "@src/modules/shared/components/SearchSpecific/Search
 import FormItem from "antd/es/form/FormItem";
 import { useAllProductsQuery } from "@src/modules/products/service/productApi";
 import { useUsersQuery } from "@src/modules/vendores/services/vendorApi";
-import { useAdressesOfUserQuery } from "@src/modules/vendores/services/vendorApi";
+import { useAdressesOfUserQuery , useAddAdressOfUserMutation } from "@src/modules/vendores/services/vendorApi";
+import ModalAddress from "../../components/AddressModal";
 
 interface OrderFormProps {
   onFinish: (values: any) => void;
@@ -32,6 +34,37 @@ const OrderForm: FC<OrderFormProps> = () => {
   const [currentPage] = useState(1);
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string>("");
+  const [showAddressModal, setShowAddressModal] = useState<boolean>(false);
+  const [addressForm] = Form.useForm(); // Form for the modal
+  
+  const handleOpenModal = () => {
+    setShowAddressModal(true);
+  };
+
+  // Function to handle modal closing
+  const handleCloseModal = () => {
+    setShowAddressModal(false);
+    addressForm.resetFields(); // Reset the form fields when closing the modal
+  };
+
+  // Function to handle form submission in the modal
+  const [addAddress] = useAddAdressOfUserMutation()
+  const handleAddAddress = async (values: any) => {
+    try {
+      console.log("New address values:", values);
+      await addAddress(values)
+
+      // Perform any action you need with the new address values
+
+      handleCloseModal(); // Close the modal after successful submission
+    } catch (error) {
+      console.error("Error adding new address", error);
+    }
+  };
+
+
+
+
 
   const { data: fetchedUsers } = useUsersQuery({
     perPage: pageSize,
@@ -69,6 +102,7 @@ console.log(addrress_option)
       const values = await form.validateFields();
       console.log(values);
       console.log(products, "iiiciiciciicicicicici");
+
 
       form.resetFields();
 
@@ -233,7 +267,7 @@ console.log(addrress_option)
                             message: "Please enter address",
                           },
                           {
-                            min: 8,
+                            min: 4,
                             message:
                               "Address must be at least 8 characters long",
                           },
@@ -243,9 +277,11 @@ console.log(addrress_option)
                               options={addrress_option}
                               onChange={handleProductSelection}
                             />
-                            <Button style={{marginTop:"30px"}}>Add new Address</Button>
 
                       </Form.Item>
+                      <Button style={{ marginTop: "30px", width: "150px" }} onClick={handleOpenModal}>
+          Add new Address
+        </Button>
 
                     </Col>
                   </Row>
@@ -265,6 +301,11 @@ console.log(addrress_option)
           </Form>
         </div>
       </div>
+      <ModalAddress
+        visible={showAddressModal}
+        onCancel={handleCloseModal}
+        onAddAddress={handleAddAddress}
+      />
     </div>
   );
 };

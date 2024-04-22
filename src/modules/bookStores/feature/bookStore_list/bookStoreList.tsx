@@ -303,7 +303,7 @@ export default function bookStoreList() {
             variant={selectedRowIds.length === 0 ? 'dark' : 'primary'}
             onClick={handleDelete}
           >
-            deleted
+            Delete
           </Button>
         </div>
         <Table {...tableProps} />

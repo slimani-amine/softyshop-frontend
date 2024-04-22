@@ -1,4 +1,4 @@
-export default interface Vendor {
+export  interface Vendor {
       email: string,
       id : string,
       isVerified: boolean,
@@ -8,3 +8,10 @@ export default interface Vendor {
       role: string ,
       phoneNumber : string
     }
+export interface Address {
+  addres: string
+  city:string
+  phoneNumber: string
+  zipCod: string
+
+}

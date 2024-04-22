@@ -276,7 +276,7 @@ const { data: fetchedProducts, isLoading } = selectedStore
             variant={selectedRowIds.length === 0 ? "dark" : "primary"}
             onClick={handleDelete}
           >
-            deleted
+            Deleted
           </Button>
         </div>
         <Table<Product> {...tableProps} />

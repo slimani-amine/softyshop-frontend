@@ -153,7 +153,7 @@ export default function CreatorsList() {
       </div>
       <div className="container-Product-List">
       <div className="container-btn">
-        <Button size="sm"  disabled={selectedRowIds.length === 0} variant={selectedRowIds.length === 0 ?'dark':'primary'} onClick={handleDelete}>deleted</Button>
+        <Button size="sm"  disabled={selectedRowIds.length === 0} variant={selectedRowIds.length === 0 ?'dark':'primary'} onClick={handleDelete}>Deleted</Button>
         </div>
         <Table<any> {...tableProps} />
       </div>
