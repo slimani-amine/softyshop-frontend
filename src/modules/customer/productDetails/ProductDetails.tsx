@@ -48,8 +48,8 @@ function ProductDetails() {
     fetchData();
   }, [BASE_URL]);
   const theProduct = product[0];
-
   const images = theProduct.images.length && JSON.parse(theProduct?.images);
+  console.log(images);
 
   const [loading, setIsLoading] = useState(false);
   const cart = useAppSelector((state) => state.cart.cart);
@@ -95,7 +95,7 @@ function ProductDetails() {
     <>
       <div className="product-details">
         <div className="image-wrapper">
-          <img width={400} height={400} className="" src={images[0]} alt="" />
+          <img width={400} height={400} className="" src={images} alt="" />
         </div>
         <div className="product-info">
           <h1 className="product-name">{theProduct.name}</h1>

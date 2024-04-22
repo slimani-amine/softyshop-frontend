@@ -28,7 +28,7 @@ function Product({
   const [showIcons, setShowIcons] = useState(false);
   const [loading, setIsLoading] = useState(false);
 
-  const lastImage = images.length && JSON.parse(images)[0];
+  const lastImage = images.length && JSON.parse(images);
 
   // useEffect(() => {
   //   console.log('hola');
