@@ -29,7 +29,7 @@ function Product({
   const [loading, setIsLoading] = useState(false);
 
   const theImage = images.length && JSON.parse(images);
-  console.log('🚀 ~ theImage:', theImage);
+  // console.log('🚀 ~ theImage:', theImage);
 
   // useEffect(() => {
   //   console.log('hola');

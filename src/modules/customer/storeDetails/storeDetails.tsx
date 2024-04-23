@@ -11,6 +11,8 @@ import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { settProducts } from '../data/productSlice';
 import { useParams } from 'react-router-dom';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
+import { ProductType } from '../data/dataTypes';
+import Product from '../home/components/Product/Product';
 
 function storeDetails() {
   // const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
@@ -50,7 +52,7 @@ function storeDetails() {
           // const response = await fetch(`${FAKE_URL}`);
           const response = await fetch(`${BASE_URL}api/stores/${storeId}`);
           const data = await response.json();
-          // console.log('🚀 ~ fetchData ~ data:', data.data);
+          console.log('🚀 ~ fetchData ~ store:', data.data);
 
           setStore(data.data);
           // setProducts(store.products);
@@ -76,15 +78,17 @@ function storeDetails() {
           );
 
           const data = await response.json();
-          console.log('🚀 ~ fetchData ~ data:', data);
+          console.log('🚀 ~ fetchData ~ products:', data.data);
 
           // console.log(store);
           // setProducts(store.products);
-          // setProducts(
-          //   data.map((product: ProductType) => {
-          //     return { ...product, quantity: 0 };
-          //   })
-          // );
+          dispatch(
+            settProducts(
+              data.data.map((product: ProductType) => {
+                return { ...product, quantity: 0 };
+              })
+            )
+          );
         } catch (err: string | unknown) {
           console.log(err);
           return err;
@@ -98,7 +102,7 @@ function storeDetails() {
   );
   // console.log('🚀 ~ storeDetails ~ store:', store);
 
-  dispatch(settProducts(store.products));
+  // dispatch(settProducts(store.products));
   // const cart = useAppSelector((state) => state.cart.cart);
   const theProducts = useAppSelector((state) => state.product.products);
   console.log('🚀 ~ storeDetails ~ theProducts:', theProducts);
@@ -161,12 +165,12 @@ function storeDetails() {
         </div>
       </div>
       <div className="books">
-        {/* {theProducts.map(
+        {theProducts.map(
           (
             {
               id,
               name,
-              image,
+              images,
               //  rating
               price,
             },
@@ -183,11 +187,11 @@ function storeDetails() {
                 name={name}
                 // rating={rating}
                 price={Number(price)}
-                image={image}
+                images={images}
               />
             );
           }
-        )} */}
+        )}
       </div>
     </div>
   );
