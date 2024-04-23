@@ -1,39 +1,38 @@
-import { Checkbox, Modal, Space, Switch, Table, message } from 'antd';
-import Button from '@src/modules/shared/components/Button/Button';
+import { Checkbox, Modal, Space, Switch, Table, message } from "antd";
+import Button from "@src/modules/shared/components/Button/Button";
 import {
   useDeleteStoresMutation,
   usePublishStoreMutation,
   useStoresQuery,
   useMyStoresQuery,
   useSearchStoresQuery,
-} from '../../service/storeApi';
-import { SetStateAction, useEffect, useState } from 'react';
-import SeachFilter from '@src/modules/shared/components/SearchFilter/SearchFilter';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '@src/modules/shared/store';
-import { debounce } from 'lodash';
-import Spinner from '@src/modules/shared/components/Spinner/Spinner';
+} from "../../service/storeApi";
+import { SetStateAction, useEffect, useState } from "react";
+import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@src/modules/shared/store";
+import { debounce } from "lodash";
+import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 
 export default function bookStoreList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
-  const [nameStore, setNameStore] = useState<string>('');
+  const [nameStore, setNameStore] = useState<string>("");
   const [stores, setStores] = useState<Array<any>>([]);
 
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
-  console.log(Current_User)
+  console.log(Current_User);
   const Current_id = useSelector((state: RootState) => state.auth.user?.id);
   console.log(Current_id);
   const { data: fetchedSearchStores } = useSearchStoresQuery({
     subName: nameStore,
-    role: Current_User || 'ADMIN',
-    id: Current_id || '',
+    role: Current_User || "ADMIN",
+    id: Current_id || "",
   });
-
 
   const handlePaginationChange = (page: number, pageSize?: number) => {
     setCurrentPage(page);
@@ -43,28 +42,25 @@ export default function bookStoreList() {
 
   let fetchedData: { data: { docs: SetStateAction<any[]> } };
   const [publishStore] = usePublishStoreMutation();
-  const isAdmin = Current_User === 'ADMIN';
-  console.log(isAdmin, 'verification role ');
+  const isAdmin = Current_User === "ADMIN";
+  console.log(isAdmin, "verification role ");
   if (isAdmin) {
-    console.log("oke")
-    const { data: fetchedStores,isLoading} = useStoresQuery({
+    console.log("oke");
+    const { data: fetchedStores, isLoading } = useStoresQuery({
       page: currentPage,
       perPage: pageSize,
-      id : Current_id,
-      role : Current_User
+      id: Current_id,
+      role: Current_User,
     });
     fetchedData = fetchedStores;
-    isLoading ? <Spinner/> : null
-    
+    isLoading ? <Spinner /> : null;
   } else {
-    console.log("object")
-    const { data: fetchedMyStores,isLoading } = useMyStoresQuery();
+    console.log("object");
+    const { data: fetchedMyStores, isLoading } = useMyStoresQuery();
     fetchedData = fetchedMyStores;
-    isLoading ? <Spinner/> : null
-
-
+    isLoading ? <Spinner /> : null;
   }
-  
+
   useEffect(() => {
     if (nameStore && fetchedSearchStores) {
       setStores(fetchedSearchStores.data?.docs);
@@ -82,7 +78,7 @@ export default function bookStoreList() {
     position: string[];
   }
   const handleSearchChange = debounce((searchText: string) => {
-    console.log('Search text for category mlist:', searchText);
+    console.log("Search text for category mlist:", searchText);
     setNameStore(searchText);
   }, 500);
   const navigate = useNavigate();
@@ -91,7 +87,7 @@ export default function bookStoreList() {
   };
 
   const handleNavigate = () => {
-    navigate('/stores/create');
+    navigate("/stores/create");
   };
   const [deleteStores] = useDeleteStoresMutation();
   const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State to manage modal visibility
@@ -110,20 +106,20 @@ export default function bookStoreList() {
   const handleDelete = async () => {
     try {
       const response = await deleteStores(selectedRowIds).unwrap();
-      if ('data' in response) {
+      if ("data" in response) {
         // Display success message if data exists
         message.success("Store deleted successfully!");
         console.log(response.data);
-        
-        
-    } else if ('error' in response) {
+      } else if ("error" in response) {
         // Display error message if error exists
         message.error("Failed to Delete Store. Please try again.");
-        console.error('Error saving product', response.error);
-    } else {
+        console.error("Error saving product", response.error);
+      } else {
         // Handle unexpected response format
-        message.error("Unexpected response from server. Please try again later.");
-    }
+        message.error(
+          "Unexpected response from server. Please try again later."
+        );
+      }
     } catch (error) {
       // Handle error
     }
@@ -145,8 +141,8 @@ export default function bookStoreList() {
 
   const columns = [
     {
-      title: 'Select',
-      dataIndex: 'id',
+      title: "Select",
+      dataIndex: "id",
       render: (_: any, record: any) => (
         <Checkbox
           checked={selectedRowIds.includes(record.id)}
@@ -155,13 +151,13 @@ export default function bookStoreList() {
       ),
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       render: (_name: string, record: any) => (
         <div className="name-column">
           <div className="picture-Product">
-            <img height={'30px'} width={'30px'} src={record.logo} alt="" />
+            <img height={"30px"} width={"30px"} src={record.logo} alt="" />
           </div>
           <div className="data-name">
             <h3>{record.name}</h3>
@@ -172,9 +168,9 @@ export default function bookStoreList() {
       sorter: (a: Store, b: Store) => a.name.localeCompare(b.name),
     },
     {
-      title: 'Links',
-      dataIndex: 'socialMediaLinks',
-      key: 'links',
+      title: "Links",
+      dataIndex: "socialMediaLinks",
+      key: "links",
       render: (socialMediaLinks: string) => {
         const links = JSON.parse(socialMediaLinks.replace(/'/g, '"'));
         return (
@@ -187,18 +183,18 @@ export default function bookStoreList() {
       },
     },
     {
-      title: 'Position',
-      dataIndex: 'address',
-      key: 'position',
+      title: "Position",
+      dataIndex: "address",
+      key: "position",
       render: (position: string) => {
         return <div className="position-column">{position}</div>;
       },
     },
 
     {
-      title: 'Published',
-      dataIndex: 'published',
-      key: 'published',
+      title: "Published",
+      dataIndex: "published",
+      key: "published",
 
       sorter: (a: Store, b: Store) =>
         (a.isPublished ? 1 : 0) - (b.isPublished ? 1 : 0),
@@ -219,9 +215,9 @@ export default function bookStoreList() {
       ),
     },
     {
-      title: 'Action',
-      key: 'action',
-      className: 'action-category',
+      title: "Action",
+      key: "action",
+      className: "action-category",
       render: (record: any) => (
         <Space>
           <div className="icon-action" onClick={() => Navigate(record?.id)}>
@@ -242,21 +238,21 @@ export default function bookStoreList() {
                 stroke-linejoin="round"
               ></g>
               <g id="SVGRepo_iconCarrier">
-                {' '}
+                {" "}
                 <g>
-                  {' '}
+                  {" "}
                   <g>
-                    {' '}
-                    <path d="M311.18,78.008L32.23,356.958L0.613,485.716c-1.771,7.209,0.355,14.818,5.604,20.067 c5.266,5.266,12.88,7.368,20.067,5.604l128.759-31.617l278.95-278.95L311.18,78.008z M40.877,471.123l10.871-44.271l33.4,33.4 L40.877,471.123z"></path>{' '}
-                  </g>{' '}
-                </g>{' '}
+                    {" "}
+                    <path d="M311.18,78.008L32.23,356.958L0.613,485.716c-1.771,7.209,0.355,14.818,5.604,20.067 c5.266,5.266,12.88,7.368,20.067,5.604l128.759-31.617l278.95-278.95L311.18,78.008z M40.877,471.123l10.871-44.271l33.4,33.4 L40.877,471.123z"></path>{" "}
+                  </g>{" "}
+                </g>{" "}
                 <g>
-                  {' '}
+                  {" "}
                   <g>
-                    {' '}
-                    <path d="M502.598,86.818L425.182,9.402c-12.536-12.536-32.86-12.536-45.396,0l-30.825,30.825l122.812,122.812l30.825-30.825 C515.134,119.679,515.134,99.354,502.598,86.818z"></path>{' '}
-                  </g>{' '}
-                </g>{' '}
+                    {" "}
+                    <path d="M502.598,86.818L425.182,9.402c-12.536-12.536-32.86-12.536-45.396,0l-30.825,30.825l122.812,122.812l30.825-30.825 C515.134,119.679,515.134,99.354,502.598,86.818z"></path>{" "}
+                  </g>{" "}
+                </g>{" "}
               </g>
             </svg>
           </div>
@@ -268,7 +264,7 @@ export default function bookStoreList() {
   const tableProps = {
     dataSource: stores,
     columns: columns,
-    headerStyle: { backgroundColor: 'lightblue' },
+    headerStyle: { backgroundColor: "lightblue" },
     pagination: {
       total: 7,
       current: currentPage,
@@ -280,7 +276,7 @@ export default function bookStoreList() {
     },
 
     header: {
-      style: { borderRadius: 'px' },
+      style: { borderRadius: "px" },
     },
   };
   return (
@@ -288,7 +284,7 @@ export default function bookStoreList() {
       <h1>Stores List</h1>
       <div className="header-Product-list">
         <SeachFilter
-          placeholder={'Search Store ...'}
+          placeholder={"Search Store ..."}
           onSearchChange={handleSearchChange}
         />
         <Button className="add-cat" onClick={handleNavigate}>
@@ -300,7 +296,7 @@ export default function bookStoreList() {
           <Button
             size="sm"
             disabled={selectedRowIds.length === 0}
-            variant={selectedRowIds.length === 0 ? 'dark' : 'primary'}
+            variant={selectedRowIds.length === 0 ? "dark" : "primary"}
             onClick={handleDelete}
           >
             Delete

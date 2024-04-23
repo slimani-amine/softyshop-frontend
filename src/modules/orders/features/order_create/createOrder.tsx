@@ -10,7 +10,6 @@ import {
 import OrderItem from "../../components/orderItem/orderItem";
 import Button from "@src/modules/shared/components/Button/Button";
 import SearchSpecific from "@src/modules/shared/components/SearchSpecific/SearchSpecific";
-import FormItem from "antd/es/form/FormItem";
 import { useAllPaymentsQuery } from "@src/modules/payment/service/paymentApi";
 import { useAllProductsQuery } from "@src/modules/products/service/productApi";
 import { useUsersQuery } from "@src/modules/vendores/services/vendorApi";
@@ -109,7 +108,7 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
       const values = await form.validateFields();
      
       const productsPayload = products.map(obj => ({
-        name: obj.productId,
+        productId: obj.productId,
         quantity: obj.quantity
       }));
       const payload= {...values,products:productsPayload}
@@ -120,7 +119,7 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
         message.success("Product saved successfully!");
         form.resetFields();
 
-        navigate("/categories")
+        navigate("/orders")
 
         
     } else if ('error' in response) {
@@ -146,7 +145,7 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
     const quantity = 1;
     const product = getProductById(value);
 
-    if (!products.find((prod: Product) => prod.productId === product.id)) {
+    if (!products.find((prod: Product) => prod.productId === product?.id)) {
       setProducts([
         ...products,
         {
@@ -179,27 +178,39 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
           <Form form={form} className="form-shop">
             <div className="form-content">
               <div className="part-1">
-                <FormItem name="products">
+               
                   <Row gutter={[3, 0]} className="name-Shop">
                     <Col span={3}>
                      
                         <Row gutter={[3, 0]} className="name-Shop">
                           <Col span={3}>
+                         
                             <label
                               className="label-order"
                               htmlFor="products-search"
                             >
                               Product:
                             </label>
+                            <Form.Item 
+                                  name="products"
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: "Products",
+                                    },
+                                  
+                                  ]}
+                              >
                             <SearchSpecific
                               options={products_option}
                               onChange={handleProductSelection}
                             />
+                             </Form.Item>
                           </Col>
                         </Row>
                     </Col>
                   </Row>
-                </FormItem>
+               
 
                 <Form.Item className="product-selected">
                   {products.map((product: any, index) => {
@@ -232,7 +243,15 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
                       <label className="label-order" htmlFor="products-search">
                         Email:
                       </label>
-                      <Form.Item name="userId">
+                      <Form.Item 
+                      name="userId" 
+                        rules={[
+                          {
+                            required: true,
+                            message: "Email",
+                          },
+                        
+                        ]}>
                       <SearchSpecific
                         options={users_option}
                         onChange={(value: string) => setSelectedUserId(value)}
