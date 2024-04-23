@@ -35,7 +35,6 @@ const Button: React.FC<IButtonProps> = ({
 }) => {
   return (
     <button
-      // style={{ width: '120px' }}
       className={[
         'btn',
         `btn-${size}`,

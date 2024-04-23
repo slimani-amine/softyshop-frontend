@@ -39,7 +39,7 @@ function ProductDetails() {
         );
 
         const data = await response.json();
-        console.log('🚀 ~ fetchData ~ data.data.docs:', data.data);
+        // console.log('🚀 ~ fetchData ~ data.data.docs:', data.data);
         setProduct(data.data);
         // console.log(data.data.docs);
       } catch (err: string | unknown) {
@@ -52,7 +52,7 @@ function ProductDetails() {
   }, [BASE_URL]);
 
   const images = product.images.length && JSON.parse(product?.images);
-  console.log('🚀 ~ ProductDetails ~ product:', product);
+  // console.log('🚀 ~ ProductDetails ~ product:', product);
 
   const [loading, setIsLoading] = useState(false);
   const cart = useAppSelector((state) => state.cart.cart);

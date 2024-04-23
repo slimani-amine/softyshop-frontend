@@ -24,21 +24,23 @@ const cartSlice = createSlice({
       state.status = 'loading';
       // console.log(state.status);
     });
-    builder.addCase(getCart.fulfilled, (state) => {
-      state.status = 'succeeded';
+    builder.addCase(getCart.fulfilled, (state, payload) => {
+      // state.status = 'succeeded';
 
-      // state.cartId = payload.payload[0].id;
-      // state.cart = payload.payload[1];
-      // state.cartItems = state.cart.length;
-      // state.cartAmount = payload.payload[0].totalAmount;
-      // state.cartQuantity = payload.payload[0].totalQuantity;
+      state.cartId = payload.payload[0].id;
+      state.cart = payload.payload[1];
+      state.cartItems = state.cart.length;
+      state.cartAmount = payload.payload[0].totalAmount;
+      state.cartQuantity = payload.payload[0].totalQuantity;
 
-      // console.log(state.cart);
+      console.log('🚀 ~ state ~ state:', { ...state });
+      console.log('🚀 ~ cartSlice ~ ({ ...state.cart }):', { ...state.cart });
+      // console.log(state.status);
     });
     builder.addCase(getCart.rejected, (state, action) => {
       state.error = action?.payload;
       state.status = 'failed';
-      // console.log(state.status);
+      console.log(state.status);
     });
     builder.addCase(addToCart.pending, (state) => {
       state.error = null;

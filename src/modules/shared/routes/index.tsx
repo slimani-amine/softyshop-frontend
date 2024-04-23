@@ -4,8 +4,8 @@ import { Routes, Route, RouteProps } from 'react-router-dom';
 
 import pages from './routes';
 import LazyLoad from '../components/LazyLoad/LazyLoad';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../store';
 type RouteConfig = {
   exact: boolean | null;
   path: string;
@@ -16,10 +16,10 @@ type RouteConfig = {
 } & RouteProps;
 
 export const renderRoutes = (routes: RouteConfig[] = []) => {
-  const Current_User =
-    useSelector(
-      (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
-    ) || 'admin';
+  // const Current_User =
+  //   useSelector(
+  //     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+  //   ) || 'admin';
   //  console.log(Current_User)
   return (
     <Suspense fallback={<LazyLoad />}>
@@ -28,10 +28,10 @@ export const renderRoutes = (routes: RouteConfig[] = []) => {
           const Component = route.component;
           const Guard = route?.guard || Fragment;
           const Layout = route?.layout || Fragment;
-          const roles = route?.roles;
-          const allowedRoles = roles && roles.includes(Current_User);
+          // const roles = route?.roles;
+          // const allowedRoles = roles && roles.includes(Current_User);
           // console.log(Current_User)
-          console.log(allowedRoles);
+          // console.log(allowedRoles);
 
           if (true) {
             return (

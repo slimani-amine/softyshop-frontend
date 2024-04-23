@@ -15,7 +15,6 @@ const rootReducer = combineReducers({
   role: roleReducer,
   cart: cartReducer,
   product: productReducer,
-  // user: userReducer,
   [api.reducerPath]: api.reducer,
 });
 

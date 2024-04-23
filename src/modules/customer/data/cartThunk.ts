@@ -19,7 +19,9 @@ export const getCart = createAsyncThunk('cart/getCart', async () => {
     // console.log(response);
     // console.log(token);
     const data = await response.json();
-    // console.log(data.data);
+
+    console.log('🚀 ~ getCart ~ data:', data.data);
+
     return data.data;
   } catch (error) {
     console.log(error);
