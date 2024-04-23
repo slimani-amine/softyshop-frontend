@@ -93,68 +93,65 @@ function ProductDetails() {
   }
 
   return (
-    <>
-      <div className="product-details">
-        <div className="image-wrapper">
-          <img width={400} height={400} className="" src={images} alt="" />
-        </div>
-        <div className="product-info">
-          <h1 className="product-name">{product.name}</h1>
-          <div className="brand-and-category">
-            <p className="brand">
-              <span className="brand-title">Publisher:</span>{' '}
-              {product?.brand?.name}
-            </p>
-            <p className="brand">
-              <span className="brand-title">category:</span>{' '}
-              {product?.category?.name}
-            </p>
-          </div>
-
-          {/* <p className='rate'>product.rate</p> */}
-
-          <h2 className="price">${product.price}</h2>
-          <p className="stock">
-            Stock{' '}
-            {product?.availability
-              ? `Available: (${product?.stockNumber} ${
-                  product?.stockNumber == 1 ? 'book' : 'books'
-                }  remaining)`
-              : 'Unavailable'}
-          </p>
-          {quantity == 0 && (
-            <Button
-              onClick={handleAddToCart}
-              disabled={loading}
-              label={'Add To Cart'}
-            />
-          )}
-          {quantity > 0 && (
-            <div className="buttons-product-details">
-              <RemoveFromCart
-                className="add-product-details"
-                onClick={() => {
-                  handleRemoveFromCart();
-                }}
-              />
-              <p className="quantity">
-                {quantity <= 9 ? `0${quantity}` : quantity}
-              </p>
-              <AddToCart
-                onClick={() => {
-                  handleAddToCart();
-                }}
-                className="add-product-details"
-              />
-            </div>
-          )}
-
-          <p className="store">
-            <span className="store-title">Sold By:</span> {product?.store?.name}
-          </p>
-        </div>
+    <div className="product-details" id="product-details">
+      <div className="image-wrapper">
+        <img width={400} height={400} className="" src={images} alt="" />
       </div>
-    </>
+      <div className="product-info">
+        <h1 className="product-name">{product.name}</h1>
+        <div className="brand-and-category">
+          <p className="brand">
+            <span className="brand-title">Publisher:</span>{' '}
+            {product?.brand?.name}
+          </p>
+          <p className="brand">
+            <span className="brand-title">category:</span>{' '}
+            {product?.category?.name}
+          </p>
+        </div>
+
+        {/* <p className='rate'>product.rate</p> */}
+
+        <h2 className="price">${product.price}</h2>
+        <p className="stock">
+          {product?.availability && product?.stockNumber != 0
+            ? `Stock Available: (${product?.stockNumber} ${
+                product?.stockNumber == 1 ? 'book' : 'books'
+              }  remaining)`
+            : 'Out of Stock'}
+        </p>
+        {quantity == 0 && (
+          <Button
+            onClick={handleAddToCart}
+            disabled={loading}
+            label={'Add To Cart'}
+          />
+        )}
+        {quantity > 0 && (
+          <div className="buttons-product-details">
+            <RemoveFromCart
+              className="add-product-details"
+              onClick={() => {
+                handleRemoveFromCart();
+              }}
+            />
+            <p className="quantity">
+              {quantity <= 9 ? `0${quantity}` : quantity}
+            </p>
+            <AddToCart
+              onClick={() => {
+                handleAddToCart();
+              }}
+              className="add-product-details"
+            />
+          </div>
+        )}
+
+        <p className="store">
+          <span className="store-title">Sold By:</span> {product?.store?.name}
+        </p>
+      </div>
+    </div>
   );
 }
 

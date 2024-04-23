@@ -1,3 +1,4 @@
+import { HashLink } from 'react-router-hash-link';
 import {
   // useEffect,
   useState,
@@ -7,7 +8,7 @@ import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/hom
 import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
 import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // import { addToCart } from '@src/modules/customer/data/cartSlice';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 //import { BASE_URL } from '@src/modules/auth/data/authThunk';
@@ -59,6 +60,7 @@ function Product({
 
   // console.log(cart);
   async function handleAddToCart() {
+    //
     const quantity: any =
       cart?.find((item: any) => item.product.id == id)?.quantity || 0;
     console.log(quantity);
@@ -92,7 +94,7 @@ function Product({
       onMouseLeave={() => setShowIcons(false)}
       className="card"
     >
-      <Link to={`${id}#`}>
+      <HashLink to={`${id}#`}>
         <div className="image-wrapper">
           <img
             width={336.75}
@@ -102,7 +104,7 @@ function Product({
             className="image"
           />
         </div>
-      </Link>
+      </HashLink>
       {showIcons && (
         <>
           <View className="icons view" />
@@ -110,7 +112,7 @@ function Product({
         </>
       )}
       <div className="product-info-and-buttons">
-        <Link to={`${id}#`}>
+        <HashLink to={`${id}#`}>
           <div className="product-info">
             <p className="name"> {name}</p>
             <div>
@@ -121,7 +123,7 @@ function Product({
             </div>
             <p className="price"> ${price}</p>
           </div>
-        </Link>
+        </HashLink>
         <button className="buttons" disabled={loading}>
           {/* <RemoveFromCart
             className="add"

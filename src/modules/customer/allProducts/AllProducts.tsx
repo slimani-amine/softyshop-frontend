@@ -16,8 +16,9 @@ function AllProducts() {
       const fetchData = async () => {
         try {
           // const response = await fetch(`${fake_URL}`);
-          const response = await fetch(`${BASE_URL}api/products`);
+          const response = await fetch(`${BASE_URL}api/products?perPage=6`);
           const data = await response.json();
+          console.log('🚀 ~ fetchData ~ All Products:', data);
           setProducts(
             data.data.docs.map((product: ProductType) => {
               return { ...product, quantity: 0 };
