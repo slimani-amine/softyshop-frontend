@@ -4,15 +4,15 @@
 // import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
 // import { ReactComponent as Facebook } from '../../../../shared/assets/icons/home/facebook.svg';
 // import { ReactComponent as Instagram } from '../../../../shared/assets/icons/customerLayout/Footer/instagram.svg';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 function Store({
   id,
   name,
-  logo,
-} // phoneNumber,
-// isPublished,
-// location,
+  logo, // phoneNumber,
+  // isPublished,
+} // location,
 // address,
 // socialMediaLinks,
 : {
@@ -29,7 +29,7 @@ function Store({
 
   return (
     <div className="card">
-      <Link to={`${id}`}>
+      <HashLink to={`${id}#`}>
         <div className="image-wrapper">
           <img width={336.75} height={336.75} src={logo} className="image" />
         </div>
@@ -40,7 +40,7 @@ function Store({
             <div className="contacts"></div>
           </div>
         </div>
-      </Link>
+      </HashLink>
     </div>
   );
 }

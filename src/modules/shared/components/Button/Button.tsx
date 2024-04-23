@@ -1,16 +1,24 @@
-import { HTMLAttributes, ReactNode } from 'react'
+import { HTMLAttributes, ReactNode } from 'react';
 
 interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  icon?: string
-  label?: string
-  variant?: 'primary' | 'info' | 'success' | 'danger' | 'warning' | 'dark' | 'secondary' | 'light'
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  outlined?: boolean
-  rounded?: boolean
-  disabled?: boolean
-  loading?: boolean
-  type?: 'button' | 'submit' | 'reset'
-  children?: ReactNode
+  icon?: string;
+  label?: string;
+  variant?:
+    | 'primary'
+    | 'info'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'dark'
+    | 'secondary'
+    | 'light';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  outlined?: boolean;
+  rounded?: boolean;
+  disabled?: boolean;
+  loading?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  children?: ReactNode;
 }
 
 const Button: React.FC<IButtonProps> = ({
@@ -48,8 +56,8 @@ const Button: React.FC<IButtonProps> = ({
         </>
       )}
     </button>
-  )
-}
+  );
+};
 
 type ButtonDefaultProps = Pick<
   IButtonProps,
@@ -62,7 +70,7 @@ type ButtonDefaultProps = Pick<
   | 'disabled'
   | 'children'
   | 'loading'
->
+>;
 
 Button.defaultProps = {
   icon: '',
@@ -74,6 +82,6 @@ Button.defaultProps = {
   loading: false,
   disabled: false,
   children: null,
-} as ButtonDefaultProps
+} as ButtonDefaultProps;
 
-export default Button
+export default Button;

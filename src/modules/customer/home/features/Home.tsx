@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import Store from '../components/Store/Store';
-// import { BASE_URL } from '@src/modules/auth/data/authThunk';
+import { BASE_URL } from '@src/modules/auth/data/authThunk';
 // import { fetchStores } from '../../data/storeSlice';
 import { useAppSelector } from '@src/modules/shared/store';
 import { Navigate } from 'react-router-dom';
 
 function Home() {
-  const FAKE_URL = 'http://localhost:3001/stores';
+  // const FAKE_URL = 'http://localhost:3001/stores';
   // const dispatch = useAppDispatch();
   // const navigate = useNavigate();
   const user = useAppSelector((state) => state.auth.user);
-  console.log(user);
+  // console.log(user);
   // if (!user) navigate('/');
   // if (user?.role == 'user') navigate('/home');
   // if (user?.role == 'vendor') navigate('/categories');
@@ -20,11 +20,11 @@ function Home() {
     () => {
       const fetchData = async () => {
         try {
-          const response = await fetch(`${FAKE_URL}`);
-          // const response = await fetch(`${BASE_URL}api/stores`);
+          // const response = await fetch(`${FAKE_URL}`);
+          const response = await fetch(`${BASE_URL}api/stores`);
           const data = await response.json();
           // console.log(data);
-          setStores(data);
+          setStores(data.data.docs);
           //  setStores(data?.data?.docs);
         } catch (err: string | unknown) {
           console.log(err);
@@ -34,8 +34,8 @@ function Home() {
 
       fetchData();
     },
-    [FAKE_URL]
-    // [BASE_URL]
+    // [FAKE_URL]
+    [BASE_URL]
   );
   // console.log(Stores);
   // useEffect(
@@ -49,8 +49,8 @@ function Home() {
   //   },
   //   [dispatch]
   // );
+  // console.log('🚀 ~ Home ~ Stores:', Stores);
 
-  // console.log(Stores);
   return (
     <>
       {user?.role === 'user' && <Navigate to="/home" />}
