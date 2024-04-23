@@ -128,15 +128,11 @@ function ProductDetails() {
         {/* 'primary' | 'info' | 'success' | 'danger' | 'warning' | 'dark' | 'secondary' | 'light' */}
         {quantity == 0 && (
           <Button
-            style={
-              isInStock
-                ? { width: '160px' }
-                : { width: '160px', cursor: 'not-allowed' }
-            }
+            style={{ width: '160px' }}
             size="lg"
             variant={isInStock ? 'primary' : 'secondary'}
             onClick={handleAddToCart}
-            disabled={loading}
+            disabled={loading || !isInStock}
             label={'Add To Cart'}
           />
         )}
