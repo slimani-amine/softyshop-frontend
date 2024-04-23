@@ -10,7 +10,7 @@ function Home() {
   // const dispatch = useAppDispatch();
   // const navigate = useNavigate();
   const user = useAppSelector((state) => state.auth.user);
-  console.log(user);
+  // console.log(user);
   // if (!user) navigate('/');
   // if (user?.role == 'user') navigate('/home');
   // if (user?.role == 'vendor') navigate('/categories');
@@ -49,7 +49,7 @@ function Home() {
   //   },
   //   [dispatch]
   // );
-  console.log('🚀 ~ Home ~ Stores:', Stores);
+  // console.log('🚀 ~ Home ~ Stores:', Stores);
 
   return (
     <>

@@ -8,6 +8,7 @@ import { ProductType } from '../data/dataTypes';
 function AllProducts() {
   // const fake_URL = 'http://localhost:3001/products';
   const [Products, setProducts] = useState([]);
+  console.log('🚀 ~ AllProducts ~ Products:', Products);
   const dispatch = useAppDispatch();
 
   useEffect(
@@ -50,7 +51,7 @@ function AllProducts() {
           {
             id,
             name,
-            image,
+            images,
             //  rating
             price,
           },
@@ -62,7 +63,7 @@ function AllProducts() {
             name={name}
             // rating={rating}
             price={price}
-            image={image}
+            images={images}
           />
         )
       )}

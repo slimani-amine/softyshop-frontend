@@ -102,7 +102,8 @@ function ProductDetails() {
           <h1 className="product-name">{product.name}</h1>
           <div className="brand-and-category">
             <p className="brand">
-              <span className="brand-title">Brand:</span> {product?.brand?.name}
+              <span className="brand-title">Publisher:</span>{' '}
+              {product?.brand?.name}
             </p>
             <p className="brand">
               <span className="brand-title">category:</span>{' '}

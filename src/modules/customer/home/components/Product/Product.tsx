@@ -17,18 +17,19 @@ function Product({
   id,
   name,
   price,
-  image,
+  images,
 }: {
   id: number;
   name: string;
   price: number;
-  image: string;
+  images: string;
 }) {
   const dispatch = useAppDispatch();
   const [showIcons, setShowIcons] = useState(false);
   const [loading, setIsLoading] = useState(false);
 
-  // const lastImage = images.length && JSON.parse(images)[0];
+  const theImage = images.length && JSON.parse(images);
+  console.log('🚀 ~ theImage:', theImage);
 
   // useEffect(() => {
   //   console.log('hola');
@@ -83,7 +84,7 @@ function Product({
   //   setIsLoading(false);
   // }
 
-  // console.log(myCart);
+  // console.log('🚀 ~ image:', image);
 
   return (
     <div
@@ -96,8 +97,8 @@ function Product({
           <img
             width={336.75}
             height={336.75}
-            // src={lastImage}
-            src={image}
+            src={theImage}
+            // src={images}
             className="image"
           />
         </div>
