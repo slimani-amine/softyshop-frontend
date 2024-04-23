@@ -15,6 +15,7 @@ function ProductDetails() {
   const { productId } = useParams();
   // const products = useAppSelector((state) => state.product.products);
 
+  const [isInStock, setIsInStock] = useState(false);
   const [product, setProduct] = useState({
     id: 0,
     name: '',
@@ -92,6 +93,10 @@ function ProductDetails() {
     setIsLoading(false);
   }
 
+  useEffect(() => {
+    setIsInStock(product?.availability && product?.stockNumber != 0);
+  }, [isInStock, setIsInStock, product]);
+
   return (
     <div className="product-details" id="product-details">
       <div className="image-wrapper">
@@ -114,14 +119,17 @@ function ProductDetails() {
 
         <h2 className="price">${product.price}</h2>
         <p className="stock">
-          {product?.availability && product?.stockNumber != 0
+          {isInStock
             ? `Stock Available: (${product?.stockNumber} ${
                 product?.stockNumber == 1 ? 'book' : 'books'
               }  remaining)`
             : 'Out of Stock'}
         </p>
+        {/* 'primary' | 'info' | 'success' | 'danger' | 'warning' | 'dark' | 'secondary' | 'light' */}
         {quantity == 0 && (
           <Button
+            size="xl"
+            variant={isInStock ? 'primary' : 'secondary'}
             onClick={handleAddToCart}
             disabled={loading}
             label={'Add To Cart'}
