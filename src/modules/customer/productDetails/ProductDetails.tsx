@@ -128,7 +128,12 @@ function ProductDetails() {
         {/* 'primary' | 'info' | 'success' | 'danger' | 'warning' | 'dark' | 'secondary' | 'light' */}
         {quantity == 0 && (
           <Button
-            size="xl"
+            style={
+              isInStock
+                ? { width: '160px' }
+                : { width: '160px', cursor: 'not-allowed' }
+            }
+            size="lg"
             variant={isInStock ? 'primary' : 'secondary'}
             onClick={handleAddToCart}
             disabled={loading}
