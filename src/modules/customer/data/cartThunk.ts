@@ -16,11 +16,9 @@ export const getCart = createAsyncThunk('cart/getCart', async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    // console.log(response);
-    // console.log(token);
     const data = await response.json();
 
-    console.log('🚀 ~ getCart ~ data:', data.data);
+    // console.log('🚀 ~ getCart ~ data:', data.data);
 
     return data.data;
   } catch (error) {
@@ -45,10 +43,7 @@ export const addToCart = createAsyncThunk(
         },
         body: JSON.stringify(query),
       });
-      // console.log(response);
-      // console.log(token);
       const data = await response.json();
-      // console.log(data);
 
       return data.data;
     } catch (error) {

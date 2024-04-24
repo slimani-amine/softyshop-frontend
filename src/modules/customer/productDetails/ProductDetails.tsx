@@ -119,11 +119,13 @@ function ProductDetails() {
 
         <h2 className="price">${product.price}</h2>
         <p className="stock">
-          {isInStock
-            ? `Stock Available: (${product?.stockNumber} ${
-                product?.stockNumber == 1 ? 'book' : 'books'
-              }  remaining)`
-            : 'Out of Stock'}
+          {isInStock ? (
+            `Stock Available: (${product?.stockNumber} ${
+              product?.stockNumber == 1 ? 'book' : 'books'
+            }  remaining)`
+          ) : (
+            <strong className='out-of-stock'>Out of Stock</strong>
+          )}
         </p>
         {/* 'primary' | 'info' | 'success' | 'danger' | 'warning' | 'dark' | 'secondary' | 'light' */}
         {quantity == 0 && (

@@ -8,24 +8,25 @@ import { ProductType } from '../data/dataTypes';
 function AllProducts() {
   // const fake_URL = 'http://localhost:3001/products';
   const [Products, setProducts] = useState([]);
-  // console.log('🚀 ~ AllProducts ~ Products:', Products);
+  const [numberOfProducts, setNumberOfProducts] = useState(0);
   const dispatch = useAppDispatch();
 
   useEffect(
     () => {
       const fetchData = async () => {
         try {
-          // const response = await fetch(`${fake_URL}`);
-          const response = await fetch(`${BASE_URL}api/products?perPage=6`);
+          const response = await fetch(
+            `${BASE_URL}api/products?perPage=6?&page=1`
+          );
           const data = await response.json();
-          // console.log('🚀 ~ fetchData ~ All Products:', data);
+          // console.log('🚀 ~ fetchData ~ data:', data);
+          // const { totalRecords: numberOfProducts } = data.data.meta;
           setProducts(
             data.data.docs.map((product: ProductType) => {
               return { ...product, quantity: 0 };
             })
           );
-          // console.log(data);
-          // setProducts(data);
+          setNumberOfProducts(data.data.docs.length);
         } catch (err: string | unknown) {
           console.log(err);
           return err;
@@ -45,6 +46,7 @@ function AllProducts() {
   // console.log(theProducts);
   // dispatch(updateQuantity);
 
+  console.log('🚀 ~ AllProducts ~ numberOfProducts:', numberOfProducts);
   return (
     <div className="home">
       {Products?.map(

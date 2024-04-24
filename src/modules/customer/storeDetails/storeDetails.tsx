@@ -52,7 +52,7 @@ function storeDetails() {
           // const response = await fetch(`${FAKE_URL}`);
           const response = await fetch(`${BASE_URL}api/stores/${storeId}`);
           const data = await response.json();
-          console.log('🚀 ~ fetchData ~ store:', data.data);
+          // console.log('🚀 ~ fetchData ~ store:', data.data);
 
           setStore(data.data);
           // setProducts(store.products);
@@ -78,10 +78,8 @@ function storeDetails() {
           );
 
           const data = await response.json();
-          console.log('🚀 ~ fetchData ~ products:', data.data);
+          // console.log('🚀 ~ fetchData ~ products:', data.data);
 
-          // console.log(store);
-          // setProducts(store.products);
           dispatch(
             settProducts(
               data.data.map((product: ProductType) => {
@@ -100,7 +98,6 @@ function storeDetails() {
     // [FAKE_URL]
     [BASE_URL]
   );
-  // console.log('🚀 ~ storeDetails ~ store:', store);
 
   // dispatch(settProducts(store.products));
   // const cart = useAppSelector((state) => state.cart.cart);

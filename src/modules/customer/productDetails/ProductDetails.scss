@@ -45,6 +45,11 @@
       line-height: 1;
       font-size: large;
       font-weight: 100;
+      .out-of-stock {
+        font-size: large;
+        font-weight: 700;
+        color: #d23e57;
+      }
     }
     .store {
       font-size: 14px;
