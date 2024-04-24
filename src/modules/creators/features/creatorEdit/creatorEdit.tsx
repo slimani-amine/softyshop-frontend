@@ -40,22 +40,21 @@ const AddCreatorForm: FC<AddCreatorFormProps> = () => {
       });
       if ('data' in response) {
         // Display success message if data exists
-        message.success("Product saved successfully!");
+        message.success("Creator saved successfully!");
         console.log(response.data);
-        navigate("/vendors")
+        navigate("/creators")
         
     } else if ('error' in response) {
         // Display error message if error exists
-        message.error("Failed to save product. Please try again.");
-        console.error('Error saving product', response.error);
+        message.error("Failed to save Creator. Please try again.");
+        console.error('Error saving Creator', response.error);
     } else {
         // Handle unexpected response format
         message.error("Unexpected response from server. Please try again later.");
     }
 
       // Reset form fields and validation status
-      form.resetFields();
-      message.success('Creator saved successfully');
+     
       
       // Refetch creator data to reflect changes
       refetch();

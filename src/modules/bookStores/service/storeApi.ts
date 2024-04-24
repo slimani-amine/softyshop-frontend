@@ -3,8 +3,20 @@ import { api } from '@src/modules/shared/services/api';
 
 export const StoreApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    storess: builder.query<any, { page: number, perPage: number, id: any, role: string, subName?: string }>({
+      query: ({ page, perPage, role, id, subName }) => {
+        if (role === "VENDOR") {
+          // If role is VENDOR, search by vendor_id and optional subName
+          return `api/stores?page=${page}&perPage=${perPage}&search=vendor_id:${id}${subName ? ` name:${subName}` : ""}`;
+        } else {
+          // If role is not VENDOR, search by name only
+          return `api/stores?page=${page}&perPage=${perPage}&search=name:${subName || ""}`;
+        }
+      },
+      providesTags: ['stores']
+    }),
     stores: builder.query<any,  { page: Number, perPage: Number,id : any,role:string }>({
-      query: ({ page, perPage , role , id }) => `api/stores?page=${page}&perPage=${perPage}&${role==="VENDOR" ? `?search=vendor_id:${id};`:""}`,
+      query: ({ page, perPage , role , id }) => `api/stores?page=${page}&perPage=${perPage}&${role==="VENDOR" ? `?search=vendor_id:${id} ;`:""}`,
       providesTags : ['stores']
     }),
     allStores : builder.query<any,void>({
@@ -77,5 +89,5 @@ export const StoreApi = api.injectEndpoints({
   })
 });
 
-export const {useMyStoresQuery,useAllStoresQuery,useCreateStoreMutation,useDeleteStoresMutation, useStoreQuery ,useSearchStoresQuery, useStoresQuery , useUpdateStoreMutation ,usePublishStoreMutation ,  useDeleteStoreMutation} = StoreApi
+export const {useStoressQuery,useMyStoresQuery,useAllStoresQuery,useCreateStoreMutation,useDeleteStoresMutation, useStoreQuery ,useSearchStoresQuery, useStoresQuery , useUpdateStoreMutation ,usePublishStoreMutation ,  useDeleteStoreMutation} = StoreApi
 

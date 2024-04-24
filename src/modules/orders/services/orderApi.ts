@@ -49,7 +49,7 @@ export const OrderApi  = api.injectEndpoints({
       invalidatesTags: ['creators' , 'creator']}),
     
     searchOrders: builder.query<any,string>({
-      query: (subName) => `api/admin/orders/?fullNumber=${subName}`,
+      query: (subName) => `api/admin/orders/?phoneNumber=${subName}`,
       providesTags:  ['creators']
 
     }) , 

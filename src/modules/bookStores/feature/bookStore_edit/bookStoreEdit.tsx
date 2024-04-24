@@ -19,7 +19,7 @@ interface EditShopFormProps {
   initialValues: any;
 }
 
-const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
+const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
   const navigate = useNavigate()
 
   const [files, setFile] = useState<any>(null);
@@ -35,7 +35,16 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
   const [fields, setFields] = useState<string[]>([]);
   const { data: fetchedStore, isLoading } = useStoreQuery(id?.toString());
   const store = fetchedStore?.data
-  
+  console.log(store)
+  const  userStore = store?.user
+
+  const selectDefaultOption = {
+    label : userStore?.email,
+    value : userStore?.id
+  }
+
+  console.log(selectDefaultOption)
+
   useEffect(() => {
     if (fetchedStore?.data) {
       const { name, phoneNumber, user, location, socialMediaLinks } = fetchedStore.data;
@@ -43,7 +52,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
       const links = JSON.parse(socialMediaLinks);
       setFields(links);
       setPosition([pos[0], pos[1], ""]);
-      form.setFieldsValue({ name, phone: phoneNumber, vendor: user?.email || "a" });
+      form.setFieldsValue({ name, phone: phoneNumber, vendor: user?.id || "test@gmail.com" });
     }
   }, [initialValues, form, fetchedStore]);
 
@@ -77,6 +86,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
       console.log(objectPost ,"object Post")
       const address = await getPlaceName(objectPost.positionOfShop[0],objectPost.positionOfShop[1])
       const name = objectPost.name
+      console.log(objectPost.vendor , 'iugrf')
       const data = {
          name ,
          phoneNumber : objectPost.phone,
@@ -84,7 +94,8 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
          location : [objectPost.positionOfShop[0] , objectPost.positionOfShop[1]] , 
          address,
          cover : selectedCoverUrl,
-         socialMediaLinks : objectPost.data
+         socialMediaLinks : objectPost.data,
+         vendor_id : objectPost.vendor
       }
       console.log(data)
     
@@ -105,8 +116,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
         message.error("Unexpected response from server. Please try again later.");
     }
       console.log(response)
-      onFinish();
-    } catch (error) {
+      } catch (error) {
       console.error("Error updating shop", error);
       message.error("Error updating shop");
     }
@@ -169,11 +179,21 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
       uid: "-1",
       name: "Current Image",
       status: "done",
-      url: selectedFileUrl,
       thumbUrl: store.logo,
     } as any,
-     
   ];
+  const defaultFileListCover :any = [
+    
+    {
+      uid: "-1",
+      name: "Current Image",
+      status: "done",
+      thumbUrl: store.cover,
+    } 
+  ];
+
+  console.log(defaultFileListCover)
+      console.log(defaultFileList)
   return (
     <div className="">
       <div className="parent-container">
@@ -184,6 +204,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
               <Col span={24}>
                 <Form.Item
                   name="name"
+                  
                   style={{ marginBottom: 0 }}
                   rules={[ 
                     { 
@@ -222,6 +243,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
               <Col span={24}>
                 <Form.Item
                   name="vendor"
+                  initialValue={"111"}
                   className="select-vendor"
                   style={{ marginBottom: "20px" }}
                   rules={[{ required: true, message: "Please select a vendor" }]}
@@ -231,8 +253,9 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
                     placeholder="Select vendor"
                     className="input-custom"
                     options={Current_User === "ADMIN" ? selectOptions : []}
-                    defaultValue={Current_User === "ADMIN" ? undefined : Email_user}
+                    defaultValue={Current_User === "ADMIN" ? selectDefaultOption.value : Email_user}
                     disabled={Current_User !== "ADMIN"}
+                    
                   />
                 </Form.Item>
               </Col>
@@ -302,11 +325,12 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
             <Form.Item
               className="upload-images"
               name="images"
-              rules={[{ required: true, message: "Cover is required!" }]}
             >
               <Upload.Dragger
                 className="drag-images"
                 listType="picture"
+                 defaultFileList={defaultFileListCover}
+              
                 accept="image/*"
                 multiple
                 maxCount={1}
