@@ -104,7 +104,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
     try {
       const values = await form.validateFields();
       const objectPost = { ...values, positionOfShop: position };
-      console.log(objectPost);
+      console.log(objectPost, "ooookkkkkkkpppp");
       console.log(objectPost.positionOfShop[2]);
       const plc = objectPost.positionOfShop[2]
       console.log(plc)
@@ -309,7 +309,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 }
                 beforeUpload={() => false}
               >
-                <p className="ant-upload-text">Drag & drop Shop image here</p>
+                <p className="ant-upload-text">Drag & drop Shop Cover here</p>
                 <div className="icon-drag">
                   <Divider className="divider" />
                   <p className="or">OR</p>

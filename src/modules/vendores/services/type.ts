@@ -6,7 +6,8 @@ export  interface Vendor {
       lastName: string,
       picture: string,
       role: string ,
-      phoneNumber : string
+      phoneNumber : string,
+      state :string
     }
 export interface Address {
   addres: string

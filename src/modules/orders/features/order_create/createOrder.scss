@@ -8,10 +8,27 @@
 .ant-select-selector{
     height: 40px !important;
 }
+.ant-pagination {
+    &.ant-pagination-item-active {
+      font-weight: 600;
+      background-color: #ffffff; /* Change background color */
+      border-color: #1677ff; /* Change border color */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+  }
 .form-content{
     display: flex;
     gap: 40px;
     
+}
+.id-Title{
+    font-weight: bold;
+}
+.price-td{
+    font-weight: 700;
 }
 .order-item {
     width: 280px;
@@ -30,6 +47,7 @@
         align-items: center;
         justify-content: center;
     }
+   
     
 
 

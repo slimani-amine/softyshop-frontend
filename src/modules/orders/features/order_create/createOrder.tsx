@@ -10,12 +10,13 @@ import {
 import OrderItem from "../../components/orderItem/orderItem";
 import Button from "@src/modules/shared/components/Button/Button";
 import SearchSpecific from "@src/modules/shared/components/SearchSpecific/SearchSpecific";
-import FormItem from "antd/es/form/FormItem";
+import { useAllPaymentsQuery } from "@src/modules/payment/service/paymentApi";
 import { useAllProductsQuery } from "@src/modules/products/service/productApi";
 import { useUsersQuery } from "@src/modules/vendores/services/vendorApi";
 import { useAdressesOfUserQuery , useAddAdressOfUserMutation } from "@src/modules/vendores/services/vendorApi";
 import ModalAddress from "../../components/AddressModal";
-
+import { useCreateOrderMutation } from "../../services/orderApi";
+import { useNavigate } from "react-router-dom";
 interface OrderFormProps {
   onFinish: (values: any) => void;
 }
@@ -29,6 +30,7 @@ interface Product {
 }
 
 const OrderForm: FC<OrderFormProps> = () => {
+  const navigate = useNavigate()
   const [form] = Form.useForm();
   const [pageSize] = useState(5);
   const [currentPage] = useState(1);
@@ -49,10 +51,12 @@ const OrderForm: FC<OrderFormProps> = () => {
 
   // Function to handle form submission in the modal
   const [addAddress] = useAddAdressOfUserMutation()
+  const [addOrder] = useCreateOrderMutation()
   const handleAddAddress = async (values: any) => {
     try {
       console.log("New address values:", values);
-      await addAddress(values)
+      
+      await addAddress({body : values , id:selectedUserId})
 
       // Perform any action you need with the new address values
 
@@ -63,7 +67,11 @@ const OrderForm: FC<OrderFormProps> = () => {
   };
 
 
-
+const {data:fetchedPayments} = useAllPaymentsQuery()
+const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
+  label: payment.name,
+  value: payment.id,
+}));
 
 
   const { data: fetchedUsers } = useUsersQuery({
@@ -93,20 +101,40 @@ const OrderForm: FC<OrderFormProps> = () => {
   label: address.address,
   value: address.id,
 }));
-console.log(addrress_option)
- console.log(selectedUserId)
- console.log(fetchedAddresses)
+
 
   const handleSaveClick = async () => {
     try {
       const values = await form.validateFields();
-      console.log(values);
-      console.log(products, "iiiciiciciicicicicici");
+     
+      const productsPayload = products.map(obj => ({
+        productId: obj.productId,
+        quantity: obj.quantity
+      }));
+      const payload= {...values,products:productsPayload}
+      
+      const response = await addOrder(payload)
+      if ('data' in response) {
+        // Display success message if data exists
+        message.success("Product saved successfully!");
+        form.resetFields();
+
+        navigate("/orders")
+
+        
+    } else if ('error' in response) {
+        // Display error message if error exists
+        message.error("Failed to save product. Please try again.");
+        console.error('Error saving product', response.error);
+    } else {
+        message.error("Unexpected response from server. Please try again later.");
+    }
+      
 
 
-      form.resetFields();
 
-      message.success("Shop saved successfully");
+
+      
     } catch (error) {
       console.error("Error saving shop", error);
       message.error("Error saving shop");
@@ -117,7 +145,7 @@ console.log(addrress_option)
     const quantity = 1;
     const product = getProductById(value);
 
-    if (!products.find((prod: Product) => prod.productId === product.id)) {
+    if (!products.find((prod: Product) => prod.productId === product?.id)) {
       setProducts([
         ...products,
         {
@@ -150,29 +178,39 @@ console.log(addrress_option)
           <Form form={form} className="form-shop">
             <div className="form-content">
               <div className="part-1">
-                <FormItem name="products-search">
+               
                   <Row gutter={[3, 0]} className="name-Shop">
                     <Col span={3}>
                      
-                      <FormItem name="products-search">
                         <Row gutter={[3, 0]} className="name-Shop">
                           <Col span={3}>
+                         
                             <label
                               className="label-order"
                               htmlFor="products-search"
                             >
                               Product:
                             </label>
+                            <Form.Item 
+                                  name="products"
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: "Products",
+                                    },
+                                  
+                                  ]}
+                              >
                             <SearchSpecific
                               options={products_option}
                               onChange={handleProductSelection}
                             />
+                             </Form.Item>
                           </Col>
                         </Row>
-                      </FormItem>
                     </Col>
                   </Row>
-                </FormItem>
+               
 
                 <Form.Item className="product-selected">
                   {products.map((product: any, index) => {
@@ -205,10 +243,20 @@ console.log(addrress_option)
                       <label className="label-order" htmlFor="products-search">
                         Email:
                       </label>
+                      <Form.Item 
+                      name="userId" 
+                        rules={[
+                          {
+                            required: true,
+                            message: "Email",
+                          },
+                        
+                        ]}>
                       <SearchSpecific
                         options={users_option}
                         onChange={(value: string) => setSelectedUserId(value)}
                       />
+                      </Form.Item>
                     </Col>
                   </Row>
                 </Form.Item>
@@ -259,18 +307,14 @@ console.log(addrress_option)
                         Address:
                       </label>
                       <Form.Item
-                        name="address"
+                        name="addressId"
                         style={{ marginBottom: 0, width: "280px" }}
                         rules={[
                           {
                             required: true,
                             message: "Please enter address",
                           },
-                          {
-                            min: 4,
-                            message:
-                              "Address must be at least 8 characters long",
-                          },
+                        
                         ]}
                       >
                         <SearchSpecific
@@ -279,15 +323,56 @@ console.log(addrress_option)
                             />
 
                       </Form.Item>
-                      <Button style={{ marginTop: "30px", width: "150px" }} onClick={handleOpenModal}>
-          Add new Address
-        </Button>
+       
+        <Button
+            size="sm"
+            disabled={!(selectedUserId.length >0)}
+            variant={selectedUserId.length >0?  "primary" : "dark"}
+            onClick={handleOpenModal}
+            style={{marginTop:"50px" , width:"150px"}}
+          >
+            Add new Address
+          </Button>
 
                     </Col>
                   </Row>
                 </Form.Item>
               </div>
-              <div className="part-3">{/* Other content */}</div>
+              <div className="part-3">{/* Other content */}
+              <Form.Item>
+                  <Row gutter={[4, 0]} className="name-Shop">
+                    <Col span={3}>
+                      <label
+                        className="label-order"
+                        htmlFor="products-search"
+                        style={{minWidth:"200px"}}
+                      >
+                        Payment:
+                      </label>
+                      <Form.Item
+                        name="paymentMethodId"
+                        style={{ marginBottom: 0, width: "280px" }}
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter address",
+                          },
+                        
+                        ]}
+                      >
+                        <SearchSpecific
+                          options={payment_option} onChange={function (_value: string): void {
+                            throw new Error("Function not implemented.");
+                          } }                            />
+
+                      </Form.Item>
+       
+       
+
+                    </Col>
+                  </Row>
+                </Form.Item>
+              </div>
             </div>
             <Form.Item>
               <Button

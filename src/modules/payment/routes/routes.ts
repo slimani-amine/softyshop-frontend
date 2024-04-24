@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import MainLayout from '@src/modules/shared/layout/MainLayout/MainLayout';
-import AuthGuard from '@src/modules/shared/guards/AuthGuard';
-import { RouteProps } from 'react-router-dom';
-import { Fragment, lazy } from 'react';
+import MainLayout from "@src/modules/shared/layout/MainLayout/MainLayout";
+import AuthGuard from "@src/modules/shared/guards/AuthGuard";
+import { RouteProps } from "react-router-dom";
+import { Fragment, lazy } from "react";
 
 type RouteConfig = {
   exact: boolean | null;
@@ -10,7 +10,7 @@ type RouteConfig = {
   component: React.ComponentType<any>;
   guard?: React.ComponentType<any> | typeof Fragment | any;
   layout?: React.ComponentType<any> | typeof Fragment;
-  roles: string[];
+  roles : string[];
 } & RouteProps;
 
 const routes: RouteConfig[] = [
@@ -18,19 +18,20 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: '/orders/create',
-    component: lazy(() => import('../features/order_create/createOrder')),
+    path: "/payments",
+    component: lazy(() => import("../features/paymentList/paymentList")),
     layout: MainLayout,
-    roles: ['VENDOR', 'ADMIN'],
+    roles: ['VENDOR'],
   },
   {
     exact: true,
     guard: AuthGuard,
-    path: '/orders',
-    component: lazy(() => import('../features/order_list/OrderList')),
+    path: "/payments/create",
+    component: lazy(() => import("../features/paymentCreate/paymentCreate")),
     layout: MainLayout,
-    roles: ['VENDOR', 'ADMIN'],
+    roles: ['VENDOR'],
   },
+ 
 ];
 
 export default routes;

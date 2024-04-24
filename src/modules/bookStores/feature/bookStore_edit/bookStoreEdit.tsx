@@ -23,6 +23,10 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
   const navigate = useNavigate()
 
   const [files, setFile] = useState<any>(null);
+  const [ , setCover] = useState<any>(null)
+  const [selectedCoverUrl, setSelectedCoverUrl] = useState<string>();
+
+
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const { id } = useParams<{ id: string }>();
@@ -63,9 +67,12 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
   };
 
   const [updateStore] = useUpdateStoreMutation()
+
   const handleSaveClick = async () => {
+
     try {
       const values = await form.validateFields();
+      console.log(values,"me")
       const objectPost = { ...values, positionOfShop: position ,fields};
       console.log(objectPost ,"object Post")
       const address = await getPlaceName(objectPost.positionOfShop[0],objectPost.positionOfShop[1])
@@ -76,15 +83,18 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
          logo: selectedFileUrl ,
          location : [objectPost.positionOfShop[0] , objectPost.positionOfShop[1]] , 
          address,
+         cover : selectedCoverUrl,
          socialMediaLinks : objectPost.data
       }
+      console.log(data)
     
-      const response = await updateStore({ id: fetchedStore.data.id, data});
+      const response = await updateStore({ id: fetchedStore.data.id, data } );
       if ('data' in response) {
         // Display success message if data exists
         message.success("Store updated successfully!");
         console.log(response.data);
         navigate("/stores")
+
         
     } else if ('error' in response) {
         // Display error message if error exists
@@ -123,12 +133,14 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
       return null;
     }
   }
+
+
   const handleClick = async (lat: number, lng: number) => {
     setPosition([lat, lng, ""]);
     setShowPopup(true);
   };
-  const Current_User = useSelector((state: RootState) => state?.auth?.user?.role.toUpperCase());
 
+  const Current_User = useSelector((state: RootState) => state?.auth?.user?.role.toUpperCase());
     let vendors: any[] = []; 
     if (Current_User === "ADMIN") {
       const { data: fetchedVendors } = useAllvendorsQuery();
@@ -140,7 +152,6 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
       value: vendor.id,
     }));
     const Email_user = useSelector((state: RootState) => state.auth.user?.email);
-
     if (isLoading) return <Spinner />;
   const addField = () => {
     setFields([...fields, ""]);
@@ -153,6 +164,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
   };
   console.log(store)
   const defaultFileList = [
+    
     {
       uid: "-1",
       name: "Current Image",
@@ -160,6 +172,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
       url: selectedFileUrl,
       thumbUrl: store.logo,
     } as any,
+     
   ];
   return (
     <div className="">
@@ -286,6 +299,38 @@ const EditShopForm: FC<EditShopFormProps> = ({ onFinish, initialValues }) => {
                 </Button>
               </Form.Item>
             </Form.Item>
+            <Form.Item
+              className="upload-images"
+              name="images"
+              rules={[{ required: true, message: "Cover is required!" }]}
+            >
+              <Upload.Dragger
+                className="drag-images"
+                listType="picture"
+                accept="image/*"
+                multiple
+                maxCount={1}
+                onChange={(e: any) =>
+                  handleFileChange(
+                    e,
+                    setCover,
+                    setSelectedCoverUrl,
+                  )
+                }
+                beforeUpload={() => false}
+              >
+                <p className="ant-upload-text">Drag & drop Shop Cover here</p>
+                <div className="icon-drag">
+                  <Divider className="divider" />
+                  <p className="or">OR</p>
+                  <Divider className="divider" />
+                </div>
+                <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                <p className="size-img">Upload 280*280 image</p>
+              </Upload.Dragger>
+            </Form.Item>
+
+
             <Form.Item>
               <Button type="button" className="add-cat" onClick={handleSaveClick}>
                 Save Shop

@@ -49,14 +49,16 @@ export const VendorsApi = api.injectEndpoints({
     }),
     adressesOfUser: builder.query<any, any>({
       query: (id) => `api/users/addresses/${id}`,
+      providesTags : ["address"]
      
     }),
-    addAdressOfUser: builder.mutation<any, {body :Address}>({
-      query: (body) =>({
-        url : `api/users/addresses`,
+    addAdressOfUser: builder.mutation<any, {body :Address , id:string}>({
+      query: ({body,id}) =>({
+        url : `api/users/addresses/${id}`,
         method : "POST",
         body : body
-      })
+      }),
+      invalidatesTags : ["address"]
       
 
      

@@ -73,6 +73,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
       <h1 className="title">Add New Category</h1>
       <div className="container-add-Product">
         <Form form={form}>
+
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
               <Form.Item
