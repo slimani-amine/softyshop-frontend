@@ -1,9 +1,7 @@
 import { Table, Space, message, Checkbox } from "antd";
-import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react"; // Import useState hook for managing modal state
-import { debounce } from "lodash";
 import {
   useDeletePaymentsMutation,
   usePaymentsQuery,useSearchPaymentQuery
@@ -15,7 +13,7 @@ export default function PaymentsList() {
   const [pageSize, setPageSize] = useState(5);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
-  const [namePayment, setnamePayment] = useState<string>("");
+  const [namePayment] = useState<string>("");
   const { data: fetchedpayments } = usePaymentsQuery({
     perPage: pageSize,
     page: currentPage,
@@ -39,11 +37,7 @@ export default function PaymentsList() {
     }
   }, [namePayment, fetchedpayments, fetchedSearchpayments]);
 
-  const handleSearchChange = debounce((searchText: string) => {
-    console.log("Search text for creator list:", searchText);
-    setnamePayment(searchText);
-  }, 200);
-
+  
   /*const handleDelete = async (creatorId :Number) => {
     try {
       await deletecreator(creatorId).unwrap();
@@ -68,7 +62,7 @@ export default function PaymentsList() {
   };
 
   const handleNavigate = () => {
-    navigate("/payment/create");
+    navigate("/payments/create");
   };
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -179,15 +173,12 @@ export default function PaymentsList() {
 
   return (
     <div className="Product-List">
-      <h1>creator List</h1>
+      <h1>Payment Methods List</h1>
       <div className="header-Product-list">
-        <SeachFilter
-          onSearchChange={handleSearchChange}
-          placeholder={"Search creator.."}
-        />
+      <div></div>
         <Button className="add-cat" onClick={handleNavigate}>
           {" "}
-          <span>+</span> Add creator
+          <span>+</span> Add New Method
         </Button>
       </div>
       <div className="container-Product-List">

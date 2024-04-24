@@ -1,13 +1,12 @@
-import { Checkbox, Modal, Space, Switch, Table, message } from "antd";
+import { Checkbox, Space, Switch, Table, message } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import {
   useDeleteStoresMutation,
   usePublishStoreMutation,
-  useStoresQuery,
-  useMyStoresQuery,
-  useSearchStoresQuery,
+ 
+  useStoressQuery
 } from "../../service/storeApi";
-import { SetStateAction, useEffect, useState } from "react";
+import { useState } from "react";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -17,58 +16,37 @@ import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 
 export default function bookStoreList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(5);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [nameStore, setNameStore] = useState<string>("");
-  const [stores, setStores] = useState<Array<any>>([]);
 
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
-  console.log(Current_User);
+  const isAdmin = Current_User === "ADMIN";
   const Current_id = useSelector((state: RootState) => state.auth.user?.id);
-  console.log(Current_id);
-  const { data: fetchedSearchStores } = useSearchStoresQuery({
-    subName: nameStore,
-    role: Current_User || "ADMIN",
-    id: Current_id || "",
-  });
+      
 
   const handlePaginationChange = (page: number, pageSize?: number) => {
     setCurrentPage(page);
     setPageSize(pageSize || 5); // Update pageSize if changed
-    console.log(stores);
   };
 
-  let fetchedData: { data: { docs: SetStateAction<any[]> } };
   const [publishStore] = usePublishStoreMutation();
-  const isAdmin = Current_User === "ADMIN";
-  console.log(isAdmin, "verification role ");
-  if (isAdmin) {
-    console.log("oke");
-    const { data: fetchedStores, isLoading } = useStoresQuery({
+
+  const {data:fetchdStoress , isLoading} = useStoressQuery({
       page: currentPage,
       perPage: pageSize,
       id: Current_id,
-      role: Current_User,
-    });
-    fetchedData = fetchedStores;
-    isLoading ? <Spinner /> : null;
-  } else {
-    console.log("object");
-    const { data: fetchedMyStores, isLoading } = useMyStoresQuery();
-    fetchedData = fetchedMyStores;
-    isLoading ? <Spinner /> : null;
-  }
+      role: Current_User!,
+      subName:nameStore
+      
 
-  useEffect(() => {
-    if (nameStore && fetchedSearchStores) {
-      setStores(fetchedSearchStores.data?.docs);
-    } else {
-      setStores(fetchedData?.data?.docs || []); // Set stores based on admin or user query
-    }
-  }, [nameStore, fetchedSearchStores, currentPage, pageSize]);
+  })
+  isLoading ? <Spinner /> : null;
 
+
+  
   interface Store {
     id: Number;
     name: string;
@@ -80,7 +58,8 @@ export default function bookStoreList() {
   const handleSearchChange = debounce((searchText: string) => {
     console.log("Search text for category mlist:", searchText);
     setNameStore(searchText);
-  }, 500);
+  }, 200);
+
   const navigate = useNavigate();
   const Navigate = (id: string) => {
     navigate(`/stores/edit/${id}`);
@@ -90,19 +69,8 @@ export default function bookStoreList() {
     navigate("/stores/create");
   };
   const [deleteStores] = useDeleteStoresMutation();
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State to manage modal visibility
 
-  /*const handleDelete = async (categoryId :Number) => {
-    console.log(categoryId)
-    try {
-      await deleteStore(categoryId).unwrap();
-      message.success('Category deleted!');
-      setDeleteModalVisible(false); // Close the modal after successful deletion
-    } catch (error) {
-      // Handle error
-    }
-    
-  };*/
+
   const handleDelete = async () => {
     try {
       const response = await deleteStores(selectedRowIds).unwrap();
@@ -168,6 +136,17 @@ export default function bookStoreList() {
       sorter: (a: Store, b: Store) => a.name.localeCompare(b.name),
     },
     {
+      title: "Phone",
+      dataIndex: "phoneNumber",
+      key: "name",
+      render: (_phone:string , record: any) => (
+        <div className="name-column">
+        {record.phoneNumber}
+        </div>
+      ),
+    },
+
+    {
       title: "Links",
       dataIndex: "socialMediaLinks",
       key: "links",
@@ -218,6 +197,7 @@ export default function bookStoreList() {
       title: "Action",
       key: "action",
       className: "action-category",
+      
       render: (record: any) => (
         <Space>
           <div className="icon-action" onClick={() => Navigate(record?.id)}>
@@ -262,17 +242,15 @@ export default function bookStoreList() {
   ];
 
   const tableProps = {
-    dataSource: stores,
+    dataSource: fetchdStoress?.data?.docs,
     columns: columns,
     headerStyle: { backgroundColor: "lightblue" },
     pagination: {
-      total: 7,
+      total: fetchdStoress?.data?.meta?.totalRecords,
       current: currentPage,
       pageSize: pageSize,
       onChange: handlePaginationChange, // Handle page change event
-      onShowSizeChange: handlePaginationChange,
-
-      // Handle page size change event
+      onShowSizeChange: handlePaginationChange,// Handle page size change event
     },
 
     header: {
@@ -304,17 +282,6 @@ export default function bookStoreList() {
         </div>
         <Table {...tableProps} />
       </div>
-      {/* Delete Category Modal */}
-      <Modal
-        title="Confirm Deletion"
-        visible={deleteModalVisible}
-        onOk={() => handleDelete()}
-        onCancel={() => setDeleteModalVisible(false)}
-        okText="Delete"
-        cancelText="Cancel"
-      >
-        <p>Are you sure you want to delete this category?</p>
-      </Modal>
     </div>
   );
 }
