@@ -93,3 +93,10 @@
     flex-direction: column;
     gap:10px
   }
+.ant-pagination-item{
+  display: flex !important;
+  
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 100% !important;
+}
