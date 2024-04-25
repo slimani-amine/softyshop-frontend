@@ -54,7 +54,10 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
         // Display success message if data exists
         message.success("Brand updated successfully!");
         console.log(response.data);
+        form.resetFields();
+
         navigate("/brands")
+
         
     } else if ('error' in response) {
         // Display error message if error exists
@@ -64,7 +67,6 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
         // Handle unexpected response format
         message.error("Unexpected response from server. Please try again later.");
     }
-      form.resetFields();
     } catch (error) {
       console.error("Error updating Brand:", error);
     }

@@ -27,6 +27,12 @@ export const SIDEBARITEMS = [
     roles: ['ADMIN', 'VENDOR'],
   },
   {
+    link: '/orders',
+    label: 'Order List',
+    icon: <StoreIcon />,
+    roles: ['ADMIN', 'VENDOR'],
+  },
+  {
     link: '/vendors',
     label: 'Vendors',
     icon: <VendorIcon />,
@@ -46,9 +52,10 @@ export const SIDEBARITEMS = [
     roles: ['VENDOR', 'ADMIN'],
   },
   {
-    link: '/orders',
-    label: 'Order List',
-    icon: <StoreIcon />,
-    roles: ['ADMIN', 'VENDOR'],
+    link: '/payments',
+    label: 'Payment methods',
+    icon: <BrandIcon />,
+    roles: ['VENDOR', 'ADMIN'],
   },
+  
 ];

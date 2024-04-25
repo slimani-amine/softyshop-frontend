@@ -136,6 +136,16 @@ import {
 
       },
       {
+        title: "Phone",
+        dataIndex: "phoneNumber",
+        key: "name",
+        render: (_phone:string , record: any) => (
+          <div className="name-column">
+          {record.phoneNumber}
+          </div>
+        ),
+      },
+      {
         title: 'Date',
         className: 'name',
         dataIndex: 'createdAt',
@@ -207,7 +217,7 @@ import {
         <div className="header-Product-list">
           <SeachFilter
             onSearchChange={handleSearchChange}
-            placeholder={'Search Category..'}
+            placeholder={'Search Order by Phone..'}
           />
           <Button className="add-cat" onClick={handleNavigate}>
             {' '}

@@ -273,20 +273,15 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
                         name="phoneNumber"
                         style={{ marginBottom: 0, width: "280px" }}
                         rules={[
-                          {
-                            required: true,
-                            message: "Please enter phone number",
+                          { 
+                              required: true, 
+                              message: 'Please enter Shop phone' 
                           },
                           {
-                            min: 2,
-                            message:
-                              "Phone number must be at least 8 characters long",
-                          },
-                          {
-                            pattern: /^\d+$/,
-                            message: "Phone number must contain only numbers",
-                          },
-                        ]}
+                              pattern: /^[2-57-9]\d{7}$/,
+                              message: 'Phone number must be 8 digits and start with 2, 4, 5, 7, or 9'
+                          }
+                      ]}    
                       >
                         <Input
                           size="small"
