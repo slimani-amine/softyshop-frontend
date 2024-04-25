@@ -16,7 +16,7 @@ function AllProducts() {
       const fetchData = async () => {
         try {
           const response = await fetch(
-            `${BASE_URL}api/products?perPage=50&page=1`
+            `${BASE_URL}api/products?perPage=100&page=1`
           );
           const data = await response.json();
           // console.log('🚀 ~ fetchData ~ data:', data);
@@ -26,7 +26,7 @@ function AllProducts() {
               return { ...product, quantity: 0 };
             })
           );
-          setNumberOfProducts(data.data.docs.length);
+          setNumberOfProducts(data.data.meta.totalRecords);
         } catch (err: string | unknown) {
           console.log(err);
           return err;
