@@ -1,6 +1,11 @@
 import { api } from '@src/modules/shared/services/api';
 export const ProductsApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    pr:builder.query<any , {perPage : number , page:number ,name:string , role : string, storeId?:string }>({
+      query: ({ perPage, page , name,role,storeId  }) => `api/${storeId ? `stores/${storeId}/` : ''}products?perPage=${perPage}&page=${page}${name ? `&name=${name}`:"" }`,
+      providesTags:['products']
+
+    }),
     allProducts :  builder.query<any,void>({
       query: () => `api/products`,
       providesTags:['products']
@@ -41,4 +46,4 @@ export const ProductsApi = api.injectEndpoints({
   })
 });
 
-export const {useAllProductsQuery, useProductsQuery , useCreateProductMutation , useDeleteProductsMutation , useMyProductsQuery} = ProductsApi
+export const {usePrQuery,useAllProductsQuery, useProductsQuery , useCreateProductMutation , useDeleteProductsMutation , useMyProductsQuery} = ProductsApi

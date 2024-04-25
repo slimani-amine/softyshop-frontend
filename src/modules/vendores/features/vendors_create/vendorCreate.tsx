@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Form, Upload, Divider, Row, Col, Input, message } from "antd";
+import { Form, Upload, Divider, Row, Col, Input, message , Button as ButtonAnt } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useCreateVendorMutation } from "../../services/vendorApi";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
@@ -187,12 +187,12 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
                 <p className="or">OR</p>
                 <Divider className="divider" />
               </div>
-              <Button className="btn-select">Select Files</Button>
+              <ButtonAnt className="btn-select">Select Files</ButtonAnt>
               <p className="size-img">Upload 280*280 image</p>
             </Upload.Dragger>
           </Form.Item>
           <Form.Item>
-            <Button type="submit" className="add-cat" onClick={handleSaveClick}>Save Category</Button>
+            <Button type="submit" className="add-cat" onClick={handleSaveClick}>Save Vendor</Button>
           </Form.Item>
         </Form>
       </div>

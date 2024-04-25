@@ -52,7 +52,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
       const links = JSON.parse(socialMediaLinks);
       setFields(links);
       setPosition([pos[0], pos[1], ""]);
-      form.setFieldsValue({ name, phone: phoneNumber, vendor: user?.id || "test@gmail.com" });
+      form.setFieldsValue({ name, phone: phoneNumber, vendor: user?.email || "test@gmail.com" });
     }
   }, [initialValues, form, fetchedStore]);
 

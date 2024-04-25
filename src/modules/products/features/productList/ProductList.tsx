@@ -1,13 +1,22 @@
-import {  useEffect, useState } from "react";
+import {  useState } from "react";
 import { Table, Space, Switch, Checkbox, Select } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useProductsQuery , useDeleteProductsMutation , useMyProductsQuery} from "../../service/productApi";
+import {
+
+  useDeleteProductsMutation,
+  
+  usePrQuery,
+} from "../../service/productApi";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
-import { useAllStoresQuery, useMyStoresQuery  } from "@src/modules/bookStores/service/storeApi";
+import {
+  useAllStoresQuery,
+  useMyStoresQuery,
+} from "@src/modules/bookStores/service/storeApi";
+import { debounce } from "lodash";
 
 interface Product {
   id: string;
@@ -19,15 +28,12 @@ interface Product {
   images: string;
 }
 
-
 export default function ProductList() {
-
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [selectedStore, setSelectedStore] = useState<string>();
   const [pageSize, setPageSize] = useState(5);
-  const [ , setProducts] =  useState<Array<any>>([]);
-  const [nameProduct] = useState<string>('a');
+  const [nameProduct, setNameProduct] = useState<string>("");
 
   const navigate = useNavigate();
   const [deleteProducts] = useDeleteProductsMutation();
@@ -47,44 +53,23 @@ export default function ProductList() {
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
+  const { data: fetchdePr, isLoading } = usePrQuery({
+    perPage: pageSize,
+    page: currentPage,
+    name: nameProduct,
+    role: Current_User!,
+    storeId: selectedStore,
+  });
 
-const { data: fetchedProducts, isLoading } = selectedStore
-    ? useMyProductsQuery({
-        id: selectedStore,
-        perPage: pageSize,
-        page: currentPage,
-        name:""
-      })
-    : useProductsQuery({
-        perPage: pageSize,
-        page: currentPage,
-        name:""
-      });
-    
-  useEffect(()=>{
-    if (nameProduct){
-      setProducts(fetchedProducts?.data.docs)
-    }
-    else{
-      setProducts(fetchedProducts?.data.docs)
-
-      
-    }
-
-
-  } , [])
-  console.log(fetchedProducts , 'fetcheddddd products')
-  
   // get stores base to ROLE
   //const total = fetchedProducts?.data?.meta.totalRecords
   let stores = [];
   if (Current_User === "VENDOR") {
     const { data: fetechedMyStores } = useMyStoresQuery();
     stores = fetechedMyStores?.data?.docs;
-  }
-  else{
-    const {data : fetchedAllStores}=useAllStoresQuery()
-    stores = fetchedAllStores?.data?.docs
+  } else {
+    const { data: fetchedAllStores } = useAllStoresQuery();
+    stores = fetchedAllStores?.data?.docs;
   }
   const selectStores = stores?.map((store: any) => ({
     label: store.name,
@@ -97,18 +82,23 @@ const { data: fetchedProducts, isLoading } = selectedStore
   //   perPage: pageSize,
   //   page: currentPage,
   // });
-  
-  console.log(fetchedProducts);
-  
+
   // Handle loading state
   if (isLoading) {
     return <Spinner />;
   }
 
-
   const handleDelete = async () => {
     await deleteProducts(selectedRowIds);
   };
+  const handleAllStores= ()=>{
+    setSelectedStore("")
+  }
+
+  const handleSearchChange = debounce((searchText: string) => {
+    console.log("Search text for category list:", searchText);
+    setNameProduct(searchText);
+  }, 200);
 
   const handleNavigate = () => {
     navigate("/products/create");
@@ -134,19 +124,20 @@ const { data: fetchedProducts, isLoading } = selectedStore
       dataIndex: "name",
       key: "name",
       render: (name: string, record: Product) => {
-        const imgUrl  = record.images.replace(/"/g, '');
-        console.log(imgUrl)
+        const imgUrl = record.images.replace(/"/g, "");
+        console.log(imgUrl);
 
-        return(
-        <div className="name-column">
-          <div className="picture-Product">
-            <img height={"30px"} width={"30px"} src={imgUrl} alt="" />
+        return (
+          <div className="name-column">
+            <div className="picture-Product">
+              <img height={"30px"} width={"30px"} src={imgUrl} alt="" />
+            </div>
+            <div className="data-name">
+              <h3>{name}</h3>
+              <span>{record.id}</span>
+            </div>
           </div>
-          <div className="data-name">
-            <h3>{name}</h3>
-            <span>{record.id}</span>
-          </div>
-        </div>)
+        );
       },
       sorter: (a: Product, b: Product) => a.name.localeCompare(b.name),
     },
@@ -154,7 +145,9 @@ const { data: fetchedProducts, isLoading } = selectedStore
       title: "Category",
       className: "product",
       dataIndex: "category",
-      render: (category: any) => <span className="">{category?.name || "erf"}</span>,
+      render: (category: any) => (
+        <span className="">{category?.name || "erf"}</span>
+      ),
 
       key: "Product",
       sorter: (a: Product, b: Product) => a.Product.localeCompare(b.Product),
@@ -171,7 +164,8 @@ const { data: fetchedProducts, isLoading } = selectedStore
       dataIndex: "published",
       key: "published",
 
-      sorter: (a: Product, b: Product) => (a.published ? 1 : 0) - (b.published ? 1 : 0),
+      sorter: (a: Product, b: Product) =>
+        (a.published ? 1 : 0) - (b.published ? 1 : 0),
       render: (published: boolean) => (
         <Switch
           checked={published}
@@ -183,7 +177,7 @@ const { data: fetchedProducts, isLoading } = selectedStore
     {
       title: "Action",
       key: "action",
-      render: (record : any) => (
+      render: (record: any) => (
         <Space size="middle">
           <div className="icon-action" onClick={() => Navigate(record?.id)}>
             <svg
@@ -197,7 +191,11 @@ const { data: fetchedProducts, isLoading } = selectedStore
               stroke=""
             >
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
               <g id="SVGRepo_iconCarrier">
                 {" "}
                 <g>
@@ -223,12 +221,12 @@ const { data: fetchedProducts, isLoading } = selectedStore
   ];
 
   const tableProps = {
-    dataSource: fetchedProducts?.data?.docs,
+    dataSource: fetchdePr?.data?.docs,
     columns: columns,
     headerStyle: { backgroundColor: "lightblue" },
     // Set the pageSize in pagination config
     pagination: {
-      total: 30,
+      total: fetchdePr?.data?.meta?.totalRecords,
       current: currentPage,
       pageSize: pageSize,
       onChange: handlePaginationChange, // Handle page change event
@@ -240,8 +238,7 @@ const { data: fetchedProducts, isLoading } = selectedStore
   };
   const handleSelectChange = (value: any) => {
     setSelectedStore(value);
-    console.log(selectedStore)
-
+    console.log(selectedStore);
   };
 
   return (
@@ -251,18 +248,30 @@ const { data: fetchedProducts, isLoading } = selectedStore
       <div className="header-Product-list">
         <SeachFilter
           placeholder={"Search Product.."}
-          onSearchChange={function (_text: string): void {
-            throw new Error("Function not implemented.");
-          }}
+          onSearchChange={handleSearchChange}
         />
+        <div style={{display:"flex" , alignItems:'center' , justifyContent:'center' , gap:"10px" ,backgroundColor:'#f3f5f9',paddingTop:'0',height:'42px',width:"320px", borderRadius:"10px"  }}>
         <Select
-        style={{ width: '200px', height: '8px !important' , borderRadius:"30px"}}
-        size="small"
+          style={{
+            width: "200px",
+            height: "8px !important",
+            borderRadius: "30px",
+          }}
+          size="small"
           placeholder="Store "
           options={selectStores}
-          onChange={(value) => handleSelectChange(value)} 
+          onChange={(value) => handleSelectChange(value)}
           className="input-custom"
         />
+          <Button
+            style={{height:"40px"}}
+            size="xl"
+            variant={"info"}
+            onClick={handleAllStores}
+          >
+            All stores
+          </Button>
+          </div>
         <Button className="add-cat" onClick={handleNavigate}>
           {" "}
           <span>+</span> Add Product

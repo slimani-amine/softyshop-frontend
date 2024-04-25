@@ -7,6 +7,7 @@ import {
   Col,
   Input,
   message,
+  Button as ButtonAnt,
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useCreateBrandMutation } from "../../service/brandApi";
@@ -121,7 +122,7 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
                 <p className="or">OR</p>
                 <Divider className="divider" />
               </div>
-              <Button className="btn-select">Select Files</Button>
+              <ButtonAnt className="btn-select">Select Files</ButtonAnt>
               <p className="size-img">Upload 280*280 image</p>
             </Upload.Dragger>
           </Form.Item>
