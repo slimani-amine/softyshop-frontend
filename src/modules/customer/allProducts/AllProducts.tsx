@@ -16,7 +16,7 @@ function AllProducts() {
       const fetchData = async () => {
         try {
           const response = await fetch(
-            `${BASE_URL}api/products?perPage=6?&page=1`
+            `${BASE_URL}api/products?perPage=50&page=1`
           );
           const data = await response.json();
           // console.log('🚀 ~ fetchData ~ data:', data);
