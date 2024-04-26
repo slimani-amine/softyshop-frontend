@@ -1,9 +1,25 @@
 import { api } from '@src/modules/shared/services/api';
 export const ProductsApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    pr:builder.query<any , {perPage : number , page:number ,name:string , role : string, storeId?:string }>({
-      query: ({ perPage, page , name,role,storeId  }) => `api/${storeId ? `stores/${storeId}/` : ''}products?perPage=${perPage}&page=${page}${name ? `&name=${name}`:"" }`,
-      providesTags:['products']
+    pr:builder.query<any , {perPage : number , page:number ,name:string , role : string, storeId?:string , vendorId?:string }>({
+      query: ({ perPage, page, name, role, storeId, vendorId }) => {
+        let url = "api/";
+        if (role === "VENDOR" || storeId) {
+            url += "stores/";
+            if (role === "VENDOR") {
+                url += `${vendorId}/`;
+            }
+        }
+        if (storeId) {
+            url += `${storeId}/`;
+        }
+        url += `products?perPage=${perPage}&page=${page}`;
+        if (name) {
+            url += `&name=${name}`;
+        }
+       return url;
+    }   , 
+     providesTags:['products']
 
     }),
     allProducts :  builder.query<any,void>({

@@ -31,6 +31,8 @@ interface AddProductFormProps {
 }
 
 const AddProductForm: FC<AddProductFormProps> = () => {
+  const [uploading, setUploading] = useState(false);
+
   const navigate = useNavigate()
   const { data: fetchedCatgeories} = useAllCategoriesQuery();
   const categories = fetchedCatgeories?.data.docs || [];
@@ -54,7 +56,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
   }));
 
   const [files, setFile] = useState<any>(null);
-  const [selectedFileUrl, setSelectedFileUrl] = useState<string[]>([]);
+  const [selectedFileUrl  , setSelectedFileUrl] = useState<string[]>([]);
   console.log(files)
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
@@ -142,8 +144,8 @@ const AddProductForm: FC<AddProductFormProps> = () => {
                       message: 'Please enter Product name' 
                   },
                   {
-                      pattern: /^(?!\s)(?=.*[a-zA-Z])[a-zA-Z\s]{2,}$/,
-                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                    pattern: /^(?!\s)(?=.*[a-zA-Z'À-ÖØ-öø-ÿ\s])[a-zA-Z'À-ÖØ-öø-ÿ\s]{2,}$/,
+                    message: 'Name must contain at least two alphabetical characters and no leading spaces'
                   }
               ]}
               >
@@ -249,25 +251,35 @@ const AddProductForm: FC<AddProductFormProps> = () => {
             name="images"
             rules={[{ required: true, message: 'Description is required!' }]}
           >
-            <Upload.Dragger
+             <Upload.Dragger
               className="drag-images"
               listType="picture"
               accept="image/*"
-              multiple
               maxCount={3}
               onChange={(e: any) =>
-                handleFileChange(e, setFile, setSelectedFileUrl)
+                handleFileChange(
+                  e,
+                  setFile,
+                  setSelectedFileUrl,
+                  setUploading
+                )
               }
               beforeUpload={() => false}
             >
-              <p className="ant-upload-text">Drag & drop Product image here</p>
-              <div className="icon-drag">
-                <Divider className="divider" />
-                <p className="or">OR</p>
-                <Divider className="divider" />
-              </div>
-              <ButtonAnt className="btn-select">Select Files</ButtonAnt>
-              <p className="size-img">Upload 280*280 image</p>
+              {uploading ? (
+                <div className="uploading-indicator">Uploading...</div>
+              ) : (
+                <>
+                  <p className="ant-upload-text">Drag & drop Category image here</p>
+                  <div className="icon-drag">
+                    <Divider className="divider" />
+                    <p className="or">OR</p>
+                    <Divider className="divider" />
+                  </div>
+                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                  <p className="size-img">Upload 280*280 image</p>
+                </>
+              )}
             </Upload.Dragger>
           </Form.Item>
           <Form.Item>

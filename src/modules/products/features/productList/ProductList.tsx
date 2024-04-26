@@ -17,6 +17,7 @@ import {
   useMyStoresQuery,
 } from "@src/modules/bookStores/service/storeApi";
 import { debounce } from "lodash";
+import { current } from "@reduxjs/toolkit";
 
 interface Product {
   id: string;
@@ -53,11 +54,16 @@ export default function ProductList() {
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
+  const userId =  useSelector(
+    (state: RootState) => state.auth.user?.id.toLocaleUpperCase()
+  );
+  console.log(userId)
   const { data: fetchdePr, isLoading } = usePrQuery({
     perPage: pageSize,
     page: currentPage,
     name: nameProduct,
     role: Current_User!,
+    vendorId : Current_User === "VENDOR" ? userId : "" ,
     storeId: selectedStore,
   });
 
@@ -130,10 +136,10 @@ export default function ProductList() {
         return (
           <div className="name-column">
             <div className="picture-Product">
-              <img height={"30px"} width={"30px"} src={imgUrl} alt="" />
+              <img height={"40px"} width={"40px"} style={{borderRadius:'8px'}} src={imgUrl} alt="" />
             </div>
             <div className="data-name">
-              <h3>{name}</h3>
+              <h3 className="prod-name">{name}</h3>
               <span>{record.id}</span>
             </div>
           </div>
@@ -142,11 +148,23 @@ export default function ProductList() {
       sorter: (a: Product, b: Product) => a.name.localeCompare(b.name),
     },
     {
-      title: "Category",
+      title: "Store",
       className: "product",
+      dataIndex: ['store' , 'name'],
+      render: (name: string) => (
+        <span className="store-td">{name}</span>
+      ),
+
+      key: "Product",
+      sorter: (a: Product, b: Product) => a.Product.localeCompare(b.Product),
+    },
+    
+    {
+      title: "Category",
+      className: "",
       dataIndex: "category",
       render: (category: any) => (
-        <span className="">{category?.name || "erf"}</span>
+        <span className="category-td">{category?.name || "erf"}</span>
       ),
 
       key: "Product",
@@ -158,7 +176,19 @@ export default function ProductList() {
       dataIndex: "price",
       key: "price",
       sorter: (a: Product, b: Product) => a.price - b.price,
+      render:(price:string)=>(
+        <p className="price-product">{price} Dt</p>
+      )
     },
+    {
+      title: "Stock",
+      dataIndex: "stockNumber",
+      key: "price",
+      render:(stock:string)=>(
+        <p className="stock-product">{stock}</p>
+      )
+    },
+
     {
       title: "Published",
       dataIndex: "published",

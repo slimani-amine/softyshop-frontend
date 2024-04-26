@@ -6,6 +6,7 @@ import {
   Row,
   Col,
   Input,
+  Button as ButtonAnt,
 
   message,
 } from "antd";
@@ -24,7 +25,8 @@ const UpdateVendorForm: FC = () => {
   const [form] = Form.useForm();
   const { id } = useParams<{ id: string }>(); // Assuming useParams returns an object with 'id' property
   const [files, setFile] = useState<any>(null);
-  console.log(files)
+  const [uploading, setUploading] = useState(false);
+
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [updateVendor] = useUpdateVendorMutation();
   const { data: fetchVendor, isLoading } = useVendorQuery(id);
@@ -188,29 +190,40 @@ const UpdateVendorForm: FC = () => {
           </Row>
 
           <Form.Item className="upload-images" name="images">
-            <Upload.Dragger
+          <Upload.Dragger
               defaultFileList={defaultFileList}
               className="drag-images"
               listType="picture"
               accept="image/*"
-              maxCount={1} // set maxCount to 1 for single image
+              maxCount={1}
               onChange={(e: any) =>
-                handleFileChange(e, setFile, setSelectedFileUrl)
+                handleFileChange(
+                  e,
+                  setFile,
+                  setSelectedFileUrl,
+                  setUploading
+                )
               }
               beforeUpload={() => false}
             >
-              <p className="ant-upload-text">Drag & drop Category image here</p>
-              <div className="icon-drag">
-                <Divider className="divider" />
-                <p className="or">OR</p>
-                <Divider className="divider" />
-              </div>
-              <Button className="btn-select">Select Files</Button>
-              <p className="size-img">Upload 280*280 image</p>
+              {uploading ? (
+                <div className="uploading-indicator">Uploading...</div>
+              ) : (
+                <>
+                  <p className="ant-upload-text">Drag & drop Category image here</p>
+                  <div className="icon-drag">
+                    <Divider className="divider" />
+                    <p className="or">OR</p>
+                    <Divider className="divider" />
+                  </div>
+                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                  <p className="size-img">Upload 280*280 image</p>
+                </>
+              )}
             </Upload.Dragger>
           </Form.Item>
           <Form.Item>
-            <Button type="submit" className="add-cat" onClick={handleSaveClick}>
+            <Button type="submit" className="add-cat" disabled={uploading} onClick={handleSaveClick}>
               Update Vendor
             </Button>
           </Form.Item>

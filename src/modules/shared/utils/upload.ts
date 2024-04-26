@@ -1,8 +1,10 @@
 import { message } from "antd";
+
 export const handleFileChange = async (
   e: any,
   setFile: any,
-  setSelectedFileUrl: any
+  setSelectedFileUrl: any,
+  setUploading: any
 ) => {
   if (e.file) {
     const selectedFile = e.file;
@@ -12,6 +14,8 @@ export const handleFileChange = async (
       selectedFile.size <= 2 * 1024 * 1024
     ) {
       try {
+        setUploading(true);
+
         const form = new FormData();
         form.append("file", selectedFile);
         form.append("upload_preset", "firaslatrach");
@@ -29,6 +33,7 @@ export const handleFileChange = async (
           console.log(data);
 
           setSelectedFileUrl(data.url);
+          
         } else {
           message.error(
             "Erreur lors du téléchargement du fichier. Veuillez réessayer."
@@ -39,6 +44,8 @@ export const handleFileChange = async (
           "Une erreur est survenue lors du téléchargement du fichier. Veuillez réessayer."
         );
         console.error(error);
+      } finally {
+        setUploading(false);
       }
     } else {
       message.error(
@@ -46,4 +53,5 @@ export const handleFileChange = async (
       );
     }
   }
+  
 };

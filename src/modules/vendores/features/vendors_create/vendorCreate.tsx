@@ -4,11 +4,14 @@ import Button from "@src/modules/shared/components/Button/Button";
 import { useCreateVendorMutation } from "../../services/vendorApi";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
 import { useNavigate } from "react-router-dom";
+
 const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
   const [form] = Form.useForm();
   const [createVendor] = useCreateVendorMutation();
   const [, setGeneratedPassword] = useState<string>('');
   const [files, setFile] = useState<any>(null);
+  const [uploading, setUploading] = useState(false);
+
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
 
@@ -35,11 +38,13 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
         console.log(response.data);
         navigate("/vendors")
         
-    } else if ('error' in response) {
+    } else if ('error' in response ) {
         // Display error message if error exists
-        message.error("Failed to save product. Please try again.");
-        console.error('Error saving product', response.error);
-    } else {
+        message.error("Failed to save vendor. Please try again.");
+        console.error('Error saving vendor', response);
+    } 
+    
+    else {
         // Handle unexpected response format
         message.error("Unexpected response from server. Please try again later.");
     }
@@ -75,13 +80,13 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
                 rules={[
                   { 
                       required: true, 
-                      message: 'Please enter vendor name' 
+                      message: 'Please enter Vendor name' 
                   },
                   {
-                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF]{2,}$/,
-                      message: 'Name must contain at least two alphabetical characters and no spaces'
+                      pattern: /^(?!\s)(?=.*[a-zA-Z])[a-zA-Z\s]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
                   }
-              ]}                 >
+              ]}             >
                 <Input size="large" placeholder="Name" className="input-custom" />
               </Form.Item>
             </Col>
@@ -94,13 +99,13 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
                 rules={[
                   { 
                       required: true, 
-                      message: 'Please enter vendor last name' 
+                      message: 'Please enter Vendor name' 
                   },
                   {
-                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF]{2,}$/,
-                      message: 'Name must contain at least two alphabetical characters and no spaces'
+                      pattern: /^(?!\s)(?=.*[a-zA-Z])[a-zA-Z\s]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
                   }
-              ]}                      >
+              ]}                     >
                 <Input size="large" placeholder="Last Name" className="input-custom" />
               </Form.Item>
             </Col>
@@ -167,32 +172,39 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
             name="images"
             rules={[{ required: true, message: "Picture of Category!" }]}
           >
-            <Upload.Dragger
+               <Upload.Dragger
               className="drag-images"
               listType="picture"
               accept="image/*"
-              maxCount={1} // set maxCount to 1 for single image
+              maxCount={1}
               onChange={(e: any) =>
                 handleFileChange(
                   e,
                   setFile,
                   setSelectedFileUrl,
+                  setUploading
                 )
               }
               beforeUpload={() => false}
             >
-              <p className="ant-upload-text">Drag & drop Category image here</p>
-              <div className="icon-drag">
-                <Divider className="divider" />
-                <p className="or">OR</p>
-                <Divider className="divider" />
-              </div>
-              <ButtonAnt className="btn-select">Select Files</ButtonAnt>
-              <p className="size-img">Upload 280*280 image</p>
+              {uploading ? (
+                <div className="uploading-indicator">Uploading...</div>
+              ) : (
+                <>
+                  <p className="ant-upload-text">Drag & drop Category image here</p>
+                  <div className="icon-drag">
+                    <Divider className="divider" />
+                    <p className="or">OR</p>
+                    <Divider className="divider" />
+                  </div>
+                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                  <p className="size-img">Upload 280*280 image</p>
+                </>
+              )}
             </Upload.Dragger>
           </Form.Item>
           <Form.Item>
-            <Button type="submit" className="add-cat" onClick={handleSaveClick}>Save Vendor</Button>
+            <Button type="submit" className="add-cat" disabled={uploading} onClick={handleSaveClick}>Save Vendor</Button>
           </Form.Item>
         </Form>
       </div>
