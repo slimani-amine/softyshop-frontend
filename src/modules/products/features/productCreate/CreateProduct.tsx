@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { RootState } from '@src/modules/shared/store';
-import { handleFileChange } from '@src/modules/shared/utils/upload';
+import { handleFileChange } from '@src/modules/shared/utils/uploadsMany';
 
 import {
   Form,
@@ -91,7 +91,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
 
       const values = await form.validateFields();
 
-      console.log(values, 'vallllllluuuuuuuueeeeeeeeesà');
+      console.log(values.description , "desssss")
       const product = {
         name: values.name,
         initialPrice: values.price,
@@ -101,6 +101,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
         creator_id: values.creator,
         brand_id: values.brand,
         images: selectedFileUrl,
+        description : values.description
       };
       const response = await createProduct({
         id: values.store,
@@ -255,6 +256,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
               className="drag-images"
               listType="picture"
               accept="image/*"
+              multiple={true}
               maxCount={3}
               onChange={(e: any) =>
                 handleFileChange(
@@ -282,11 +284,13 @@ const AddProductForm: FC<AddProductFormProps> = () => {
               )}
             </Upload.Dragger>
           </Form.Item>
-          <Form.Item>
+          <Form.Item    
+            name="description"
+            >
             <TextArea
               placeholder="Description"
               autoSize={{ minRows: 7, maxRows: 20 }}
-              name="description"
+
             />
           </Form.Item>
 
@@ -310,9 +314,19 @@ const AddProductForm: FC<AddProductFormProps> = () => {
               <Form.Item
                 name="discount"
                 className="SalePrice"
+                
                 style={{ marginBottom: 0 }}
-                rules={[{ required: true, message: 'Please enter sale price' }]}
-              >
+                rules={[
+                  { 
+                    required: true, 
+                    message: 'Please enter a sale price' 
+                  },
+                  { 
+                    type: 'number',
+                    max: 100, 
+                    message: 'Discount must be less than or equal to 100' 
+                  }
+                ]}              >
                 <InputNumber
                   placeholder="Discount"
                   className="input-custom"
@@ -327,8 +341,16 @@ const AddProductForm: FC<AddProductFormProps> = () => {
               <Form.Item
                 name="stock"
                 style={{ marginBottom: 0 }}
-                rules={[{ required: true, message: 'Price is required!  ' }]}
-              >
+                rules={[
+                  { 
+                    required: true, 
+                    message: 'Stock number is required!' 
+                  },
+                  { 
+                    type: 'number',
+                    message: 'Stock number must be a valid number' 
+                  }
+                ]}              >
                 <InputNumber
                   name="stock"
                   placeholder="Stock Number"

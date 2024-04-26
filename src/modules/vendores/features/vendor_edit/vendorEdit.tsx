@@ -25,6 +25,7 @@ const UpdateVendorForm: FC = () => {
   const [form] = Form.useForm();
   const { id } = useParams<{ id: string }>(); // Assuming useParams returns an object with 'id' property
   const [files, setFile] = useState<any>(null);
+  console.log(files)
   const [uploading, setUploading] = useState(false);
 
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();

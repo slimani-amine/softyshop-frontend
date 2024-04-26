@@ -35,6 +35,7 @@ interface AddShopFormProps {
 
 const AddShopForm: FC<AddShopFormProps> = () => {
   const navigate = useNavigate()
+  const [uploading, setUploading] = useState(false);
 
   const [form] = Form.useForm();
   const [fields, setFields] = useState<string[]>([""]);
@@ -46,6 +47,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   console.log(selectedCoverUrl)
   console.log(files)
   console.log(cover)
+  console.log(uploading)
   const initialPosition = [33.892166, 9.561555499999997]; // New York coordinates
   const [position, setPosition] = useState(initialPosition);
   const [createStore] = useCreateStoreMutation(); // Destructure and use the hook
@@ -252,6 +254,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                     e,
                     setFile,
                     setSelectedFileUrl,
+                    setUploading
                   )
                 }
                 beforeUpload={() => false}
@@ -305,6 +308,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                     e,
                     setCover,
                     setSelectedCoverUrl,
+                    setUploading
                   )
                 }
                 beforeUpload={() => false}

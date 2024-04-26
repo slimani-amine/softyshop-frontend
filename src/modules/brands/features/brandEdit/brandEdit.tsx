@@ -22,6 +22,8 @@ interface AddBrandFormProps {
 const EditBrandForm: FC<AddBrandFormProps> = () => {
   const navigate = useNavigate()
   const [files, setFile] = useState<any>(null);
+  const [uploading, setUploading] = useState(false);
+  console.log(uploading)
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
@@ -119,7 +121,7 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
               accept="image/*"
               maxCount={1}
               onChange={(e: any) =>
-                handleFileChange(e, setFile, setSelectedFileUrl)
+                handleFileChange(e, setFile, setSelectedFileUrl,setUploading)
               }
               beforeUpload={() => false}
             >

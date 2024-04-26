@@ -19,7 +19,8 @@ interface AddBrandFormProps {
 
 const AddBrandForm: FC<AddBrandFormProps> = () => {
   const navigate = useNavigate()
-
+  const [uploading, setUploading] = useState(false);
+  console.log(uploading)
   const [files, setFile] = useState<any>(null);
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
@@ -112,6 +113,7 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
                   e,
                   setFile,
                   setSelectedFileUrl,
+                  setUploading
                 )
               }
               beforeUpload={() => false}

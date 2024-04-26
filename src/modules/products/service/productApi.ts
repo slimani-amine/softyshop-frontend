@@ -1,6 +1,11 @@
 import { api } from '@src/modules/shared/services/api';
 export const ProductsApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    allProducts :  builder.query<any,void>({
+      query: () => `api/products`,
+      providesTags:['products']
+    }),
+
     pr:builder.query<any , {perPage : number , page:number ,name:string , role : string, storeId?:string , vendorId?:string }>({
       query: ({ perPage, page, name, role, storeId, vendorId }) => {
         let url = "api/";
@@ -22,21 +27,6 @@ export const ProductsApi = api.injectEndpoints({
      providesTags:['products']
 
     }),
-    allProducts :  builder.query<any,void>({
-      query: () => `api/products`,
-      providesTags:['products']
-    }),
-    products: builder.query<any, { perPage: number; page: number , name :string  }>({
-      query: ({ perPage, page , name  }) => `api/products?perPage=${perPage}&page=${page}${name ? `&name=${name}`:"" }`,
-      providesTags:['products']
-    }),
-    myProducts: builder.query<any,{id:any , perPage: number; page: number , name :string}>({
-      query: ({id,perPage,page,name}) => ({
-        url: `/api/stores/${id}/products?perPage=${perPage}&page=${page}${name ? `&name=${name}`:"" }`,
-      
-      }),
-      providesTags : ["products"]
-    }),
     createProduct: builder.mutation<any,{id:number,newProduct:any}>({
       query: ({id,newProduct}) => ({
         url: `/api/stores/${id}/products`,
@@ -54,7 +44,15 @@ export const ProductsApi = api.injectEndpoints({
       invalidatesTags : ['products'],
 
 
-    })
+    }),
+    publishProduct : builder.mutation<any ,{ id: any;}>({
+      query: ({ id}) => ({
+        url: `api/products/${id}/publish`,
+        method: 'PATCH',
+        
+      }),
+      invalidatesTags: ['products']}),
+
     
    
  
@@ -62,4 +60,4 @@ export const ProductsApi = api.injectEndpoints({
   })
 });
 
-export const {usePrQuery,useAllProductsQuery, useProductsQuery , useCreateProductMutation , useDeleteProductsMutation , useMyProductsQuery} = ProductsApi
+export const {useAllProductsQuery,usePrQuery , useCreateProductMutation , useDeleteProductsMutation , usePublishProductMutation } = ProductsApi

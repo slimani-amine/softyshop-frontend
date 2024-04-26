@@ -25,7 +25,8 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
   const [files, setFile] = useState<any>(null);
   const [ , setCover] = useState<any>(null)
   const [selectedCoverUrl, setSelectedCoverUrl] = useState<string>();
-
+  const [uploading, setUploading] = useState(false);
+  console.log(uploading)
 
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
@@ -288,6 +289,8 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
                     e,
                     setFile,
                     setSelectedFileUrl,
+                    setUploading
+                  
                   )
                 }
                 beforeUpload={() => false}
@@ -339,6 +342,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
                     e,
                     setCover,
                     setSelectedCoverUrl,
+                    setUploading
                   )
                 }
                 beforeUpload={() => false}

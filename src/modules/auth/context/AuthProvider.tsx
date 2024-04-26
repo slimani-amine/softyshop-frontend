@@ -7,7 +7,6 @@ import useIsMountedRef from '../hook/useIsMountedRef';
 import { initialise } from '../data/authSlice';
 import { RootState } from '@src/modules/shared/store';
 import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
-import { BASE_URL } from '../data/authThunk';
 
 interface AuthProviderProps {
   children: React.ReactNode;

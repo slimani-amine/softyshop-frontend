@@ -41,7 +41,7 @@ const AddVendorForm: FC = () => { // Removed AddCategoryFormProps
     } else if ('error' in response ) {
         // Display error message if error exists
         message.error("Failed to save vendor. Please try again.");
-        console.error('Error saving vendor', response);
+        console.error('Error saving ', response);
     } 
     
     else {

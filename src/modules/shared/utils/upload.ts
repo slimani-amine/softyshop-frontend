@@ -9,12 +9,13 @@ export const handleFileChange = async (
   if (e.file) {
     const selectedFile = e.file;
     setFile(selectedFile);
+
     if (
       selectedFile.type.startsWith("image/") &&
       selectedFile.size <= 2 * 1024 * 1024
     ) {
       try {
-        setUploading(true);
+        setUploading(true); // Set uploading to true when starting upload
 
         const form = new FormData();
         form.append("file", selectedFile);
@@ -30,28 +31,24 @@ export const handleFileChange = async (
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
-
           setSelectedFileUrl(data.url);
-          
         } else {
           message.error(
-            "Erreur lors du téléchargement du fichier. Veuillez réessayer."
+            "Error uploading file. Please try again."
           );
         }
       } catch (error) {
         message.error(
-          "Une erreur est survenue lors du téléchargement du fichier. Veuillez réessayer."
+          "An error occurred while uploading the file. Please try again."
         );
         console.error(error);
       } finally {
-        setUploading(false);
+        setUploading(false); // Set uploading to false when upload completes
       }
     } else {
       message.error(
-        "Format ou taille de fichier invalide. Veuillez choisir un fichier image valide (max 2 Mo)."
+        "Invalid file format or size. Please choose a valid image file (max 2 MB)."
       );
     }
   }
-  
 };

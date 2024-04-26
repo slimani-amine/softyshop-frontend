@@ -6,8 +6,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import {
 
   useDeleteProductsMutation,
-  
   usePrQuery,
+  usePublishProductMutation
 } from "../../service/productApi";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 import { useSelector } from "react-redux";
@@ -17,7 +17,6 @@ import {
   useMyStoresQuery,
 } from "@src/modules/bookStores/service/storeApi";
 import { debounce } from "lodash";
-import { current } from "@reduxjs/toolkit";
 
 interface Product {
   id: string;
@@ -33,7 +32,7 @@ export default function ProductList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [selectedStore, setSelectedStore] = useState<string>();
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [nameProduct, setNameProduct] = useState<string>("");
 
   const navigate = useNavigate();
@@ -66,7 +65,7 @@ export default function ProductList() {
     vendorId : Current_User === "VENDOR" ? userId : "" ,
     storeId: selectedStore,
   });
-
+const [publishProduct] = usePublishProductMutation()
   // get stores base to ROLE
   //const total = fetchedProducts?.data?.meta.totalRecords
   let stores = [];
@@ -81,18 +80,13 @@ export default function ProductList() {
     label: store.name,
     value: store.id,
   }));
-  ////////////////////////////////////////////////////////
 
-  // const { data: fetchedProductsOfStore } = useMyProductsQuery({
-  //   id: selectedStore,
-  //   perPage: pageSize,
-  //   page: currentPage,
-  // });
 
   // Handle loading state
   if (isLoading) {
     return <Spinner />;
   }
+  console.log(import.meta.env.VITE_APP_BASE_URL)
 
   const handleDelete = async () => {
     await deleteProducts(selectedRowIds);
@@ -130,9 +124,8 @@ export default function ProductList() {
       dataIndex: "name",
       key: "name",
       render: (name: string, record: Product) => {
-        const imgUrl = record.images.replace(/"/g, "");
-        console.log(imgUrl);
-
+        const imgUrl = JSON.parse(record.images)[0];
+      
         return (
           <div className="name-column">
             <div className="picture-Product">
@@ -156,7 +149,6 @@ export default function ProductList() {
       ),
 
       key: "Product",
-      sorter: (a: Product, b: Product) => a.Product.localeCompare(b.Product),
     },
     
     {
@@ -168,7 +160,6 @@ export default function ProductList() {
       ),
 
       key: "Product",
-      sorter: (a: Product, b: Product) => a.Product.localeCompare(b.Product),
     },
 
     {
@@ -191,16 +182,16 @@ export default function ProductList() {
 
     {
       title: "Published",
-      dataIndex: "published",
+      dataIndex: "isPublished",
       key: "published",
 
       sorter: (a: Product, b: Product) =>
         (a.published ? 1 : 0) - (b.published ? 1 : 0),
-      render: (published: boolean) => (
+      render: (isPublished: boolean , record: Product) => (
         <Switch
-          checked={published}
+          checked={isPublished}
           onChange={(checked) => console.log(checked)}
-          onClick={(checked) => !checked}
+          onClick={()=>{publishProduct({id:record.id})}}
         />
       ),
     },
