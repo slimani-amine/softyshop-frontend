@@ -104,13 +104,16 @@ function storeDetails() {
   const theProducts = useAppSelector((state) => state.product.products);
   console.log('🚀 ~ storeDetails ~ theProducts:', theProducts);
 
-  // theProducts.map(function (product) {
-  //   return cart.filter(function (item) {
-  //     console.log(item.product.id, product.id);
-  //     return item.product.id == product.id;
-  //   });
-  // });
-  // console.log(store.products);
+  //todo                                             Make it Work                                  ;
+  const cart = useAppSelector((state) => state.cart.cart);
+  const updatedProducts = theProducts.map((product: any) => {
+    const updatedProduct = cart.find((item) => item.product.id === product.id);
+    if (updatedProduct) {
+      console.log(updatedProduct);
+      return { ...product, quantity: updatedProduct.quantity };
+    } else return product;
+  });
+  console.log(updatedProducts);
   return (
     <div className="home">
       <div className="store-card-identification">
@@ -162,7 +165,7 @@ function storeDetails() {
         </div>
       </div>
       <div className="books">
-        {theProducts.map(
+        {updatedProducts.map(
           (
             {
               id,
