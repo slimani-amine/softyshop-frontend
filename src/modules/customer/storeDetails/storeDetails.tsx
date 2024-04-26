@@ -170,6 +170,7 @@ function storeDetails() {
               images,
               //  rating
               price,
+              quantity,
             },
             index
           ) => {
@@ -185,6 +186,7 @@ function storeDetails() {
                 // rating={rating}
                 price={Number(price)}
                 images={images}
+                quantity={quantity}
               />
             );
           }

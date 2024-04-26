@@ -57,9 +57,15 @@
     .buttons {
       background-color: transparent;
       display: flex;
-      align-items: end;
+      align-items: center;
       justify-content: end;
       flex-direction: column;
+      .quantity {
+        font-size: 14px;
+        font-weight: 600;
+        color: rgb(43, 52, 69);
+        transform: translate(-9px, 0);
+      }
       .add {
         cursor: pointer;
         border: 0.5px solid #e99fab;

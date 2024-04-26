@@ -48,7 +48,7 @@ function AllProducts() {
     const updatedProduct = cart.find((item) => item.product.id === product.id);
     if (updatedProduct) {
       console.log(updatedProduct);
-      return updatedProduct;
+      return { ...product, quantity: updatedProduct.quantity };
     } else return product;
   });
   console.log(updatedProducts);
@@ -59,7 +59,7 @@ function AllProducts() {
   // console.log('🚀 ~ AllProducts ~ numberOfProducts:', numberOfProducts);
   return (
     <div className="home">
-      {Products?.map(
+      {updatedProducts?.map(
         (
           {
             id,
@@ -67,6 +67,7 @@ function AllProducts() {
             images,
             //  rating
             price,
+            quantity,
           },
           index
         ) => (
@@ -77,6 +78,7 @@ function AllProducts() {
             // rating={rating}
             price={price}
             images={images}
+            quantity={quantity}
           />
         )
       )}

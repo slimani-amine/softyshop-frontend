@@ -4,10 +4,10 @@ import {
   useState,
 } from 'react';
 import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/home/addToCart.svg';
-//import { ReactComponent as RemoveFromCart } from '../../../../shared/assets/icons/home/removeFromCart.svg';
+import { ReactComponent as RemoveFromCart } from '../../../../shared/assets/icons/home/removeFromCart.svg';
 import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
 import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 // import { Link } from 'react-router-dom';
 // import { addToCart } from '@src/modules/customer/data/cartSlice';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
@@ -19,11 +19,13 @@ function Product({
   name,
   price,
   images,
+  quantity,
 }: {
   id: number;
   name: string;
   price: number;
   images: string;
+  quantity: number;
 }) {
   const dispatch = useAppDispatch();
   const [showIcons, setShowIcons] = useState(false);
@@ -70,21 +72,21 @@ function Product({
       dispatch(getCart()),
     ]);
     setIsLoading(false);
-    toast.success('Product successfully added to cart.');
+    // toast.success('Product successfully added to cart.');
   }
 
-  // async function handleRemoveFromCart() {
-  //   const quantity: any = cart?.find((item: any) => item.product.id == id)
-  //     ?.quantity;
-  //   console.log(quantity);
-  //   if (quantity < 1) return;
-  //   setIsLoading(true);
-  //   Promise.all([
-  //     await dispatch(addToCart({ quantity: quantity - 1, productId: id + '' })),
-  //     dispatch(getCart()),
-  //   ]);
-  //   setIsLoading(false);
-  // }
+  async function handleRemoveFromCart() {
+    const quantity: any = cart?.find((item: any) => item.product.id == id)
+      ?.quantity;
+    console.log(quantity);
+    if (quantity < 1) return;
+    setIsLoading(true);
+    Promise.all([
+      await dispatch(addToCart({ quantity: quantity - 1, productId: id + '' })),
+      dispatch(getCart()),
+    ]);
+    setIsLoading(false);
+  }
 
   // console.log('🚀 ~ image:', image);
 
@@ -125,12 +127,36 @@ function Product({
           </div>
         </HashLink>
         <button className="buttons" disabled={loading}>
-          {/* <RemoveFromCart
-            className="add"
-            onClick={() => {
-              handleRemoveFromCart();
-            }}
-          /> */}
+          {quantity != 0 && (
+            <RemoveFromCart
+              className="add"
+              onClick={() => {
+                handleRemoveFromCart();
+              }}
+            />
+          )}
+          {/* {quantity != 0 && <p className="quantity">{quantity}</p>} */}
+          {quantity == 0 ? (
+            <p></p>
+          ) : quantity < 10 ? (
+            <p
+              style={{
+                transform: 'translate(-9px, 0)',
+              }}
+              className="quantity"
+            >
+              {quantity}
+            </p>
+          ) : (
+            <p
+              style={{
+                transform: 'translate(-6px, 0)',
+              }}
+              className="quantity"
+            >
+              {quantity}
+            </p>
+          )}
           <AddToCart
             onClick={() => {
               handleAddToCart();
