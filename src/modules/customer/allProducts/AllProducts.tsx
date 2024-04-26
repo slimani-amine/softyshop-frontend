@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Product from '../home/components/Product/Product';
-import { useAppDispatch } from '@src/modules/shared/store';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { settProducts } from '../data/productSlice';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 import { ProductType } from '../data/dataTypes';
@@ -8,7 +8,7 @@ import { ProductType } from '../data/dataTypes';
 function AllProducts() {
   // const fake_URL = 'http://localhost:3001/products';
   const [Products, setProducts] = useState([]);
-  const [numberOfProducts, setNumberOfProducts] = useState(0);
+  // const [numberOfProducts, setNumberOfProducts] = useState(0);
   const dispatch = useAppDispatch();
 
   useEffect(
@@ -26,7 +26,7 @@ function AllProducts() {
               return { ...product, quantity: 0 };
             })
           );
-          setNumberOfProducts(data.data.meta.totalRecords);
+          // setNumberOfProducts(data.data.meta.totalRecords);
         } catch (err: string | unknown) {
           console.log(err);
           return err;
@@ -39,14 +39,24 @@ function AllProducts() {
     [BASE_URL]
   );
 
-  // console.log(Products, cart);
-  // console.log(Products);
-  dispatch(settProducts(Products));
-  // const theProducts = useAppSelector((state) => state.product.products);
-  // console.log(theProducts);
+  // const products = useAppSelector((state) => state.product.products);
+  // console.log(products);
+
+  // console.log(cart, Products);
+  const cart = useAppSelector((state) => state.cart.cart);
+  const updatedProducts = Products.map((product: any) => {
+    const updatedProduct = cart.find((item) => item.product.id === product.id);
+    if (updatedProduct) {
+      console.log(updatedProduct);
+      return updatedProduct;
+    } else return product;
+  });
+  console.log(updatedProducts);
+  dispatch(settProducts(updatedProducts));
+
   // dispatch(updateQuantity);
 
-  console.log('🚀 ~ AllProducts ~ numberOfProducts:', numberOfProducts);
+  // console.log('🚀 ~ AllProducts ~ numberOfProducts:', numberOfProducts);
   return (
     <div className="home">
       {Products?.map(

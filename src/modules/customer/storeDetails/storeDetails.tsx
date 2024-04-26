@@ -74,7 +74,7 @@ function storeDetails() {
         try {
           // const response = await fetch(`${FAKE_URL}`);
           const response = await fetch(
-            `${BASE_URL}api/stores/${storeId}/products?page=1`
+            `${BASE_URL}api/stores/${storeId}/products?perPage=100&page=1`
           );
 
           const data = await response.json();
