@@ -2,7 +2,7 @@ import {  useState } from "react";
 import { Table, Space, Switch, Checkbox, Select } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import {
 
   useDeleteProductsMutation,
@@ -103,6 +103,9 @@ const [publishProduct] = usePublishProductMutation()
   const handleNavigate = () => {
     navigate("/products/create");
   };
+  const handleNavigateEdit = (id : any) =>{
+    navigate(`/products/edit/${id}`)
+  }
   const handlePaginationChange = (page: number, pageSize?: number) => {
     setCurrentPage(page);
     setPageSize(pageSize || 5);
@@ -200,7 +203,7 @@ const [publishProduct] = usePublishProductMutation()
       key: "action",
       render: (record: any) => (
         <Space size="middle">
-          <div className="icon-action" onClick={() => Navigate(record?.id)}>
+          <div className="icon-action" onClick={() => handleNavigateEdit(record?.id)}>
             <svg
               fill="#7D879C"
               width="16px"

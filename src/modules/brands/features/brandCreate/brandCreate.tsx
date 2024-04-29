@@ -76,6 +76,13 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
         <Form form={form}>
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
+            <label
+              className="label-order"
+              htmlFor="products-search"
+              style={{color:"#6195def5" , fontWeight:'500'}}
+               >
+                Name Of Brand :
+              </label>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}

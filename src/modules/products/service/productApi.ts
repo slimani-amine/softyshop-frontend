@@ -27,6 +27,10 @@ export const ProductsApi = api.injectEndpoints({
      providesTags:['products']
 
     }),
+    product: builder.query<any, any>({
+      query: (id) => `api/products/${id}`,
+      providesTags : ['category']
+    }),
     createProduct: builder.mutation<any,{id:number,newProduct:any}>({
       query: ({id,newProduct}) => ({
         url: `/api/stores/${id}/products`,
@@ -52,6 +56,15 @@ export const ProductsApi = api.injectEndpoints({
         
       }),
       invalidatesTags: ['products']}),
+      UpdateProduct : builder.mutation<any ,{ id: any, body:any}>({
+        query: ({ id,body}) => ({
+          url: `api/products/${id}`,
+          method: 'PATCH',
+          body:body
+          
+        }),
+        invalidatesTags: ['products']}),
+    
 
     
    
@@ -60,4 +73,4 @@ export const ProductsApi = api.injectEndpoints({
   })
 });
 
-export const {useAllProductsQuery,usePrQuery , useCreateProductMutation , useDeleteProductsMutation , usePublishProductMutation } = ProductsApi
+export const {useUpdateProductMutation,useProductQuery,useAllProductsQuery,usePrQuery , useCreateProductMutation , useDeleteProductsMutation , usePublishProductMutation } = ProductsApi

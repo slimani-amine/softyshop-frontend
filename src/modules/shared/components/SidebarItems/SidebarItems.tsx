@@ -80,7 +80,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
             >
               <div className="item-left">
                 <div
-                  className={` link-icon-stroke-color  ${
+                  className={`link-icon-stroke-color  ${
                     paths.includes(link) && 'link-icon-stroke-color-active'
                   }`}
                 >

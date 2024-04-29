@@ -92,6 +92,13 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
         <Form form={form} initialValues={initialValues}>
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
+            <label
+              className="label-order"
+              htmlFor="products-search"
+              style={{color:"#6195def5" , fontWeight:'500'}}
+               >
+                Name of Brand :
+              </label>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
@@ -125,19 +132,28 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
               }
               beforeUpload={() => false}
             >
-              <p className="ant-upload-text">Drag & drop Brand image here</p>
-              <div className="icon-drag">
-                <Divider className="divider" />
-                <p className="or">OR</p>
-                <Divider className="divider" />
-              </div>
-              <ButtonAnt className="btn-select">Select Files</ButtonAnt>
-              <p className="size-img">Upload 280*280 image</p>
+            
+            {uploading ? (
+                <div className="uploading-indicator">Uploading...</div>
+              ) : (
+                <>
+                  <p className="ant-upload-text">
+                    Drag & drop Category image here
+                  </p>
+                  <div className="icon-drag">
+                    <Divider className="divider" />
+                    <p className="or">OR</p>
+                    <Divider className="divider" />
+                  </div>
+                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                  <p className="size-img">Upload 280*280 image</p>
+                </>
+              )}
             </Upload.Dragger>
           </Form.Item>
 
           <Form.Item>
-            <Button className="add-cat" onClick={handleFinish} type="submit">
+            <Button className="add-cat" disabled={uploading} onClick={handleFinish} type="submit">
               Save Brand
             </Button>
           </Form.Item>
