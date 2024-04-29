@@ -115,16 +115,29 @@ function Product({
       )}
       <div className="product-info-and-buttons">
         <HashLink to={`${id}#`}>
-          <div className="product-info">
-            <p className="name"> {name}</p>
-            <div>
-              {/* <img
+          {quantity == 0 ? (
+            <div className="product-info">
+              <p className="name"> {name}</p>
+              <div>
+                {/* <img
               className="rating"
               src={`/src/modules/shared/assets/icons/customerLayout/Sidebar/${rating}-stars.png`}
             /> */}
+              </div>
+              <p className="price"> ${price}</p>
             </div>
-            <p className="price"> ${price}</p>
-          </div>
+          ) : (
+            <div className="product-info" style={{ gap: '17px' }}>
+              <p className="name"> {name}</p>
+              <div>
+                {/* <img
+              className="rating"
+              src={`/src/modules/shared/assets/icons/customerLayout/Sidebar/${rating}-stars.png`}
+            /> */}
+              </div>
+              <p className="price"> ${price}</p>
+            </div>
+          )}
         </HashLink>
         <button className="buttons" disabled={loading}>
           {quantity != 0 && (
