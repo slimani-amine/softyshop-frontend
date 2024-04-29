@@ -8,7 +8,7 @@ import axiosInstance from '@src/modules/auth/utils/axios';
 import { setTokens } from '@src/modules/auth/utils/token';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_APP_BASE_URL,
+  baseUrl:import.meta.env.VITE_APP_BASE_URL,
   // Add headers here
   prepareHeaders: (headers) => {
     // You can add any headers you need here

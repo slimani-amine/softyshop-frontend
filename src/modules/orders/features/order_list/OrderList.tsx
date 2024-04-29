@@ -196,18 +196,13 @@ import {
     const tableProps = {
       dataSource: orders,
       columns: columns,
-      headerStyle: { backgroundColor: 'lightblue' },
-      header: {
-        style: { borderRadius: 'px' },
-      },
       pagination: {
         total: fetchedOrders?.data?.meta.totalRecords,
         current: currentPage,
         pageSize: pageSize,
-        onChange: handlePaginationChange, // Handle page change event
-        onShowSizeChange: handlePaginationChange,
-  
-        // Handle page size change event
+        onChange: handlePaginationChange,
+        pageSizeOptions: ['5', '10', '20'], // Define available page sizes
+        showSizeChanger: true, // Enable page size selector
       },
     };
   

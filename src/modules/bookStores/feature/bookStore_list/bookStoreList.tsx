@@ -33,7 +33,6 @@ export default function bookStoreList() {
   };
 
   const [publishStore] = usePublishStoreMutation();
-
   const {data:fetchdStoress , isLoading} = useStoressQuery({
       page: currentPage,
       perPage: pageSize,

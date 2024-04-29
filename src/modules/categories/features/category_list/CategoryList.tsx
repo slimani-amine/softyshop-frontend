@@ -20,8 +20,8 @@ import {
 import { useEffect, useState } from 'react'; // Import useState hook for managing modal state
 import Category from '../../service/type';
 import { debounce } from 'lodash';
-
 export default function CategoryList() {
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
@@ -142,6 +142,7 @@ export default function CategoryList() {
        render: (_isPublished: boolean, record: any) => (
         
         <Switch
+          disabled = {false}
           checked={record.isPublished}
           onClick={() => {
             updateCategory({

@@ -38,6 +38,14 @@ const routes: RouteConfig[] = [
     layout: MainLayout,
     roles: ['ADMIN', 'VENDOR'],
   },
+  {
+    exact: true,
+    guard: AuthGuard,
+    path: '/products/edit/:id',
+    component: lazy(() => import('../features/prodcutEdit/productEdit')),
+    layout: MainLayout,
+    roles: ['ADMIN', 'VENDOR'],
+  },
 ];
 
 export default routes;

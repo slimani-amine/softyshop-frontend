@@ -7,6 +7,7 @@ import {
   Col,
   Input,
   message,
+  Button as ButtonAnt,
 } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useCreateBrandMutation } from "../../service/brandApi";
@@ -18,7 +19,8 @@ interface AddBrandFormProps {
 
 const AddBrandForm: FC<AddBrandFormProps> = () => {
   const navigate = useNavigate()
-
+  const [uploading, setUploading] = useState(false);
+  console.log(uploading)
   const [files, setFile] = useState<any>(null);
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
@@ -74,6 +76,13 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
         <Form form={form}>
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
+            <label
+              className="label-order"
+              htmlFor="products-search"
+              style={{color:"#6195def5" , fontWeight:'500'}}
+               >
+                Name Of Brand :
+              </label>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
@@ -111,6 +120,7 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
                   e,
                   setFile,
                   setSelectedFileUrl,
+                  setUploading
                 )
               }
               beforeUpload={() => false}
@@ -121,7 +131,7 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
                 <p className="or">OR</p>
                 <Divider className="divider" />
               </div>
-              <Button className="btn-select">Select Files</Button>
+              <ButtonAnt className="btn-select">Select Files</ButtonAnt>
               <p className="size-img">Upload 280*280 image</p>
             </Upload.Dragger>
           </Form.Item>

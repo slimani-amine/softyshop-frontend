@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { RootState } from '@src/modules/shared/store';
 import { handleFileChange } from '@src/modules/shared/utils/uploadsMany';
 
@@ -22,17 +22,20 @@ import {
 } from '@src/modules/bookStores/service/storeApi';
 import { useAllCategoriesQuery } from '@src/modules/categories/service/categoryApi';
 import { useAllBrandsQuery } from '@src/modules/brands/service/brandApi';
-import { useCreateProductMutation } from '../../service/productApi';
+import {  useProductQuery , useUpdateProductMutation } from '../../service/productApi';
 import { useAllCreatorsQuery } from '@src/modules/creators/service/creatorApi';
 import { useSelector } from 'react-redux';
-import {  useNavigate } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
+import Spinner from '@src/modules/shared/components/Spinner/Spinner';
 interface AddProductFormProps {
   onFinish: (values: any) => void;
 }
 
-const AddProductForm: FC<AddProductFormProps> = () => {
+const EditProduct: FC<AddProductFormProps> = () => {
+  const [form] = Form.useForm();
   const [uploading, setUploading] = useState(false);
 
+const [updateProduct] = useUpdateProductMutation()
   const navigate = useNavigate()
   const { data: fetchedCatgeories} = useAllCategoriesQuery();
   const categories = fetchedCatgeories?.data.docs || [];
@@ -61,7 +64,6 @@ const AddProductForm: FC<AddProductFormProps> = () => {
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
-  console.log(Current_User);
   let stores = [];
   if (Current_User === 'ADMIN') {
     const { data: fetechedAllStores } = useAllStoresQuery();
@@ -76,14 +78,44 @@ const AddProductForm: FC<AddProductFormProps> = () => {
     value: store.id,
   }));
   console.log(selectStores);
-  const [form] = Form.useForm();
   const handleFinish = (values: any) => {
     console.log(values);
     console.log(values);
     form.resetFields();
   };
 
-  const [createProduct] = useCreateProductMutation();
+  const { id } = useParams<{ id: string }>(); // Assuming useParams returns an object with 'id' property
+
+  const { data: fetchedProduct, isLoading } = useProductQuery(id);
+  const product = fetchedProduct?.data
+
+
+  isLoading? <Spinner/> : null
+  useEffect(() => {
+    if (fetchedProduct) {
+      // Set form fields with fetched vendor data here
+      form.setFieldsValue({
+        name: product.name,
+        price : product.initialPrice,
+        category :product?.category?.name ,
+        discount : product.discount,
+        stock : product.stockNumber,
+        brand : product.brand?.name,
+        description : product.description,
+        store : product?.store?.name
+       
+        // Set other fields accordingly
+      });
+      setSelectedFileUrl(product.images);
+    }
+  }, [fetchedProduct, form]);
+
+  
+
+  
+
+
+
 
   const handleSaveClick = async () => {
     try {
@@ -101,11 +133,11 @@ const AddProductForm: FC<AddProductFormProps> = () => {
         creator_id: values.creator,
         brand_id: values.brand,
         images: selectedFileUrl,
-        description : values.description
+        description : values.description ,      
       };
-      const response = await createProduct({
-        id: values.store,
-        newProduct: product,
+      const response = await updateProduct({
+        id: id,
+        body: product,
       });
       if ('data' in response) {
         // Display success message if data exists
@@ -118,7 +150,6 @@ const AddProductForm: FC<AddProductFormProps> = () => {
         message.error("Failed to save product. Please try again.");
         console.error('Error saving product', response.error);
     } else {
-        // Handle unexpected response format
         message.error("Unexpected response from server. Please try again later.");
     }
 
@@ -128,12 +159,19 @@ const AddProductForm: FC<AddProductFormProps> = () => {
       console.error('Error saving product', error);
     }
   };
+  /*let images = [];
+  if (product && product.images) {
+    images = JSON.parse(product.images);
+  } */
+
+
+  
 
   return (
     <div className="add-new-Product">
-      <h1 className="title">Add New Product</h1>
+      <h1 className="title">Edit Product</h1>
       <div className="container-add-Product">
-        <Form form={form} onFinish={handleFinish}>
+        <Form form={form}  onFinish={handleFinish} >
           <Row gutter={[16, 0]} className="name-Product-new">
             <Col span={24}>
             <label
@@ -191,6 +229,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
                   placeholder="Store"
                   className="input-custom"
                   options={selectStores}
+
                 />
               </Form.Item>
             </Col>
@@ -205,10 +244,10 @@ const AddProductForm: FC<AddProductFormProps> = () => {
                  Category :
               </label>
               <Form.Item
-
                 name="category"
                 className="Product"
                 style={{ marginBottom: 20 }}
+
                 rules={[
                   {
                     required: true,
@@ -221,6 +260,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
                   placeholder="Category"
                   className="input-custom"
                   options={selectOptionsCategories}
+
                 />
               </Form.Item>
             </Col>
@@ -267,9 +307,10 @@ const AddProductForm: FC<AddProductFormProps> = () => {
                 name="creator"
                 className="Product"
                 style={{ marginBottom: 20 }}
+                
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: 'Product field must have at least 1 items',
                   },
                 ]}
@@ -278,6 +319,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
                   size="large"
                   placeholder="Creator"
                   className="input-custom"
+
                   options={selectOptionsCreators}
                 />
               </Form.Item>
@@ -286,6 +328,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
           <Form.Item
             className="upload-images"
             name="images"
+            rules={[{ required: false, message: 'Description is required!' }]}
           >
              <Upload.Dragger
               className="drag-images"
@@ -435,4 +478,4 @@ const AddProductForm: FC<AddProductFormProps> = () => {
   );
 };
 
-export default AddProductForm;
+export default EditProduct;

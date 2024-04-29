@@ -11,6 +11,7 @@ import { clearTokens } from '../utils/token';
 
 export const AUTH_URL = import.meta.env.VITE_APP_AUTH_URL;
 export const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
+console.log(BASE_URL)
 
 export const login = createAsyncThunk(
   'auth/login',
