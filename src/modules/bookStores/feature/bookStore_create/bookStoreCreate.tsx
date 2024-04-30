@@ -124,13 +124,13 @@ const AddShopForm: FC<AddShopFormProps> = () => {
 
       if ("data" in response) {
         // Display success message if data exists
-        message.success("Product saved successfully!");
+        message.success("Store saved successfully!");
         form.resetFields();
         navigate("/stores");
       } else if ("error" in response) {
         // Display error message if error exists
-        message.error("Failed to save product. Please try again.");
-        console.error("Error saving product", response.error);
+        message.error("Failed to save store. Please try again.");
+        console.error("Error saving store", response.error);
       } else {
         message.error(
           "Unexpected response from server. Please try again later."

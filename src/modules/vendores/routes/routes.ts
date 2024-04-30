@@ -30,7 +30,8 @@ const routes: RouteConfig[] = [
     component: lazy(() => import("../features/vendors_create/vendorCreate")),
     layout: MainLayout,
     roles: ["ADMIN"],
-  },
+  }
+  ,
   {
     exact: true,
     guard: AuthGuard,

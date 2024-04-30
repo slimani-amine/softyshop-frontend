@@ -21,7 +21,7 @@ const routes: RouteConfig[] = [
     path: "/payments",
     component: lazy(() => import("../features/paymentList/paymentList")),
     layout: MainLayout,
-    roles: ['VENDOR'],
+    roles: ['ADMIN'],
   },
   {
     exact: true,
@@ -29,7 +29,7 @@ const routes: RouteConfig[] = [
     path: "/payments/create",
     component: lazy(() => import("../features/paymentCreate/paymentCreate")),
     layout: MainLayout,
-    roles: ['VENDOR'],
+    roles: ['ADMIN'],
   },
  
 ];

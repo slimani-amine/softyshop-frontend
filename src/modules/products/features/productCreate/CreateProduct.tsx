@@ -90,6 +90,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
       console.log(selectedFileUrl , 'selected files');
 
       const values = await form.validateFields();
+      console.log(values)
 
       console.log(values.description , "desssss")
       const product = {
@@ -102,6 +103,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
         brand_id: values.brand,
         images: selectedFileUrl,
         description : values.description
+        
       };
       const response = await createProduct({
         id: values.store,

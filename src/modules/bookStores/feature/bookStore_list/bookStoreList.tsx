@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
 import { debounce } from "lodash";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
+import { ADMIN } from "@src/global_roles_config";
 
 export default function bookStoreList() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +34,7 @@ export default function bookStoreList() {
   };
 
   const [publishStore] = usePublishStoreMutation();
+  console.log(Current_User)
   const {data:fetchdStoress , isLoading} = useStoressQuery({
       page: currentPage,
       perPage: pageSize,
@@ -141,6 +143,16 @@ export default function bookStoreList() {
       render: (_phone:string , record: any) => (
         <div className="name-column">
         {record.phoneNumber}
+        </div>
+      ),
+    },
+    {
+      title: "Vendor",
+      dataIndex: "phoneNumber",
+      key: "name",
+      render: (_phone:string , record: any) => (
+        <div className="name-column">
+        {record?.user?.email}
         </div>
       ),
     },
@@ -258,7 +270,7 @@ export default function bookStoreList() {
   };
   return (
     <div className="Product-List">
-      <h1>Stores List</h1>
+      <h1>{Current_User ===ADMIN ?'Stores List' : 'My Stores List' } </h1>
       <div className="header-Product-list">
         <SeachFilter
           placeholder={"Search Store ..."}

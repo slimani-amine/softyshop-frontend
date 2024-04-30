@@ -21,7 +21,7 @@ const routes: RouteConfig[] = [
     path: "/creators",
     component: lazy(() => import("../features/creatorsList/creatorList")),
     layout: MainLayout,
-    roles: ['VENDOR'],
+    roles: ['VENDOR' , 'ADMIN'],
   },
   {
     exact: true,
@@ -29,7 +29,7 @@ const routes: RouteConfig[] = [
     path: "/creators/create",
     component: lazy(() => import("../features/creatorsCreate/creatorCreate")),
     layout: MainLayout,
-    roles: ['VENDOR'],
+    roles: ['VENDOR' , 'ADMIN'],
   },
   {
     exact: true,
@@ -37,7 +37,7 @@ const routes: RouteConfig[] = [
     path: "/creators/edit/:id",
     component: lazy(() => import("../features/creatorEdit/creatorEdit")),
     layout: MainLayout,
-    roles: ['VENDOR'],
+    roles: ['VENDOR' ,'ADMIN'],
   },
 ];
 

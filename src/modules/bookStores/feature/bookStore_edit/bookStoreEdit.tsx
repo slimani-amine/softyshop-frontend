@@ -302,7 +302,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
                 </label>
                 <Form.Item
                   name="vendor"
-                  initialValue={userStore?.id}
+                  initialValue={selectDefaultOption.label}
                   className="select-vendor"
                   style={{ marginBottom: "20px" }}
                   rules={[

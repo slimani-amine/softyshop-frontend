@@ -30,7 +30,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
 
   const Current_User =
     useSelector((state: RootState) => state.auth.user?.role.toUpperCase()) ||
-    'vendor';
+    'admin';
   console.log('role in all', Current_User);
   console.log(SIDEBARITEMS, 'sideeeszfshfuidshuhuidfhviu');
 

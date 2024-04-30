@@ -106,7 +106,7 @@ const [updateProduct] = useUpdateProductMutation()
        
         // Set other fields accordingly
       });
-      setSelectedFileUrl(product.images);
+      setSelectedFileUrl(JSON.parse(product.images));
     }
   }, [fetchedProduct, form]);
 
@@ -122,12 +122,13 @@ const [updateProduct] = useUpdateProductMutation()
       console.log(selectedFileUrl , 'selected files');
 
       const values = await form.validateFields();
+      console.log(values)
 
       console.log(values.description , "desssss")
       const product = {
         name: values.name,
         initialPrice: values.price,
-        category_id: values.category,
+        category_id: values.category+"",
         discount: values.discount,
         stockNumber: values.stock,
         creator_id: values.creator,

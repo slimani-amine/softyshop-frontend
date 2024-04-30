@@ -1,5 +1,5 @@
 import {  useState } from "react";
-import { Table, Space, Switch, Checkbox, Select } from "antd";
+import { Table, Space, Switch, Checkbox, Select, message } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import {  useNavigate } from "react-router-dom";
@@ -17,6 +17,7 @@ import {
   useMyStoresQuery,
 } from "@src/modules/bookStores/service/storeApi";
 import { debounce } from "lodash";
+import { ADMIN } from "@src/global_roles_config";
 
 interface Product {
   id: string;
@@ -89,7 +90,18 @@ const [publishProduct] = usePublishProductMutation()
   console.log(import.meta.env.VITE_APP_BASE_URL)
 
   const handleDelete = async () => {
-    await deleteProducts(selectedRowIds);
+    const response = await deleteProducts(selectedRowIds);
+    console.log(selectedRowIds)
+    if ('data' in response) {
+      // Display success message if data exists
+      message.success( ` Product${selectedRowIds.length==1 ? "" :"s"} deleted successfully!`);
+      setSelectedRowIds([])
+
+  } else {
+      // Handle unexpected response format
+      message.error("Unexpected response from server. Please try again later.");
+  }
+
   };
   const handleAllStores= ()=>{
     setSelectedStore("")
@@ -267,7 +279,7 @@ const [publishProduct] = usePublishProductMutation()
 
   return (
     <div className="Product-List">
-      <h1>Product List</h1>
+      <h1>{Current_User ===ADMIN ?'Products List' : 'My Products List' } </h1>
 
       <div className="header-Product-list">
         <SeachFilter

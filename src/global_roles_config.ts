@@ -5,7 +5,7 @@ export const VENDOR = "VENDOR"
 
 export default function global_roles_config() {
     const current_user= useSelector((state: RootState) => state.auth.user?.role.toLocaleUpperCase()) 
-    return current_user ===ADMIN
+    return current_user
 
 }
 

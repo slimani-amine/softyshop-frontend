@@ -7,6 +7,7 @@ import {
   Switch,
   Checkbox,
 } from 'antd';
+import { RootState } from '@src/modules/shared/store';
 import SeachFilter from '@src/modules/shared/components/SearchFilter/SearchFilter';
 import Button from '@src/modules/shared/components/Button/Button';
 import { useNavigate } from 'react-router-dom';
@@ -20,8 +21,10 @@ import {
 import { useEffect, useState } from 'react'; // Import useState hook for managing modal state
 import Category from '../../service/type';
 import { debounce } from 'lodash';
+import { useSelector } from 'react-redux';
+import { VENDOR} from '@src/global_roles_config';
 export default function CategoryList() {
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
@@ -50,7 +53,9 @@ export default function CategoryList() {
       }
     }
   }, [nameCategory, fetchedCategories, fetchedSearchCategories]);
-
+  const Current_User = useSelector(
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+  );
   const handleSearchChange = debounce((searchText: string) => {
     console.log('Search text for category list:', searchText);
     setNameCategory(searchText);
@@ -142,7 +147,7 @@ export default function CategoryList() {
        render: (_isPublished: boolean, record: any) => (
         
         <Switch
-          disabled = {false}
+          disabled = {Current_User !== VENDOR}
           checked={record.isPublished}
           onClick={() => {
             updateCategory({
@@ -153,6 +158,7 @@ export default function CategoryList() {
         />
       ),
     },
+    
     {
       title: 'Action',
       key: 'action',
