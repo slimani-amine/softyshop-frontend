@@ -1,0 +1,25 @@
+.checkout {
+  .checkout-title-bar-and-button {
+    display: flex;
+    justify-content: space-between;
+  }
+  .checkout-title-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .payment-method {
+    margin: 60px 0;
+
+    .payment-method-text {
+      font-size: 18px;
+      font-weight: 400;
+    }
+  }
+  .section-content {
+    display: flex;
+    gap: 24px;
+  }
+}

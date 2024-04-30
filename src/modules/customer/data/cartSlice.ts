@@ -22,11 +22,11 @@ const cartSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(getCart.fulfilled, (state, payload) => {
-      state.cartId = payload.payload[0].id;
-      state.cart = payload.payload[1];
+      state.cartId = payload?.payload[0]?.id;
+      state.cart = payload?.payload[1];
       state.cartItems = state.cart.length;
-      state.cartAmount = payload.payload[0].totalAmount;
-      state.cartQuantity = payload.payload[0].totalQuantity;
+      state.cartAmount = payload?.payload[0].totalAmount;
+      state.cartQuantity = payload?.payload[0].totalQuantity;
     });
     builder.addCase(getCart.rejected, (state, action) => {
       state.error = action?.payload;

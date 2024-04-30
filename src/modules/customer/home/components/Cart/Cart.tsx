@@ -13,9 +13,11 @@ import {
   getCart,
 } from '@src/modules/customer/data/cartThunk';
 import Button from '@src/modules/shared/components/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const TheDrawer: React.FC = () => {
   const [Loading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isDrawerShown = useAppSelector((state) => state.drawer.isDrawerShown);
   const myCartItemsNumber: any = useAppSelector(
@@ -127,6 +129,10 @@ const TheDrawer: React.FC = () => {
         size="xl"
         style={{ maxWidth: '340px', width: '100%', marginTop: '48px' }}
         label={`Checkout Now ($${totalPrice.toFixed(2)})`}
+        onClick={() => {
+          dispatch(hideDrawer());
+          navigate('/checkout');
+        }}
       />
     </Drawer>
   );
