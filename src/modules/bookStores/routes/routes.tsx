@@ -2,6 +2,7 @@ import MainLayout from "@src/modules/shared/layout/MainLayout/MainLayout";
 import AuthGuard from "@src/modules/shared/guards/AuthGuard";
 import { RouteProps } from "react-router-dom";
 import { Fragment, lazy } from "react";
+import { ADMIN , VENDOR } from "@src/global_roles_config";
 
 type RouteConfig = {
   exact: boolean | null;
@@ -21,7 +22,7 @@ const routes: RouteConfig[] = [
     path: "/stores",
     component: lazy(() => import("../feature/bookStore_list/bookStoreList")),
     layout: MainLayout,
-    roles:['ADMIN','VENDOR']
+    roles:[ADMIN,VENDOR]
   },
   {
     exact: true,
@@ -29,7 +30,7 @@ const routes: RouteConfig[] = [
     path: "/stores/create",
     component: lazy(() => import("../feature/bookStore_create/bookStoreCreate")),
     layout: MainLayout,
-    roles : ['ADMIN','VENDOR']
+    roles : [ADMIN,VENDOR]
   },
   {
     exact: true,
@@ -37,7 +38,7 @@ const routes: RouteConfig[] = [
     path: "/stores/edit/:id",
     component: lazy(() => import("../feature/bookStore_edit/bookStoreEdit")),
     layout: MainLayout,
-    roles : ['ADMIN','VENDOR']
+    roles : [ADMIN,VENDOR]
   }
 ];
 

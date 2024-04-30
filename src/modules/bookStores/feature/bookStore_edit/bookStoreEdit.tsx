@@ -28,6 +28,7 @@ import { RootState } from "@src/modules/shared/store";
 import { useAllvendorsQuery } from "@src/modules/vendores/services/vendorApi";
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
+import { ADMIN } from "@src/global_roles_config";
 
 interface EditShopFormProps {
   onFinish: () => void;
@@ -37,29 +38,27 @@ interface EditShopFormProps {
 const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
   const navigate = useNavigate();
 
-  const [files, setFile] = useState<any>(null);
+  const [, setFile] = useState<any>(null);
   const [, setCover] = useState<any>(null);
   const [selectedCoverUrl, setSelectedCoverUrl] = useState<string>();
   const [uploading, setUploading] = useState(false);
-  console.log(uploading);
-
-  console.log(files);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const { id } = useParams<{ id: string }>();
   const [form] = Form.useForm();
   const [showPopup, setShowPopup] = useState(true);
   const [fields, setFields] = useState<string[]>([]);
+
+
   const { data: fetchedStore, isLoading } = useStoreQuery(id?.toString());
   const store = fetchedStore?.data;
-  console.log(store);
-  const userStore = store?.user;
 
+
+  const userStore = store?.user;
   const selectDefaultOption = {
     label: userStore?.email,
     value: userStore?.id,
   };
 
-  console.log(selectDefaultOption.value);
 
   useEffect(() => {
     if (fetchedStore?.data) {
@@ -97,7 +96,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
         handleClick(lat, lng);
       },
     });
-    console.log(map);
+    console.log(map)
     return null;
   };
 
@@ -106,9 +105,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
   const handleSaveClick = async () => {
     try {
       const values = await form.validateFields();
-      console.log(values, "me");
       const objectPost = { ...values, positionOfShop: position, fields };
-      console.log(objectPost, "object Post");
       const address = await getPlaceName(
         objectPost.positionOfShop[0],
         objectPost.positionOfShop[1]
@@ -130,21 +127,17 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
       if ("data" in response) {
         // Display success message if data exists
         message.success("Store updated successfully!");
-        console.log(response.data);
         navigate("/stores");
       } else if ("error" in response) {
         // Display error message if error exists
         message.error("Failed to save Store. Please try again.");
-        console.error("Error saving Store", response.error);
       } else {
         // Handle unexpected response format
         message.error(
           "Unexpected response from server. Please try again later."
         );
       }
-      console.log(response);
     } catch (error) {
-      console.error("Error updating shop", error);
       message.error("Error updating shop");
     }
   };
@@ -158,7 +151,6 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
 
       if (response.ok) {
         const placeName = data.display_name;
-        console.log(`The place is: ${placeName}`);
         setPosition([latitude, longitude, placeName]);
         return placeName;
       } else {
@@ -180,7 +172,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
     (state: RootState) => state?.auth?.user?.role.toUpperCase()
   );
   let vendors: any[] = [];
-  if (Current_User === "ADMIN") {
+  if (Current_User === ADMIN) {
     const { data: fetchedVendors } = useAllvendorsQuery();
 
     vendors = fetchedVendors?.data?.docs || [];
@@ -200,7 +192,6 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
     newFields.splice(index, 1);
     setFields(newFields);
   };
-  console.log(store);
   const defaultFileList = [
     {
       uid: "-1",
@@ -313,13 +304,13 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
                     size="middle"
                     placeholder="Select vendor"
                     className="input-custom"
-                    options={Current_User === "ADMIN" ? selectOptions : []}
+                    options={Current_User === ADMIN ? selectOptions : []}
                     defaultValue={
-                      Current_User === "ADMIN"
+                      Current_User === ADMIN
                         ? selectDefaultOption
                         : Email_user
                     }
-                    disabled={Current_User !== "ADMIN"}
+                    disabled={Current_User !== ADMIN}
                   />
                 </Form.Item>
               </Col>

@@ -48,10 +48,10 @@ const MyComponent: React.FC<MyComponentProps> = ({ defaultOption, onUpdateOrder 
 
   // Define the options array
   const options: Option[] = [
-    { value: 'processing', backgroundColor: 'rgba(255, 215, 0, 0.8)' }, // Gold
-    { value: 'on_delivery', backgroundColor: 'rgba(50, 205, 50, 0.8)'}, // Lime Green
-    { value: 'delivered', backgroundColor: 'rgba(65, 105, 225, 0.8)'}, // Royal Blue
-    { value: 'cancelled', backgroundColor: 'rgba(255, 99, 71, 0.8)'} // Tomato Red
+    { value: 'processing', backgroundColor: '#FFDBAA' }, // Gold
+    { value: 'on_delivery', backgroundColor: '#F4EEEE'}, // Lime Green
+    { value: 'delivered', backgroundColor: '#96C291'}, // Royal Blue
+    { value: 'cancelled', backgroundColor: '#FFB7B7'} // Tomato Red
   ];
 
   // Filter out the default option from rendering in the dropdown

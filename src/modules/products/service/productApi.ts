@@ -29,7 +29,7 @@ export const ProductsApi = api.injectEndpoints({
     }),
     product: builder.query<any, any>({
       query: (id) => `api/products/${id}`,
-      providesTags : ['category']
+      providesTags : ['product']
     }),
     createProduct: builder.mutation<any,{id:number,newProduct:any}>({
       query: ({id,newProduct}) => ({
@@ -63,7 +63,7 @@ export const ProductsApi = api.injectEndpoints({
           body:body
           
         }),
-        invalidatesTags: ['products']}),
+        invalidatesTags: ['products' , 'product']}),
     
 
     

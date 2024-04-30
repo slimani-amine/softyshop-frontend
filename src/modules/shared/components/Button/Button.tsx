@@ -11,7 +11,8 @@ interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
     | 'warning'
     | 'dark'
     | 'secondary'
-    | 'light';
+    | 'light'
+    | 'secondary-650';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   outlined?: boolean;
   rounded?: boolean;

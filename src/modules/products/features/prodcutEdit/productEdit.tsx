@@ -90,19 +90,21 @@ const [updateProduct] = useUpdateProductMutation()
   const product = fetchedProduct?.data
 
 
-  isLoading? <Spinner/> : null
+ 
   useEffect(() => {
     if (fetchedProduct) {
+      console.log(product.brand?.id)
       // Set form fields with fetched vendor data here
       form.setFieldsValue({
         name: product.name,
         price : product.initialPrice,
-        category :product?.category?.name ,
+        category :product?.category?.id ,
         discount : product.discount,
         stock : product.stockNumber,
-        brand : product.brand?.name,
+        creator : product.creator?.id.toString(),
+        brand : product.brand?.id.toString(),
         description : product.description,
-        store : product?.store?.name
+        store : product?.store?.id
        
         // Set other fields accordingly
       });
@@ -119,12 +121,9 @@ const [updateProduct] = useUpdateProductMutation()
 
   const handleSaveClick = async () => {
     try {
-      console.log(selectedFileUrl , 'selected files');
 
       const values = await form.validateFields();
-      console.log(values)
-
-      console.log(values.description , "desssss")
+     
       const product = {
         name: values.name,
         initialPrice: values.price,
@@ -167,7 +166,9 @@ const [updateProduct] = useUpdateProductMutation()
 
 
   
-
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div className="add-new-Product">
       <h1 className="title">Edit Product</h1>

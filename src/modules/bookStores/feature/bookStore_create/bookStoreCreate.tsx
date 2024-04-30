@@ -28,6 +28,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
 import { useNavigate } from "react-router-dom";
+import { ADMIN } from "@src/global_roles_config";
 interface AddShopFormProps {
   onFinish: (values: any) => void;
 }
@@ -58,11 +59,10 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   console.log(Id_user);
   console.log(Current_User);
   let vendors = []; // Initialize vendors outside the condition to avoid undefined errors
-  if (Current_User === "ADMIN") {
+  if (Current_User === ADMIN) {
     const { data: fetchedVendors } = useAllvendorsQuery();
     vendors = fetchedVendors?.data.docs;
   }
-  console.log(vendors);
 
   const selectOptions = vendors?.map((cat: any) => ({
     label: cat.email,
@@ -105,10 +105,9 @@ const AddShopForm: FC<AddShopFormProps> = () => {
     try {
       const values = await form.validateFields();
       const objectPost = { ...values, positionOfShop: position };
-      console.log(objectPost, "ooookkkkkkkpppp");
-      console.log(objectPost.positionOfShop[2]);
       const plc = objectPost.positionOfShop[2];
-      console.log(plc);
+
+
       const response = await createStore({
         name: objectPost.name,
         phoneNumber: objectPost.phone,
@@ -116,11 +115,10 @@ const AddShopForm: FC<AddShopFormProps> = () => {
         location: objectPost.positionOfShop.splice(0, 2),
         address: plc,
         socialMediaLinks: objectPost.data,
-        vendor_id: Current_User === "ADMIN" ? objectPost.vendor : Id_user,
+        vendor_id: Current_User === ADMIN ? objectPost.vendor : Id_user,
         cover: selectedCoverUrl,
       });
 
-      console.log(response, "data of response");
 
       if ("data" in response) {
         // Display success message if data exists
@@ -203,11 +201,11 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                     size="middle"
                     placeholder="select-vendor"
                     className="input-custom"
-                    options={Current_User === "ADMIN" ? selectOptions : []}
+                    options={Current_User === ADMIN ? selectOptions : []}
                     defaultValue={
-                      Current_User === "ADMIN" ? undefined : Email_user
+                      Current_User === ADMIN ? undefined : Email_user
                     }
-                    disabled={Current_User !== "ADMIN" ? true : false}
+                    disabled={Current_User !== ADMIN ? true : false}
                   />
                 </Form.Item>
               </Col>
