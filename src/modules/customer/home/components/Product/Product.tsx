@@ -124,7 +124,7 @@ function Product({
               src={`/src/modules/shared/assets/icons/customerLayout/Sidebar/${rating}-stars.png`}
             /> */}
               </div>
-              <p className="price"> ${price}</p>
+              <p className="price"> ${price.toFixed(2)}</p>
             </div>
           ) : (
             <div className="product-info" style={{ gap: '17px' }}>
@@ -135,7 +135,7 @@ function Product({
               src={`/src/modules/shared/assets/icons/customerLayout/Sidebar/${rating}-stars.png`}
             /> */}
               </div>
-              <p className="price"> ${price}</p>
+              <p className="price"> ${price.toFixed(2)}</p>
             </div>
           )}
         </HashLink>

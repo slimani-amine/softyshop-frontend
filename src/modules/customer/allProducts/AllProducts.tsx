@@ -47,11 +47,11 @@ function AllProducts() {
   const updatedProducts = Products.map((product: any) => {
     const updatedProduct = cart.find((item) => item.product.id === product.id);
     if (updatedProduct) {
-      console.log(updatedProduct);
+      // console.log(updatedProduct);
       return { ...product, quantity: updatedProduct.quantity };
     } else return product;
   });
-  console.log(updatedProducts);
+  // console.log(updatedProducts);
   dispatch(settProducts(updatedProducts));
 
   // dispatch(updateQuantity);

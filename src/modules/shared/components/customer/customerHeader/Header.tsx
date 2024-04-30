@@ -6,49 +6,63 @@ import Logo from '../../../assets/icons/customerLayout/Header/logo-complete.svg'
 import Search from './components/Search';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { getCart } from '@src/modules/customer/data/cartThunk';
+import { showDrawer } from '@src/modules/customer/data/drawerSlice';
+import TheDrawer from '@src/modules/customer/home/components/Cart/Cart';
 
 function Header() {
-  const dispatch = useAppDispatch();
+  const dispatch: any = useAppDispatch();
   (async function () {
     dispatch(getCart());
   })();
 
-  const myCartItemsNumber = useAppSelector((state) => state.cart.cartItems);
+  const myCartItemsNumber: any = useAppSelector(
+    (state) => state.cart.cartItems
+  );
   // const cartId = useAppSelector((state) => state.cart.cartId);
   // console.log(myCartItemsNumber);
 
+  function interactWithDrawer() {
+    dispatch(showDrawer());
+  }
+
   return (
-    <div className="header">
-      <div className="logo-wrapper">
-        <img src={Logo} alt="" />
-      </div>
-      <div className="middle-component">
-        <div className="magnifyingGlassIcon">
-          <MagnifyingGlass1 />
-          <span className="divider"></span>
+    <>
+      <TheDrawer></TheDrawer>
+      <div className="header">
+        <div className="logo-wrapper">
+          <img src={Logo} alt="" />
         </div>
-        <div>
-          <Search />
-        </div>
-        <div className="categories">
-          <p>All Categories</p>
-          <ChevronDownBlack />
-        </div>
-      </div>
-
-      <div className="icons">
-        <div className="profile-icon-wrapper">
-          <ProfileIcon1 className="profile-icon" />
-        </div>
-        <div className="shopping-bag-icon-wrapper">
-          <ShoppingBagIcon1 className="shopping-bag-icon" />
+        <div className="middle-component">
+          <div className="magnifyingGlassIcon">
+            <MagnifyingGlass1 />
+            <span className="divider"></span>
+          </div>
+          <div>
+            <Search />
+          </div>
+          <div className="categories">
+            <p>All Categories</p>
+            <ChevronDownBlack />
+          </div>
         </div>
 
-        <span className="cart-items-number">
-          <p>{myCartItemsNumber}</p>
-        </span>
+        <div className="icons">
+          <div className="profile-icon-wrapper">
+            <ProfileIcon1 className="profile-icon" />
+          </div>
+          <div className="shopping-bag-icon-wrapper">
+            <ShoppingBagIcon1
+              onClick={() => interactWithDrawer()}
+              className="shopping-bag-icon"
+            />
+          </div>
+
+          <span className="cart-items-number">
+            <p>{myCartItemsNumber}</p>
+          </span>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

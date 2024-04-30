@@ -15,9 +15,7 @@ const initialState: initialStateCartType = {
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  reducers: {
-    // updateQuantity(state, action) {},
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getCart.pending, (state) => {
       state.error = null;
@@ -29,9 +27,6 @@ const cartSlice = createSlice({
       state.cartItems = state.cart.length;
       state.cartAmount = payload.payload[0].totalAmount;
       state.cartQuantity = payload.payload[0].totalQuantity;
-
-      // console.log('🚀 ~ state ~ state:', { ...state });
-      // console.log('🚀 ~ cartSlice ~ ({ ...state.cart }):', { ...state.cart });
     });
     builder.addCase(getCart.rejected, (state, action) => {
       state.error = action?.payload;
@@ -53,4 +48,3 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-// export const { addToCart } = cartSlice.actions;

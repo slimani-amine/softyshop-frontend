@@ -69,7 +69,6 @@ function ProductDetails() {
   );
 
   async function handleAddToCart() {
-    console.log(quantity);
     setIsLoading(true);
     Promise.all([
       await dispatch(
@@ -81,7 +80,6 @@ function ProductDetails() {
   }
 
   async function handleRemoveFromCart() {
-    console.log(quantity);
     if (quantity < 1) return;
     setIsLoading(true);
     Promise.all([
@@ -117,14 +115,14 @@ function ProductDetails() {
 
         {/* <p className='rate'>product.rate</p> */}
 
-        <h2 className="price">${product.price}</h2>
+        <h2 className="price">${product.price.toFixed(2)}</h2>
         <p className="stock">
           {isInStock ? (
             `Stock Available: (${product?.stockNumber} ${
               product?.stockNumber == 1 ? 'book' : 'books'
             }  remaining)`
           ) : (
-            <strong className='out-of-stock'>Out of Stock</strong>
+            <strong className="out-of-stock">Out of Stock</strong>
           )}
         </p>
         {/* 'primary' | 'info' | 'success' | 'danger' | 'warning' | 'dark' | 'secondary' | 'light' */}

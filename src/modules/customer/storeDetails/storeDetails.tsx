@@ -82,7 +82,7 @@ function storeDetails() {
 
           dispatch(
             settProducts(
-              data.data.map((product: ProductType) => {
+              data.data.docs.map((product: ProductType) => {
                 return { ...product, quantity: 0 };
               })
             )
@@ -102,18 +102,17 @@ function storeDetails() {
   // dispatch(settProducts(store.products));
   // const cart = useAppSelector((state) => state.cart.cart);
   const theProducts = useAppSelector((state) => state.product.products);
-  console.log('🚀 ~ storeDetails ~ theProducts:', theProducts);
+  // console.log('🚀 ~ storeDetails ~ theProducts:', theProducts);
 
-  //todo                                             Make it Work                                  ;
   const cart = useAppSelector((state) => state.cart.cart);
   const updatedProducts = theProducts.map((product: any) => {
     const updatedProduct = cart.find((item) => item.product.id === product.id);
     if (updatedProduct) {
-      console.log(updatedProduct);
+      // console.log(updatedProduct);
       return { ...product, quantity: updatedProduct.quantity };
     } else return product;
   });
-  console.log(updatedProducts);
+  // console.log(updatedProducts);
   return (
     <div className="home">
       <div className="store-card-identification">

@@ -18,8 +18,6 @@ export const getCart = createAsyncThunk('cart/getCart', async () => {
     });
     const data = await response.json();
 
-    // console.log('🚀 ~ getCart ~ data:', data.data);
-
     return data.data;
   } catch (error) {
     console.log(error);
@@ -30,7 +28,6 @@ export const addToCart = createAsyncThunk(
   'cart/addToCart',
   async (query: addToCartPayload) => {
     try {
-      // console.log(query);
       const token = localStorage.getItem('accessToken');
       const response = await fetch(`${AUTH_URL}api/shopping/my-cart`, {
         method: 'POST',
