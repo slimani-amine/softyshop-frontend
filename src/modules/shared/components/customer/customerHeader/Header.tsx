@@ -18,8 +18,6 @@ function Header() {
   const myCartItemsNumber: any = useAppSelector(
     (state) => state.cart.cartItems
   );
-  // const cartId = useAppSelector((state) => state.cart.cartId);
-  // console.log(myCartItemsNumber);
 
   function interactWithDrawer() {
     dispatch(showDrawer());

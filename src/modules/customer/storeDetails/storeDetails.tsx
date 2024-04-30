@@ -15,8 +15,6 @@ import { ProductType } from '../data/dataTypes';
 import Product from '../home/components/Product/Product';
 
 function storeDetails() {
-  // const FAKE_URL = 'http://localhost:3001/stores?_embed=products';
-
   const dispatch = useAppDispatch();
   const { storeId } = useParams();
   const [store, setStore] = useState({
@@ -35,84 +33,56 @@ function storeDetails() {
     products: [],
   });
 
-  // const [products, setProducts] = useState([
-  //   {
-  //     id: 0,
-  //     name: '',
-  //     images: '',
-  //     rating: '',
-  //     price: '',
-  //   },
-  // ]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}api/stores/${storeId}`);
+        const data = await response.json();
 
-  useEffect(
-    () => {
-      const fetchData = async () => {
-        try {
-          // const response = await fetch(`${FAKE_URL}`);
-          const response = await fetch(`${BASE_URL}api/stores/${storeId}`);
-          const data = await response.json();
-          // console.log('🚀 ~ fetchData ~ store:', data.data);
+        setStore(data.data);
+      } catch (err: string | unknown) {
+        console.log(err);
+        return err;
+      }
+    };
 
-          setStore(data.data);
-          // setProducts(store.products);
-        } catch (err: string | unknown) {
-          console.log(err);
-          return err;
-        }
-      };
+    fetchData();
+  }, [BASE_URL]);
 
-      fetchData();
-    },
-    // [FAKE_URL]
-    [BASE_URL]
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}api/stores/${storeId}/products?perPage=100&page=1`
+        );
 
-  useEffect(
-    () => {
-      const fetchData = async () => {
-        try {
-          // const response = await fetch(`${FAKE_URL}`);
-          const response = await fetch(
-            `${BASE_URL}api/stores/${storeId}/products?perPage=100&page=1`
-          );
+        const data = await response.json();
 
-          const data = await response.json();
-          // console.log('🚀 ~ fetchData ~ products:', data.data);
+        dispatch(
+          settProducts(
+            data.data.docs.map((product: ProductType) => {
+              return { ...product, quantity: 0 };
+            })
+          )
+        );
+      } catch (err: string | unknown) {
+        console.log(err);
+        return err;
+      }
+    };
 
-          dispatch(
-            settProducts(
-              data.data.docs.map((product: ProductType) => {
-                return { ...product, quantity: 0 };
-              })
-            )
-          );
-        } catch (err: string | unknown) {
-          console.log(err);
-          return err;
-        }
-      };
+    fetchData();
+  }, [BASE_URL]);
 
-      fetchData();
-    },
-    // [FAKE_URL]
-    [BASE_URL]
-  );
-
-  // dispatch(settProducts(store.products));
-  // const cart = useAppSelector((state) => state.cart.cart);
   const theProducts = useAppSelector((state) => state.product.products);
-  // console.log('🚀 ~ storeDetails ~ theProducts:', theProducts);
-
   const cart = useAppSelector((state) => state.cart.cart);
   const updatedProducts = theProducts.map((product: any) => {
     const updatedProduct = cart.find((item) => item.product.id === product.id);
     if (updatedProduct) {
-      // console.log(updatedProduct);
       return { ...product, quantity: updatedProduct.quantity };
     } else return product;
   });
-  // console.log(updatedProducts);
+
   return (
     <div className="home">
       <div className="store-card-identification">
@@ -167,27 +137,27 @@ function storeDetails() {
         {updatedProducts.map(
           (
             {
+              availability,
               id,
               name,
               images,
               //  rating
               price,
+              stockNumber,
               quantity,
             },
             index
           ) => {
             return (
               <Product
-                // onClick={() => {
-                //   console.log('hello');
-                //   navigate(`products/${id}`);
-                // }}
+                availability={availability}
                 id={id}
                 key={index}
                 name={name}
                 // rating={rating}
                 price={Number(price)}
                 images={images}
+                stockNumber={stockNumber}
                 quantity={quantity}
               />
             );
