@@ -4,6 +4,8 @@ import Section from './components/Section';
 import Title from './components/Title';
 import Button from '@src/modules/shared/components/Button/Button';
 import Address from './components/Address';
+import AddressTitle from './components/AddressTitle';
+import AddressContent from './components/AddressContent';
 
 function Checkout() {
   return (
@@ -25,10 +27,25 @@ function Checkout() {
             style={{ height: '36px', width: '150px' }}
           />
         </div>
-        <div className="section-content">
-          <Address></Address>
-          <Address></Address>
-          <Address></Address>
+        <div className="section-content addresses-section">
+          <Address>
+            <AddressTitle>Home</AddressTitle>
+            <AddressContent>
+              645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
+            </AddressContent>
+          </Address>
+          <Address>
+            <AddressTitle>Office</AddressTitle>
+            <AddressContent>
+              645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
+            </AddressContent>
+          </Address>
+          <Address>
+            <AddressTitle>Apartment</AddressTitle>
+            <AddressContent>
+              645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
+            </AddressContent>
+          </Address>
         </div>
       </Section>
       <Section>

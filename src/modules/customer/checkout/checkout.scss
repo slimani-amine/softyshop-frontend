@@ -22,4 +22,12 @@
     display: flex;
     gap: 24px;
   }
+  .addresses-section {
+    max-width: 800px;
+    width: 800px;
+    min-width: 800px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #d23e57 #fff;
+  }
 }
