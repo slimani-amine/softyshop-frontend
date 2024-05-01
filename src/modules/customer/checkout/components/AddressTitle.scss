@@ -9,6 +9,14 @@
   }
   .icons {
     display: flex;
-    gap: 8px;
+    // gap: 8px;
+    .icon {
+      padding: 4px;
+      border-radius: 100px;
+    }
+    .icon:hover {
+      background-color: #eee;
+      transition: all 0.3s ease-in-out;
+    }
   }
 }
