@@ -112,6 +112,14 @@ export default function bookStoreList() {
       }
     });
   };
+  const handlePublishToggle = (record: Store) => {
+    if (isAdmin) {
+      publishStore({
+        id: record.id,
+        isPublished: !record.isPublished,
+      });
+    }
+  };
 
   const columns = [
     {
@@ -196,15 +204,7 @@ export default function bookStoreList() {
       render: (_isPublished: boolean, record: any) => (
         <Switch
           checked={record.isPublished}
-          onClick={() => {
-            if (isAdmin) {
-              // Assuming isAdmin is a boolean indicating whether the user is an admin
-              publishStore({
-                id: record.id, // Pass the category ID
-                isPublished: !record.isPublished, // Pass the updated data
-              });
-            }
-          }}
+          onClick={() => handlePublishToggle(record)}
           disabled={!isAdmin} // Disable the switch if the user is not an admin
         />
       ),
