@@ -290,7 +290,7 @@ const [publishProduct] = usePublishProductMutation()
             variant={selectedRowIds.length === 0 ? "dark" : "primary"}
             onClick={handleDelete}
           >
-            Deleted
+            Delete
           </Button>
         </div>
         <Table<Product> {...tableProps} />

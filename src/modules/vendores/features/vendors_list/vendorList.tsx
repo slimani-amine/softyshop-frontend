@@ -180,7 +180,7 @@ export default function CategoryList() {
             variant={selectedRowIds.length === 0 ? "dark" : "primary"}
             onClick={handleDelete}
           >
-            Deleted
+            Delete
           </Button>
         </div>
         <Table<any> {...tableProps} />

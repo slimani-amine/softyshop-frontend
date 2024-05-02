@@ -147,9 +147,9 @@ export default function CreatorsList() {
 
   return (
     <div className="Product-List">
-      <h1>creator List</h1>
+      <h1>Authors List</h1>
       <div className="header-Product-list">
-        <SeachFilter onSearchChange={handleSearchChange} placeholder={'Search creator..'} />
+        <SeachFilter onSearchChange={handleSearchChange} placeholder={'Search author..'} />
         <Button className="add-cat" onClick={handleNavigate}> <span>+</span> Add creator</Button>
       </div>
       <div className="container-Product-List">
