@@ -21,6 +21,8 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
+import L from 'leaflet'
+import maker from "@src/modules/shared/assets/icons/leaflet/marker.svg"
 import "leaflet/dist/leaflet.css";
 import { useCreateStoreMutation } from "../../service/storeApi";
 import { useAllvendorsQuery } from "../../../vendores/services/vendorApi";
@@ -30,6 +32,9 @@ import { handleFileChange } from "@src/modules/shared/utils/upload";
 import { useNavigate } from "react-router-dom";
 import { ADMIN } from "@src/global_roles_config";
 import TypeOfResponse from "@src/modules/shared/services/ResponseType";
+import { LatLngExpression } from "leaflet";
+
+
 interface AddShopFormProps {
   onFinish: (values: any) => void;
 }
@@ -49,8 +54,8 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   console.log(files);
   console.log(cover);
   console.log(uploading);
-  const initialPosition = [33.892166, 9.561555499999997]; // New York coordinates
-  const [position, setPosition] = useState(initialPosition);
+  const initialPosition: LatLngExpression = [33.892166, 9.561555499999997]; // New York coordinates
+  const [position, setPosition] = useState<LatLngExpression>(initialPosition);
   const [createStore] = useCreateStoreMutation();
 
  
@@ -71,6 +76,13 @@ const AddShopForm: FC<AddShopFormProps> = () => {
     value: cat.id,
   }));
   const [showPopup, setShowPopup] = useState(false);
+  const customIcon = L.icon({
+    iconUrl: maker, // Specify the URL of your custom marker icon image
+    iconSize: [50, 50], // Increased size of the icon
+    iconAnchor: [25, 50], // Point of the icon which will correspond to marker's location
+    popupAnchor: [-3, -50], // Point from which the popup should open relative to the iconAnchor
+  });
+  
   const MapObject = {
     center: position,
     zoom: 6,
@@ -257,12 +269,10 @@ const AddShopForm: FC<AddShopFormProps> = () => {
             <MapContainer className="map" {...MapObject}>
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {showPopup && (
-                <Marker position={position}>
-                  <Popup>
-                    <div>Latitude: {position[0]}</div>
-                    <div>Longitude: {position[1]}</div>
-                  </Popup>
-                </Marker>
+              <Marker position={position} icon={customIcon}>
+              <Popup>
+              </Popup>
+            </Marker>
               )}
               <ChoosePlaceOnClick handleClick={handleClick} />
             </MapContainer>

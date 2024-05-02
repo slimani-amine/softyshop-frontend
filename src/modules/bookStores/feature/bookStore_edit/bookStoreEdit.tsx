@@ -19,6 +19,8 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
+import L from 'leaflet'
+import maker from "@src/modules/shared/assets/icons/leaflet/marker.svg"
 import "leaflet/dist/leaflet.css";
 import { useStoreQuery, useUpdateStoreMutation } from "../../service/storeApi";
 import { useNavigate, useParams } from "react-router-dom";
@@ -30,6 +32,7 @@ import { MinusCircleOutlined } from "@ant-design/icons";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
 import { ADMIN } from "@src/global_roles_config";
 import TypeOfResponse from "@src/modules/shared/services/ResponseType";
+import { LatLngExpression } from "leaflet";
 
 interface EditShopFormProps {
   onFinish: () => void;
@@ -68,7 +71,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
       const pos = JSON.parse(location);
       const links = JSON.parse(socialMediaLinks);
       setFields(links);
-      setPosition([pos[0], pos[1], ""]);
+      setPosition([pos[0], pos[1]]);
       form.setFieldsValue({
         name,
         phone: phoneNumber,
@@ -77,13 +80,13 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
     }
   }, [initialValues, form, fetchedStore]);
 
-  const [position, setPosition] = useState<[number, number, string]>([
+  const [position, setPosition] = useState<LatLngExpression>([
     35,
     10,
-    "",
+   
   ]);
   const MapObject = {
-    center: position,
+    center: position, // Update center to match the LatLngExpression type
     zoom: 6,
     style: { height: "400px", width: "100%" },
     attribution: "&copy; OpenStreetMap contributors",
@@ -164,7 +167,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
   }
 
   const handleClick = async (lat: number, lng: number) => {
-    setPosition([lat, lng, ""]);
+    setPosition([lat, lng]);
     setShowPopup(true);
   };
 
@@ -208,7 +211,13 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
       thumbUrl: store.cover,
     },
   ];
-
+  const customIcon = L.icon({
+    iconUrl: maker, // Specify the URL of your custom marker icon image
+    iconSize: [50, 50], // Increased size of the icon
+    iconAnchor: [25, 50], // Point of the icon which will correspond to marker's location
+    popupAnchor: [-3, -50], // Point from which the popup should open relative to the iconAnchor
+  });
+  
   console.log(defaultFileListCover);
   console.log(defaultFileList);
   return (
@@ -319,21 +328,22 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
               className="label-order"
               htmlFor="products-search"
               style={{ color: "#6195def5", fontWeight: "500" }}
-            >
+              >
               Position Of Shop:
             </label>
-            <MapContainer className="map" {...MapObject}>
+            <MapContainer  className="map" {...MapObject}>
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {showPopup && (
-                <Marker position={position}>
+                <Marker position={position} icon={customIcon}>
                   <Popup>
-                    <div>Latitude: {position[0]}</div>
-                    <div>Longitude: {position[1]}</div>
+              
                   </Popup>
                 </Marker>
               )}
               <ChoosePlaceOnClick handleClick={handleClick} />
             </MapContainer>
+
+
             <Form.Item className="upload-images" name="images">
               <Upload.Dragger
                 defaultFileList={defaultFileList}

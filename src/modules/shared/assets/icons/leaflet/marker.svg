@@ -1,22 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="800px" height="800px" viewBox="-4 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-    <title>map-marker</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-</defs>
-    <g id="Vivid.JS" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Vivid-Icons" transform="translate(-125.000000, -643.000000)">
-            <g id="Icons" transform="translate(37.000000, 169.000000)">
-                <g id="map-marker" transform="translate(78.000000, 468.000000)">
-                    <g transform="translate(10.000000, 6.000000)">
-                        <path d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z" id="Shape" fill="#FF6E6E">
-</path>
-                        <circle id="Oval" fill="#0C0058" fill-rule="nonzero" cx="14" cy="14" r="7">
-</circle>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg viewBox="0 0 500 820" version="1.1" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="fill-rule: evenodd; clip-rule: evenodd; stroke-linecap: round;"><defs><linearGradient x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(2.30025e-15,-37.566,37.566,2.30025e-15,416.455,540.999)" id="map-marker-38-f"><stop offset="0" stop-color="rgb(18,111,198)"/><stop offset="1" stop-color="rgb(76,156,209)"/></linearGradient><linearGradient x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.16666e-15,-19.053,19.053,1.16666e-15,414.482,522.486)" id="map-marker-38-s"><stop offset="0" stop-color="rgb(46,108,151)"/><stop offset="1" stop-color="rgb(56,131,183)"/></linearGradient></defs><g transform="matrix(19.5417,0,0,19.5417,-7889.1,-9807.44)"><path d="M416.544,503.612C409.971,503.612 404.5,509.303 404.5,515.478C404.5,518.256 406.064,521.786 407.194,524.224L416.5,542.096L425.762,524.224C426.892,521.786 428.5,518.433 428.5,515.478C428.5,509.303 423.117,503.612 416.544,503.612ZM416.544,510.767C419.128,510.784 421.223,512.889 421.223,515.477C421.223,518.065 419.128,520.14 416.544,520.156C413.96,520.139 411.865,518.066 411.865,515.477C411.865,512.889 413.96,510.784 416.544,510.767Z" stroke-width="1.1px" fill="url(#map-marker-38-f)" stroke="url(#map-marker-38-s)"/></g></svg>
