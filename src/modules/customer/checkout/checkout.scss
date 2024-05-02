@@ -1,0 +1,110 @@
+.checkout-page {
+  display: flex;
+  gap: 2px;
+  .checkout {
+    max-width: 1026px;
+    width: 100%;
+    .date-section {
+      cursor: pointer;
+    }
+    .checkout-title-bar-and-button {
+      display: flex;
+      justify-content: space-between;
+    }
+    .checkout-title-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .payment-method {
+      margin: 60px 0;
+
+      .payment-method-text {
+        font-size: 18px;
+        font-weight: 400;
+      }
+    }
+    .section-content {
+      display: flex;
+      gap: 24px;
+    }
+    .addresses-section {
+      max-width: 800px;
+      width: 800px;
+      min-width: 800px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #d23e57 #fff;
+    }
+  }
+  .order {
+    width: 34%;
+    min-width: 360px;
+    .order-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0c0e30;
+      margin-bottom: 16px;
+    }
+    .cart-items {
+      padding-bottom: 12px;
+      border-bottom: #ddd solid 1px;
+      .checkout-order-item {
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        .checkout-order-details {
+          font-size: 14px;
+          font-weight: 200;
+        }
+        .order-quantity {
+          font-weight: 700;
+        }
+        .checkout-order-item-price {
+          font-size: 14px;
+          font-weight: 200;
+        }
+      }
+    }
+    .calcul {
+      padding-top: 20px;
+      padding-bottom: 16px;
+      border-bottom: #ddd solid 1px;
+      .line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        .label {
+          text-transform: capitalize;
+          font-size: 14px;
+          font-weight: 200;
+          color: #7d879c;
+        }
+        .cost {
+          font-size: 14px;
+          font-weight: 700;
+        }
+      }
+    }
+    .total {
+      padding-top: 10px;
+      padding-bottom: 16px;
+      .line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        .label {
+          text-transform: capitalize;
+          font-size: 14px;
+          font-weight: 300;
+        }
+        .cost {
+          font-size: 14px;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

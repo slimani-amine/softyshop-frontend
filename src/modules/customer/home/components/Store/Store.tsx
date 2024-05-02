@@ -11,8 +11,8 @@ function Store({
   id,
   name,
   logo, // phoneNumber,
-  // isPublished,
-} // location,
+  // location,
+} // isPublished,
 // address,
 // socialMediaLinks,
 : {
@@ -25,8 +25,6 @@ function Store({
   address: string;
   socialMediaLinks: string;
 }) {
-  // const [showIcons, setShowIcons] = useState(false);
-
   return (
     <div className="card">
       <HashLink to={`${id}#`}>

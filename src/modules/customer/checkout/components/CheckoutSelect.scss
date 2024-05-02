@@ -1,0 +1,16 @@
+.ant-select-selector {
+  cursor: pointer !important ;
+  span.ant-select-selection-placeholder {
+    color: black !important;
+  }
+}
+.ant-select-show-search:where(
+    .css-dev-only-do-not-override-k7429z
+  ).ant-select:not(.ant-select-customize-input)
+  .ant-select-selector
+  input {
+  cursor: pointer !important;
+}
+// .ant-select:hover {
+//   border: 1px #d23e57 solid !important;
+// }

@@ -5,8 +5,8 @@ import authReducer from '../../auth/data/authSlice';
 import roleReducer from '../../auth/data/roleSlice';
 import cartReducer from '@src/modules/customer/data/cartSlice';
 import productReducer from '@src/modules/customer/data/productSlice';
-// import userReducer from '@src/modules/customer/data/userSlice';
-// import storeReducer from '@src/modules/customer/data/storeSlice';
+import drawerReducer from '@src/modules/customer/data/drawerSlice';
+import checkoutReducer from '@src/modules/customer/data/checkoutSlice';
 import { api } from '../services/api';
 
 const rootReducer = combineReducers({
@@ -15,6 +15,8 @@ const rootReducer = combineReducers({
   role: roleReducer,
   cart: cartReducer,
   product: productReducer,
+  drawer: drawerReducer,
+  checkout: checkoutReducer,
   [api.reducerPath]: api.reducer,
 });
 

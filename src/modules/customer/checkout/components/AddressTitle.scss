@@ -1,0 +1,22 @@
+.address-title-bar {
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  p {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+  .icons {
+    display: flex;
+    // gap: 8px;
+    .icon {
+      padding: 4px;
+      border-radius: 100px;
+    }
+    .icon:hover {
+      background-color: #eee;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}

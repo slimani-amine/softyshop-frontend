@@ -7,14 +7,13 @@ import { ReactComponent as AddToCart } from '../../shared/assets/icons/home/add-
 import { ReactComponent as RemoveFromCart } from '../../shared/assets/icons/home/removeProductDetails.svg';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 
-// import { addToCart } from '../data/cartSlice';
-
 function ProductDetails() {
   const dispatch = useAppDispatch();
-  // const FAKE_URL = 'http://localhost:3001/products';
   const { productId } = useParams();
-  // const products = useAppSelector((state) => state.product.products);
+  const cart = useAppSelector((state) => state.cart.cart);
 
+  const [loading, setIsLoading] = useState(false);
+  const [quantity, setQuantity] = useState<number>(0);
   const [isInStock, setIsInStock] = useState(false);
   const [product, setProduct] = useState({
     id: 0,
@@ -28,20 +27,14 @@ function ProductDetails() {
     availability: false,
     stockNumber: 0,
   });
+  const images = product.images.length && JSON.parse(product?.images);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await fetch(`${fake_URL}`);
-        const response = await fetch(
-          `${BASE_URL}api/products/${productId}`
-          // `${BASE_URL}api/products?id=${productId}`
-        );
-
+        const response = await fetch(`${BASE_URL}api/products/${productId}`);
         const data = await response.json();
-        // console.log('🚀 ~ fetchData ~ data.data.docs:', data.data);
         setProduct(data.data);
-        // console.log(data.data.docs);
       } catch (err: string | unknown) {
         console.log(err);
         return err;
@@ -50,14 +43,6 @@ function ProductDetails() {
 
     fetchData();
   }, [BASE_URL]);
-
-  const images = product.images.length && JSON.parse(product?.images);
-  // console.log('🚀 ~ ProductDetails ~ product:', product);
-
-  const [loading, setIsLoading] = useState(false);
-  const cart = useAppSelector((state) => state.cart.cart);
-
-  const [quantity, setQuantity] = useState<number>(0);
 
   useEffect(
     function () {
@@ -69,7 +54,6 @@ function ProductDetails() {
   );
 
   async function handleAddToCart() {
-    console.log(quantity);
     setIsLoading(true);
     Promise.all([
       await dispatch(
@@ -81,7 +65,6 @@ function ProductDetails() {
   }
 
   async function handleRemoveFromCart() {
-    console.log(quantity);
     if (quantity < 1) return;
     setIsLoading(true);
     Promise.all([
@@ -117,14 +100,14 @@ function ProductDetails() {
 
         {/* <p className='rate'>product.rate</p> */}
 
-        <h2 className="price">${product.price}</h2>
+        <h2 className="price">${product.price.toFixed(2)}</h2>
         <p className="stock">
           {isInStock ? (
             `Stock Available: (${product?.stockNumber} ${
               product?.stockNumber == 1 ? 'book' : 'books'
             }  remaining)`
           ) : (
-            <strong className='out-of-stock'>Out of Stock</strong>
+            <strong className="out-of-stock">Out of Stock</strong>
           )}
         </p>
         {/* 'primary' | 'info' | 'success' | 'danger' | 'warning' | 'dark' | 'secondary' | 'light' */}

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
 import axiosInstance from '../utils/axios';
 import { useSelector, useDispatch } from 'react-redux';
-// import { clearTokens, getTokens } from '../utils/token';
 import useIsMountedRef from '../hook/useIsMountedRef';
 import { initialise } from '../data/authSlice';
 import { RootState } from '@src/modules/shared/store';
@@ -16,9 +15,11 @@ interface JwtPayload {
   exp: number;
 }
 
+export const accessToken: string | null = localStorage.getItem('accessToken');
+
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const isMounted = useIsMountedRef();
-
+  const URL = import.meta.env.VITE_APP_AUTH_URL
   const { isInitialised } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
@@ -34,35 +35,14 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     async function fetchUser() {
-      // const { accessToken } = getTokens();
-
-      const accessToken: string | null = localStorage.getItem('accessToken');
-
       if (accessToken && isValidToken(accessToken)) {
-        const response = await axiosInstance.get(`http://192.168.3.55:3001/v1/api/users/me`);
+        const response = await axiosInstance.get(`${URL}api/users/me`);
 
         const user = response?.data?.data;
-        // console.log(user);
-
-        // dispatch(saveUser(user));
-
-        // if (user.role == 'user') navigate('/home');
-        // if (user.role == 'vendor') navigate('/categories');
-
-        // if(user.role == 'user')
-        // const user = {
-        //   email: 'string',
-        //   isVerified: true,
-        //   firstName: 'string',
-        //   lastName: 'string',
-        //   picture: 'string',
-        //   role: 'admin',
-        // };
 
         dispatch(initialise({ isAuthenticated: true, user }));
       } else {
         dispatch(initialise({ isAuthenticated: false, user: null }));
-        // clearTokens();
       }
     }
 
