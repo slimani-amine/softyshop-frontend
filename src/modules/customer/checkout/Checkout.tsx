@@ -6,8 +6,10 @@ import Button from '@src/modules/shared/components/Button/Button';
 import Address from './components/Address';
 import AddressTitle from './components/AddressTitle';
 import AddressContent from './components/AddressContent';
-import { useAppSelector } from '@src/modules/shared/store';
 import CheckoutSelect from './components/CheckoutSelect';
+import AddAddressModal from './components/AddAddressModal';
+
+import { useAppSelector } from '@src/modules/shared/store';
 
 function Checkout() {
   const deliveryDate = useAppSelector((state) => state.checkout.deliveryDate);
@@ -18,6 +20,8 @@ function Checkout() {
   const Total = total + 28;
 
   const isOrderReady = isChecked && deliveryDate && deliveryTime;
+
+  // const [chosenAddress, setChosenAddress] = useState(null);
 
   return (
     <div className="checkout-page">
@@ -36,32 +40,33 @@ function Checkout() {
             <div className="checkout-title-bar">
               <Number>2</Number> <Title>delivery address</Title>
             </div>
-            <Button
-              size="sm"
-              outlined={true}
-              label="Add New Address"
-              style={{ height: '36px', width: '150px' }}
-            />
+            <AddAddressModal />
           </div>
           <div className="section-content addresses-section">
-            <Address>
-              <AddressTitle>Home</AddressTitle>
-              <AddressContent>
-                645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
-              </AddressContent>
-            </Address>
-            <Address>
-              <AddressTitle>Office</AddressTitle>
-              <AddressContent>
-                645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
-              </AddressContent>
-            </Address>
-            <Address>
-              <AddressTitle>Apartment</AddressTitle>
-              <AddressContent>
-                645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
-              </AddressContent>
-            </Address>
+            <div className="checkout-address checkout-address1">
+              <Address>
+                <AddressTitle>Home</AddressTitle>
+                <AddressContent>
+                  645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
+                </AddressContent>
+              </Address>
+            </div>
+            <div className="checkout-address checkout-address2">
+              <Address>
+                <AddressTitle>Office</AddressTitle>
+                <AddressContent>
+                  645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
+                </AddressContent>
+              </Address>
+            </div>
+            <div className="checkout-address checkout-address3">
+              <Address>
+                <AddressTitle>Apartment</AddressTitle>
+                <AddressContent>
+                  645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
+                </AddressContent>
+              </Address>
+            </div>
           </div>
         </Section>
         <Section>
