@@ -17,7 +17,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
-
+import TypeOfResponse from "@src/modules/shared/services/ResponseType";
 const UpdateVendorForm: FC = () => {
   const navigate = useNavigate();
 
@@ -52,7 +52,7 @@ const UpdateVendorForm: FC = () => {
       const values = await form.validateFields();
       const objectPost = { ...values, isVerified };
       console.log(objectPost, "object post");
-      const response = await updateVendor({
+      const response : TypeOfResponse = await updateVendor({
         id,
         data: {
           firstName: objectPost.name,
@@ -65,18 +65,15 @@ const UpdateVendorForm: FC = () => {
       console.log(response);
       if ("data" in response) {
         // Display success message if data exists
-        message.success("Vendor updated successfully!");
-        form.resetFields();
+        message.success("Vendor saved successfully!");
+        console.log(response.data);
         navigate("/vendors");
-      } else if ("error" in response) {
-        // Display error message if error exists
-        message.error("Failed to update product. Please try again.");
-        console.error("Error updating product", response.error);
-      } else {
-        message.error(
-          "Unexpected response from server. Please try again later."
-        );
-      }
+      } else if ("error" in response && response.error) {
+        // Display error message if error exists and it's truthy
+        message.error(`${response.error.message}`);
+    } else {
+        message.error("Unexpected response from server. Please try again later.");
+    }
     } catch (error) {
       console.error("Error updating vendor", error);
     }
@@ -91,7 +88,7 @@ const UpdateVendorForm: FC = () => {
       name: "Current Image",
       status: "done",
       url: selectedFileUrl,
-      thumbUrl: vendor.picture,
+      thumbUrl: vendor?.picture,
     } as any,
   ];
   return (

@@ -5,28 +5,28 @@ export const ProductsApi = api.injectEndpoints({
       query: () => `api/products`,
       providesTags:['products']
     }),
+    
 
-    pr:builder.query<any , {perPage : number , page:number ,name:string , role : string, storeId?:string , vendorId?:string }>({
-      query: ({ perPage, page, name, role, storeId, vendorId }) => {
-        let url = "api/";
-        if (role === "VENDOR" || storeId) {
-            url += "stores/";
-            if (role === "VENDOR") {
-                url += `${vendorId}/`;
-            }
+    pr: builder.query<any, { perPage: number, page: number, name: string, role: string, storeId?: string, vendorId?: string }>({
+      query: ({ perPage, page, name, role, storeId }) => {
+          let url;
+          if (role === "VENDOR") {
+              url = "/api/products/vendor";
+          }  else {
+              // Handle the case if no role or store ID is provided
+              url = "/api/products"; // Default endpoint, adjust as needed
+          }
+          if (storeId) {
+            url = `/api/stores/${storeId}/products`;
         }
-        if (storeId) {
-            url += `${storeId}/`;
-        }
-        url += `products?perPage=${perPage}&page=${page}`;
-        if (name) {
-            url += `&name=${name}`;
-        }
-       return url;
-    }   , 
-     providesTags:['products']
-
-    }),
+          url += `?perPage=${perPage}&page=${page}`;
+          if (name) {
+              url += `&name=${name}`;
+          }
+          return url;
+      },
+      providesTags: ['products']
+  }),
     product: builder.query<any, any>({
       query: (id) => `api/products/${id}`,
       providesTags : ['product']

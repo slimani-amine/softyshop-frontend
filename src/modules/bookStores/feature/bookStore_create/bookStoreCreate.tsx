@@ -29,6 +29,7 @@ import { RootState } from "@src/modules/shared/store";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
 import { useNavigate } from "react-router-dom";
 import { ADMIN } from "@src/global_roles_config";
+import TypeOfResponse from "@src/modules/shared/services/ResponseType";
 interface AddShopFormProps {
   onFinish: (values: any) => void;
 }
@@ -50,8 +51,9 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   console.log(uploading);
   const initialPosition = [33.892166, 9.561555499999997]; // New York coordinates
   const [position, setPosition] = useState(initialPosition);
-  const [createStore] = useCreateStoreMutation(); // Destructure and use the hook
+  const [createStore] = useCreateStoreMutation();
 
+ 
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
@@ -86,7 +88,6 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   const handleClick = async (event: any) => {
     const { lat, lng } = event.latlng;
     const placeName = await getPlaceName(lat, lng);
-    console.log(placeName);
     setPosition([lat, lng, placeName]);
     setShowPopup(true);
   };
@@ -103,43 +104,41 @@ const AddShopForm: FC<AddShopFormProps> = () => {
 
   const handleSaveClick = async () => {
     try {
-      const values = await form.validateFields();
-      const objectPost = { ...values, positionOfShop: position };
-      const plc = objectPost.positionOfShop[2];
+        const values = await form.validateFields();
+        const objectPost = { ...values, positionOfShop: position };
+        const plc = objectPost.positionOfShop[2];
+        console.log(position  , 'postion')
 
+        const response:TypeOfResponse = await createStore({
+            name: objectPost.name,
+            phoneNumber: objectPost.phone,
+            logo: selectedFileUrl,
+            location: objectPost.positionOfShop.slice(0, 2), // Use slice instead of splice
+            address: plc,
+            socialMediaLinks: objectPost.data,
+            vendor_id: Current_User === ADMIN ? objectPost.vendor : Id_user,
+            cover: selectedCoverUrl,
+        });
 
-      const response = await createStore({
-        name: objectPost.name,
-        phoneNumber: objectPost.phone,
-        logo: selectedFileUrl,
-        location: objectPost.positionOfShop.splice(0, 2),
-        address: plc,
-        socialMediaLinks: objectPost.data,
-        vendor_id: Current_User === ADMIN ? objectPost.vendor : Id_user,
-        cover: selectedCoverUrl,
-      });
+        
 
-
-      if ("data" in response) {
-        // Display success message if data exists
-        message.success("Store saved successfully!");
-        form.resetFields();
-        navigate("/stores");
-      } else if ("error" in response) {
-        // Display error message if error exists
-        message.error("Failed to save store. Please try again.");
-        console.error("Error saving store", response.error);
-      } else {
-        message.error(
-          "Unexpected response from server. Please try again later."
-        );
-      }
+        if ("data" in response) {
+            // Display success message if data exists
+            message.success("Store saved successfully!");
+            form.resetFields();
+            navigate("/stores");
+        } 
+        else if ("error" in response && response.error) {
+            // Display error message if error exists and it's truthy
+            message.error(`${response.error.message}`);
+        } else {
+            message.error("Unexpected response from server. Please try again later.");
+        }
     } catch (error) {
-      console.log(error);
-      console.error("Error saving shop", error);
-      message.error("Error saving shop");
+        console.error("Error saving shop", error);
     }
-  };
+};
+
 
   const Email_user = useSelector((state: RootState) => state.auth.user?.email);
   console.log(Email_user);
@@ -169,7 +168,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                     },
                     {
                       pattern:
-                        /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                        /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){4})[a-zA-Z\u0600-\u06FF\s]{4,}$/,
                       message:
                         "Name must contain at least two alphabetical characters and no leading spaces",
                     },
@@ -196,6 +195,11 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                   name="vendor"
                   className="select-vendor"
                   style={{ marginBottom: "20px" }}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Select Vendor",
+                    }]}
                 >
                   <Select
                     size="middle"
@@ -271,7 +275,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 className="drag-images"
                 listType="picture"
                 accept="image/*"
-                multiple
+                
                 maxCount={1}
                 onChange={(e: any) =>
                   handleFileChange(e, setFile, setSelectedFileUrl, setUploading)
@@ -328,7 +332,6 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 className="drag-images"
                 listType="picture"
                 accept="image/*"
-                multiple
                 maxCount={1}
                 onChange={(e: any) =>
                   handleFileChange(

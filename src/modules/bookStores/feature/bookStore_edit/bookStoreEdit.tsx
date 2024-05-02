@@ -29,6 +29,7 @@ import { useAllvendorsQuery } from "@src/modules/vendores/services/vendorApi";
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
 import { ADMIN } from "@src/global_roles_config";
+import TypeOfResponse from "@src/modules/shared/services/ResponseType";
 
 interface EditShopFormProps {
   onFinish: () => void;
@@ -123,23 +124,22 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
       };
     
 
-      const response = await updateStore({ id: fetchedStore.data.id, data });
+      const response:TypeOfResponse = await updateStore({ id: fetchedStore.data.id, data });
       if ("data" in response) {
         // Display success message if data exists
-        message.success("Store updated successfully!");
+        message.success("Store Updated successfully!");
+        form.resetFields();
         navigate("/stores");
-      } else if ("error" in response) {
-        // Display error message if error exists
-        message.error("Failed to save Store. Please try again.");
-      } else {
-        // Handle unexpected response format
-        message.error(
-          "Unexpected response from server. Please try again later."
-        );
-      }
+    } 
+        else if ("error" in response && response.error) {
+            // Display error message if error exists and it's truthy
+            message.error(`${response.error.message}`);
+        } else {
+            message.error("Unexpected response from server. Please try again later.");
+        }
     } catch (error) {
-      message.error("Error updating shop");
-    }
+        console.error("Error updating shop", error);
+}
   };
 
   async function getPlaceName(latitude: any, longitude: any) {

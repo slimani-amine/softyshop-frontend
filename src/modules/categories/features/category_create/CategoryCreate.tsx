@@ -14,6 +14,7 @@ import Button from '@src/modules/shared/components/Button/Button';
 import { useCreateCategoryMutation } from '../../service/categoryApi';
 import { handleFileChange } from '@src/modules/shared/utils/upload';
 import { useNavigate } from 'react-router-dom';
+import TypeOfResponse from '@src/modules/shared/services/ResponseType';
 interface AddCategoryFormProps {
   onFinish: (values: any) => void;
 }
@@ -34,33 +35,28 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
       const values = await form.validateFields(); // Validate form fields
       const objectPost = { ...values };
       // Create category
-      const response = await createCategory({
+      const response : TypeOfResponse = await createCategory({
         name: objectPost.name,
         icon: selectedFileUrl,
         isPublished: objectPost.isPublished === 'on' ? true : false,
       });
       if ('data' in response) {
         // Display success message if data exists
-        message.success("Product saved successfully!");
+        message.success("Category saved successfully!");
         form.resetFields();
 
         navigate("/categories")
 
         
-    } else if ('error' in response) {
-        // Display error message if error exists
-        message.error("Failed to save product. Please try again.");
-        console.error('Error saving product', response.error);
-    } else {
-        message.error("Unexpected response from server. Please try again later.");
-    }
-
-      // Reset form fields and validation status
-     
-    } catch (error) {
-      console.error('Error saving category', error);
-      message.error('Error saving category');
-    }
+    }       else if ("error" in response && response.error) {
+      // Display error message if error exists and it's truthy
+      message.error(`${response.error.message}`);
+  } else {
+      message.error("Unexpected response from server. Please try again later.");
+  }
+} catch (error) {
+  console.error("Error saving Category", error);
+}
   };
 
   // const handleFileChange = (info: any) => {

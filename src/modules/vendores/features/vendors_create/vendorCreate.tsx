@@ -13,6 +13,7 @@ import Button from "@src/modules/shared/components/Button/Button";
 import { useCreateVendorMutation } from "../../services/vendorApi";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
 import { useNavigate } from "react-router-dom";
+import TypeOfResponse from "@src/modules/shared/services/ResponseType";
 
 const AddVendorForm: FC = () => {
   // Removed AddCategoryFormProps
@@ -32,7 +33,7 @@ const AddVendorForm: FC = () => {
       const values = await form.validateFields();
       const objectPost = { ...values };
       console.log(objectPost, "object post");
-      const response = await createVendor({
+      const response : TypeOfResponse = await createVendor({
         firstName: objectPost.name,
         lastName: objectPost.lastName,
         email: objectPost.email,
@@ -44,19 +45,16 @@ const AddVendorForm: FC = () => {
       });
       if ("data" in response) {
         // Display success message if data exists
-        message.success("Product saved successfully!");
+        message.success("Vendor saved successfully!");
         console.log(response.data);
         navigate("/vendors");
-      } else if ("error" in response) {
-        // Display error message if error exists
-        message.error("Failed to save vendor. Please try again.");
-        console.error("Error saving ", response);
-      } else {
-        // Handle unexpected response format
-        message.error(
-          "Unexpected response from server. Please try again later."
-        );
-      }
+      } else if ("error" in response && response.error) {
+        // Display error message if error exists and it's truthy
+        message.error(`${response.error.message}`);
+    } else {
+        message.error("Unexpected response from server. Please try again later.");
+    }
+      
     } catch (error) {
       console.error("Error saving vendor", error);
       message.error("Error saving vendor");
@@ -245,7 +243,7 @@ const AddVendorForm: FC = () => {
           <Form.Item
             className="upload-images"
             name="images"
-            rules={[{ required: true, message: "Picture of Category!" }]}
+            rules={[{ required: true, message: "Vendor of Category!" }]}
           >
             <Upload.Dragger
               className="drag-images"
