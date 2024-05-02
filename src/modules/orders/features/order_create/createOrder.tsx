@@ -215,7 +215,7 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
                 <Form.Item className="product-selected">
                   {products.map((product: any, index) => {
                     const imagesArray = product.images;
-                    const image = JSON.parse(imagesArray);
+                    const image = JSON.parse(imagesArray)[0];
                     return (
                       <OrderItem
                         key={product.productId}

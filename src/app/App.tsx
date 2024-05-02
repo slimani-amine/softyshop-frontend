@@ -1,8 +1,9 @@
 import routes, { renderRoutes } from '@src/modules/shared/routes';
-import { useAppSelector } from '@src/modules/shared/store';
+import { RootState, useAppSelector } from '@src/modules/shared/store';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { AnimationProvider } from '@src/modules/shared/layout/MainLayout/context/animationContext';
+import { useSelector } from 'react-redux';
 
 const App = () => {
   // get translation.json file from public/locales
@@ -11,7 +12,10 @@ const App = () => {
   document.body.dir = i18n?.dir();
 
   const theme = useAppSelector((state) => state.theme.mode);
-
+  const role = useSelector(
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+  )  || "VENDOR"
+  console.log(role)
   return (
     <AnimationProvider>
       <div id={theme}>
@@ -19,7 +23,7 @@ const App = () => {
           <title>SoftyShop</title>
         </Helmet>
 
-        {renderRoutes(routes)}
+        {renderRoutes(routes,role)}
       </div>
     </AnimationProvider>
   );

@@ -4,8 +4,8 @@ import { Routes, Route, RouteProps } from 'react-router-dom';
 
 import pages from './routes';
 import LazyLoad from '../components/LazyLoad/LazyLoad';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../store';
+
+
 type RouteConfig = {
   exact: boolean | null;
   path: string;
@@ -15,47 +15,34 @@ type RouteConfig = {
   roles?: string[];
 } & RouteProps;
 
-export const renderRoutes = (routes: RouteConfig[] = []) => {
-  // const Current_User =
-  //   useSelector(
-  //     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
-  //   ) || 'admin';
-  //  console.log(Current_User)
+export const renderRoutes = (routes: RouteConfig[] = [], role: string) => {
+  // Filter routes based on whether the user's role is included in the allowed roles
+  
+  const filteredRoutes = routes.filter((route) => {
+    return route.roles && route.roles.includes(role);
+  });
+console.log(filteredRoutes)
   return (
     <Suspense fallback={<LazyLoad />}>
       <Routes>
-        {routes.map((route, index) => {
+        {filteredRoutes.map((route, index) => {
           const Component = route.component;
           const Guard = route?.guard || Fragment;
           const Layout = route?.layout || Fragment;
-          // const roles = route?.roles;
-          // const allowedRoles = roles && roles.includes(Current_User);
-          // console.log(Current_User)
-          // console.log(allowedRoles);
 
-          if (true) {
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Guard>
-                    <Layout>
-                      <Component />
-                    </Layout>
-                  </Guard>
-                }
-              />
-            );
-          } else {
-            return (
-              <Route
-                key={index}
-                path={'*'}
-                element={<Component propos="401" />}
-              />
-            );
-          }
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <Guard>
+                  <Layout>
+                    <Component />
+                  </Layout>
+                </Guard>
+              }
+            />
+          );
         })}
       </Routes>
     </Suspense>

@@ -8,6 +8,7 @@ import {
   Input,
   Checkbox,
   message,
+  Button as ButtonAnt,
 } from 'antd';
 import Button from '@src/modules/shared/components/Button/Button';
 import { useCreateCategoryMutation } from '../../service/categoryApi';
@@ -20,7 +21,7 @@ interface AddCategoryFormProps {
 
 const AddCategoryForm: FC<AddCategoryFormProps> = () => {
   const navigate = useNavigate()
-
+  const [uploading, setUploading] = useState(false);
   const [files, setFile] = useState<any>(null);
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
@@ -76,6 +77,13 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
 
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
+            <label
+              className="label-order"
+              htmlFor="products-search"
+              style={{color:"#6195def5" , fontWeight:'500'}}
+               >
+                 Category Name :
+              </label>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
@@ -107,20 +115,31 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
               className="drag-images"
               listType="picture"
               accept="image/*"
-              maxCount={1} // set maxCount to 1 for single image
+              maxCount={1}
               onChange={(e: any) =>
-                handleFileChange(e, setFile, setSelectedFileUrl)
+                handleFileChange(
+                  e,
+                  setFile,
+                  setSelectedFileUrl,
+                  setUploading
+                )
               }
               beforeUpload={() => false}
             >
-              <p className="ant-upload-text">Drag & drop Category image here</p>
-              <div className="icon-drag">
-                <Divider className="divider" />
-                <p className="or">OR</p>
-                <Divider className="divider" />
-              </div>
-              <Button className="btn-select">Select Files</Button>
-              <p className="size-img">Upload 280*280 image</p>
+              {uploading ? (
+                <div className="uploading-indicator">Uploading...</div>
+              ) : (
+                <>
+                  <p className="ant-upload-text">Drag & drop Category image here</p>
+                  <div className="icon-drag">
+                    <Divider className="divider" />
+                    <p className="or">OR</p>
+                    <Divider className="divider" />
+                  </div>
+                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                  <p className="size-img">Upload 280*280 image</p>
+                </>
+              )}
             </Upload.Dragger>
           </Form.Item>
           <Form.Item name="isPublished">
@@ -129,7 +148,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
             </div>
           </Form.Item>
           <Form.Item>
-            <Button type="submit" className="add-cat" onClick={handleSaveClick}>
+            <Button type="submit" className="add-cat" disabled={uploading} onClick={handleSaveClick}>
               Save Category
             </Button>
           </Form.Item>

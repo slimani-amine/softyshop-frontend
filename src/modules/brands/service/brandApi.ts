@@ -17,7 +17,7 @@ export const BrandApi = api.injectEndpoints({
    
     brand: builder.query<any, any>({
       query: (id) => `api/brands?search=id:${id}`,
-      providesTags : ['category']
+      providesTags : ['brand']
     }),
     createBrand: builder.mutation<Brand, any>({
         query: (newBrand) => ({

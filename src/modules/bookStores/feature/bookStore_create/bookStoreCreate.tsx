@@ -28,44 +28,45 @@ import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
 import { handleFileChange } from "@src/modules/shared/utils/upload";
 import { useNavigate } from "react-router-dom";
-
+import { ADMIN } from "@src/global_roles_config";
 interface AddShopFormProps {
   onFinish: (values: any) => void;
 }
 
 const AddShopForm: FC<AddShopFormProps> = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [uploading, setUploading] = useState(false);
 
   const [form] = Form.useForm();
   const [fields, setFields] = useState<string[]>([""]);
   const [files, setFile] = useState<any>(null);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
-  const [cover , setCover] = useState<any>(null)
+  const [cover, setCover] = useState<any>(null);
   const [selectedCoverUrl, setSelectedCoverUrl] = useState<string>();
 
-  console.log(selectedCoverUrl)
-  console.log(files)
-  console.log(cover)
+  console.log(selectedCoverUrl);
+  console.log(files);
+  console.log(cover);
+  console.log(uploading);
   const initialPosition = [33.892166, 9.561555499999997]; // New York coordinates
   const [position, setPosition] = useState(initialPosition);
   const [createStore] = useCreateStoreMutation(); // Destructure and use the hook
-  
-  const Current_User= useSelector((state: RootState) => state.auth.user?.role.toLocaleUpperCase()) 
-  const Id_user = useSelector((state: RootState) => state?.auth?.user?.id)
-  console.log(Id_user)
-  console.log(Current_User)
-  let vendors = []; // Initialize vendors outside the condition to avoid undefined errors
 
-  if (Current_User === "ADMIN") {
-      const { data: fetchedVendors } = useAllvendorsQuery();
-      vendors = fetchedVendors?.data.docs;
+  const Current_User = useSelector(
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+  );
+  const Id_user = useSelector((state: RootState) => state?.auth?.user?.id);
+  console.log(Id_user);
+  console.log(Current_User);
+  let vendors = []; // Initialize vendors outside the condition to avoid undefined errors
+  if (Current_User === ADMIN) {
+    const { data: fetchedVendors } = useAllvendorsQuery();
+    vendors = fetchedVendors?.data.docs;
   }
-  console.log(Current_User === "ADMIN")
-  console.log(vendors)
-  
+
   const selectOptions = vendors?.map((cat: any) => ({
-      label: cat.email,
-      value: cat.id,
+    label: cat.email,
+    value: cat.id,
   }));
   const [showPopup, setShowPopup] = useState(false);
   const MapObject = {
@@ -104,37 +105,35 @@ const AddShopForm: FC<AddShopFormProps> = () => {
     try {
       const values = await form.validateFields();
       const objectPost = { ...values, positionOfShop: position };
-      console.log(objectPost, "ooookkkkkkkpppp");
-      console.log(objectPost.positionOfShop[2]);
-      const plc = objectPost.positionOfShop[2]
-      console.log(plc)
-      const response =await createStore({
+      const plc = objectPost.positionOfShop[2];
+
+
+      const response = await createStore({
         name: objectPost.name,
         phoneNumber: objectPost.phone,
         logo: selectedFileUrl,
         location: objectPost.positionOfShop.splice(0, 2),
         address: plc,
         socialMediaLinks: objectPost.data,
-        vendor_id: objectPost.vendor,
-        cover : selectedCoverUrl
+        vendor_id: Current_User === ADMIN ? objectPost.vendor : Id_user,
+        cover: selectedCoverUrl,
       });
 
-      console.log(response , "data of response")
 
-      if ('data' in response) {
+      if ("data" in response) {
         // Display success message if data exists
-        message.success("Product saved successfully!");
+        message.success("Store saved successfully!");
         form.resetFields();
-        navigate("/stores")
-
-        
-    } else if ('error' in response) {
+        navigate("/stores");
+      } else if ("error" in response) {
         // Display error message if error exists
-        message.error("Failed to save product. Please try again.");
-        console.error('Error saving product', response.error);
-    } else {
-        message.error("Unexpected response from server. Please try again later.");
-    }
+        message.error("Failed to save store. Please try again.");
+        console.error("Error saving store", response.error);
+      } else {
+        message.error(
+          "Unexpected response from server. Please try again later."
+        );
+      }
     } catch (error) {
       console.log(error);
       console.error("Error saving shop", error);
@@ -142,11 +141,8 @@ const AddShopForm: FC<AddShopFormProps> = () => {
     }
   };
 
- 
- 
-
   const Email_user = useSelector((state: RootState) => state.auth.user?.email);
-  console.log(Email_user)
+  console.log(Email_user);
 
   return (
     <div className="">
@@ -156,19 +152,28 @@ const AddShopForm: FC<AddShopFormProps> = () => {
           <Form form={form} className="form-shop">
             <Row gutter={[22, 0]} className="name-Shop">
               <Col span={24}>
+                <label
+                  className="label-order"
+                  htmlFor="products-search"
+                  style={{ color: "#6195def5", fontWeight: "500" }}
+                >
+                  Name Of Shop:
+                </label>
                 <Form.Item
                   name="name"
                   style={{ marginBottom: 0 }}
-                  rules={[ 
-                    { 
-                        required: true, 
-                        message: 'Please enter Store name' 
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter Store name",
                     },
                     {
-                        pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
-                        message: 'Name must contain at least two alphabetical characters and no leading spaces'
-                    }
-                ]}            
+                      pattern:
+                        /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                      message:
+                        "Name must contain at least two alphabetical characters and no leading spaces",
+                    },
+                  ]}
                 >
                   <Input
                     size="large"
@@ -180,40 +185,54 @@ const AddShopForm: FC<AddShopFormProps> = () => {
             </Row>
             <Row gutter={[22, 0]} className="name-shop">
               <Col span={24}>
+                <label
+                  className="label-order"
+                  htmlFor="products-search"
+                  style={{ color: "#6195def5", fontWeight: "500" }}
+                >
+                  Select Vendor:
+                </label>
                 <Form.Item
                   name="vendor"
                   className="select-vendor"
                   style={{ marginBottom: "20px" }}
-                
                 >
                   <Select
                     size="middle"
                     placeholder="select-vendor"
                     className="input-custom"
-                    options={Current_User === "ADMIN" ? selectOptions : []}
+                    options={Current_User === ADMIN ? selectOptions : []}
                     defaultValue={
-                      Current_User === "ADMIN" ? undefined: Email_user
+                      Current_User === ADMIN ? undefined : Email_user
                     }
-                    disabled={Current_User !== "ADMIN" ? true : false}
+                    disabled={Current_User !== ADMIN ? true : false}
                   />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={[16, 0]} className="number-Shop">
               <Col span={24}>
+                <label
+                  className="label-order"
+                  htmlFor="products-search"
+                  style={{ color: "#6195def5", fontWeight: "500" }}
+                >
+                  Phone of Shop:
+                </label>
                 <Form.Item
-                  name="phone"  
+                  name="phone"
                   style={{ marginBottom: 0 }}
                   rules={[
-                    { 
-                        required: true, 
-                        message: 'Please enter Shop phone' 
+                    {
+                      required: true,
+                      message: "Please enter Shop phone",
                     },
                     {
-                        pattern: /^[2-57-9]\d{7}$/,
-                        message: 'Phone number must be 8 digits and start with 2, 4, 5, 7, or 9'
-                    }
-                ]}      
+                      pattern: /^[2-57-9]\d{7}$/,
+                      message:
+                        "Phone number must be 8 digits and start with 2, 4, 5, 7, or 9",
+                    },
+                  ]}
                 >
                   <Input
                     size="large"
@@ -224,6 +243,13 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 </Form.Item>
               </Col>
             </Row>
+            <label
+              className="label-order"
+              htmlFor="products-search"
+              style={{ color: "#6195def5", fontWeight: "500" }}
+            >
+              Position Of Shop:
+            </label>
             <MapContainer className="map" {...MapObject}>
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {showPopup && (
@@ -248,22 +274,26 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 multiple
                 maxCount={1}
                 onChange={(e: any) =>
-                  handleFileChange(
-                    e,
-                    setFile,
-                    setSelectedFileUrl,
-                  )
+                  handleFileChange(e, setFile, setSelectedFileUrl, setUploading)
                 }
                 beforeUpload={() => false}
               >
-                <p className="ant-upload-text">Drag & drop Shop image here</p>
-                <div className="icon-drag">
-                  <Divider className="divider" />
-                  <p className="or">OR</p>
-                  <Divider className="divider" />
-                </div>
-                <ButtonAnt className="btn-select">Select Files</ButtonAnt>
-                <p className="size-img">Upload 280*280 image</p>
+                {uploading ? (
+                <div className="uploading-indicator">Uploading...</div>
+              ) : (
+                <>
+                  <p className="ant-upload-text">
+                    Drag & drop Category image here
+                  </p>
+                  <div className="icon-drag">
+                    <Divider className="divider" />
+                    <p className="or">OR</p>
+                    <Divider className="divider" />
+                  </div>
+                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                  <p className="size-img">Upload 280*280 image</p>
+                </>
+              )}
               </Upload.Dragger>
             </Form.Item>
             <Form.Item name="dynamicInputs">
@@ -305,21 +335,29 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                     e,
                     setCover,
                     setSelectedCoverUrl,
+                    setUploading
                   )
                 }
                 beforeUpload={() => false}
               >
-                <p className="ant-upload-text">Drag & drop Shop Cover here</p>
-                <div className="icon-drag">
-                  <Divider className="divider" />
-                  <p className="or">OR</p>
-                  <Divider className="divider" />
-                </div>
-                <ButtonAnt className="btn-select">Select Files</ButtonAnt>
-                <p className="size-img">Upload 280*280 image</p>
+              {uploading ? (
+                <div className="uploading-indicator">Uploading...</div>
+              ) : (
+                <>
+                  <p className="ant-upload-text">
+                    Drag & drop Category image here
+                  </p>
+                  <div className="icon-drag">
+                    <Divider className="divider" />
+                    <p className="or">OR</p>
+                    <Divider className="divider" />
+                  </div>
+                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                  <p className="size-img">Upload 280*280 image</p>
+                </>
+              )}
               </Upload.Dragger>
             </Form.Item>
-
 
             <Form.Item>
               <Button

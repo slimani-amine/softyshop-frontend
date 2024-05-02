@@ -1,5 +1,7 @@
 import { Checkbox, Space, Switch, Table, message } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
+import { ReactComponent as EditIcon } from "@src/modules/shared/assets/icons/List/edit.svg";
+
 import {
   useDeleteStoresMutation,
   usePublishStoreMutation,
@@ -13,6 +15,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
 import { debounce } from "lodash";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
+import { ADMIN } from "@src/global_roles_config";
 
 export default function bookStoreList() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +26,7 @@ export default function bookStoreList() {
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
-  const isAdmin = Current_User === "ADMIN";
+  const isAdmin = Current_User === ADMIN;
   const Current_id = useSelector((state: RootState) => state.auth.user?.id);
       
 
@@ -33,7 +36,7 @@ export default function bookStoreList() {
   };
 
   const [publishStore] = usePublishStoreMutation();
-
+  console.log(Current_User)
   const {data:fetchdStoress , isLoading} = useStoressQuery({
       page: currentPage,
       perPage: pageSize,
@@ -92,6 +95,9 @@ export default function bookStoreList() {
       // Handle error
     }
   };
+
+
+
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     id: string
@@ -100,9 +106,9 @@ export default function bookStoreList() {
     console.log(selectedRowIds);
     setSelectedRowIds((prevIds) => {
       if (checked) {
-        return [...prevIds, id]; // Add ID to the selected IDs array
+        return [...prevIds, id]; 
       } else {
-        return prevIds.filter((rowId) => rowId !== id); // Remove ID from the selected IDs array
+        return prevIds.filter((rowId) => rowId !== id); 
       }
     });
   };
@@ -142,6 +148,16 @@ export default function bookStoreList() {
       render: (_phone:string , record: any) => (
         <div className="name-column">
         {record.phoneNumber}
+        </div>
+      ),
+    },
+    {
+      title: "Vendor",
+      dataIndex: "phoneNumber",
+      key: "name",
+      render: (_phone:string , record: any) => (
+        <div className="name-column">
+        {record?.user?.email}
         </div>
       ),
     },
@@ -201,40 +217,7 @@ export default function bookStoreList() {
       render: (record: any) => (
         <Space>
           <div className="icon-action" onClick={() => Navigate(record?.id)}>
-            <svg
-              fill="#7D879C"
-              width="16px"
-              height="16px"
-              version="1.1"
-              id="Layer_1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              stroke=""
-            >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></g>
-              <g id="SVGRepo_iconCarrier">
-                {" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M311.18,78.008L32.23,356.958L0.613,485.716c-1.771,7.209,0.355,14.818,5.604,20.067 c5.266,5.266,12.88,7.368,20.067,5.604l128.759-31.617l278.95-278.95L311.18,78.008z M40.877,471.123l10.871-44.271l33.4,33.4 L40.877,471.123z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M502.598,86.818L425.182,9.402c-12.536-12.536-32.86-12.536-45.396,0l-30.825,30.825l122.812,122.812l30.825-30.825 C515.134,119.679,515.134,99.354,502.598,86.818z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-              </g>
-            </svg>
+            <EditIcon/>
           </div>
         </Space>
       ),
@@ -259,7 +242,7 @@ export default function bookStoreList() {
   };
   return (
     <div className="Product-List">
-      <h1>Stores List</h1>
+      <h1>{Current_User ===ADMIN ?'Stores List' : 'My Stores List' } </h1>
       <div className="header-Product-list">
         <SeachFilter
           placeholder={"Search Store ..."}
@@ -277,6 +260,8 @@ export default function bookStoreList() {
             variant={selectedRowIds.length === 0 ? "dark" : "primary"}
             onClick={handleDelete}
           >
+
+
             Delete
           </Button>
         </div>

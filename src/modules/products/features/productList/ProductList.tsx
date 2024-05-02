@@ -1,13 +1,25 @@
-import {  useEffect, useState } from "react";
-import { Table, Space, Switch, Checkbox, Select } from "antd";
+import {  useState } from "react";
+import { Table, Space, Switch, Checkbox, Select, message } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useProductsQuery , useDeleteProductsMutation , useMyProductsQuery} from "../../service/productApi";
+import { ReactComponent as EditIcon } from "@src/modules/shared/assets/icons/List/edit.svg";
+
+import {  useNavigate } from "react-router-dom";
+import {
+
+  useDeleteProductsMutation,
+  usePrQuery,
+  usePublishProductMutation
+} from "../../service/productApi";
 import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
-import { useAllStoresQuery, useMyStoresQuery  } from "@src/modules/bookStores/service/storeApi";
+import {
+  useAllStoresQuery,
+  useMyStoresQuery,
+} from "@src/modules/bookStores/service/storeApi";
+import { debounce } from "lodash";
+import { ADMIN } from "@src/global_roles_config";
 
 interface Product {
   id: string;
@@ -19,15 +31,12 @@ interface Product {
   images: string;
 }
 
-
 export default function ProductList() {
-
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const [selectedStore, setSelectedStore] = useState<string>();
-  const [pageSize, setPageSize] = useState(5);
-  const [ , setProducts] =  useState<Array<any>>([]);
-  const [nameProduct] = useState<string>('a');
+  const [pageSize, setPageSize] = useState(10);
+  const [nameProduct, setNameProduct] = useState<string>("");
 
   const navigate = useNavigate();
   const [deleteProducts] = useDeleteProductsMutation();
@@ -47,72 +56,70 @@ export default function ProductList() {
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
-
-const { data: fetchedProducts, isLoading } = selectedStore
-    ? useMyProductsQuery({
-        id: selectedStore,
-        perPage: pageSize,
-        page: currentPage,
-        name:""
-      })
-    : useProductsQuery({
-        perPage: pageSize,
-        page: currentPage,
-        name:""
-      });
-    
-  useEffect(()=>{
-    if (nameProduct){
-      setProducts(fetchedProducts?.data.docs)
-    }
-    else{
-      setProducts(fetchedProducts?.data.docs)
-
-      
-    }
-
-
-  } , [])
-  console.log(fetchedProducts , 'fetcheddddd products')
-  
+  const userId =  useSelector(
+    (state: RootState) => state.auth.user?.id.toLocaleUpperCase()
+  );
+  console.log(userId)
+  const { data: fetchdePr, isLoading } = usePrQuery({
+    perPage: pageSize,
+    page: currentPage,
+    name: nameProduct,
+    role: Current_User!,
+    vendorId : Current_User === "VENDOR" ? userId : "" ,
+    storeId: selectedStore,
+  });
+const [publishProduct] = usePublishProductMutation()
   // get stores base to ROLE
   //const total = fetchedProducts?.data?.meta.totalRecords
   let stores = [];
   if (Current_User === "VENDOR") {
     const { data: fetechedMyStores } = useMyStoresQuery();
     stores = fetechedMyStores?.data?.docs;
-  }
-  else{
-    const {data : fetchedAllStores}=useAllStoresQuery()
-    stores = fetchedAllStores?.data?.docs
+  } else {
+    const { data: fetchedAllStores } = useAllStoresQuery();
+    stores = fetchedAllStores?.data?.docs;
   }
   const selectStores = stores?.map((store: any) => ({
     label: store.name,
     value: store.id,
   }));
-  ////////////////////////////////////////////////////////
 
-  // const { data: fetchedProductsOfStore } = useMyProductsQuery({
-  //   id: selectedStore,
-  //   perPage: pageSize,
-  //   page: currentPage,
-  // });
-  
-  console.log(fetchedProducts);
-  
+
   // Handle loading state
   if (isLoading) {
     return <Spinner />;
   }
-
+  console.log(import.meta.env.VITE_APP_BASE_URL)
 
   const handleDelete = async () => {
-    await deleteProducts(selectedRowIds);
+    const response = await deleteProducts(selectedRowIds);
+    console.log(selectedRowIds)
+    if ('data' in response) {
+      // Display success message if data exists
+      message.success( ` Product${selectedRowIds.length==1 ? "" :"s"} deleted successfully!`);
+      setSelectedRowIds([])
+
+  } else {
+      // Handle unexpected response format
+      message.error("Unexpected response from server. Please try again later.");
+  }
+
   };
+  const handleAllStores= ()=>{
+    setSelectedStore("")
+  }
+
+  const handleSearchChange = debounce((searchText: string) => {
+    console.log("Search text for category list:", searchText);
+    setNameProduct(searchText);
+  }, 200);
 
   const handleNavigate = () => {
     navigate("/products/create");
   };
+  const handleNavigateEdit = (id : any) =>{
+    navigate(`/products/edit/${id}`)
+  }
   const handlePaginationChange = (page: number, pageSize?: number) => {
     setCurrentPage(page);
     setPageSize(pageSize || 5);
@@ -134,30 +141,42 @@ const { data: fetchedProducts, isLoading } = selectedStore
       dataIndex: "name",
       key: "name",
       render: (name: string, record: Product) => {
-        const imgUrl  = record.images.replace(/"/g, '');
-        console.log(imgUrl)
-
-        return(
-        <div className="name-column">
-          <div className="picture-Product">
-            <img height={"30px"} width={"30px"} src={imgUrl} alt="" />
+        const imgUrl = JSON.parse(record.images)[0];
+      
+        return (
+          <div className="name-column">
+            <div className="picture-Product">
+              <img height={"40px"} width={"40px"} style={{borderRadius:'8px'}} src={imgUrl} alt="" />
+            </div>
+            <div className="data-name">
+              <h3 className="prod-name">{name}</h3>
+              <span>{record.id}</span>
+            </div>
           </div>
-          <div className="data-name">
-            <h3>{name}</h3>
-            <span>{record.id}</span>
-          </div>
-        </div>)
+        );
       },
       sorter: (a: Product, b: Product) => a.name.localeCompare(b.name),
     },
     {
-      title: "Category",
+      title: "Store",
       className: "product",
-      dataIndex: "category",
-      render: (category: any) => <span className="">{category?.name || "erf"}</span>,
+      dataIndex: ['store' , 'name'],
+      render: (name: string) => (
+        <span className="store-td">{name}</span>
+      ),
 
       key: "Product",
-      sorter: (a: Product, b: Product) => a.Product.localeCompare(b.Product),
+    },
+    
+    {
+      title: "Category",
+      className: "",
+      dataIndex: "category",
+      render: (category: any) => (
+        <span className="category-td">{category?.name || "erf"}</span>
+      ),
+
+      key: "Product",
     },
 
     {
@@ -165,57 +184,41 @@ const { data: fetchedProducts, isLoading } = selectedStore
       dataIndex: "price",
       key: "price",
       sorter: (a: Product, b: Product) => a.price - b.price,
+      render:(price:string)=>(
+        <p className="price-product">{price} Dt</p>
+      )
     },
     {
+      title: "Stock",
+      dataIndex: "stockNumber",
+      key: "price",
+      render:(stock:string)=>(
+        <p className="stock-product">{stock}</p>
+      )
+    },
+
+    {
       title: "Published",
-      dataIndex: "published",
+      dataIndex: "isPublished",
       key: "published",
 
-      sorter: (a: Product, b: Product) => (a.published ? 1 : 0) - (b.published ? 1 : 0),
-      render: (published: boolean) => (
+      sorter: (a: Product, b: Product) =>
+        (a.published ? 1 : 0) - (b.published ? 1 : 0),
+      render: (isPublished: boolean , record: Product) => (
         <Switch
-          checked={published}
+          checked={isPublished}
           onChange={(checked) => console.log(checked)}
-          onClick={(checked) => !checked}
+          onClick={()=>{publishProduct({id:record.id})}}
         />
       ),
     },
     {
       title: "Action",
       key: "action",
-      render: (record : any) => (
+      render: (record: any) => (
         <Space size="middle">
-          <div className="icon-action" onClick={() => Navigate(record?.id)}>
-            <svg
-              fill="#7D879C"
-              width="16px"
-              height="16px"
-              version="1.1"
-              id="Layer_1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              stroke=""
-            >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-              <g id="SVGRepo_iconCarrier">
-                {" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M311.18,78.008L32.23,356.958L0.613,485.716c-1.771,7.209,0.355,14.818,5.604,20.067 c5.266,5.266,12.88,7.368,20.067,5.604l128.759-31.617l278.95-278.95L311.18,78.008z M40.877,471.123l10.871-44.271l33.4,33.4 L40.877,471.123z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-                <g>
-                  {" "}
-                  <g>
-                    {" "}
-                    <path d="M502.598,86.818L425.182,9.402c-12.536-12.536-32.86-12.536-45.396,0l-30.825,30.825l122.812,122.812l30.825-30.825 C515.134,119.679,515.134,99.354,502.598,86.818z"></path>{" "}
-                  </g>{" "}
-                </g>{" "}
-              </g>
-            </svg>
+          <div className="icon-action" onClick={() => handleNavigateEdit(record?.id)}>
+            <EditIcon/>
           </div>
         </Space>
       ),
@@ -223,12 +226,12 @@ const { data: fetchedProducts, isLoading } = selectedStore
   ];
 
   const tableProps = {
-    dataSource: fetchedProducts?.data?.docs,
+    dataSource: fetchdePr?.data?.docs,
     columns: columns,
     headerStyle: { backgroundColor: "lightblue" },
     // Set the pageSize in pagination config
     pagination: {
-      total: 30,
+      total: fetchdePr?.data?.meta?.totalRecords,
       current: currentPage,
       pageSize: pageSize,
       onChange: handlePaginationChange, // Handle page change event
@@ -240,29 +243,40 @@ const { data: fetchedProducts, isLoading } = selectedStore
   };
   const handleSelectChange = (value: any) => {
     setSelectedStore(value);
-    console.log(selectedStore)
-
+    console.log(selectedStore);
   };
 
   return (
     <div className="Product-List">
-      <h1>Product List</h1>
+      <h1>{Current_User ===ADMIN ?'Products List' : 'My Products List' } </h1>
 
       <div className="header-Product-list">
         <SeachFilter
           placeholder={"Search Product.."}
-          onSearchChange={function (_text: string): void {
-            throw new Error("Function not implemented.");
-          }}
+          onSearchChange={handleSearchChange}
         />
+        <div style={{display:"flex" , alignItems:'center' , justifyContent:'center' , gap:"10px" ,backgroundColor:'#f3f5f9',paddingTop:'0',height:'42px',width:"320px", borderRadius:"10px"  }}>
         <Select
-        style={{ width: '200px', height: '8px !important' , borderRadius:"30px"}}
-        size="small"
+          style={{
+            width: "200px",
+            height: "8px !important",
+            borderRadius: "30px",
+          }}
+          size="small"
           placeholder="Store "
           options={selectStores}
-          onChange={(value) => handleSelectChange(value)} 
+          onChange={(value) => handleSelectChange(value)}
           className="input-custom"
         />
+          <Button
+            style={{height:"40px"}}
+            size="xl"
+            variant={"dark"}
+            onClick={handleAllStores}
+          >
+            All stores
+          </Button>
+          </div>
         <Button className="add-cat" onClick={handleNavigate}>
           {" "}
           <span>+</span> Add Product

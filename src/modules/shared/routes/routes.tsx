@@ -13,7 +13,7 @@ import brandRoutes from '../../brands/routes/routes';
 import orderRoutes from '../../orders/routes/routes';
 import paymentRoutes from '../../payment/routes/routes';
 
-const routes = [
+const Routes = [
   ...sharedRoutes,
   ...authRoutes,
   ...homeRoutes,
@@ -30,4 +30,6 @@ const routes = [
   ...paymentRoutes,
 ];
 
-export default routes;
+// Filter routes based on the user's role
+
+export default Routes;

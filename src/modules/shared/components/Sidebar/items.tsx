@@ -8,35 +8,34 @@ import { ReactComponent as VendorIcon } from '../../assets/icons/sidebar/vendor.
 
 export const SIDEBARITEMS = [
   {
-    link: '/products',
-    label: 'Products',
-    icon: <ProductIcon />,
-    roles: ['ADMIN', 'VENDOR'],
-  },
-  {
-    link: '/categories',
-    label: 'Categories',
-    icon: <CatergoryIcon />,
-    roles: ['ADMIN', 'VENDOR'],
-  },
-
-  {
     link: '/stores',
     label: 'Stores',
     icon: <StoreIcon />,
     roles: ['ADMIN', 'VENDOR'],
   },
   {
+    link: '/products',
+    label: 'Products',
+    icon: <ProductIcon />,
+    roles: ['ADMIN', 'VENDOR'],
+  },
+  {
     link: '/orders',
     label: 'Order List',
-    icon: <StoreIcon />,
+    icon: <BrandIcon />,
     roles: ['ADMIN', 'VENDOR'],
   },
   {
     link: '/vendors',
     label: 'Vendors',
     icon: <VendorIcon />,
-    roles: ['ADMIN', 'VENDOR'],
+    roles: ['ADMIN'],
+  },
+  {
+    link: '/categories',
+    label: 'Categories',
+    icon: <CatergoryIcon />,
+    roles: ['ADMIN'],
   },
   {
     link: '/brands',
@@ -55,7 +54,7 @@ export const SIDEBARITEMS = [
     link: '/payments',
     label: 'Payment methods',
     icon: <BrandIcon />,
-    roles: ['VENDOR', 'ADMIN'],
+    roles: [ 'ADMIN'],
   },
   
 ];

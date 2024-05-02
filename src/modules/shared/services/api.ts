@@ -8,7 +8,7 @@ import axiosInstance from '@src/modules/auth/utils/axios';
 import { setTokens } from '@src/modules/auth/utils/token';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_APP_BASE_URL,
+  baseUrl:import.meta.env.VITE_APP_BASE_URL,
   // Add headers here
   prepareHeaders: (headers) => {
     // You can add any headers you need here
@@ -26,7 +26,7 @@ const staggeredBaseQueryWithBailOut = retry(
     const result = await baseQuery(args, api, extraOptions);
     console.log({ result });
     if (result.error) {
-      if (result.error.status === 401) {
+      if (result.error.status === 409) {
         try {
           const response = await axiosInstance.get('/auth/refresh');
           const { accessToken } = response.data.payload;
@@ -64,7 +64,8 @@ export const api = createApi({
     'vendors',
     'vendor',
     'address',
-    'orders'
+    'orders',
+    "product"
     
     
   ],

@@ -30,7 +30,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
 
   const Current_User =
     useSelector((state: RootState) => state.auth.user?.role.toUpperCase()) ||
-    'vendor';
+    'admin';
   console.log('role in all', Current_User);
   console.log(SIDEBARITEMS, 'sideeeszfshfuidshuhuidfhviu');
 
@@ -80,7 +80,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
             >
               <div className="item-left">
                 <div
-                  className={` link-icon-stroke-color  ${
+                  className={`link-icon-stroke-color  ${
                     paths.includes(link) && 'link-icon-stroke-color-active'
                   }`}
                 >

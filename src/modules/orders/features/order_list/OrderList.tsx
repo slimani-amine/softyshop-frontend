@@ -17,12 +17,17 @@ import {
   
   import { useEffect, useState } from 'react'; // Import useState hook for managing modal state
   import { debounce } from 'lodash';
+import { useSelector } from 'react-redux';
+import { RootState } from '@src/modules/shared/store';
+import { ADMIN } from '@src/global_roles_config';
   
   export default function CategoryList() {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
-
+    const Current_User = useSelector(
+      (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+    );
     const [numberOrder, setNumberOrder] = useState<string>('');
     const { data: fetchedOrders } = useOrdersQuery({
       perPage: pageSize,
@@ -196,24 +201,19 @@ import {
     const tableProps = {
       dataSource: orders,
       columns: columns,
-      headerStyle: { backgroundColor: 'lightblue' },
-      header: {
-        style: { borderRadius: 'px' },
-      },
       pagination: {
         total: fetchedOrders?.data?.meta.totalRecords,
         current: currentPage,
         pageSize: pageSize,
-        onChange: handlePaginationChange, // Handle page change event
-        onShowSizeChange: handlePaginationChange,
-  
-        // Handle page size change event
+        onChange: handlePaginationChange,
+        pageSizeOptions: ['5', '10', '20'], // Define available page sizes
+        showSizeChanger: true, // Enable page size selector
       },
     };
   
     return (
       <div className="Product-List">
-        <h1>Orders List</h1>
+      <h1>{Current_User ===ADMIN ?'Orders List' : 'My Orders List' } </h1>
         <div className="header-Product-list">
           <SeachFilter
             onSearchChange={handleSearchChange}

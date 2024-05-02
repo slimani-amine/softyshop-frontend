@@ -5,16 +5,31 @@ export const ProductsApi = api.injectEndpoints({
       query: () => `api/products`,
       providesTags:['products']
     }),
-    products: builder.query<any, { perPage: number; page: number , name :string  }>({
-      query: ({ perPage, page , name  }) => `api/products?perPage=${perPage}&page=${page}${name ? `&name=${name}`:"" }`,
-      providesTags:['products']
+
+    pr:builder.query<any , {perPage : number , page:number ,name:string , role : string, storeId?:string , vendorId?:string }>({
+      query: ({ perPage, page, name, role, storeId, vendorId }) => {
+        let url = "api/";
+        if (role === "VENDOR" || storeId) {
+            url += "stores/";
+            if (role === "VENDOR") {
+                url += `${vendorId}/`;
+            }
+        }
+        if (storeId) {
+            url += `${storeId}/`;
+        }
+        url += `products?perPage=${perPage}&page=${page}`;
+        if (name) {
+            url += `&name=${name}`;
+        }
+       return url;
+    }   , 
+     providesTags:['products']
+
     }),
-    myProducts: builder.query<any,{id:any , perPage: number; page: number , name :string}>({
-      query: ({id,perPage,page,name}) => ({
-        url: `/api/stores/${id}/products?perPage=${perPage}&page=${page}${name ? `&name=${name}`:"" }`,
-      
-      }),
-      providesTags : ["products"]
+    product: builder.query<any, any>({
+      query: (id) => `api/products/${id}`,
+      providesTags : ['product']
     }),
     createProduct: builder.mutation<any,{id:number,newProduct:any}>({
       query: ({id,newProduct}) => ({
@@ -33,7 +48,24 @@ export const ProductsApi = api.injectEndpoints({
       invalidatesTags : ['products'],
 
 
-    })
+    }),
+    publishProduct : builder.mutation<any ,{ id: any;}>({
+      query: ({ id}) => ({
+        url: `api/products/${id}/publish`,
+        method: 'PATCH',
+        
+      }),
+      invalidatesTags: ['products']}),
+      UpdateProduct : builder.mutation<any ,{ id: any, body:any}>({
+        query: ({ id,body}) => ({
+          url: `api/products/${id}`,
+          method: 'PATCH',
+          body:body
+          
+        }),
+        invalidatesTags: ['products' , 'product']}),
+    
+
     
    
  
@@ -41,4 +73,4 @@ export const ProductsApi = api.injectEndpoints({
   })
 });
 
-export const {useAllProductsQuery, useProductsQuery , useCreateProductMutation , useDeleteProductsMutation , useMyProductsQuery} = ProductsApi
+export const {useUpdateProductMutation,useProductQuery,useAllProductsQuery,usePrQuery , useCreateProductMutation , useDeleteProductsMutation , usePublishProductMutation } = ProductsApi

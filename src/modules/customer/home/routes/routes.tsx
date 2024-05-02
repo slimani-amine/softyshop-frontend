@@ -2,6 +2,7 @@ import { RouteProps } from 'react-router-dom';
 import { Fragment, lazy } from 'react';
 import AuthGuard from '@src/modules/shared/guards/AuthGuard';
 import CustomerLayout from '@src/modules/shared/layout/CustomerLayout/CustomerLayout';
+import { ADMIN , VENDOR } from "@src/global_roles_config";
 
 type RouteConfig = {
   exact: boolean | null;
@@ -20,7 +21,7 @@ const routes: RouteConfig[] = [
     path: '/home',
     component: lazy(() => import('../features/Home')),
     layout: CustomerLayout,
-    roles: ['ADMIN', 'VENDOR'],
+    roles: [ADMIN, VENDOR],
   },
   {
     exact: true,
@@ -28,7 +29,7 @@ const routes: RouteConfig[] = [
     path: '/home/:storeId',
     component: lazy(() => import('../../storeDetails/storeDetails')),
     layout: CustomerLayout,
-    roles: ['ADMIN', 'VENDOR'],
+    roles: [ADMIN, VENDOR],
   },
   {
     exact: true,
@@ -36,7 +37,7 @@ const routes: RouteConfig[] = [
     path: '/home/:storeId/:productId',
     component: lazy(() => import('../../productDetails/ProductDetails')),
     layout: CustomerLayout,
-    roles: ['ADMIN', 'VENDOR'],
+    roles: [ADMIN, VENDOR],
   },
   {
     exact: true,
@@ -44,7 +45,7 @@ const routes: RouteConfig[] = [
     path: '/books/:productId',
     component: lazy(() => import('../../productDetails/ProductDetails')),
     layout: CustomerLayout,
-    roles: ['ADMIN', 'VENDOR'],
+    roles: [ADMIN, VENDOR],
   },
 ];
 

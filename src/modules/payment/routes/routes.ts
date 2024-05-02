@@ -3,6 +3,7 @@ import MainLayout from "@src/modules/shared/layout/MainLayout/MainLayout";
 import AuthGuard from "@src/modules/shared/guards/AuthGuard";
 import { RouteProps } from "react-router-dom";
 import { Fragment, lazy } from "react";
+import { ADMIN } from "@src/global_roles_config";
 
 type RouteConfig = {
   exact: boolean | null;
@@ -21,7 +22,7 @@ const routes: RouteConfig[] = [
     path: "/payments",
     component: lazy(() => import("../features/paymentList/paymentList")),
     layout: MainLayout,
-    roles: ['VENDOR'],
+    roles: [ADMIN],
   },
   {
     exact: true,
@@ -29,7 +30,7 @@ const routes: RouteConfig[] = [
     path: "/payments/create",
     component: lazy(() => import("../features/paymentCreate/paymentCreate")),
     layout: MainLayout,
-    roles: ['VENDOR'],
+    roles: [ADMIN],
   },
  
 ];

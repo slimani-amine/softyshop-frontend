@@ -26,6 +26,8 @@ interface AddCategoryFormProps {
 const EditCategoryForm: FC<AddCategoryFormProps> = () => {
   const navigate = useNavigate()
   const [files, setFile] = useState<any>(null);
+  const [uploading, setUploading] = useState(false);
+
   console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
@@ -66,7 +68,7 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
       });
       if ('data' in response) {
         // Display success message if data exists
-        message.success("Category saved successfully!");
+        message.success("Category updated successfully!");
         form.resetFields();
 
         navigate("/categories")
@@ -74,8 +76,8 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
         
     } else if ('error' in response) {
         // Display error message if error exists
-        message.error("Failed to save product. Please try again.");
-        console.error('Error saving product', response.error);
+        message.error("Failed to save category. Please try again.");
+        console.error('Error saving category', response.error);
     } else {
         message.error("Unexpected response from server. Please try again later.");
     }
@@ -103,6 +105,13 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
         <Form form={form} initialValues={initialValues}>
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
+            <label
+              className="label-order"
+              htmlFor="products-search"
+              style={{color:"#6195def5" , fontWeight:'500'}}
+               >
+                 Category Name :
+              </label>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
@@ -126,31 +135,42 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
             </Col>
           </Row>
           <Form.Item className="upload-images" name="images">
-            <Upload.Dragger
-              defaultFileList={defaultFileList}
+          <Upload.Dragger
               className="drag-images"
               listType="picture"
               accept="image/*"
               maxCount={1}
+              defaultFileList={defaultFileList}
               onChange={(e: any) =>
-                handleFileChange(e, setFile, setSelectedFileUrl)
+                handleFileChange(
+                  e,
+                  setFile,
+                  setSelectedFileUrl,
+                  setUploading
+                )
               }
               beforeUpload={() => false}
             >
-              <p className="ant-upload-text">Drag & drop Category image here</p>
-              <div className="icon-drag">
-                <Divider className="divider" />
-                <p className="or">OR</p>
-                <Divider className="divider" />
-              </div>
-              <ButtonAnt className="btn-select">Select Files</ButtonAnt>
-              <p className="size-img">Upload 280*280 image</p>
+              {uploading ? (
+                <div className="uploading-indicator">Uploading...</div>
+              ) : (
+                <>
+                  <p className="ant-upload-text">Drag & drop Category image here</p>
+                  <div className="icon-drag">
+                    <Divider className="divider" />
+                    <p className="or">OR</p>
+                    <Divider className="divider" />
+                  </div>
+                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                  <p className="size-img">Upload 280*280 image</p>
+                </>
+              )}
             </Upload.Dragger>
           </Form.Item>
 
       
           <Form.Item>
-            <Button className="add-cat" onClick={handleFinish} type="submit">
+            <Button className="add-cat" onClick={handleFinish} disabled={uploading} type="submit">
               Save Category
             </Button>
           </Form.Item>
