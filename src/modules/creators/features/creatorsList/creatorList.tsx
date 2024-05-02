@@ -66,11 +66,11 @@ export default function CreatorsList() {
 
   const navigate = useNavigate();
   const Navigate = (id:string)=>{
-    navigate(`/creators/edit/${id}`)
+    navigate(`/authors/edit/${id}`)
   }
 
   const handleNavigate = () => {
-    navigate('/creators/create');
+    navigate('/authors/create');
   };
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     const checked = e.target.checked;

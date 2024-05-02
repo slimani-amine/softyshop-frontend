@@ -4,12 +4,13 @@ import browseIcon from '../../assets/icons/navbar/website.png';
 import { ReactComponent as ProfileIcon } from '../../assets/icons/sidebar/profile.svg';
 import { ReactComponent as SettingsIcon } from '../../assets/icons/navbar/settings.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/icons/navbar/logout.svg';
-import { useAppDispatch } from '../../store';
+import { RootState, useAppDispatch } from '../../store';
 import { logout } from '@src/modules/auth/data/authThunk';
 import Search from '../Search/Search';
 import NotificationIcon from '../../assets/icons/navbar/bell.png';
 //eslint-ignore-next-line
 import { useAnimation } from '../../layout/MainLayout/context/animationContext';
+import { useSelector } from 'react-redux';
 interface INavbarProps {
   setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   setCollapseSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +21,8 @@ const Navbar: React.FC<INavbarProps> = () => {
   const { isAnimating } = useAnimation();
   const navigate = useNavigate()
   const dispatch = useAppDispatch();
+  const current_user= useSelector((state: RootState) => state.auth.user)
+  console.log(current_user)
 
   const handleLogout = () => {
     dispatch(logout());
@@ -34,11 +37,11 @@ const Navbar: React.FC<INavbarProps> = () => {
       label: (
         <Space>
           <Avatar size={32} className="navbar-avatar">
-            TG
+            <img src={`${current_user?.picture}`} alt="" />
           </Avatar>
           <div className="navbar-account-info">
-            <p className="sidebar-accountinfo-item">tarekgzgz@gmail.com</p>
-            <p>Role: Admin</p>
+            <p className="sidebar-accountinfo-item">{current_user?.email}</p>
+            <p>Role: {current_user?.role}</p>
           </div>
         </Space>
       ),

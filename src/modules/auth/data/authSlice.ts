@@ -12,6 +12,7 @@ export interface AuthState {
     name: string;
     email: string;
     role: string;
+    picture: string
   } | null;
   error: string | null;
 }

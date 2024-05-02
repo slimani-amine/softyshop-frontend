@@ -192,8 +192,8 @@ const [updateProduct] = useUpdateProductMutation()
                       message: 'Please enter Product name' 
                   },
                   {
-                    pattern: /^(?!\s)(?=.*[a-zA-Z'À-ÖØ-öø-ÿ\s])[a-zA-Z'À-ÖØ-öø-ÿ\s]{2,}$/,
-                    message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                      pattern: /^(?!\s)(?=.*[a-zA-Z0-9'À-ÖØ-öø-ÿ\s])[a-zA-Z0-9'À-ÖØ-öø-ÿ\s]{2,}$/,
+                      message: 'Name must contain at least two characters (alphabetic or numeric) and no leading spaces'
                   }
               ]}
               >

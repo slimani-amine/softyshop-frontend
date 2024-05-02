@@ -20,7 +20,6 @@ const AddCreatorForm: FC<AddCreatorFormProps> = () => {
       // Create category
         const response  = await createCreator({
         name: objectPost.name,
-        icon: 'hhhhh',
         isPublished: objectPost.isPublished === "on" ? true : false,
       });
       if ('data' in response) {
@@ -28,12 +27,12 @@ const AddCreatorForm: FC<AddCreatorFormProps> = () => {
         message.success("Creator saved successfully!");
         form.resetFields();
 
-        navigate("/creators")
+        navigate("/authors")
         
     } else if ('error' in response) {
         // Display error message if error exists
-        message.error("Failed to save Creator. Please try again.");
-        console.error('Error saving Creator', response.error);
+        message.error("Failed to save Author. Please try again.");
+        console.error('Error saving Author', response.error);
     } else {
         // Handle unexpected response format
         message.error("Unexpected response from server. Please try again later.");
@@ -41,8 +40,8 @@ const AddCreatorForm: FC<AddCreatorFormProps> = () => {
   
       
     } catch (error) {
-      console.error('Error saving Creator', error);
-      message.error('Error saving Creator');
+      console.error('Error saving Author', error);
+      message.error('Error saving Author');
     }
   };
   

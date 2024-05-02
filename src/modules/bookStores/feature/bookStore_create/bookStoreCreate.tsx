@@ -174,17 +174,15 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                   name="name"
                   style={{ marginBottom: 0 }}
                   rules={[
-                    {
-                      required: true,
-                      message: "Please enter Store name",
+                    { 
+                        required: true, 
+                        message: 'Please enter Product name' 
                     },
                     {
-                      pattern:
-                        /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){4})[a-zA-Z\u0600-\u06FF\s]{4,}$/,
-                      message:
-                        "Name must contain at least two alphabetical characters and no leading spaces",
-                    },
-                  ]}
+                        pattern: /^(?!\s)(?=.*[a-zA-Z0-9'À-ÖØ-öø-ÿ\s])[a-zA-Z0-9'À-ÖØ-öø-ÿ\s]{2,}$/,
+                        message: 'Name must contain at least two characters (alphabetic or numeric) and no leading spaces'
+                    }
+                ]}
                 >
                   <Input
                     size="large"
