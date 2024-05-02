@@ -1,6 +1,12 @@
+import { checkIt } from '@src/modules/customer/data/checkoutSlice';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { Checkbox, ConfigProvider } from 'antd';
 
 function CheckedItem({ children }: { children: React.ReactNode }) {
+  const dispatch = useAppDispatch();
+  const isChecked = useAppSelector((state) => state.checkout.agreedToPayCash);
+  console.log(isChecked);
+
   return (
     <div className="checked-item">
       <ConfigProvider
@@ -10,7 +16,7 @@ function CheckedItem({ children }: { children: React.ReactNode }) {
           },
         }}
       >
-        <Checkbox />
+        <Checkbox value={isChecked} onChange={() => dispatch(checkIt())} />
       </ConfigProvider>{' '}
       {children}
     </div>

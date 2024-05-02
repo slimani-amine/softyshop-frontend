@@ -7,18 +7,28 @@ import Address from './components/Address';
 import AddressTitle from './components/AddressTitle';
 import AddressContent from './components/AddressContent';
 import { useAppSelector } from '@src/modules/shared/store';
+import CheckoutSelect from './components/CheckoutSelect';
 
 function Checkout() {
+  const deliveryDate = useAppSelector((state) => state.checkout.deliveryDate);
+  const deliveryTime = useAppSelector((state) => state.checkout.deliveryTime);
+  const isChecked = useAppSelector((state) => state.checkout.agreedToPayCash);
   const cart = useAppSelector((state) => state.cart.cart);
   const total = useAppSelector((state) => state.cart.cartAmount);
   const Total = total + 28;
+
+  const isOrderReady = isChecked && deliveryDate && deliveryTime;
 
   return (
     <div className="checkout-page">
       <div className="checkout" style={{ padding: '0 24px' }}>
         <Section>
           <div className="checkout-title-bar">
-            <Number>1</Number> <Title>delivery date & time</Title>
+            <Number>1</Number>
+            <Title>delivery date & time</Title>
+          </div>
+          <div className="date-section">
+            <CheckoutSelect></CheckoutSelect>
           </div>
         </Section>
         <Section>
@@ -65,7 +75,17 @@ function Checkout() {
               </p>
             </CheckedItem>
           </div>
-          <Button label="Place Order" size="xl" style={{ width: '100%' }} />
+          {isOrderReady ? (
+            <Button label="Place Order" size="xl" style={{ width: '100%' }} />
+          ) : (
+            <Button
+              label="Place Order"
+              size="xl"
+              variant="secondary"
+              disabled={true}
+              style={{ width: '100%' }}
+            />
+          )}
         </Section>
       </div>
       <div className="order">

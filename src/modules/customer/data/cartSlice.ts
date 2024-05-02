@@ -31,7 +31,7 @@ const cartSlice = createSlice({
     builder.addCase(getCart.rejected, (state, action) => {
       state.error = action?.payload;
       state.status = 'failed';
-      console.log(state.status);
+      // console.log(state.status);
     });
     builder.addCase(addToCart.pending, (state) => {
       state.error = null;
@@ -47,16 +47,16 @@ const cartSlice = createSlice({
     builder.addCase(deleteFromCart.pending, (state) => {
       state.error = null;
       state.status = 'loading';
-      console.log(state.status);
+      // console.log(state.status);
     });
     builder.addCase(deleteFromCart.fulfilled, (state) => {
       state.status = 'succeeded';
-      console.log(state.status);
+      // console.log(state.status);
     });
     builder.addCase(deleteFromCart.rejected, (state, action) => {
       state.error = action?.payload;
       state.status = 'failed';
-      console.log(state.status);
+      // console.log(state.status);
     });
   },
 });

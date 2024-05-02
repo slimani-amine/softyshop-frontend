@@ -53,6 +53,14 @@ $color: (
     background-color: transparent;
     border: 1px solid $value;
     color: $value;
+    transition: all ease-in-out 0.3s;
+  }
+  .btn-outlined-#{$key}:hover {
+    opacity: 0.5;
+  }
+  .btn-outlined-#{$key}:active {
+    opacity: 0.9;
+    transition: none;
   }
 }
 
