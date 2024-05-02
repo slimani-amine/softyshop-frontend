@@ -20,7 +20,7 @@ const routes: RouteConfig[] = [
     path: '/checkout',
     component: lazy(() => import('./Checkout')),
     layout: CustomerLayout,
-    roles: ['ADMIN', 'VENDOR'],
+    roles: ['ADMIN', 'VENDOR', 'CUSTOMER'],
   },
 ];
 
