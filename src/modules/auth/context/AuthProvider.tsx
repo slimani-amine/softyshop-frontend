@@ -19,7 +19,7 @@ export const accessToken: string | null = localStorage.getItem('accessToken');
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const isMounted = useIsMountedRef();
-
+  const URL = import.meta.env.VITE_APP_AUTH_URL
   const { isInitialised } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
     async function fetchUser() {
       if (accessToken && isValidToken(accessToken)) {
-        const response = await axiosInstance.get(`https://softyshopapi.lissene.dev/v1/api/users/me`);
+        const response = await axiosInstance.get(`${URL}api/users/me`);
 
         const user = response?.data?.data;
 

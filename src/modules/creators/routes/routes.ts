@@ -19,7 +19,7 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: "/creators",
+    path: "/authors",
     component: lazy(() => import("../features/creatorsList/creatorList")),
     layout: MainLayout,
     roles: [VENDOR , ADMIN],
@@ -27,7 +27,7 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: "/creators/create",
+    path: "/authors/create",
     component: lazy(() => import("../features/creatorsCreate/creatorCreate")),
     layout: MainLayout,
     roles: [VENDOR , ADMIN],
@@ -35,7 +35,7 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: "/creators/edit/:id",
+    path: "/authors/edit/:id",
     component: lazy(() => import("../features/creatorEdit/creatorEdit")),
     layout: MainLayout,
     roles: [VENDOR ,ADMIN],

@@ -66,11 +66,11 @@ export default function CreatorsList() {
 
   const navigate = useNavigate();
   const Navigate = (id:string)=>{
-    navigate(`/creators/edit/${id}`)
+    navigate(`/authors/edit/${id}`)
   }
 
   const handleNavigate = () => {
-    navigate('/creators/create');
+    navigate('/authors/create');
   };
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     const checked = e.target.checked;
@@ -147,9 +147,9 @@ export default function CreatorsList() {
 
   return (
     <div className="Product-List">
-      <h1>creator List</h1>
+      <h1>Authors List</h1>
       <div className="header-Product-list">
-        <SeachFilter onSearchChange={handleSearchChange} placeholder={'Search creator..'} />
+        <SeachFilter onSearchChange={handleSearchChange} placeholder={'Search author..'} />
         <Button className="add-cat" onClick={handleNavigate}> <span>+</span> Add creator</Button>
       </div>
       <div className="container-Product-List">

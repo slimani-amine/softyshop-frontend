@@ -42,6 +42,7 @@ const Button: React.FC<IButtonProps> = ({
         `${outlined ? 'btn-outlined' : 'btn'}-${variant}`,
         `${rounded ? 'btn-rounded' : ''}`,
         `${disabled ? 'btn-disabled' : ''}`,
+
       ].join(' ')}
       disabled={disabled || loading}
       {...props}

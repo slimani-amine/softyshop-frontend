@@ -22,7 +22,7 @@ const routes: RouteConfig[] = [
     path: '/orders/create',
     component: lazy(() => import('../features/order_create/createOrder')),
     layout: MainLayout,
-    roles: [VENDOR, ADMIN],
+    roles: [VENDOR, ADMIN ],
   },
   {
     exact: true,
@@ -30,7 +30,7 @@ const routes: RouteConfig[] = [
     path: '/orders',
     component: lazy(() => import('../features/order_list/OrderList')),
     layout: MainLayout,
-    roles: [VENDOR, ADMIN],
+    roles: [VENDOR,ADMIN],
   },
 ];
 
