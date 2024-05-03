@@ -8,8 +8,10 @@ import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { getCart } from '@src/modules/customer/data/cartThunk';
 import { showDrawer } from '@src/modules/customer/data/drawerSlice';
 import TheDrawer from '@src/modules/customer/home/components/Cart/Cart';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
+  const navigate = useNavigate();
   const dispatch: any = useAppDispatch();
   (async function () {
     dispatch(getCart());
@@ -18,7 +20,9 @@ function Header() {
   const myCartItemsNumber: any = useAppSelector(
     (state) => state.cart.cartItems
   );
-
+  const role: string | undefined = useAppSelector(
+    (state) => state.auth.user?.role
+  );
   function interactWithDrawer() {
     dispatch(showDrawer());
   }
@@ -27,7 +31,13 @@ function Header() {
     <>
       <TheDrawer></TheDrawer>
       <div className="header">
-        <div className="logo-wrapper">
+        <div
+          onClick={() => {
+            if (role == 'user') navigate('/home');
+            else navigate('/products');
+          }}
+          className="logo-wrapper"
+        >
           <img src={Logo} alt="" />
         </div>
         <div className="middle-component">
