@@ -6,6 +6,7 @@ import useIsMountedRef from '../hook/useIsMountedRef';
 import { initialise } from '../data/authSlice';
 import { RootState } from '@src/modules/shared/store';
 import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
+import { AUTH_URL } from '../data/authThunk';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -36,7 +37,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
     async function fetchUser() {
       if (accessToken && isValidToken(accessToken)) {
-        const response = await axiosInstance.get(`https://softyshopapi.lissene.dev/v1/api/users/me`);
+        const response = await axiosInstance.get(`${AUTH_URL}api/users/me`);
 
         const user = response?.data?.data;
 

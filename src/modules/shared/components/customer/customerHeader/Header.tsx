@@ -5,15 +5,15 @@ import { ReactComponent as ChevronDownBlack } from '../../../assets/icons/custom
 import Logo from '../../../assets/icons/customerLayout/Header/logo-complete.svg';
 import Search from './components/Search';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { getCart } from '@src/modules/customer/data/cartThunk';
+// import { getCart } from '@src/modules/customer/data/cartThunk';
 import { showDrawer } from '@src/modules/customer/data/drawerSlice';
 import TheDrawer from '@src/modules/customer/home/components/Cart/Cart';
 
 function Header() {
   const dispatch: any = useAppDispatch();
-  (async function () {
-    dispatch(getCart());
-  })();
+  // (async function () {
+  //   dispatch(getCart());
+  // })();
 
   const myCartItemsNumber: any = useAppSelector(
     (state) => state.cart.cartItems
