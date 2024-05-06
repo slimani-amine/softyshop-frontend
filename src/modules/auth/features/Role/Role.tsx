@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initialStateType, setRole } from '../../data/roleSlice';
 // import { useEffect } from 'react';
 import { useAppSelector } from '@src/modules/shared/store';
+import { Link } from 'react-router-dom';
 
 function Role() {
   const dispatch = useDispatch();
@@ -41,6 +42,9 @@ function Role() {
           <Button label={'Customer'} onClick={() => handleRole('user')} />
           <Button label={'Vendor'} onClick={() => handleRole('vendor')} />
         </div>
+        <Link to={PATH.LOGIN} className="link">
+          Already a member?
+        </Link>
       </div>
     </div>
   );

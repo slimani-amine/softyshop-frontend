@@ -8,6 +8,7 @@ import productReducer from '@src/modules/customer/data/productSlice';
 import drawerReducer from '@src/modules/customer/data/drawerSlice';
 import checkoutReducer from '@src/modules/customer/data/checkoutSlice';
 import { api } from '../services/api';
+import addressReducer from '@src/modules/customer/data/addressSlice';
 
 const rootReducer = combineReducers({
   theme: themeReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   product: productReducer,
   drawer: drawerReducer,
   checkout: checkoutReducer,
+  address: addressReducer,
   [api.reducerPath]: api.reducer,
 });
 

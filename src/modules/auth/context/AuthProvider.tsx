@@ -40,6 +40,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         const response = await axiosInstance.get(`${AUTH_URL}api/users/me`);
 
         const user = response?.data?.data;
+        // todo const user = { ...response?.data?.data, token: accessToken };
+        // console.log(user);
 
         dispatch(initialise({ isAuthenticated: true, user }));
       } else {
