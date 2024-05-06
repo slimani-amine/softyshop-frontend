@@ -9,7 +9,7 @@ import { useAppSelector } from '@src/modules/shared/store';
 
 const AddAddressModal: React.FC = () => {
   const userId = useAppSelector((state) => state.auth.user?.id);
-  console.log('🚀 ~ userId:', userId);
+  // console.log('🚀 ~ userId:', userId);
 
   const initialValues = {
     address: '',
@@ -47,9 +47,11 @@ const AddAddressModal: React.FC = () => {
     onSubmit: (values) => {
       setSubmitting(true);
       const changedValues = getChangedValues(values, initialValues);
+      console.log(changedValues);
     },
   });
 
+  console.log(formik);
   return (
     <>
       <Button
