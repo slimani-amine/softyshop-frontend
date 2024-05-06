@@ -6,6 +6,7 @@ import useIsMountedRef from '../hook/useIsMountedRef';
 import { initialise } from '../data/authSlice';
 import { RootState } from '@src/modules/shared/store';
 import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
+import { saveToken } from '@src/modules/customer/data/cartSlice';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -15,13 +16,15 @@ interface JwtPayload {
   exp: number;
 }
 
-export const accessToken: string | null = localStorage.getItem('accessToken');
+export const accessToken: any = localStorage.getItem('accessToken');
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const isMounted = useIsMountedRef();
-  const URL = import.meta.env.VITE_APP_AUTH_URL
-  const { isInitialised } = useSelector((state: RootState) => state.auth);
+  // console.log(accessToken);
   const dispatch = useDispatch();
+  const isMounted = useIsMountedRef();
+
+  const { isInitialised } = useSelector((state: RootState) => state.auth);
+  dispatch(saveToken(accessToken));
 
   const isValidToken = (token: string) => {
     const decoded: JwtPayload = jwtDecode(token);
@@ -36,7 +39,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
     async function fetchUser() {
       if (accessToken && isValidToken(accessToken)) {
-        const response = await axiosInstance.get(`${URL}api/users/me`);
+        const response = await axiosInstance.get(
+          `https://softyshopapi.lissene.dev/v1/api/users/me`
+        );
 
         const user = response?.data?.data;
 

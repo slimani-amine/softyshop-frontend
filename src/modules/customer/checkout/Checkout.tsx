@@ -95,10 +95,10 @@ function Checkout() {
             <div className="checkout-order-item" key={index}>
               <p className="checkout-order-details">
                 <strong className="order-quantity">{item.quantity}</strong> x{' '}
-                {item.product.name}
+                {item?.product?.name}
               </p>
               <p className="checkout-order-item-price">
-                ${(item.product.price * item.quantity).toFixed(2)}
+                ${(item?.product?.price * item.quantity).toFixed(2)}
               </p>
             </div>
           ))}
