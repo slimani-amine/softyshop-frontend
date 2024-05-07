@@ -31,7 +31,9 @@ function AllProducts() {
   }, [BASE_URL]);
   const cart = useAppSelector((state) => state.cart.cart);
   const updatedProducts = Products.map((product: any) => {
-    const updatedProduct = cart.find((item) => item.product.id === product.id);
+    const updatedProduct = cart.find(
+      (item) => item?.product?.id === product?.id
+    );
     if (updatedProduct) {
       return { ...product, quantity: updatedProduct.quantity };
     } else return product;
