@@ -17,8 +17,10 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    saveToken(state, payload: any) {
-      state.token = payload;
+    saveToken(state, action) {
+      if (!action.payload) return;
+      state.token = action.payload;
+      console.log('🚀 ~ saveToken ~ action.payload:', action.payload);
     },
   },
   extraReducers: (builder) => {

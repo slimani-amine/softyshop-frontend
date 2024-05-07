@@ -45,6 +45,7 @@ const TheDrawer: React.FC = () => {
     >
       <section className="items-section">
         {cart.map((item, index) => {
+          console.log(item.product);
           return (
             <div key={index} className="cart-item">
               <div className="buttons">
@@ -96,7 +97,7 @@ const TheDrawer: React.FC = () => {
               </div>
               <img
                 src={
-                  item?.product.images.length &&
+                  item?.product?.images?.length &&
                   JSON.parse(item?.product?.images)
                 }
                 className="product-image-drawer"

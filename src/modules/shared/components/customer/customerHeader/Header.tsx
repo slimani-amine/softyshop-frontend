@@ -8,14 +8,16 @@ import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { showDrawer } from '@src/modules/customer/data/drawerSlice';
 import TheDrawer from '@src/modules/customer/home/components/Cart/Cart';
 import { useNavigate } from 'react-router-dom';
+import { getCart } from '@src/modules/customer/data/cartThunk';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch: any = useAppDispatch();
 
-  // (async function () {
-  //   dispatch(getCart());
-  // })();
+  const token = useAppSelector((state) => state.cart.token);
+  (async function () {
+    dispatch(getCart(token));
+  })();
 
   // (async function () {
   //   while (!accessToken) {

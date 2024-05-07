@@ -19,7 +19,7 @@ interface JwtPayload {
 
 export const accessToken: any = localStorage.getItem('accessToken');
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  console.log(accessToken);
+  // console.log(accessToken);
   const dispatch = useDispatch();
   const isMounted = useIsMountedRef();
 
