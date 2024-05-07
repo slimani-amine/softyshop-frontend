@@ -9,8 +9,11 @@ import { useAppSelector } from '@src/modules/shared/store';
 
 const AddAddressModal: React.FC = () => {
   // const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.auth.user);
-  console.log('🚀 ~ user:', user);
+  const userId: string | undefined = useAppSelector(
+    (state) => state.auth.user?.id
+  );
+
+  console.log('🚀 ~ Header ~ userId:', userId);
 
   const initialValues = {
     address: '',
