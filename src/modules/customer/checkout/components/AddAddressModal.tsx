@@ -19,7 +19,7 @@ const AddAddressModal: React.FC = () => {
     state: '',
     zipCode: '',
   };
-  const [submitting, setSubmitting] = useState(false);
+  // const [submitting, setSubmitting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -46,7 +46,7 @@ const AddAddressModal: React.FC = () => {
       zipCode: Yup.string().required('Zip Code is required'),
     }),
     onSubmit: (values) => {
-      setSubmitting(true);
+      // setSubmitting(true);
       const changedValues = getChangedValues(values, initialValues);
       console.log(changedValues);
       return handleOk();
