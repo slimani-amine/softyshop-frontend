@@ -8,8 +8,9 @@ import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesForm
 import { useAppSelector } from '@src/modules/shared/store';
 
 const AddAddressModal: React.FC = () => {
-  const userId = useAppSelector((state) => state.auth.user?.id);
-  // console.log('🚀 ~ userId:', userId);
+  // const dispatch = useDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  console.log('🚀 ~ user:', user);
 
   const initialValues = {
     address: '',
@@ -48,6 +49,7 @@ const AddAddressModal: React.FC = () => {
       setSubmitting(true);
       const changedValues = getChangedValues(values, initialValues);
       console.log(changedValues);
+      return handleOk();
     },
   });
 
@@ -67,7 +69,11 @@ const AddAddressModal: React.FC = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={[<Button size="sm" label="Save" onClick={handleOk} />]}
+        footer={[
+          <form onSubmit={formik.handleSubmit}>
+            <Button size="sm" label="Save" type="submit" />
+          </form>,
+        ]}
       >
         <div className="add-address-inputs">
           <Input

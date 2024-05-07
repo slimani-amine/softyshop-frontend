@@ -10,9 +10,6 @@ import { showDrawer } from '@src/modules/customer/data/drawerSlice';
 import TheDrawer from '@src/modules/customer/home/components/Cart/Cart';
 
 function Header() {
-  //todo                                                        IMPLEMENT getME() HERE           ;
-  const token = useAppSelector((state) => state.auth.user?.token);
-  console.log(token);
   const dispatch: any = useAppDispatch();
   // (async function () {
   //   dispatch(getCart());

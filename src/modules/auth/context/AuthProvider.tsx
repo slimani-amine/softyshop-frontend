@@ -7,6 +7,7 @@ import { initialise } from '../data/authSlice';
 import { RootState } from '@src/modules/shared/store';
 import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
 import { AUTH_URL } from '../data/authThunk';
+import { saveUser } from '@src/modules/customer/data/userSlice';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -42,7 +43,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         const user = response?.data?.data;
         // todo const user = { ...response?.data?.data, token: accessToken };
         // console.log(user);
-
+        dispatch(saveUser(user));
         dispatch(initialise({ isAuthenticated: true, user }));
       } else {
         dispatch(initialise({ isAuthenticated: false, user: null }));

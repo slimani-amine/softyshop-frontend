@@ -33,6 +33,7 @@ const authSlice = createSlice({
       const { isAuthenticated, user } = action.payload;
       state.isAuthenticated = isAuthenticated;
       state.isInitialised = true;
+      if (!user) return;
       state.user = user;
     },
     restore: (state) => {
