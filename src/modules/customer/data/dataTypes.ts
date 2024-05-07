@@ -65,6 +65,7 @@ export interface initialStateCartType {
   cartQuantity: number;
   error: any;
   status: string;
+  token: any;
 }
 export interface addToCartPayload {
   quantity: number;

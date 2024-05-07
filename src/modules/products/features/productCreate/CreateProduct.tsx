@@ -26,6 +26,7 @@ import { useCreateProductMutation } from '../../service/productApi';
 import { useAllCreatorsQuery } from '@src/modules/creators/service/creatorApi';
 import { useSelector } from 'react-redux';
 import {  useNavigate } from 'react-router-dom';
+import { ADMIN } from '@src/global_roles_config';
 interface AddProductFormProps {
   onFinish: (values: any) => void;
 }
@@ -63,7 +64,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
   );
   console.log(Current_User);
   let stores = [];
-  if (Current_User === 'ADMIN') {
+  if (Current_User === ADMIN) {
     const { data: fetechedAllStores } = useAllStoresQuery();
     stores = fetechedAllStores?.data.docs;
   } else {
@@ -87,12 +88,10 @@ const AddProductForm: FC<AddProductFormProps> = () => {
 
   const handleSaveClick = async () => {
     try {
-      console.log(selectedFileUrl , 'selected files');
+  
 
       const values = await form.validateFields();
-      console.log(values)
-
-      console.log(values.description , "desssss")
+   
       const product = {
         name: values.name,
         initialPrice: values.price,
@@ -154,10 +153,11 @@ const AddProductForm: FC<AddProductFormProps> = () => {
                       message: 'Please enter Product name' 
                   },
                   {
-                    pattern: /^(?!\s)(?=.*[a-zA-Z'À-ÖØ-öø-ÿ\s])[a-zA-Z'À-ÖØ-öø-ÿ\s]{2,}$/,
-                    message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                      pattern: /^(?!\s)(?=.*[a-zA-Z0-9'À-ÖØ-öø-ÿ\s])[a-zA-Z0-9'À-ÖØ-öø-ÿ\s]{2,}$/,
+                      message: 'Name must contain at least two characters (alphabetic or numeric) and no leading spaces'
                   }
               ]}
+          
               >
                 <Input
                   size="large"

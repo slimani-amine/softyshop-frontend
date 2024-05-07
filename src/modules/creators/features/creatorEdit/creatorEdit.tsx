@@ -42,7 +42,7 @@ const AddCreatorForm: FC<AddCreatorFormProps> = () => {
         // Display success message if data exists
         message.success("Creator saved successfully!");
         console.log(response.data);
-        navigate("/creators")
+        navigate("/authors")
         
     } else if ('error' in response) {
         // Display error message if error exists

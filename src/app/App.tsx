@@ -12,11 +12,19 @@ const App = () => {
   document.body.dir = i18n?.dir();
 
   const theme = useAppSelector((state) => state.theme.mode);
+<<<<<<< HEAD
   const role =
     useSelector(
       (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
     ) || 'VENDOR';
   console.log(role);
+=======
+  const role = useSelector(
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+  )  || "VENDOR"
+  
+  console.log(role)
+>>>>>>> develop
   return (
     <AnimationProvider>
       <div id={theme}>

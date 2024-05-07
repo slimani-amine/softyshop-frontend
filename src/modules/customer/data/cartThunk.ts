@@ -2,27 +2,30 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { AUTH_URL, BASE_URL } from '@src/modules/auth/data/authThunk';
 import { addToCartPayload } from './dataTypes';
-import { accessToken as token } from '@src/modules/auth/context/AuthProvider';
+import { accessToken } from '@src/modules/auth/context/AuthProvider';
 
-export const getCart = createAsyncThunk('cart/getCart', async () => {
-  try {
-    const response = await fetch(`${BASE_URL}api/shopping/my-cart`, {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
+export const getCart = createAsyncThunk(
+  'cart/getCart',
+  async (query: string) => {
+    try {
+      const response = await fetch(`${BASE_URL}api/shopping/my-cart`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${query}`,
+        },
+      });
+      const data = await response.json();
 
-    return data.data;
-  } catch (error) {
-    console.log(error);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
+);
 
 export const addToCart = createAsyncThunk(
   'cart/addToCart',
@@ -35,7 +38,7 @@ export const addToCart = createAsyncThunk(
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(query),
       });
@@ -60,7 +63,7 @@ export const deleteFromCart = createAsyncThunk(
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
       const data = await response.json();

@@ -21,7 +21,6 @@ export const renderRoutes = (routes: RouteConfig[] = [], role: string) => {
   const filteredRoutes = routes.filter((route) => {
     return route.roles && route.roles.includes(role);
   });
-console.log(filteredRoutes)
   return (
     <Suspense fallback={<LazyLoad />}>
       <Routes>

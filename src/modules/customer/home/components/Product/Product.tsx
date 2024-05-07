@@ -31,26 +31,27 @@ function Product({
 
   const theImage = images.length && JSON.parse(images);
   const cart = useAppSelector((state) => state.cart.cart);
+  const accessToken = useAppSelector((state) => state.cart.token);
 
   async function handleAddToCart() {
     const quantity: any =
-      cart?.find((item: any) => item.product.id == id)?.quantity || 0;
+      cart?.find((item: any) => item?.product?.id == id)?.quantity || 0;
     setIsLoading(true);
     Promise.all([
       await dispatch(addToCart({ quantity: quantity + 1, productId: id + '' })),
-      dispatch(getCart()),
+      dispatch(getCart(accessToken)),
     ]);
     setIsLoading(false);
   }
 
   async function handleRemoveFromCart() {
-    const quantity: any = cart?.find((item: any) => item.product.id == id)
+    const quantity: any = cart?.find((item: any) => item?.product?.id == id)
       ?.quantity;
     if (quantity < 1) return;
     setIsLoading(true);
     Promise.all([
       await dispatch(addToCart({ quantity: quantity - 1, productId: id + '' })),
-      dispatch(getCart()),
+      dispatch(getCart(accessToken)),
     ]);
     setIsLoading(false);
   }

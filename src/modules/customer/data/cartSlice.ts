@@ -10,12 +10,17 @@ const initialState: initialStateCartType = {
   cartQuantity: 0,
   error: '',
   status: '',
+  token: '',
 };
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  reducers: {},
+  reducers: {
+    saveToken(state, payload: any) {
+      state.token = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getCart.pending, (state) => {
       state.error = null;
@@ -24,14 +29,13 @@ const cartSlice = createSlice({
     builder.addCase(getCart.fulfilled, (state, payload) => {
       state.cartId = payload?.payload[0]?.id;
       state.cart = payload?.payload[1];
-      state.cartItems = state.cart.length;
+      state.cartItems = state?.cart?.length;
       state.cartAmount = payload?.payload[0].totalAmount;
       state.cartQuantity = payload?.payload[0].totalQuantity;
     });
     builder.addCase(getCart.rejected, (state, action) => {
       state.error = action?.payload;
       state.status = 'failed';
-      // console.log(state.status);
     });
     builder.addCase(addToCart.pending, (state) => {
       state.error = null;
@@ -47,18 +51,16 @@ const cartSlice = createSlice({
     builder.addCase(deleteFromCart.pending, (state) => {
       state.error = null;
       state.status = 'loading';
-      // console.log(state.status);
     });
     builder.addCase(deleteFromCart.fulfilled, (state) => {
       state.status = 'succeeded';
-      // console.log(state.status);
     });
     builder.addCase(deleteFromCart.rejected, (state, action) => {
       state.error = action?.payload;
       state.status = 'failed';
-      // console.log(state.status);
     });
   },
 });
 
 export default cartSlice.reducer;
+export const { saveToken } = cartSlice.actions;

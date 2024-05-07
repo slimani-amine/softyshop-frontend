@@ -13,6 +13,7 @@ export interface AuthState {
     email: string;
     role: string;
     token: string;
+    picture: string;
   } | null;
   error: string | null;
 }

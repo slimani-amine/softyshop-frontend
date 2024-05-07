@@ -11,6 +11,7 @@ function ProductDetails() {
   const dispatch = useAppDispatch();
   const { productId } = useParams();
   const cart = useAppSelector((state) => state.cart.cart);
+  const accessToken = useAppSelector((state) => state.cart.token);
 
   const [loading, setIsLoading] = useState(false);
   const [quantity, setQuantity] = useState<number>(0);
@@ -59,7 +60,7 @@ function ProductDetails() {
       await dispatch(
         addToCart({ quantity: quantity + 1, productId: product.id + '' })
       ),
-      dispatch(getCart()),
+      dispatch(getCart(accessToken)),
     ]);
     setIsLoading(false);
   }
@@ -71,7 +72,7 @@ function ProductDetails() {
       await dispatch(
         addToCart({ quantity: quantity - 1, productId: product.id + '' })
       ),
-      dispatch(getCart()),
+      dispatch(getCart(accessToken)),
     ]);
     setIsLoading(false);
   }

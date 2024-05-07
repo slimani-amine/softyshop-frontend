@@ -7,7 +7,7 @@ export const StoreApi = api.injectEndpoints({
       query: ({ page, perPage, role, id, subName }) => {
         if (role === "VENDOR") {
           // If role is VENDOR, search by vendor_id and optional subName
-          return `api/stores?page=${page}&perPage=${perPage}&vendor_id=${id}&${subName ? `name=${subName}` : ""}`;
+          return `api/stores/my-stores?page=${page}&perPage=${perPage}&vendor_id=${id}&${subName ? `name=${subName}` : ""}`;
         } else {
           // If role is not VENDOR, search by name only
           return `api/stores?page=${page}&perPage=${perPage}&${subName ? `name=${subName}` : ""}`;

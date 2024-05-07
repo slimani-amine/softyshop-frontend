@@ -5,7 +5,7 @@ import { Navigate, RouteProps } from 'react-router-dom';
 import { Fragment, lazy } from 'react';
 import { PATH } from './paths';
 import AuthGuard from '@src/modules/shared/guards/AuthGuard';
-import { ADMIN , VENDOR } from "@src/global_roles_config";
+import { ADMIN , VENDOR , CUSTOMER } from "@src/global_roles_config";
 
 type RouteConfig = {
   exact: boolean | null;
@@ -21,11 +21,11 @@ const routes: RouteConfig[] = [
     exact: true,
     path: PATH.ROOT,
     guard: AuthGuard,
-    roles: [VENDOR, ADMIN],
+    roles: [VENDOR, ADMIN , ],
     component: () => <Navigate to="/home" />,
   },
   {
-    roles: [VENDOR, ADMIN],
+    roles: [VENDOR, ADMIN ,  CUSTOMER],
 
     exact: true,
     guard: GuestGuard,
@@ -34,7 +34,7 @@ const routes: RouteConfig[] = [
     layout: GuestLayout,
   },
   {
-    roles: [VENDOR, ADMIN],
+    roles: [VENDOR, ADMIN , CUSTOMER],
 
     exact: true,
     guard: GuestGuard,
@@ -43,7 +43,7 @@ const routes: RouteConfig[] = [
     layout: GuestLayout,
   },
   {
-    roles: [VENDOR, ADMIN],
+    roles: [VENDOR, ADMIN , CUSTOMER],
 
     exact: true,
     guard: GuestGuard,
@@ -52,7 +52,7 @@ const routes: RouteConfig[] = [
     layout: GuestLayout,
   },
   {
-    roles: [VENDOR, ADMIN],
+    roles: [VENDOR, ADMIN , CUSTOMER],
 
     exact: true,
     guard: GuestGuard,
@@ -61,7 +61,7 @@ const routes: RouteConfig[] = [
     layout: GuestLayout,
   },
   {
-    roles: [VENDOR, ADMIN],
+    roles: [VENDOR, ADMIN , CUSTOMER],
 
     exact: true,
     guard: GuestGuard,

@@ -18,7 +18,7 @@ import {
 import Button from '@src/modules/shared/components/Button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import { handleFileChange } from '@src/modules/shared/utils/upload';
-
+import TypeOfResponse from '@src/modules/shared/services/ResponseType';
 interface AddCategoryFormProps {
   onFinish: (values: any) => void;
 }
@@ -58,7 +58,7 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
         },
         '0000000000000000000000000'
       );
-      const response = await updateCategory({
+      const response : TypeOfResponse= await updateCategory({
         id: id,
         data: {
           name: values.name,
@@ -73,14 +73,15 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
 
         navigate("/categories")
 
-        
-    } else if ('error' in response) {
-        // Display error message if error exists
-        message.error("Failed to save category. Please try again.");
-        console.error('Error saving category', response.error);
-    } else {
-        message.error("Unexpected response from server. Please try again later.");
-    }
+     
+    } 
+    else if ("error" in response && response.error) {
+      // Display error message if error exists and it's truthy
+      message.error(`${response.error.message}`);
+  } else {
+      message.error("Unexpected response from server. Please try again later.");
+  }
+   
 
    
     } catch (error) {

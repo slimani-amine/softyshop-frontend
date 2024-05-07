@@ -11,8 +11,10 @@ import TheDrawer from '@src/modules/customer/home/components/Cart/Cart';
 import { AUTH_URL } from '@src/modules/auth/data/authThunk';
 import axiosInstance from '@src/modules/auth/utils/axios';
 import { saveUser } from '@src/modules/customer/data/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
+  const navigate = useNavigate();
   const dispatch: any = useAppDispatch();
   (async function () {
     const response = await axiosInstance.get(`${AUTH_URL}api/users/me`);
@@ -23,10 +25,20 @@ function Header() {
   //   dispatch(getCart());
   // })();
 
-  const myCartItemsNumber: any = useAppSelector(
-    (state) => state.cart.cartItems
-  );
+  // (async function () {
+  //   while (!accessToken) {
+  //     await dispatch(saveToken(accessToken));
+  //     setTimeout(() => console.log(accessToken), 0.1);
+  //   }
+  //   await dispatch(getCart(accessToken));
+  // })();
 
+  // const myCartItemsNumber: any = useAppSelector(
+  //   (state) => state.cart.cartItems
+  // );
+  const role: string | undefined = useAppSelector(
+    (state) => state.auth.user?.role
+  );
   function interactWithDrawer() {
     dispatch(showDrawer());
   }
@@ -35,7 +47,13 @@ function Header() {
     <>
       <TheDrawer></TheDrawer>
       <div className="header">
-        <div className="logo-wrapper">
+        <div
+          onClick={() => {
+            if (role == 'user') navigate('/home');
+            else navigate('/products');
+          }}
+          className="logo-wrapper"
+        >
           <img src={Logo} alt="" />
         </div>
         <div className="middle-component">
@@ -64,7 +82,7 @@ function Header() {
           </div>
 
           <span className="cart-items-number">
-            <p>{myCartItemsNumber}</p>
+            {/* <p>{myCartItemsNumber}</p> */}
           </span>
         </div>
       </div>
