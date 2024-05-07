@@ -96,17 +96,20 @@ function Checkout() {
       <div className="order">
         <h3 className="order-title">Your order</h3>
         <section className="cart-items">
-          {cart.map((item, index) => (
-            <div className="checkout-order-item" key={index}>
-              <p className="checkout-order-details">
-                <strong className="order-quantity">{item.quantity}</strong> x{' '}
-                {item?.product?.name}
-              </p>
-              <p className="checkout-order-item-price">
-                ${(item?.product?.price * item.quantity).toFixed(2)}
-              </p>
-            </div>
-          ))}
+          {cart.map((item, index) => {
+            if (!item?.product) return;
+            return (
+              <div className="checkout-order-item" key={index}>
+                <p className="checkout-order-details">
+                  <strong className="order-quantity">{item.quantity}</strong> x{' '}
+                  {item?.product?.name}
+                </p>
+                <p className="checkout-order-item-price">
+                  ${(item?.product?.price * item?.quantity).toFixed(2)}
+                </p>
+              </div>
+            );
+          })}
         </section>
         <section className="calcul">
           <div className="line">
