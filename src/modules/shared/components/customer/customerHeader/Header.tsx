@@ -7,20 +7,12 @@ import Search from './components/Search';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { showDrawer } from '@src/modules/customer/data/drawerSlice';
 import TheDrawer from '@src/modules/customer/home/components/Cart/Cart';
-import { AUTH_URL } from '@src/modules/auth/data/authThunk';
-import axiosInstance from '@src/modules/auth/utils/axios';
-import { saveUser } from '@src/modules/customer/data/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch: any = useAppDispatch();
 
-  (async function () {
-    const response = await axiosInstance.get(`${AUTH_URL}api/users/me`);
-    const user = response?.data?.data;
-    dispatch(saveUser(user));
-  })();
   // (async function () {
   //   dispatch(getCart());
   // })();
