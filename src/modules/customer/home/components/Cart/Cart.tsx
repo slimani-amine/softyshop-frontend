@@ -57,7 +57,7 @@ const TheDrawer: React.FC = () => {
                       await dispatch(
                         addToCart({
                           quantity: item?.quantity + 1,
-                          productId: item?.product.id + '',
+                          productId: item?.product?.id + '',
                         })
                       ),
                       dispatch(getCart(accessToken)),
@@ -103,7 +103,7 @@ const TheDrawer: React.FC = () => {
               />
               <div className="cart-item-details">
                 <p className="product-name-drawer" key={index}>
-                  {item?.product.name}
+                  {item?.product?.name}
                 </p>
                 <p className="pricing-details">{`$${item?.product?.price.toFixed(
                   2
