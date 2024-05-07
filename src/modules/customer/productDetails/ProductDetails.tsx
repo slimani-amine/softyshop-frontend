@@ -28,7 +28,7 @@ function ProductDetails() {
     availability: false,
     stockNumber: 0,
   });
-  const images = product.images.length && JSON.parse(product?.images);
+  const images = product?.images?.length && JSON.parse(product?.images);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +48,8 @@ function ProductDetails() {
   useEffect(
     function () {
       setQuantity(
-        cart?.find((item: any) => item.product.id == product.id)?.quantity || 0
+        cart?.find((item: any) => item?.product?.id == product?.id)?.quantity ||
+          0
       );
     },
     [setQuantity, cart]
@@ -58,7 +59,7 @@ function ProductDetails() {
     setIsLoading(true);
     Promise.all([
       await dispatch(
-        addToCart({ quantity: quantity + 1, productId: product.id + '' })
+        addToCart({ quantity: quantity + 1, productId: product?.id + '' })
       ),
       dispatch(getCart(accessToken)),
     ]);
@@ -70,7 +71,7 @@ function ProductDetails() {
     setIsLoading(true);
     Promise.all([
       await dispatch(
-        addToCart({ quantity: quantity - 1, productId: product.id + '' })
+        addToCart({ quantity: quantity - 1, productId: product?.id + '' })
       ),
       dispatch(getCart(accessToken)),
     ]);
