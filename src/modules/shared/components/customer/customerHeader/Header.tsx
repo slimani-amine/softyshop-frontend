@@ -5,28 +5,14 @@ import { ReactComponent as ChevronDownBlack } from '../../../assets/icons/custom
 import Logo from '../../../assets/icons/customerLayout/Header/logo-complete.svg';
 import Search from './components/Search';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-// import { getCart } from '@src/modules/customer/data/cartThunk';
 import { showDrawer } from '@src/modules/customer/data/drawerSlice';
 import TheDrawer from '@src/modules/customer/home/components/Cart/Cart';
 import { useNavigate } from 'react-router-dom';
-// import { saveToken } from '@src/modules/customer/data/cartSlice';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch: any = useAppDispatch();
-  // const accessToken = useAppSelector((state) => state.cart.token.payload);
 
-  // (async function () {
-  //   while (!accessToken) {
-  //     await dispatch(saveToken(accessToken));
-  //     setTimeout(() => console.log(accessToken), 0.1);
-  //   }
-  //   await dispatch(getCart(accessToken));
-  // })();
-
-  // const myCartItemsNumber: any = useAppSelector(
-  //   (state) => state.cart.cartItems
-  // );
   const role: string | undefined = useAppSelector(
     (state) => state.auth.user?.role
   );
@@ -72,9 +58,7 @@ function Header() {
             />
           </div>
 
-          <span className="cart-items-number">
-            {/* <p>{myCartItemsNumber}</p> */}
-          </span>
+          <span className="cart-items-number"></span>
         </div>
       </div>
     </>
