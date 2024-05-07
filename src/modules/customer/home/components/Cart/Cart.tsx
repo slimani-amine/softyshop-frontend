@@ -45,6 +45,7 @@ const TheDrawer: React.FC = () => {
     >
       <section className="items-section">
         {cart.map((item, index) => {
+          if (!item.name) return;
           return (
             <div key={index} className="cart-item">
               <div className="buttons">
