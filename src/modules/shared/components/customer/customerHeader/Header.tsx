@@ -33,9 +33,9 @@ function Header() {
   //   await dispatch(getCart(accessToken));
   // })();
 
-  // const myCartItemsNumber: any = useAppSelector(
-  //   (state) => state.cart.cartItems
-  // );
+  const myCartItemsNumber: any = useAppSelector(
+    (state) => state.cart.cartItems
+  );
   const role: string | undefined = useAppSelector(
     (state) => state.auth.user?.role
   );
@@ -82,7 +82,7 @@ function Header() {
           </div>
 
           <span className="cart-items-number">
-            {/* <p>{myCartItemsNumber}</p> */}
+            <p>{myCartItemsNumber}</p>
           </span>
         </div>
       </div>
