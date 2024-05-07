@@ -1,3 +1,12 @@
+export interface addressType {
+  address: string;
+  phoneNumber: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  userId: number;
+}
+
 export interface userType {
   role: string;
   cart: { id: number };

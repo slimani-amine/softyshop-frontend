@@ -80,9 +80,6 @@ const Register = () => {
     },
   });
 
-  // {
-  //   console.log(formik);
-  // }
   return (
     <div className="register-module">
       <form className="register-card-container" onSubmit={formik.handleSubmit}>

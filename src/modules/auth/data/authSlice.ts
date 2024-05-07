@@ -12,7 +12,8 @@ export interface AuthState {
     name: string;
     email: string;
     role: string;
-    picture: string
+    token: string;
+    picture: string;
   } | null;
   error: string | null;
 }
@@ -33,6 +34,7 @@ const authSlice = createSlice({
       const { isAuthenticated, user } = action.payload;
       state.isAuthenticated = isAuthenticated;
       state.isInitialised = true;
+      if (!user) return;
       state.user = user;
     },
     restore: (state) => {

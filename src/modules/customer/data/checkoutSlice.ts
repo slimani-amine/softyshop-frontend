@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  hola: undefined,
+  chosenAddress: null,
   deliveryDate: null,
   deliveryTime: null,
   agreedToPayCash: false,

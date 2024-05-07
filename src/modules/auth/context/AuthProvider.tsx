@@ -6,6 +6,7 @@ import useIsMountedRef from '../hook/useIsMountedRef';
 import { initialise } from '../data/authSlice';
 import { RootState } from '@src/modules/shared/store';
 import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
+import { AUTH_URL } from '../data/authThunk';
 import { saveToken } from '@src/modules/customer/data/cartSlice';
 
 interface AuthProviderProps {
@@ -39,12 +40,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
     async function fetchUser() {
       if (accessToken && isValidToken(accessToken)) {
-        const response = await axiosInstance.get(
-          `https://softyshopapi.lissene.dev/v1/api/users/me`
-        );
+        const response = await axiosInstance.get(`${AUTH_URL}api/users/me`);
 
         const user = response?.data?.data;
-
+        // todo const user = { ...response?.data?.data, token: accessToken };
+        // console.log(user);
         dispatch(initialise({ isAuthenticated: true, user }));
       } else {
         dispatch(initialise({ isAuthenticated: false, user: null }));
