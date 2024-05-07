@@ -6,11 +6,7 @@ import { login } from '../../data/authThunk';
 import Input from '@src/modules/shared/components/Input/Input';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
 import { useState } from 'react';
-<<<<<<< HEAD
 import { Link, useNavigate } from 'react-router-dom';
-=======
-import { Link } from 'react-router-dom';
->>>>>>> develop
 import { PATH } from '../../routes/paths';
 import toast from 'react-hot-toast';
 
