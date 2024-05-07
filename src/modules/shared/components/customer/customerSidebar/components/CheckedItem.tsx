@@ -5,7 +5,7 @@ import { Checkbox, ConfigProvider } from 'antd';
 function CheckedItem({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
   const isChecked = useAppSelector((state) => state.checkout.agreedToPayCash);
-  console.log(isChecked);
+  // console.log(isChecked);
 
   return (
     <div className="checked-item">

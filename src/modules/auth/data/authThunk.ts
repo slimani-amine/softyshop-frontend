@@ -11,13 +11,11 @@ import { clearTokens } from '../utils/token';
 
 export const AUTH_URL = import.meta.env.VITE_APP_AUTH_URL;
 export const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
-console.log(BASE_URL)
 
 export const login = createAsyncThunk(
   'auth/login',
   async (query: LoginPayload, { rejectWithValue }) => {
     try {
-      // console.log(1);
       const response = await axiosInstance.post(`${AUTH_URL}auth/login`, query);
 
       if (response.status === 200) {
@@ -96,13 +94,13 @@ export const enterNewPassword = createAsyncThunk(
   'auth/enterNewPassword',
   async (query: enterNewPasswordPayload, { rejectWithValue }) => {
     try {
-      console.log(query);
+      // console.log(query);
       const response = await axiosInstance.post(
         `${AUTH_URL}auth/password-reset`,
         query
       );
 
-      console.log(`response: ${response}`);
+      // console.log(`response: ${response}`);
 
       if (response.status === 200) {
         return response.data;
