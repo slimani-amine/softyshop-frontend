@@ -23,7 +23,8 @@ function Checkout() {
   const Total = total + 28;
   const isOrderReady = isChecked && deliveryDate && deliveryTime;
 
-  const addresses = dispatch(getAddresses(userId));
+  dispatch(getAddresses(userId));
+  const addresses = useAppSelector((state) => state.address.address);
   console.log('🚀 ~ Checkout ~ addresses:', addresses);
   // const [chosenAddress, setChosenAddress] = useState(null);
 
@@ -47,7 +48,17 @@ function Checkout() {
             <AddAddressModal />
           </div>
           <div className="section-content addresses-section">
-            {/* {addresses.map()} */}
+            {addresses.map((address) => (
+              <div className="checkout-address checkout-address1">
+                <Address>
+                  <AddressTitle>{address.state}</AddressTitle>
+                  <AddressContent>
+                    {address.address} <br /> {address.city} <br />{' '}
+                    {address.phoneNumber}
+                  </AddressContent>
+                </Address>
+              </div>
+            ))}
             <div className="checkout-address checkout-address1">
               <Address>
                 <AddressTitle>Home</AddressTitle>
