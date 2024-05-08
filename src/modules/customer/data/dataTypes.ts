@@ -4,6 +4,7 @@ export interface addressType {
   city: string;
   state: string;
   zipCode: string;
+  id: number;
 }
 
 export interface userType {

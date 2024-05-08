@@ -59,20 +59,25 @@ function Checkout() {
           </div>
           <div className="section-content addresses-section">
             {/*   eslint-disable-next-line */}
-            {addresses.map((address: addressType) => {
-              return (
-                <div className="checkout-address checkout-address1">
-                  <Address>
-                    <AddressTitle>{address.state}</AddressTitle>
-                    <AddressContent>
-                      {address.address} <br /> {address.city} ,{address.zipCode}
-                      <br />
-                      {address.phoneNumber}
-                    </AddressContent>
-                  </Address>
-                </div>
-              );
-            })}
+            {addresses?.map(
+              ({ state, address, city, zipCode, phoneNumber, id }, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="checkout-address checkout-address1"
+                  >
+                    <Address>
+                      <AddressTitle id={id.toString()}>{state}</AddressTitle>
+                      <AddressContent>
+                        {address} <br /> {city}, {zipCode}
+                        <br />
+                        {phoneNumber}
+                      </AddressContent>
+                    </Address>
+                  </div>
+                );
+              }
+            )}
           </div>
         </Section>
         <Section>
