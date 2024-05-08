@@ -36,11 +36,8 @@ function Checkout() {
     getAllAddresses();
   }, [userId, dispatch, getAddresses]);
 
-  const addresses: addressType[] = useAppSelector((state) => [
-    state.address.address,
-  ]);
-  const theAddresses = addresses[0];
-  console.log('🚀 ~ Checkout ~ theAddresses:', theAddresses);
+  const addresses: any = useAppSelector((state) => state.address.address);
+  console.log('🚀 ~ Checkout ~ theAddresses:', addresses);
   // const [chosenAddress, setChosenAddress] = useState(null);
 
   return (
@@ -64,13 +61,13 @@ function Checkout() {
           </div>
           <div className="section-content addresses-section">
             {/*   eslint-disable-next-line */}
-            {addresses.map((address) => {
+            {addresses.map((address: addressType) => {
               return (
                 <div className="checkout-address checkout-address1">
                   <Address>
                     <AddressTitle>{address.state}</AddressTitle>
                     <AddressContent>
-                      {address.address} <br /> {address.city} <br />{' '}
+                      {address.address} <br /> {address.city} <br />
                       {address.phoneNumber}
                     </AddressContent>
                   </Address>
