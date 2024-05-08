@@ -33,8 +33,7 @@ function Checkout() {
   }, [userId, dispatch, getAddresses]);
 
   const addresses: addressType[] = useAppSelector(
-    (state) => state?.address?.address
-    // ?.sort((a: any, b: any) => b - a)
+    (state) => state?.address?.address.sort(() => -1)
   );
 
   // const [chosenAddress, setChosenAddress] = useState(null);
@@ -59,7 +58,6 @@ function Checkout() {
             <AddAddressModal />
           </div>
           <div className="section-content addresses-section">
-            {/*   eslint-disable-next-line */}
             {addresses?.map(
               ({ state, address, city, zipCode, phoneNumber, id }, index) => {
                 return (
