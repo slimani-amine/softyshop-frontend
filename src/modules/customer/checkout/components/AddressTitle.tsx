@@ -2,6 +2,7 @@ import { ReactComponent as EditAddress } from '../../../shared/assets/icons/chec
 import { ReactComponent as DeleteAddress } from '../../../shared/assets/icons/checkout/deleteAddress.svg';
 import { deleteAddress, getAddresses } from '../../data/addressThunk';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import toast from 'react-hot-toast';
 
 function AddressTitle({
   id,
@@ -15,6 +16,7 @@ function AddressTitle({
   async function handleDelete(id: number) {
     Promise.all([
       await dispatch(deleteAddress(id)),
+      toast.success('Address deleted successfully'),
       dispatch(getAddresses(userId)),
     ]);
   }
