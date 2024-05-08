@@ -15,7 +15,7 @@ function Header() {
   const dispatch: any = useAppDispatch();
 
   const token = useAppSelector((state) => state.cart.token);
-  (async function () {
+  (function () {
     dispatch(getCart(token));
   })();
 
