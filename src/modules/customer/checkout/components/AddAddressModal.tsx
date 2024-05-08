@@ -5,10 +5,12 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { Modal } from 'antd';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
-import { useAppSelector } from '@src/modules/shared/store';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import { addAddress } from '../../data/addressThunk';
+import toast from 'react-hot-toast';
 
 const AddAddressModal: React.FC = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const userId: string | undefined = useAppSelector(
     (state) => state.auth.user?.id
   );
@@ -22,7 +24,7 @@ const AddAddressModal: React.FC = () => {
     state: '',
     zipCode: '',
   };
-  // const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -49,9 +51,20 @@ const AddAddressModal: React.FC = () => {
       zipCode: Yup.string().required('Zip Code is required'),
     }),
     onSubmit: (values) => {
-      // setSubmitting(true);
+      setSubmitting(true);
       const changedValues = getChangedValues(values, initialValues);
-      console.log(changedValues);
+      // console.log(changedValues);
+      dispatch(addAddress({ query: changedValues, userId }))
+        .unwrap()
+        .then(() => {
+          toast.success('Address added successfully');
+        })
+        .catch((err) => {
+          toast.error(err?.message || 'something-went-wrong');
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
       return handleOk();
     },
   });
@@ -74,7 +87,7 @@ const AddAddressModal: React.FC = () => {
         onCancel={handleCancel}
         footer={[
           <form onSubmit={formik.handleSubmit}>
-            <Button size="sm" label="Save" type="submit" />
+            <Button size="sm" label="Save" type="submit" loading={submitting} />
           </form>,
         ]}
       >
@@ -92,20 +105,20 @@ const AddAddressModal: React.FC = () => {
             <div className="input-group">
               <Input
                 size="sm"
-                name="phoneNumber"
-                formik={formik}
-                variant="secondary"
-                placeholder="Enter your phone number"
-                label="Phone Number"
-                required={true}
-              />
-              <Input
-                size="sm"
                 name="city"
                 formik={formik}
                 variant="secondary"
                 placeholder="Enter your city"
                 label="City"
+                required={true}
+              />
+              <Input
+                size="sm"
+                name="phoneNumber"
+                formik={formik}
+                variant="secondary"
+                placeholder="Enter your phone number"
+                label="Phone Number"
                 required={true}
               />
             </div>
