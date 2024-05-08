@@ -19,7 +19,12 @@ const initialState: addressStateType = {
 const addressSlice = createSlice({
   name: 'address',
   initialState,
-  reducers: {},
+  reducers: {
+    updateSelectedId(state, action) {
+      console.log('🚀 ~ updateSelectedId ~ action.payload:', action.payload);
+      state.selectedAddress = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(addAddress.pending, (state) => {
       state.error = null as any;
@@ -48,3 +53,4 @@ const addressSlice = createSlice({
 });
 
 export default addressSlice.reducer;
+export const { updateSelectedId } = addressSlice.actions;

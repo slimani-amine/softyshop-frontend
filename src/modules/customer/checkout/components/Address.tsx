@@ -1,6 +1,8 @@
+import { updateSelectedId } from '../../data/addressSlice';
+
 function Address({ id, children }: { id: number; children: React.ReactNode }) {
   function handleSelect(ID: number) {
-    console.log(ID);
+    updateSelectedId(ID);
   }
   return (
     <div onClick={() => handleSelect(id)} className="address">
