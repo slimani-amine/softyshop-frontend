@@ -79,7 +79,7 @@ function Checkout() {
                   );
                 }
               )
-              .sort((a: any, b: any) => b - a)}
+              .sort((a: any, b: any) => a - b)}
           </div>
         </Section>
         <Section>
