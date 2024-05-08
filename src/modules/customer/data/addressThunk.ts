@@ -53,3 +53,28 @@ export const getAddresses = createAsyncThunk(
     }
   }
 );
+
+export const deleteAddress = createAsyncThunk(
+  'address/deleteAddress',
+  async (query: number | undefined) => {
+    try {
+      console.log('🚀 ~ query:', query);
+      console.log('🚀 ~ accessToken:', accessToken);
+      const response = await fetch(`${BASE_URL}api/users/addresses/${query}`, {
+        method: 'DELETE',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const data = await response.json();
+      console.log('🚀 ~ data:', data.data);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
