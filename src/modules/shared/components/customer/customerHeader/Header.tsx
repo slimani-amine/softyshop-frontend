@@ -9,15 +9,20 @@ import { showDrawer } from '@src/modules/customer/data/drawerSlice';
 import TheDrawer from '@src/modules/customer/home/components/Cart/Cart';
 import { useNavigate } from 'react-router-dom';
 import { getCart } from '@src/modules/customer/data/cartThunk';
+import { useEffect } from 'react';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch: any = useAppDispatch();
 
   const token = useAppSelector((state) => state.cart.token);
-  (function () {
-    dispatch(getCart(token));
-  })();
+
+  useEffect(() => {
+    function getTheCart() {
+      dispatch(getCart(token));
+    }
+    getTheCart();
+  }, [token, dispatch, getCart]);
 
   // (async function () {
   //   while (!accessToken) {

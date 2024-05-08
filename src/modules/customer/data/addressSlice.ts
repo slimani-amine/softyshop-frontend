@@ -1,7 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { addAddress, getAddresses } from './addressThunk';
+import { addressType } from './dataTypes';
 
-const initialState = {
+interface addressStateType {
+  address: addressType;
+  status: string;
+  error: string;
+}
+
+const initialState: addressStateType = {
   address: {
     address: '',
     phoneNumber: '',

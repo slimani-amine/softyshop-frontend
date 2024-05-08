@@ -12,6 +12,7 @@ import AddAddressModal from './components/AddAddressModal';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { getAddresses } from '../data/addressThunk';
 import { useEffect } from 'react';
+import { addressType } from '../data/dataTypes';
 
 function Checkout() {
   const dispatch = useAppDispatch();
@@ -35,7 +36,9 @@ function Checkout() {
     getAllAddresses();
   }, [userId, dispatch, getAddresses]);
 
-  const addresses = useAppSelector((state) => state.address.address);
+  const addresses: addressType[] = useAppSelector((state) => [
+    state.address.address,
+  ]);
   console.log('🚀 ~ Checkout ~ addresses:', addresses);
   // const [chosenAddress, setChosenAddress] = useState(null);
 
@@ -60,7 +63,7 @@ function Checkout() {
           </div>
           <div className="section-content addresses-section">
             {/*   eslint-disable-next-line */}
-            {/* {addresses.map((address) => {
+            {addresses.map((address) => {
               return (
                 <div className="checkout-address checkout-address1">
                   <Address>
@@ -72,7 +75,7 @@ function Checkout() {
                   </Address>
                 </div>
               );
-            })} */}
+            })}
             <div className="checkout-address checkout-address1">
               <Address>
                 <AddressTitle>Home</AddressTitle>
