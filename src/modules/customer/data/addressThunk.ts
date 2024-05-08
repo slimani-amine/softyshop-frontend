@@ -72,7 +72,7 @@ export const deleteAddress = createAsyncThunk(
       });
       const data = await response.json();
       console.log('🚀 ~ data:', data.data);
-      return data.data;
+      return data.data.sort(() => -4);
     } catch (error) {
       console.log(error);
     }
