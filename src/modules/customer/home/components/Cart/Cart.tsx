@@ -25,7 +25,7 @@ const TheDrawer: React.FC = () => {
   const myCartItemsNumber: any = useAppSelector(
     (state) => state.cart.cartItems
   );
-  console.log(accessToken);
+  // console.log(accessToken);
   const totalPrice = useAppSelector((state) => state.cart.cartAmount);
   const cart = useAppSelector((state) => state.cart.cart);
 
@@ -47,7 +47,7 @@ const TheDrawer: React.FC = () => {
     >
       <section className="items-section">
         {cart.map((item, index) => {
-          console.log(item);
+          // console.log(item);
           if (!item?.product) return;
           return (
             <div key={index} className="cart-item">

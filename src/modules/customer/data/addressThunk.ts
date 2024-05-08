@@ -6,6 +6,8 @@ export const addAddress = createAsyncThunk(
   'address/addAddress',
   async (query: any) => {
     try {
+      console.log('🚀 ~ query:', query);
+      console.log('🚀 ~ accessToken:', accessToken);
       const response = await fetch(
         `${BASE_URL}api/users/addresses/${query.userId}`,
         {
@@ -21,7 +23,7 @@ export const addAddress = createAsyncThunk(
         }
       );
       const data = await response.json();
-      console.log(data);
+      console.log('🚀 ~ data:', data);
       return data;
     } catch (error) {
       console.log(error);
