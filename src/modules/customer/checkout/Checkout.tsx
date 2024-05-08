@@ -11,6 +11,7 @@ import AddAddressModal from './components/AddAddressModal';
 
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { getAddresses } from '../data/addressThunk';
+import { useEffect } from 'react';
 
 function Checkout() {
   const dispatch = useAppDispatch();
@@ -23,9 +24,13 @@ function Checkout() {
   const Total = total + 28;
   const isOrderReady = isChecked && deliveryDate && deliveryTime;
 
-  (function () {
+  // (function () {
+  //   dispatch(getAddresses(userId));
+  // })();
+
+  useEffect(() => {
     dispatch(getAddresses(userId));
-  })();
+  }, []);
 
   const addresses = useAppSelector((state) => state.address.address);
   console.log('🚀 ~ Checkout ~ addresses:', addresses);
