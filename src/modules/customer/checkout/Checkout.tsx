@@ -33,7 +33,7 @@ function Checkout() {
       dispatch(getAddresses(userId));
     }
     getAllAddresses();
-  }, [userId]);
+  }, [userId, dispatch, getAddresses]);
 
   const addresses = useAppSelector((state) => state.address.address);
   console.log('🚀 ~ Checkout ~ addresses:', addresses);
