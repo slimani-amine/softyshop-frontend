@@ -24,7 +24,7 @@ function Checkout() {
   const isOrderReady = isChecked && deliveryDate && deliveryTime;
 
   const addresses = dispatch(getAddresses(userId));
-  console.log(addresses);
+  console.log('🚀 ~ Checkout ~ addresses:', addresses);
   // const [chosenAddress, setChosenAddress] = useState(null);
 
   return (
@@ -47,6 +47,7 @@ function Checkout() {
             <AddAddressModal />
           </div>
           <div className="section-content addresses-section">
+            {/* {addresses.map()} */}
             <div className="checkout-address checkout-address1">
               <Address>
                 <AddressTitle>Home</AddressTitle>

@@ -46,8 +46,8 @@ export const getAddresses = createAsyncThunk(
         },
       });
       const data = await response.json();
-      console.log('🚀 ~ data:', data);
-      return data;
+      console.log('🚀 ~ data:', data.data);
+      return data.data;
     } catch (error) {
       console.log(error);
     }
