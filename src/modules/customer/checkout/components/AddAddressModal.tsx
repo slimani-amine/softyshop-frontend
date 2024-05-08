@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { Modal } from 'antd';
 import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { addAddress } from '../../data/addressThunk';
+import { addAddress, getAddresses } from '../../data/addressThunk';
 import toast from 'react-hot-toast';
 
 const AddAddressModal: React.FC = () => {
@@ -14,8 +14,6 @@ const AddAddressModal: React.FC = () => {
   const userId: string | undefined = useAppSelector(
     (state) => state.auth.user?.id
   );
-
-  console.log('🚀 ~ AddressModal ~ userId:', userId);
 
   const initialValues = {
     address: '',
@@ -53,7 +51,6 @@ const AddAddressModal: React.FC = () => {
     onSubmit: (values) => {
       setSubmitting(true);
       const changedValues = getChangedValues(values, initialValues);
-      // console.log(changedValues);
       dispatch(addAddress({ query: changedValues, userId }))
         .unwrap()
         .then(() => {
@@ -64,12 +61,12 @@ const AddAddressModal: React.FC = () => {
         })
         .finally(() => {
           setSubmitting(false);
+          dispatch(getAddresses(userId));
         });
       return handleOk();
     },
   });
 
-  console.log(formik);
   return (
     <>
       <Button

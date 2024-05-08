@@ -25,10 +25,6 @@ function Checkout() {
   const Total = total + 28;
   const isOrderReady = isChecked && deliveryDate && deliveryTime;
 
-  // (function () {
-  //   dispatch(getAddresses(userId));
-  // })();
-
   useEffect(() => {
     function getAllAddresses() {
       dispatch(getAddresses(userId));
@@ -39,7 +35,7 @@ function Checkout() {
   const addresses: addressType[] = useAppSelector(
     (state) => state.address.address
   );
-  console.log('🚀 ~ Checkout ~ theAddresses:', addresses);
+
   // const [chosenAddress, setChosenAddress] = useState(null);
 
   return (
@@ -69,7 +65,8 @@ function Checkout() {
                   <Address>
                     <AddressTitle>{address.state}</AddressTitle>
                     <AddressContent>
-                      {address.address} <br /> {address.city} <br />
+                      {address.address} <br /> {address.city} ,{address.zipCode}
+                      <br />
                       {address.phoneNumber}
                     </AddressContent>
                   </Address>
