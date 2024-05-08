@@ -1,6 +1,9 @@
 function Address({ id, children }: { id: number; children: React.ReactNode }) {
+  function handleSelect(ID: number) {
+    console.log(ID);
+  }
   return (
-    <div onClick={() => console.log(id)} className="address">
+    <div onClick={() => handleSelect(id)} className="address">
       {children}
     </div>
   );

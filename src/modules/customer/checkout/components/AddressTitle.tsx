@@ -27,7 +27,7 @@ function AddressTitle({
         <div className="icon">
           <EditAddress />
         </div>
-        <div className="icon delete-icon" onClick={() => handleDelete(+id)}>
+        <div className="delete-icon" onClick={() => handleDelete(+id)}>
           <DeleteAddress />
         </div>
       </div>

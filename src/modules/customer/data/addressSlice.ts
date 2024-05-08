@@ -4,12 +4,14 @@ import { addressType } from './dataTypes';
 
 interface addressStateType {
   address: addressType[];
+  selectedAddress: number | null;
   status: string;
   error: string;
 }
 
 const initialState: addressStateType = {
   address: [],
+  selectedAddress: null,
   status: '',
   error: '',
 };
