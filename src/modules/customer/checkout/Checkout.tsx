@@ -23,7 +23,10 @@ function Checkout() {
   const Total = total + 28;
   const isOrderReady = isChecked && deliveryDate && deliveryTime;
 
-  dispatch(getAddresses(userId));
+  (function () {
+    dispatch(getAddresses(userId));
+  })();
+
   const addresses = useAppSelector((state) => state.address.address);
   console.log('🚀 ~ Checkout ~ addresses:', addresses);
   // const [chosenAddress, setChosenAddress] = useState(null);
