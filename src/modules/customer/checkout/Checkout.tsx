@@ -33,7 +33,8 @@ function Checkout() {
   }, [userId, dispatch, getAddresses]);
 
   const addresses: addressType[] = useAppSelector(
-    (state) => state?.address?.address?.sort((a: any, b: any) => b - a)
+    (state) => state?.address?.address
+    // ?.sort((a: any, b: any) => b - a)
   );
 
   // const [chosenAddress, setChosenAddress] = useState(null);
