@@ -36,7 +36,9 @@ function Checkout() {
     getAllAddresses();
   }, [userId, dispatch, getAddresses]);
 
-  const addresses: any = useAppSelector((state) => state.address.address);
+  const addresses: addressType[] = useAppSelector(
+    (state) => state.address.address
+  );
   console.log('🚀 ~ Checkout ~ theAddresses:', addresses);
   // const [chosenAddress, setChosenAddress] = useState(null);
 

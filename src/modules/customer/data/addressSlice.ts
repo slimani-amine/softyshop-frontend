@@ -3,19 +3,13 @@ import { addAddress, getAddresses } from './addressThunk';
 import { addressType } from './dataTypes';
 
 interface addressStateType {
-  address: addressType;
+  address: addressType[];
   status: string;
   error: string;
 }
 
 const initialState: addressStateType = {
-  address: {
-    address: '',
-    phoneNumber: '',
-    city: '',
-    state: '',
-    zipCode: '',
-  },
+  address: [],
   status: '',
   error: '',
 };
