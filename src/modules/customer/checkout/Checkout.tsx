@@ -48,17 +48,20 @@ function Checkout() {
             <AddAddressModal />
           </div>
           <div className="section-content addresses-section">
-            {addresses.map((address) => (
-              <div className="checkout-address checkout-address1">
-                <Address>
-                  <AddressTitle>{address.state}</AddressTitle>
-                  <AddressContent>
-                    {address.address} <br /> {address.city} <br />{' '}
-                    {address.phoneNumber}
-                  </AddressContent>
-                </Address>
-              </div>
-            ))}
+            {/*   eslint-disable-next-line */}
+            {/* {addresses.map((address) => {
+              return (
+                <div className="checkout-address checkout-address1">
+                  <Address>
+                    <AddressTitle>{address.state}</AddressTitle>
+                    <AddressContent>
+                      {address.address} <br /> {address.city} <br />{' '}
+                      {address.phoneNumber}
+                    </AddressContent>
+                  </Address>
+                </div>
+              );
+            })} */}
             <div className="checkout-address checkout-address1">
               <Address>
                 <AddressTitle>Home</AddressTitle>
