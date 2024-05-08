@@ -77,30 +77,6 @@ function Checkout() {
                 </div>
               );
             })}
-            <div className="checkout-address checkout-address1">
-              <Address>
-                <AddressTitle>Home</AddressTitle>
-                <AddressContent>
-                  645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
-                </AddressContent>
-              </Address>
-            </div>
-            <div className="checkout-address checkout-address2">
-              <Address>
-                <AddressTitle>Office</AddressTitle>
-                <AddressContent>
-                  645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
-                </AddressContent>
-              </Address>
-            </div>
-            <div className="checkout-address checkout-address3">
-              <Address>
-                <AddressTitle>Apartment</AddressTitle>
-                <AddressContent>
-                  645 Bondorbazaar, MA 2351 968 Brockton, MA 2351 +18334271710
-                </AddressContent>
-              </Address>
-            </div>
           </div>
         </Section>
         <Section>
