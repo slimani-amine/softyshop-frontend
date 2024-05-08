@@ -17,10 +17,13 @@
       width: 28px;
       height: 28px;
       border-radius: 100px;
+      transition: all 0.3s ease-in-out;
     }
     .icon:hover {
       background-color: #eee;
-      transition: all 0.3s ease-in-out;
+    }
+    .delete-icon:hover {
+      background-color: #f5f2f6;
     }
   }
 }
