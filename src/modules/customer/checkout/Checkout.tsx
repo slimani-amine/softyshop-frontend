@@ -9,18 +9,21 @@ import AddressContent from './components/AddressContent';
 import CheckoutSelect from './components/CheckoutSelect';
 import AddAddressModal from './components/AddAddressModal';
 
-import { useAppSelector } from '@src/modules/shared/store';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import { getAddresses } from '../data/addressThunk';
 
 function Checkout() {
+  const dispatch = useAppDispatch();
   const deliveryDate = useAppSelector((state) => state.checkout.deliveryDate);
   const deliveryTime = useAppSelector((state) => state.checkout.deliveryTime);
+  const userId = useAppSelector((state) => state?.auth?.user?.id);
   const isChecked = useAppSelector((state) => state.checkout.agreedToPayCash);
   const cart = useAppSelector((state) => state.cart.cart);
   const total = useAppSelector((state) => state.cart.cartAmount);
   const Total = total + 28;
-
   const isOrderReady = isChecked && deliveryDate && deliveryTime;
 
+  const addresses = dispatch(getAddresses(userId));
   // const [chosenAddress, setChosenAddress] = useState(null);
 
   return (

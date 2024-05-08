@@ -6,8 +6,6 @@ export const addAddress = createAsyncThunk(
   'address/addAddress',
   async (query: any) => {
     try {
-      console.log('🚀 ~ query:', query);
-      console.log('🚀 ~ accessToken:', accessToken);
       const response = await fetch(
         `${BASE_URL}api/users/addresses/${query.userId}`,
         {
@@ -22,6 +20,31 @@ export const addAddress = createAsyncThunk(
           body: JSON.stringify(query.query),
         }
       );
+      const data = await response.json();
+      console.log('🚀 ~ data:', data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getAddresses = createAsyncThunk(
+  'address/getAddresses',
+  async (query: string | undefined) => {
+    try {
+      console.log('🚀 ~ query:', query);
+      console.log('🚀 ~ accessToken:', accessToken);
+      const response = await fetch(`${BASE_URL}api/users/addresses/${query}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       const data = await response.json();
       console.log('🚀 ~ data:', data);
       return data;
