@@ -60,6 +60,7 @@ function Checkout() {
           <div className="section-content addresses-section">
             {/*   eslint-disable-next-line */}
             {addresses
+              ?.sort((a: any, b: any) => b - a)
               ?.map(
                 ({ state, address, city, zipCode, phoneNumber, id }, index) => {
                   return (
@@ -78,8 +79,7 @@ function Checkout() {
                     </div>
                   );
                 }
-              )
-              .sort(() => -1)}
+              )}
           </div>
         </Section>
         <Section>
