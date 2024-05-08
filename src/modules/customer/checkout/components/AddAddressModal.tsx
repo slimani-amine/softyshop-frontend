@@ -13,7 +13,7 @@ const AddAddressModal: React.FC = () => {
     (state) => state.auth.user?.id
   );
 
-  console.log('🚀 ~ Header ~ userId:', userId);
+  console.log('🚀 ~ AddressModal ~ userId:', userId);
 
   const initialValues = {
     address: '',
@@ -88,42 +88,48 @@ const AddAddressModal: React.FC = () => {
             label="Address"
             required={true}
           />
-          <Input
-            size="sm"
-            name="phoneNumber"
-            formik={formik}
-            variant="secondary"
-            placeholder="Enter your phone number"
-            label="Phone Number"
-            required={true}
-          />
-          <Input
-            size="sm"
-            name="city"
-            formik={formik}
-            variant="secondary"
-            placeholder="Enter your city"
-            label="City"
-            required={true}
-          />
-          <Input
-            size="sm"
-            name="state"
-            formik={formik}
-            variant="secondary"
-            placeholder="Enter your state"
-            label="State"
-            required={true}
-          />
-          <Input
-            size="sm"
-            name="zipCode"
-            formik={formik}
-            variant="secondary"
-            placeholder="Enter your zip code"
-            label="Zip Code"
-            required={true}
-          />
+          <div className="two-column-addresses">
+            <div className="input-group">
+              <Input
+                size="sm"
+                name="phoneNumber"
+                formik={formik}
+                variant="secondary"
+                placeholder="Enter your phone number"
+                label="Phone Number"
+                required={true}
+              />
+              <Input
+                size="sm"
+                name="city"
+                formik={formik}
+                variant="secondary"
+                placeholder="Enter your city"
+                label="City"
+                required={true}
+              />
+            </div>
+            <div className="input-group">
+              <Input
+                size="sm"
+                name="state"
+                formik={formik}
+                variant="secondary"
+                placeholder="Enter your state"
+                label="State"
+                required={true}
+              />
+              <Input
+                size="sm"
+                name="zipCode"
+                formik={formik}
+                variant="secondary"
+                placeholder="Enter your zip code"
+                label="Zip Code"
+                required={true}
+              />
+            </div>
+          </div>
         </div>
       </Modal>
     </>

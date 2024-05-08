@@ -4,4 +4,14 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  .two-column-addresses {
+    display: flex;
+    gap: 16px;
+    .input-group {
+      max-width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
 }
