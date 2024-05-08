@@ -18,12 +18,16 @@ function Checkout() {
   const dispatch = useAppDispatch();
   const deliveryDate = useAppSelector((state) => state.checkout.deliveryDate);
   const deliveryTime = useAppSelector((state) => state.checkout.deliveryTime);
+  const selectedAddress = useAppSelector(
+    (state) => state.address.selectedAddress
+  );
   const userId = useAppSelector((state) => state?.auth?.user?.id);
   const isChecked = useAppSelector((state) => state.checkout.agreedToPayCash);
   const cart = useAppSelector((state) => state.cart.cart);
   const total = useAppSelector((state) => state.cart.cartAmount);
   const Total = total + 28;
-  const isOrderReady = isChecked && deliveryDate && deliveryTime;
+  const isOrderReady =
+    isChecked && deliveryDate && deliveryTime && selectedAddress;
 
   useEffect(() => {
     function getAllAddresses() {
