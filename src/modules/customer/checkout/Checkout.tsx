@@ -24,6 +24,7 @@ function Checkout() {
   const isOrderReady = isChecked && deliveryDate && deliveryTime;
 
   const addresses = dispatch(getAddresses(userId));
+  console.log(addresses);
   // const [chosenAddress, setChosenAddress] = useState(null);
 
   return (
