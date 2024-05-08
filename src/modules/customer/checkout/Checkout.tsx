@@ -29,8 +29,11 @@ function Checkout() {
   // })();
 
   useEffect(() => {
-    dispatch(getAddresses(userId));
-  }, []);
+    function getAllAddresses() {
+      dispatch(getAddresses(userId));
+    }
+    getAllAddresses();
+  }, [userId]);
 
   const addresses = useAppSelector((state) => state.address.address);
   console.log('🚀 ~ Checkout ~ addresses:', addresses);
