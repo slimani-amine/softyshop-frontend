@@ -59,13 +59,27 @@ function Checkout() {
           </div>
           <div className="section-content addresses-section">
             {addresses?.map(
-              ({ state, address, city, zipCode, phoneNumber, id }, index) => {
+              (
+                {
+                  state,
+                  address,
+                  city,
+                  zipCode,
+                  phoneNumber,
+                  id,
+                }: {
+                  state: string;
+                  address: string;
+                  city: string;
+                  zipCode: string;
+                  phoneNumber: string;
+                  id: number;
+                },
+                index
+              ) => {
                 return (
-                  <div
-                    key={index}
-                    className="checkout-address checkout-address1"
-                  >
-                    <Address>
+                  <div key={index} className="checkout-address">
+                    <Address id={id}>
                       <AddressTitle id={id.toString()}>{state}</AddressTitle>
                       <AddressContent>
                         {address} <br /> {city}, {zipCode}
