@@ -14,7 +14,7 @@ import { getAddresses } from '../data/addressThunk';
 import { useEffect } from 'react';
 import { addressType } from '../data/dataTypes';
 import DifferentStoresModal from './components/DifferentStoresModal';
-import { popItUp } from '../data/addressSlice';
+import { popItUp, refuseAllFees } from '../data/addressSlice';
 import { checkIt } from '../data/checkoutSlice';
 
 function Checkout() {
@@ -80,7 +80,7 @@ function Checkout() {
       deliveryTime &&
       selectedAddress &&
       storesNumber == 1) ||
-    (agreedToPayAllDeliveryFees && storesNumber > 1);
+    (agreedToPayAllDeliveryFees && isChecked && storesNumber > 1);
 
   const isMoreThanOneStore =
     isChecked &&
@@ -89,7 +89,8 @@ function Checkout() {
     selectedAddress &&
     storesNumber > 1;
 
-  if (isMoreThanOneStore) dispatch(popItUp());
+  if (isMoreThanOneStore && !isOrderReady) dispatch(popItUp());
+  if (!isChecked) dispatch(refuseAllFees());
 
   return (
     <div className="checkout-page">
