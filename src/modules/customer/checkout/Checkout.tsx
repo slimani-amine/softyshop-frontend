@@ -13,6 +13,8 @@ import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { getAddresses } from '../data/addressThunk';
 import { useEffect } from 'react';
 import { addressType } from '../data/dataTypes';
+import DifferentStoresModal from './components/DifferentStoresModal';
+import { popItUp } from '../data/addressSlice';
 
 function Checkout() {
   const dispatch = useAppDispatch();
@@ -26,20 +28,35 @@ function Checkout() {
   const cart = useAppSelector((state) => state.cart.cart);
   const total = useAppSelector((state) => state.cart.cartAmount);
   const Total = total + 28;
-  const isOrderReady =
-    isChecked && deliveryDate && deliveryTime && selectedAddress;
 
-  const storesTheUserOrderedFrom = [
+  // const storesTheUserOrderedFrom = [
+  //   ...new Set(
+  //     cart
+  //       .filter((item) => item?.product?.store?.id)
+  //       .map((item) => item.product.store.id)
+  //   ),
+  // ];
+  // const stores = cart
+  //   .filter((item) => item?.product?.store?.id)
+  //   .map((item) => item.product.store);
+
+  // console.log('🚀 ~ Checkout ~ storesNumber:', storesNumber);
+  // console.log(
+  //   '🚀 ~ Checkout ~ storesTheUserOrderedFrom:',
+  //   storesTheUserOrderedFrom
+  // );
+
+  const storeNames = [
     ...new Set(
       cart
         .filter((item) => item?.product?.store?.id)
-        .map((item) => item.product.store.id)
+        .map((item) => item.product.store.name)
     ),
   ];
-  console.log(
-    '🚀 ~ Checkout ~ storesTheUserOrderedFrom:',
-    storesTheUserOrderedFrom
-  );
+  console.log('🚀 ~ Checkout ~ storeNames:', storeNames);
+
+  const storesNumber = storeNames.length;
+  console.log('🚀 ~ Checkout ~ storesNumber:', storesNumber);
 
   useEffect(() => {
     function getAllAddresses() {
@@ -53,9 +70,25 @@ function Checkout() {
   );
 
   // const [chosenAddress, setChosenAddress] = useState(null);
+  const isOrderReady =
+    isChecked &&
+    deliveryDate &&
+    deliveryTime &&
+    selectedAddress &&
+    storesNumber == 1;
+
+  if (
+    isChecked &&
+    deliveryDate &&
+    deliveryTime &&
+    selectedAddress &&
+    storesNumber > 1
+  )
+    dispatch(popItUp());
 
   return (
     <div className="checkout-page">
+      <DifferentStoresModal />
       <div className="checkout" style={{ padding: '0 24px' }}>
         <Section>
           <div className="checkout-title-bar">
