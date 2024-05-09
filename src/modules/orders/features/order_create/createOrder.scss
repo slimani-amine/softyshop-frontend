@@ -147,3 +147,22 @@ font-weight: 600;}
     padding: 1px;
     color: white;
 }
+.csv-upload{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+  }
+.container-csv{
+    margin-bottom: 50px;
+}
+.flex-btn{
+    display: flex;
+    align-items: center;
+    gap:10px
+}
+.select-csv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

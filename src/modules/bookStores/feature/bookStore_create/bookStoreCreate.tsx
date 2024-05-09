@@ -62,6 +62,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
+
   const Id_user = useSelector((state: RootState) => state?.auth?.user?.id);
   console.log(Id_user);
   console.log(Current_User);
@@ -207,7 +208,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                   style={{ marginBottom: "20px" }}
                   rules={[
                     {
-                      required: true,
+                      required: Current_User === ADMIN,
                       message: "Please Select Vendor",
                     }]}
                 >
