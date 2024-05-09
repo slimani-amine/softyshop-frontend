@@ -149,8 +149,20 @@ font-weight: 600;}
 }
 .csv-upload{
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin: 30px 0;
+    align-items: center;
    
   }
+.container-csv{
+    margin-bottom: 50px;
+}
+.flex-btn{
+    display: flex;
+    align-items: center;
+    gap:10px
+}
+.select-csv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

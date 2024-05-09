@@ -281,7 +281,7 @@ const [publishProduct] = usePublishProductMutation()
           </Button>
           </div>
         <Button className="add-cat" onClick={handleNavigate}>
-          {" "}
+          {""}
           <span>+</span> Add Product
         </Button>
       </div>
