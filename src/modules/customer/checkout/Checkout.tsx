@@ -29,7 +29,17 @@ function Checkout() {
   const isOrderReady =
     isChecked && deliveryDate && deliveryTime && selectedAddress;
 
-  console.log('🚀 ~ Checkout ~ cart:', cart);
+  const storesTheUserOrderedFrom = [
+    ...new Set(
+      cart
+        .filter((item) => item?.product?.store?.id)
+        .map((item) => item.product.store.id)
+    ),
+  ];
+  console.log(
+    '🚀 ~ Checkout ~ storesTheUserOrderedFrom:',
+    storesTheUserOrderedFrom
+  );
 
   useEffect(() => {
     function getAllAddresses() {

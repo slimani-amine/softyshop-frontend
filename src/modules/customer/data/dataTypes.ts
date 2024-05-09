@@ -39,6 +39,18 @@ export interface ProductType {
   stockNumber: number;
   updatedAt: string;
   quantity: number;
+  store: {
+    name: string;
+    id: number;
+  };
+  brand: {
+    name: string;
+    id: number;
+  };
+  creator: {
+    name: string;
+    id: number;
+  };
 }
 
 export interface CartItemType {
