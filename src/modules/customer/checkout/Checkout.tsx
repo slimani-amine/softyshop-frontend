@@ -29,6 +29,8 @@ function Checkout() {
   const isOrderReady =
     isChecked && deliveryDate && deliveryTime && selectedAddress;
 
+  console.log('🚀 ~ Checkout ~ cart:', cart);
+
   useEffect(() => {
     function getAllAddresses() {
       dispatch(getAddresses(userId));

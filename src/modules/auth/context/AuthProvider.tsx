@@ -18,12 +18,17 @@ interface JwtPayload {
 }
 
 export const accessToken: any = localStorage.getItem('accessToken');
+
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  // console.log(accessToken);
   const dispatch = useDispatch();
   const isMounted = useIsMountedRef();
+  // const [updatedToken, setUpdatedToken] = useState(accessToken);
 
   const { isInitialised } = useSelector((state: RootState) => state.auth);
+  // while (!updatedToken)
+  //   setTimeout(() => {
+  //     setUpdatedToken(accessToken);
+  //   }, 500);
   dispatch(saveToken(accessToken));
 
   const isValidToken = (token: string) => {

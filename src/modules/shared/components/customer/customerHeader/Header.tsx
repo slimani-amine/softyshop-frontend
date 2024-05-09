@@ -24,14 +24,6 @@ function Header() {
     getTheCart();
   }, [token, dispatch, getCart]);
 
-  // (async function () {
-  //   while (!accessToken) {
-  //     await dispatch(saveToken(accessToken));
-  //     setTimeout(() => console.log(accessToken), 0.1);
-  //   }
-  //   await dispatch(getCart(accessToken));
-  // })();
-
   const myCartItemsNumber: any = useAppSelector(
     (state) => state.cart.cartItems
   );

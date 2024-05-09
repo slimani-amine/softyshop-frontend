@@ -14,6 +14,7 @@ function Home() {
         const response = await fetch(`${BASE_URL}api/stores`);
         const data = await response.json();
         setStores(data.data.docs);
+        // window.location.reload();
       } catch (err: string | unknown) {
         console.log(err);
         return err;
@@ -23,41 +24,42 @@ function Home() {
     fetchData();
   }, [BASE_URL]);
 
-  return (
-    <>
-      {user?.role === 'user' && <Navigate to="/home" />}
-      {user?.role === 'vendor' && <Navigate to="/products" />}
-      <div className="home">
-        {Stores?.map(
-          (
-            {
-              name,
-              logo,
-              phoneNumber,
-              address,
-              id,
-              isPublished,
-              location,
-              socialMediaLinks,
-            },
-            index
-          ) => (
-            <Store
-              key={index}
-              id={id}
-              name={name}
-              address={address}
-              phoneNumber={phoneNumber}
-              logo={logo}
-              isPublished={isPublished}
-              location={location}
-              socialMediaLinks={socialMediaLinks}
-            />
-          )
-        )}
-      </div>
-    </>
-  );
+  {
+    return (
+      <>
+        {user?.role === 'user' && <Navigate to="/home" />}
+        {user?.role === 'vendor' && <Navigate to="/products" />}
+        <div className="home">
+          {Stores?.map(
+            (
+              {
+                name,
+                logo,
+                phoneNumber,
+                address,
+                id,
+                isPublished,
+                location,
+                socialMediaLinks,
+              },
+              index
+            ) => (
+              <Store
+                key={index}
+                id={id}
+                name={name}
+                address={address}
+                phoneNumber={phoneNumber}
+                logo={logo}
+                isPublished={isPublished}
+                location={location}
+                socialMediaLinks={socialMediaLinks}
+              />
+            )
+          )}
+        </div>
+      </>
+    );
+  }
 }
-
 export default Home;
