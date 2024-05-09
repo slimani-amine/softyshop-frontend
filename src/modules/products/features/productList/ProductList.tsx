@@ -20,6 +20,7 @@ import {
 } from "@src/modules/bookStores/service/storeApi";
 import { debounce } from "lodash";
 import { ADMIN } from "@src/global_roles_config";
+import CSV from "@src/modules/products/components/csv";
 
 interface Product {
   id: string;
@@ -79,10 +80,12 @@ const [publishProduct] = usePublishProductMutation()
     const { data: fetchedAllStores } = useAllStoresQuery();
     stores = fetchedAllStores?.data?.docs;
   }
-  const selectStores = stores?.map((store: any) => ({
+    const selectStores = stores?.map((store: any) => ({
     label: store.name,
     value: store.id,
   }));
+
+  
 
 
   // Handle loading state
@@ -282,6 +285,7 @@ const [publishProduct] = usePublishProductMutation()
           <span>+</span> Add Product
         </Button>
       </div>
+
       <div className="container-Product-List">
         <div className="container-btn">
           <Button
@@ -294,7 +298,10 @@ const [publishProduct] = usePublishProductMutation()
           </Button>
         </div>
         <Table<Product> {...tableProps} />
+        <CSV/>
+
       </div>
     </div>
   );
 }
+
