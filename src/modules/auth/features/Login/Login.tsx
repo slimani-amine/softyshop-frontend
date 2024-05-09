@@ -38,8 +38,8 @@ const Login = () => {
         .then(() => {
           toast.success('Welcome to SoftyShop!');
           console.log(role);
-          if (role == 'USER') navigate('/checkout');
-          else navigate('/checkout');
+          if (role == 'USER') navigate('/home');
+          else navigate('/products');
         })
         .catch((err) => {
           toast.error(err?.message || 'something went wrong');
