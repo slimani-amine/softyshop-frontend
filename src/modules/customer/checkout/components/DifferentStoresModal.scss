@@ -1,3 +1,16 @@
-.diff-stores-modal {
-  background-color: red;
+.modal-save-button {
+  display: flex;
+  justify-content: center !important;
+}
+.warning-text {
+  margin-top: 24px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.checkbox-ant {
+  margin-top: 12px;
+}
+.agreement-text {
+  font-size: 18px;
+  font-weight: 600;
 }

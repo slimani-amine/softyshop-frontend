@@ -8,6 +8,7 @@ interface addressStateType {
   status: string;
   error: string;
   isPopUpShown: boolean;
+  agreedToPayAllDeliveryFees: boolean;
 }
 
 const initialState: addressStateType = {
@@ -16,6 +17,7 @@ const initialState: addressStateType = {
   status: '',
   error: '',
   isPopUpShown: false,
+  agreedToPayAllDeliveryFees: false,
 };
 
 const addressSlice = createSlice({
@@ -30,6 +32,12 @@ const addressSlice = createSlice({
     },
     hideIt(state) {
       state.isPopUpShown = false;
+    },
+    agreeToAllFees(state) {
+      state.agreedToPayAllDeliveryFees = true;
+    },
+    refuseAllFees(state) {
+      state.agreedToPayAllDeliveryFees = false;
     },
   },
   extraReducers: (builder) => {
@@ -60,4 +68,10 @@ const addressSlice = createSlice({
 });
 
 export default addressSlice.reducer;
-export const { updateSelectedId, popItUp, hideIt } = addressSlice.actions;
+export const {
+  updateSelectedId,
+  popItUp,
+  hideIt,
+  agreeToAllFees,
+  refuseAllFees,
+} = addressSlice.actions;

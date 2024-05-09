@@ -1,4 +1,4 @@
-import CheckedItem from '@src/modules/shared/components/customer/customerSidebar/components/CheckedItem';
+import { Checkbox, ConfigProvider } from 'antd';
 import Number from './components/Number';
 import Section from './components/Section';
 import Title from './components/Title';
@@ -15,19 +15,23 @@ import { useEffect } from 'react';
 import { addressType } from '../data/dataTypes';
 import DifferentStoresModal from './components/DifferentStoresModal';
 import { popItUp } from '../data/addressSlice';
+import { checkIt } from '../data/checkoutSlice';
 
 function Checkout() {
   const dispatch = useAppDispatch();
   const deliveryDate = useAppSelector((state) => state.checkout.deliveryDate);
   const deliveryTime = useAppSelector((state) => state.checkout.deliveryTime);
-  const selectedAddress = useAppSelector(
-    (state) => state.address.selectedAddress
-  );
   const userId = useAppSelector((state) => state?.auth?.user?.id);
   const isChecked = useAppSelector((state) => state.checkout.agreedToPayCash);
   const cart = useAppSelector((state) => state.cart.cart);
   const total = useAppSelector((state) => state.cart.cartAmount);
   const Total = total + 28;
+  const selectedAddress = useAppSelector(
+    (state) => state.address.selectedAddress
+  );
+  const agreedToPayAllDeliveryFees = useAppSelector(
+    (state) => state.address.agreedToPayAllDeliveryFees
+  );
 
   // const storesTheUserOrderedFrom = [
   //   ...new Set(
@@ -71,24 +75,25 @@ function Checkout() {
 
   // const [chosenAddress, setChosenAddress] = useState(null);
   const isOrderReady =
-    isChecked &&
-    deliveryDate &&
-    deliveryTime &&
-    selectedAddress &&
-    storesNumber == 1;
+    (isChecked &&
+      deliveryDate &&
+      deliveryTime &&
+      selectedAddress &&
+      storesNumber == 1) ||
+    (agreedToPayAllDeliveryFees && storesNumber > 1);
 
-  if (
+  const isMoreThanOneStore =
     isChecked &&
     deliveryDate &&
     deliveryTime &&
     selectedAddress &&
-    storesNumber > 1
-  )
-    dispatch(popItUp());
+    storesNumber > 1;
+
+  if (isMoreThanOneStore) dispatch(popItUp());
 
   return (
     <div className="checkout-page">
-      <DifferentStoresModal />
+      <DifferentStoresModal storesNumber={storesNumber} />
       <div className="checkout" style={{ padding: '0 24px' }}>
         <Section>
           <div className="checkout-title-bar">
@@ -146,12 +151,29 @@ function Checkout() {
           <div className="checkout-title-bar">
             <Number>3</Number> <Title>payment details</Title>
           </div>
-          <div className="payment-method">
+          {/* <div className="payment-method checked-item">
             <CheckedItem>
               <p className="payment-method-text">
                 I agree to pay cash on delivery
               </p>
             </CheckedItem>
+          </div> */}
+          <div className="checked-item payment-method">
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorPrimary: '#0F3460',
+                },
+              }}
+            >
+              <Checkbox
+                value={isChecked}
+                onChange={() => dispatch(checkIt())}
+              />
+            </ConfigProvider>{' '}
+            <p className="payment-method-text">
+              I agree to pay cash on delivery
+            </p>
           </div>
           {isOrderReady ? (
             <Button label="Place Order" size="xl" style={{ width: '100%' }} />
