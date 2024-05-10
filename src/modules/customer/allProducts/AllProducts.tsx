@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import Product from '../home/components/Product/Product';
-import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { settProducts } from '../data/productSlice';
-import { BASE_URL } from '@src/modules/auth/data/authThunk';
-import { ProductType } from '../data/dataTypes';
+import { useEffect, useState } from "react";
+import Product from "../home/components/Product/Product";
+import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
+import { settProducts } from "../data/productSlice";
+import { BASE_URL } from "@src/modules/auth/data/authThunk";
+import { ProductType } from "../data/dataTypes";
 
 function AllProducts() {
   const [Products, setProducts] = useState([]);
@@ -13,13 +13,13 @@ function AllProducts() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${BASE_URL}api/products?perPage=100&page=1`
+          `${BASE_URL}api/products?perPage=100&page=1`,
         );
         const data = await response.json();
         setProducts(
           data.data.docs.map((product: ProductType) => {
             return { ...product, quantity: 0 };
-          })
+          }),
         );
       } catch (err: string | unknown) {
         console.log(err);
@@ -32,7 +32,7 @@ function AllProducts() {
   const cart = useAppSelector((state) => state.cart.cart);
   const updatedProducts = Products.map((product: any) => {
     const updatedProduct = cart.find(
-      (item) => item?.product?.id === product?.id
+      (item) => item?.product?.id === product?.id,
     );
     if (updatedProduct) {
       return { ...product, quantity: updatedProduct.quantity };
@@ -55,7 +55,7 @@ function AllProducts() {
             stockNumber,
             quantity,
           },
-          index
+          index,
         ) => (
           <Product
             availability={availability}
@@ -68,7 +68,7 @@ function AllProducts() {
             images={images}
             quantity={quantity}
           />
-        )
+        ),
       )}
     </div>
   );

@@ -4,76 +4,73 @@
     fill: #7d879c;
   }
 }
-.add-cat{
+.add-cat {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 160px; 
+  width: 160px;
   height: 45px;
   gap: 10px;
-  background-color: #3d6d6f ;
+  background-color: #3d6d6f;
   color: white;
   border-radius: 8px;
   box-shadow: 0px 4px 16px rgba(43, 52, 69, 0.1);
   padding: 2px 5px;
   font-size: 14px;
   font-weight: 400;
-  span{
+  span {
     font-size: 22px;
     font-weight: 600;
-    color : white
+    color: white;
   }
-  &:hover{
-    background-color:   #365f61 !important ;
+  &:hover {
+    background-color: #365f61 !important ;
   }
 }
 
-
-.add-remove-csv{
+.add-remove-csv {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 80px; 
+  width: 80px;
   height: 40px;
-  padding: 0 5px ;
+  padding: 0 5px;
   gap: 10px;
-  background-color: #ff084e ;
+  background-color: #ff084e;
   color: white;
   border-radius: 8px;
   box-shadow: 0px 4px 16px rgba(43, 52, 69, 0.1);
   padding: 2px 5px;
   font-size: 14px;
   font-weight: 400;
-  span{
+  span {
     font-size: 22px;
     font-weight: 600;
-    color : white
+    color: white;
   }
-  
 }
-.icon-category{
+.icon-category {
   height: 20px;
   width: 300px;
-
 }
-.img-cteagory{
+.img-cteagory {
   height: 50px;
   width: 50px;
   border-radius: 10px;
 }
-.action-category{
+.action-category {
   width: 100px;
 }
-.ant-table-column-sorters{
+.ant-table-column-sorters {
   width: fit-content;
   display: flex;
   gap: 10px;
 }
-.ant-switch-checked{
+.ant-switch-checked {
   background-color: #5a6976 !important;
 }
 .ant-table-thead {
@@ -101,24 +98,23 @@
     }
   }
 }
-.icon-action{
+.icon-action {
   height: 40px;
   width: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease ;
+  transition: all 0.2s ease;
   cursor: pointer;
-  &:hover{
+  &:hover {
     background-color: rgba(94, 94, 94, 0.177);
-    svg{
+    svg {
       fill: #4da1e6a9;
     }
   }
 }
 .Product-List {
-
   .name-column {
     display: flex;
     justify-content: flex-start;
@@ -146,4 +142,3 @@
 .icon {
   color: red;
 }
-

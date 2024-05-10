@@ -1,4 +1,4 @@
 export default interface Brand {
-    name  : string,
-    logo  :string
+  name: string;
+  logo: string;
 }

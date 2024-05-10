@@ -11,7 +11,7 @@ type RouteConfig = {
   component: React.ComponentType<any>;
   guard?: React.ComponentType<any> | typeof Fragment | any;
   layout?: React.ComponentType<any> | typeof Fragment;
-  roles : string[];
+  roles: string[];
 } & RouteProps;
 
 const routes: RouteConfig[] = [
@@ -32,7 +32,6 @@ const routes: RouteConfig[] = [
     layout: MainLayout,
     roles: [ADMIN],
   },
- 
 ];
 
 export default routes;

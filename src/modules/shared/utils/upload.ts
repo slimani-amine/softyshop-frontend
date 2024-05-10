@@ -4,7 +4,7 @@ export const handleFileChange = async (
   e: any,
   setFile: any,
   setSelectedFileUrl: any,
-  setUploading: any
+  setUploading: any,
 ) => {
   if (e.file) {
     const selectedFile = e.file;
@@ -26,20 +26,18 @@ export const handleFileChange = async (
           {
             method: "post",
             body: form,
-          }
+          },
         );
 
         if (response.ok) {
           const data = await response.json();
           setSelectedFileUrl(data.url);
         } else {
-          message.error(
-            "Error uploading file. Please try again."
-          );
+          message.error("Error uploading file. Please try again.");
         }
       } catch (error) {
         message.error(
-          "An error occurred while uploading the file. Please try again."
+          "An error occurred while uploading the file. Please try again.",
         );
         console.error(error);
       } finally {
@@ -47,7 +45,7 @@ export const handleFileChange = async (
       }
     } else {
       message.error(
-        "Invalid file format or size. Please choose a valid image file (max 2 MB)."
+        "Invalid file format or size. Please choose a valid image file (max 2 MB).",
       );
     }
   }

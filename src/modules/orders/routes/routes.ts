@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import MainLayout from '@src/modules/shared/layout/MainLayout/MainLayout';
-import AuthGuard from '@src/modules/shared/guards/AuthGuard';
-import { RouteProps } from 'react-router-dom';
-import { Fragment, lazy } from 'react';
-import { ADMIN , VENDOR } from "@src/global_roles_config";
+import MainLayout from "@src/modules/shared/layout/MainLayout/MainLayout";
+import AuthGuard from "@src/modules/shared/guards/AuthGuard";
+import { RouteProps } from "react-router-dom";
+import { Fragment, lazy } from "react";
+import { ADMIN, VENDOR } from "@src/global_roles_config";
 
 type RouteConfig = {
   exact: boolean | null;
@@ -19,18 +19,18 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: '/orders/create',
-    component: lazy(() => import('../features/order_create/createOrder')),
+    path: "/orders/create",
+    component: lazy(() => import("../features/order_create/createOrder")),
     layout: MainLayout,
-    roles: [VENDOR, ADMIN ],
+    roles: [VENDOR, ADMIN],
   },
   {
     exact: true,
     guard: AuthGuard,
-    path: '/orders',
-    component: lazy(() => import('../features/order_list/OrderList')),
+    path: "/orders",
+    component: lazy(() => import("../features/order_list/OrderList")),
     layout: MainLayout,
-    roles: [VENDOR,ADMIN],
+    roles: [VENDOR, ADMIN],
   },
 ];
 

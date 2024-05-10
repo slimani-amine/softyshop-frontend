@@ -1,16 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: { id: '', token: '' },
+  user: { id: "", token: "" },
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     saveUser(state, action) {
       if (!action.payload) return;
-      console.log('🚀 ~ saveUser ~ action:', action.payload);
+      console.log("🚀 ~ saveUser ~ action:", action.payload);
       state.user = action.payload;
     },
   },

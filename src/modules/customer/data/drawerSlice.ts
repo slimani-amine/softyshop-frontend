@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = { isDrawerShown: false };
 
 const drawerSlice = createSlice({
-  name: 'drawer',
+  name: "drawer",
   initialState,
   reducers: {
     showDrawer(state) {

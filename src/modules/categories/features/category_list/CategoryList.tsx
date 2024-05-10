@@ -1,37 +1,27 @@
-import {
-  Table,
-  Space,
-
-  message,
-
-  Switch,
-  Checkbox,
-} from 'antd';
-import { RootState } from '@src/modules/shared/store';
-import SeachFilter from '@src/modules/shared/components/SearchFilter/SearchFilter';
-import Button from '@src/modules/shared/components/Button/Button';
-import { useNavigate } from 'react-router-dom';
+import { Table, Space, message, Switch, Checkbox } from "antd";
+import { RootState } from "@src/modules/shared/store";
+import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
+import Button from "@src/modules/shared/components/Button/Button";
+import { useNavigate } from "react-router-dom";
 import {
   useUpdateCatgoryMutation,
   useDeleteCategoriesMutation,
   useCategoriesQuery,
   useSearchCategoriesQuery,
-} from '../../service/categoryApi';
+} from "../../service/categoryApi";
 import { ReactComponent as EditIcon } from "@src/modules/shared/assets/icons/List/edit.svg";
 
-
-import { useEffect, useState } from 'react'; // Import useState hook for managing modal state
-import Category from '../../service/type';
-import { debounce } from 'lodash';
-import { useSelector } from 'react-redux';
-import { VENDOR} from '@src/global_roles_config';
+import { useEffect, useState } from "react"; // Import useState hook for managing modal state
+import Category from "../../service/type";
+import { debounce } from "lodash";
+import { useSelector } from "react-redux";
+import { VENDOR } from "@src/global_roles_config";
 export default function CategoryList() {
-
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
-  const [nameCategory, setNameCategory] = useState<string>('');
+  const [nameCategory, setNameCategory] = useState<string>("");
   const { data: fetchedCategories } = useCategoriesQuery({
     perPage: pageSize,
     page: currentPage,
@@ -55,10 +45,10 @@ export default function CategoryList() {
     }
   }, [nameCategory, fetchedCategories, fetchedSearchCategories]);
   const Current_User = useSelector(
-    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase(),
   );
   const handleSearchChange = debounce((searchText: string) => {
-    console.log('Search text for category list:', searchText);
+    console.log("Search text for category list:", searchText);
     setNameCategory(searchText);
   }, 200);
 
@@ -74,7 +64,7 @@ export default function CategoryList() {
   const handleDelete = async () => {
     try {
       await deleteCategories(selectedRowIds).unwrap();
-      message.success('Category deleted!');
+      message.success("Category deleted!");
     } catch (error) {
       // Handle error
     }
@@ -86,11 +76,11 @@ export default function CategoryList() {
   };
 
   const handleNavigate = () => {
-    navigate('/categories/create');
+    navigate("/categories/create");
   };
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: string
+    id: string,
   ) => {
     const checked = e.target.checked;
     console.log(selectedRowIds);
@@ -105,8 +95,8 @@ export default function CategoryList() {
 
   const columns = [
     {
-      title: 'Select',
-      dataIndex: 'id',
+      title: "Select",
+      dataIndex: "id",
       render: (_: any, record: any) => (
         <Checkbox
           checked={selectedRowIds.includes(record.id)}
@@ -115,39 +105,38 @@ export default function CategoryList() {
       ),
     },
     {
-      title: 'id',
-      dataIndex: 'id',
-      key: 'id',
+      title: "id",
+      dataIndex: "id",
+      key: "id",
       render: (id: string) => <p>{id}</p>,
     },
     {
-      title: 'name',
-      className: 'name',
-      dataIndex: 'name',
+      title: "name",
+      className: "name",
+      dataIndex: "name",
       render: (name: string) => <span className="Category-name">{name}</span>,
-      key: 'name',
+      key: "name",
       sorter: (a: Category, b: Category) => a.name.localeCompare(b.name),
     },
     {
-      title: 'icon',
-      className: 'icon-category',
-      dataIndex: 'icon',
+      title: "icon",
+      className: "icon-category",
+      dataIndex: "icon",
       render: (icon: string) => (
         <img className="img-cteagory" src={icon} alt="" />
       ),
-      key: 'icon',
+      key: "icon",
     },
     {
-      title: 'Published',
-      dataIndex: 'published',
-      key: 'published',
+      title: "Published",
+      dataIndex: "published",
+      key: "published",
 
       sorter: (a: Category, b: Category) =>
         (a.isPublished ? 1 : 0) - (b.isPublished ? 1 : 0),
-       render: (_isPublished: boolean, record: any) => (
-        
+      render: (_isPublished: boolean, record: any) => (
         <Switch
-          disabled = {Current_User === VENDOR}
+          disabled={Current_User === VENDOR}
           checked={record.isPublished}
           onClick={() => {
             updateCategory({
@@ -158,15 +147,15 @@ export default function CategoryList() {
         />
       ),
     },
-    
+
     {
-      title: 'Action',
-      key: 'action',
-      className: 'action-category',
+      title: "Action",
+      key: "action",
+      className: "action-category",
       render: (record: any) => (
         <Space>
           <div className="icon-action" onClick={() => Navigate(record?.id)}>
-           <EditIcon/>
+            <EditIcon />
           </div>
         </Space>
       ),
@@ -176,9 +165,9 @@ export default function CategoryList() {
   const tableProps = {
     dataSource: categories,
     columns: columns,
-    headerStyle: { backgroundColor: 'lightblue' },
+    headerStyle: { backgroundColor: "lightblue" },
     header: {
-      style: { borderRadius: 'px' },
+      style: { borderRadius: "px" },
     },
     pagination: {
       total: fetchedCategories?.data.meta.totalPages + 4,
@@ -197,10 +186,10 @@ export default function CategoryList() {
       <div className="header-Product-list">
         <SeachFilter
           onSearchChange={handleSearchChange}
-          placeholder={'Search Category..'}
+          placeholder={"Search Category.."}
         />
         <Button className="add-cat" onClick={handleNavigate}>
-          {' '}
+          {" "}
           <span>+</span> Add Category
         </Button>
       </div>
@@ -209,7 +198,7 @@ export default function CategoryList() {
           <Button
             size="sm"
             disabled={selectedRowIds.length === 0}
-            variant={selectedRowIds.length === 0 ? 'dark' : 'primary'}
+            variant={selectedRowIds.length === 0 ? "dark" : "primary"}
             onClick={handleDelete}
           >
             Delete
@@ -218,7 +207,6 @@ export default function CategoryList() {
         <Table<Category> {...tableProps} />
       </div>
       {/* Delete Category Modal */}
-    
     </div>
   );
 }

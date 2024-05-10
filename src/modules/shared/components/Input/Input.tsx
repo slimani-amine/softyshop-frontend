@@ -1,23 +1,23 @@
-import { HTMLAttributes, useState } from 'react';
-import eyeOn from './eyeOn.svg';
-import eyeOff from './eyeOff.svg';
+import { HTMLAttributes, useState } from "react";
+import eyeOn from "./eyeOn.svg";
+import eyeOff from "./eyeOff.svg";
 
 interface IInputProps extends HTMLAttributes<HTMLInputElement> {
   name: string;
   formik: any;
   label?: string;
   icon?: string;
-  type?: 'email' | 'text' | 'number' | 'password';
+  type?: "email" | "text" | "number" | "password";
   variant?:
-    | 'primary'
-    | 'info'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'dark'
-    | 'secondary'
-    | 'light';
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+    | "primary"
+    | "info"
+    | "success"
+    | "danger"
+    | "warning"
+    | "dark"
+    | "secondary"
+    | "light";
+  size?: "sm" | "md" | "lg" | "xl";
   rounded?: boolean;
   required?: boolean;
 }
@@ -55,37 +55,37 @@ const Input: React.FC<IInputProps> = ({
 
       <div
         className={[
-          'input-container',
+          "input-container",
           `input-container-${variant}`,
-          `${rounded ? 'input-rounded' : ''}`,
-        ].join(' ')}
+          `${rounded ? "input-rounded" : ""}`,
+        ].join(" ")}
       >
         {icon && <img src={icon} alt="icon" className="icon" />}
         <div className="input-field">
           <input
             id={name}
             name={name}
-            className={`${isFocused ? 'legend-label' : ''}`}
+            className={`${isFocused ? "legend-label" : ""}`}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={formik.handleChange}
             type={
-              type === 'password'
+              type === "password"
                 ? showPassword
-                  ? 'password'
-                  : 'text'
-                : type === 'text'
-                ? 'text'
-                : type === 'email'
-                ? 'email'
-                : 'number'
+                  ? "password"
+                  : "text"
+                : type === "text"
+                ? "text"
+                : type === "email"
+                ? "email"
+                : "number"
             }
             autoComplete="new-password"
             {...props}
           />
-          <p className={`${isFocused ? 'legend-input' : ''}`}>Name</p>
+          <p className={`${isFocused ? "legend-input" : ""}`}>Name</p>
         </div>
-        {type === 'password' && (
+        {type === "password" && (
           <img
             src={showPassword ? eyeOff : eyeOn}
             alt="eye-icon"
@@ -103,17 +103,17 @@ const Input: React.FC<IInputProps> = ({
 
 type InputDefaultProps = Pick<
   IInputProps,
-  'label' | 'icon' | 'variant' | 'size' | 'rounded' | 'type' | 'required'
+  "label" | "icon" | "variant" | "size" | "rounded" | "type" | "required"
 >;
 
 Input.defaultProps = {
-  label: '',
-  icon: '',
-  variant: 'primary',
-  size: 'md',
+  label: "",
+  icon: "",
+  variant: "primary",
+  size: "md",
   rounded: true,
   required: false,
-  type: 'text',
+  type: "text",
 } as InputDefaultProps;
 
 export default Input;

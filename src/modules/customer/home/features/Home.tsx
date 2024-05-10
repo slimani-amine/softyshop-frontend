@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import Store from '../components/Store/Store';
-import { BASE_URL } from '@src/modules/auth/data/authThunk';
-import { useAppSelector } from '@src/modules/shared/store';
-import { Navigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import Store from "../components/Store/Store";
+import { BASE_URL } from "@src/modules/auth/data/authThunk";
+import { useAppSelector } from "@src/modules/shared/store";
+import { Navigate } from "react-router-dom";
 
 function Home() {
   const user = useAppSelector((state) => state.auth.user);
@@ -25,8 +25,8 @@ function Home() {
 
   return (
     <>
-      {user?.role === 'user' && <Navigate to="/home" />}
-      {user?.role === 'vendor' && <Navigate to="/products" />}
+      {user?.role === "user" && <Navigate to="/home" />}
+      {user?.role === "vendor" && <Navigate to="/products" />}
       <div className="home">
         {Stores?.map(
           (
@@ -40,7 +40,7 @@ function Home() {
               location,
               socialMediaLinks,
             },
-            index
+            index,
           ) => (
             <Store
               key={index}
@@ -53,7 +53,7 @@ function Home() {
               location={location}
               socialMediaLinks={socialMediaLinks}
             />
-          )
+          ),
         )}
       </div>
     </>

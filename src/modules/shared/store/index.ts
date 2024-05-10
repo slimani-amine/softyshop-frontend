@@ -1,8 +1,8 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from './rootReducer';
-import { ProductsApi } from '@src/modules/products/service/productApi';
-import { StoreApi } from '@src/modules/bookStores/service/storeApi';
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "./rootReducer";
+import { ProductsApi } from "@src/modules/products/service/productApi";
+import { StoreApi } from "@src/modules/bookStores/service/storeApi";
 export const store = configureStore({
   reducer: rootReducer,
   devTools: !!import.meta.env.VITE_APP_ENABLE_REDUX_DEVTOOLS || false,

@@ -3,20 +3,20 @@ import {
   createApi,
   fetchBaseQuery,
   retry,
-} from '@reduxjs/toolkit/query/react';
-import axiosInstance from '@src/modules/auth/utils/axios';
-import { setTokens } from '@src/modules/auth/utils/token';
+} from "@reduxjs/toolkit/query/react";
+import axiosInstance from "@src/modules/auth/utils/axios";
+import { setTokens } from "@src/modules/auth/utils/token";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl:import.meta.env.VITE_APP_BASE_URL,
+  baseUrl: import.meta.env.VITE_APP_BASE_URL,
   // Add headers here
   prepareHeaders: (headers) => {
     // You can add any headers you need here
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem("accessToken");
     if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
+      headers.set("Authorization", `Bearer ${token}`);
     }
-    headers.set('Content-Type', 'application/json');
+    headers.set("Content-Type", "application/json");
     return headers;
   },
 });
@@ -28,14 +28,14 @@ const staggeredBaseQueryWithBailOut = retry(
     if (result.error) {
       if (result.error.status === 409) {
         try {
-          const response = await axiosInstance.get('/auth/refresh');
+          const response = await axiosInstance.get("/auth/refresh");
           const { accessToken } = response.data.payload;
           setTokens(accessToken);
 
           const retryResult = await baseQuery(args, api, extraOptions);
           return retryResult;
         } catch (err) {
-          window.location.replace('/');
+          window.location.replace("/");
           return result;
         }
       }
@@ -43,31 +43,29 @@ const staggeredBaseQueryWithBailOut = retry(
     }
 
     return result;
-  }
+  },
 );
 
 const baseQueryWithRetry = staggeredBaseQueryWithBailOut;
 
 export const api = createApi({
-  reducerPath: 'api',
+  reducerPath: "api",
   baseQuery: baseQueryWithRetry,
   tagTypes: [
-    'Categories',
-    'brands',
-    'brand',
-    'products',
-    'creators',
-    'creator',
-    'category',
-    'stores',
-    'store',
-    'vendors',
-    'vendor',
-    'address',
-    'orders',
-    "product"
-    
-    
+    "Categories",
+    "brands",
+    "brand",
+    "products",
+    "creators",
+    "creator",
+    "category",
+    "stores",
+    "store",
+    "vendors",
+    "vendor",
+    "address",
+    "orders",
+    "product",
   ],
   endpoints: () => ({}),
 });

@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { updateSelectedId } from '../../data/addressSlice';
+import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
+import { updateSelectedId } from "../../data/addressSlice";
 
 function Address({ id, children }: { id: number; children: React.ReactNode }) {
   const dispatch = useAppDispatch();
@@ -11,7 +11,7 @@ function Address({ id, children }: { id: number; children: React.ReactNode }) {
     <>
       {selectedId == id ? (
         <div
-          style={{ border: '1px solid #D23E57' }}
+          style={{ border: "1px solid #D23E57" }}
           onClick={() => handleSelect(id)}
           className="address"
         >

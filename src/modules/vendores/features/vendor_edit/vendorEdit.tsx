@@ -52,7 +52,7 @@ const UpdateVendorForm: FC = () => {
       const values = await form.validateFields();
       const objectPost = { ...values, isVerified };
       console.log(objectPost, "object post");
-      const response : TypeOfResponse = await updateVendor({
+      const response: TypeOfResponse = await updateVendor({
         id,
         data: {
           firstName: objectPost.name,
@@ -71,9 +71,11 @@ const UpdateVendorForm: FC = () => {
       } else if ("error" in response && response.error) {
         // Display error message if error exists and it's truthy
         message.error(`${response.error.message}`);
-    } else {
-        message.error("Unexpected response from server. Please try again later.");
-    }
+      } else {
+        message.error(
+          "Unexpected response from server. Please try again later.",
+        );
+      }
     } catch (error) {
       console.error("Error updating vendor", error);
     }

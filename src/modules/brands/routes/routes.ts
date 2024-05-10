@@ -3,7 +3,7 @@ import MainLayout from "@src/modules/shared/layout/MainLayout/MainLayout";
 import AuthGuard from "@src/modules/shared/guards/AuthGuard";
 import { RouteProps } from "react-router-dom";
 import { Fragment, lazy } from "react";
-import { ADMIN , VENDOR } from "@src/global_roles_config";
+import { ADMIN, VENDOR } from "@src/global_roles_config";
 
 type RouteConfig = {
   exact: boolean | null;
@@ -11,7 +11,7 @@ type RouteConfig = {
   component: React.ComponentType<any>;
   guard?: React.ComponentType<any> | typeof Fragment | any;
   layout?: React.ComponentType<any> | typeof Fragment;
-  roles : string[];
+  roles: string[];
 } & RouteProps;
 
 const routes: RouteConfig[] = [
@@ -22,7 +22,7 @@ const routes: RouteConfig[] = [
     path: "/brands/create",
     component: lazy(() => import("../features/brandCreate/brandCreate")),
     layout: MainLayout,
-    roles: [VENDOR , ADMIN],
+    roles: [VENDOR, ADMIN],
   },
   {
     exact: true,
@@ -30,7 +30,7 @@ const routes: RouteConfig[] = [
     path: "/brands",
     component: lazy(() => import("../features/brandList/brandList")),
     layout: MainLayout,
-    roles: [VENDOR , ADMIN],
+    roles: [VENDOR, ADMIN],
   },
   {
     exact: true,
@@ -38,9 +38,8 @@ const routes: RouteConfig[] = [
     path: "/brands/edit/:id",
     component: lazy(() => import("../features/brandEdit/brandEdit")),
     layout: MainLayout,
-    roles: [VENDOR , ADMIN],
+    roles: [VENDOR, ADMIN],
   },
-  
 ];
 
 export default routes;

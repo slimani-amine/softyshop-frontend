@@ -1,28 +1,28 @@
-import { useEffect } from 'react'
-import NProgress from 'accessible-nprogress'
-import 'accessible-nprogress/dist/accessible-nprogress.css'
+import { useEffect } from "react";
+import NProgress from "accessible-nprogress";
+import "accessible-nprogress/dist/accessible-nprogress.css";
 
 interface ILazyLoadProps {
-  showSpinner?: boolean
+  showSpinner?: boolean;
 }
 
 const LazyLoad: React.FC<ILazyLoadProps> = ({ showSpinner }) => {
   useEffect(() => {
-    NProgress.configure({ showSpinner })
-    NProgress.start()
+    NProgress.configure({ showSpinner });
+    NProgress.start();
 
     return () => {
-      NProgress.done()
-    }
-  })
+      NProgress.done();
+    };
+  });
 
-  return null
-}
+  return null;
+};
 
-type LazyLoadDefaultProps = Pick<ILazyLoadProps, 'showSpinner'>
+type LazyLoadDefaultProps = Pick<ILazyLoadProps, "showSpinner">;
 
 LazyLoad.defaultProps = {
   showSpinner: true,
-} as LazyLoadDefaultProps
+} as LazyLoadDefaultProps;
 
-export default LazyLoad
+export default LazyLoad;

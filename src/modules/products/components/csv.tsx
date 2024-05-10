@@ -15,7 +15,7 @@ interface CSVProps {}
 const CSV: React.FC<CSVProps> = () => {
   const { CSVReader } = useCSVReader();
   const Current_User = useSelector(
-    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase(),
   );
   const { data: fetchedMyStores } = useMyStoresQuery();
   const { data: fetchedAllStores } = useAllStoresQuery();
@@ -47,7 +47,7 @@ const CSV: React.FC<CSVProps> = () => {
             obj[key] = data[i][j].split(",");
           } else if (
             ["category_id", "discount", "initialPrice", "stockNumber"].includes(
-              key
+              key,
             )
           ) {
             obj[key] = parseInt(data[i][j], 10);
@@ -99,20 +99,18 @@ const CSV: React.FC<CSVProps> = () => {
               <>
                 <div>{acceptedFile.name}</div>
                 <div className="select-csv">
-                
-                
-                <Select
-                  style={{
-                    width: "200px",
-                    height: "8px !important",
-                    borderRadius: "30px",
-                  }}
-                  size="small"
-                  placeholder="Select Store"
-                  options={selectStores}
-                  className="input-custom"
-                  onChange={(value) => setSelectedStoreId(value as number)}
-                />
+                  <Select
+                    style={{
+                      width: "200px",
+                      height: "8px !important",
+                      borderRadius: "30px",
+                    }}
+                    size="small"
+                    placeholder="Select Store"
+                    options={selectStores}
+                    className="input-custom"
+                    onChange={(value) => setSelectedStoreId(value as number)}
+                  />
                 </div>
                 <div className="flex-btn">
                   <Button

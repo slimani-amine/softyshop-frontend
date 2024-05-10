@@ -33,7 +33,7 @@ const AddVendorForm: FC = () => {
       const values = await form.validateFields();
       const objectPost = { ...values };
       console.log(objectPost, "object post");
-      const response : TypeOfResponse = await createVendor({
+      const response: TypeOfResponse = await createVendor({
         firstName: objectPost.name,
         lastName: objectPost.lastName,
         email: objectPost.email,
@@ -51,10 +51,11 @@ const AddVendorForm: FC = () => {
       } else if ("error" in response && response.error) {
         // Display error message if error exists and it's truthy
         message.error(`${response.error.message}`);
-    } else {
-        message.error("Unexpected response from server. Please try again later.");
-    }
-      
+      } else {
+        message.error(
+          "Unexpected response from server. Please try again later.",
+        );
+      }
     } catch (error) {
       console.error("Error saving vendor", error);
       message.error("Error saving vendor");

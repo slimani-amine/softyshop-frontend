@@ -1,8 +1,8 @@
-import { RouteProps } from 'react-router-dom';
-import { Fragment, lazy } from 'react';
-import AuthGuard from '@src/modules/shared/guards/AuthGuard';
-import CustomerLayout from '@src/modules/shared/layout/CustomerLayout/CustomerLayout';
-import { CUSTOMER, ADMIN, VENDOR } from '@src/global_roles_config';
+import { RouteProps } from "react-router-dom";
+import { Fragment, lazy } from "react";
+import AuthGuard from "@src/modules/shared/guards/AuthGuard";
+import CustomerLayout from "@src/modules/shared/layout/CustomerLayout/CustomerLayout";
+import { CUSTOMER, ADMIN, VENDOR } from "@src/global_roles_config";
 
 type RouteConfig = {
   exact: boolean | null;
@@ -18,8 +18,8 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: '/checkout',
-    component: lazy(() => import('./Checkout')),
+    path: "/checkout",
+    component: lazy(() => import("./Checkout")),
     layout: CustomerLayout,
     roles: [ADMIN, VENDOR, CUSTOMER],
   },

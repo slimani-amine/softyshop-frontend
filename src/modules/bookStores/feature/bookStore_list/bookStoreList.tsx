@@ -5,8 +5,7 @@ import { ReactComponent as EditIcon } from "@src/modules/shared/assets/icons/Lis
 import {
   useDeleteStoresMutation,
   usePublishStoreMutation,
- 
-  useStoressQuery
+  useStoressQuery,
 } from "../../service/storeApi";
 import { useState } from "react";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
@@ -24,11 +23,10 @@ export default function bookStoreList() {
   const [nameStore, setNameStore] = useState<string>("");
 
   const Current_User = useSelector(
-    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase(),
   );
   const isAdmin = Current_User === ADMIN;
   const Current_id = useSelector((state: RootState) => state.auth.user?.id);
-      
 
   const handlePaginationChange = (page: number, pageSize?: number) => {
     setCurrentPage(page);
@@ -36,20 +34,16 @@ export default function bookStoreList() {
   };
 
   const [publishStore] = usePublishStoreMutation();
-  console.log(Current_User)
-  const {data:fetchdStoress , isLoading} = useStoressQuery({
-      page: currentPage,
-      perPage: pageSize,
-      id: Current_id,
-      role: Current_User!,
-      subName:nameStore
-      
-
-  })
+  console.log(Current_User);
+  const { data: fetchdStoress, isLoading } = useStoressQuery({
+    page: currentPage,
+    perPage: pageSize,
+    id: Current_id,
+    role: Current_User!,
+    subName: nameStore,
+  });
   isLoading ? <Spinner /> : null;
 
-
-  
   interface Store {
     id: Number;
     name: string;
@@ -73,7 +67,6 @@ export default function bookStoreList() {
   };
   const [deleteStores] = useDeleteStoresMutation();
 
-
   const handleDelete = async () => {
     try {
       const response = await deleteStores(selectedRowIds).unwrap();
@@ -88,7 +81,7 @@ export default function bookStoreList() {
       } else {
         // Handle unexpected response format
         message.error(
-          "Unexpected response from server. Please try again later."
+          "Unexpected response from server. Please try again later.",
         );
       }
     } catch (error) {
@@ -96,19 +89,17 @@ export default function bookStoreList() {
     }
   };
 
-
-
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: string
+    id: string,
   ) => {
     const checked = e.target.checked;
     console.log(selectedRowIds);
     setSelectedRowIds((prevIds) => {
       if (checked) {
-        return [...prevIds, id]; 
+        return [...prevIds, id];
       } else {
-        return prevIds.filter((rowId) => rowId !== id); 
+        return prevIds.filter((rowId) => rowId !== id);
       }
     });
   };
@@ -153,20 +144,16 @@ export default function bookStoreList() {
       title: "Phone",
       dataIndex: "phoneNumber",
       key: "name",
-      render: (_phone:string , record: any) => (
-        <div className="name-column">
-        {record.phoneNumber}
-        </div>
+      render: (_phone: string, record: any) => (
+        <div className="name-column">{record.phoneNumber}</div>
       ),
     },
     {
       title: "Vendor",
       dataIndex: "phoneNumber",
       key: "name",
-      render: (_phone:string , record: any) => (
-        <div className="name-column">
-        {record?.user?.email}
-        </div>
+      render: (_phone: string, record: any) => (
+        <div className="name-column">{record?.user?.email}</div>
       ),
     },
 
@@ -213,11 +200,11 @@ export default function bookStoreList() {
       title: "Action",
       key: "action",
       className: "action-category",
-      
+
       render: (record: any) => (
         <Space>
           <div className="icon-action" onClick={() => Navigate(record?.id)}>
-            <EditIcon/>
+            <EditIcon />
           </div>
         </Space>
       ),
@@ -233,7 +220,7 @@ export default function bookStoreList() {
       current: currentPage,
       pageSize: pageSize,
       onChange: handlePaginationChange, // Handle page change event
-      onShowSizeChange: handlePaginationChange,// Handle page size change event
+      onShowSizeChange: handlePaginationChange, // Handle page size change event
     },
 
     header: {
@@ -242,7 +229,7 @@ export default function bookStoreList() {
   };
   return (
     <div className="Product-List">
-      <h1>{Current_User ===ADMIN ?'Stores List' : 'My Stores List' } </h1>
+      <h1>{Current_User === ADMIN ? "Stores List" : "My Stores List"} </h1>
       <div className="header-Product-list">
         <SeachFilter
           placeholder={"Search Store ..."}
@@ -260,8 +247,6 @@ export default function bookStoreList() {
             variant={selectedRowIds.length === 0 ? "dark" : "primary"}
             onClick={handleDelete}
           >
-
-
             Delete
           </Button>
         </div>

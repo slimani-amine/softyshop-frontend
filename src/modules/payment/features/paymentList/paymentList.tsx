@@ -1,11 +1,11 @@
-import { Table,  message, Checkbox } from "antd";
+import { Table, message, Checkbox } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react"; // Import useState hook for managing modal state
 import {
   useDeletePaymentsMutation,
-  usePaymentsQuery,useSearchPaymentQuery
-
+  usePaymentsQuery,
+  useSearchPaymentQuery,
 } from "../../service/paymentApi";
 
 export default function PaymentsList() {
@@ -37,7 +37,6 @@ export default function PaymentsList() {
     }
   }, [namePayment, fetchedpayments, fetchedSearchpayments]);
 
-  
   /*const handleDelete = async (creatorId :Number) => {
     try {
       await deletecreator(creatorId).unwrap();
@@ -58,13 +57,12 @@ export default function PaymentsList() {
 
   const navigate = useNavigate();
 
-
   const handleNavigate = () => {
     navigate("/payments/create");
   };
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: string
+    id: string,
   ) => {
     const checked = e.target.checked;
     console.log(selectedRowIds);
@@ -102,8 +100,6 @@ export default function PaymentsList() {
       key: "name",
       sorter: (a: any, b: any) => a.name.localeCompare(b.name),
     },
-
-    
   ];
 
   const tableProps = {
@@ -129,7 +125,7 @@ export default function PaymentsList() {
     <div className="Product-List">
       <h1>Payment Methods List</h1>
       <div className="header-Product-list">
-      <div></div>
+        <div></div>
         <Button className="add-cat" onClick={handleNavigate}>
           {" "}
           <span>+</span> Add New Method

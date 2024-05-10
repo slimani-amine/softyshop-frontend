@@ -1,12 +1,12 @@
-import { HashLink } from 'react-router-hash-link';
-import { useState } from 'react';
-import { ReactComponent as AddToCart } from '../../../../shared/assets/icons/home/addToCart.svg';
-import { ReactComponent as RemoveFromCart } from '../../../../shared/assets/icons/home/removeFromCart.svg';
-import { ReactComponent as View } from '../../../../shared/assets/icons/home/view.svg';
-import { ReactComponent as Wish } from '../../../../shared/assets/icons/home/wish.svg';
-import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { addToCart, getCart } from '@src/modules/customer/data/cartThunk';
-import Button from '@src/modules/shared/components/Button/Button';
+import { HashLink } from "react-router-hash-link";
+import { useState } from "react";
+import { ReactComponent as AddToCart } from "../../../../shared/assets/icons/home/addToCart.svg";
+import { ReactComponent as RemoveFromCart } from "../../../../shared/assets/icons/home/removeFromCart.svg";
+import { ReactComponent as View } from "../../../../shared/assets/icons/home/view.svg";
+import { ReactComponent as Wish } from "../../../../shared/assets/icons/home/wish.svg";
+import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
+import { addToCart, getCart } from "@src/modules/customer/data/cartThunk";
+import Button from "@src/modules/shared/components/Button/Button";
 
 function Product({
   availability,
@@ -38,7 +38,7 @@ function Product({
       cart?.find((item: any) => item?.product?.id == id)?.quantity || 0;
     setIsLoading(true);
     Promise.all([
-      await dispatch(addToCart({ quantity: quantity + 1, productId: id + '' })),
+      await dispatch(addToCart({ quantity: quantity + 1, productId: id + "" })),
       dispatch(getCart(accessToken)),
     ]);
     setIsLoading(false);
@@ -50,7 +50,7 @@ function Product({
     if (quantity < 1) return;
     setIsLoading(true);
     Promise.all([
-      await dispatch(addToCart({ quantity: quantity - 1, productId: id + '' })),
+      await dispatch(addToCart({ quantity: quantity - 1, productId: id + "" })),
       dispatch(getCart(accessToken)),
     ]);
     setIsLoading(false);
@@ -87,7 +87,7 @@ function Product({
               <p className="price"> ${price.toFixed(2)}</p>
             </div>
           ) : (
-            <div className="product-info" style={{ gap: '17px' }}>
+            <div className="product-info" style={{ gap: "17px" }}>
               <p className="name"> {name}</p>
               <div></div>
               <p className="price"> ${price.toFixed(2)}</p>
@@ -108,7 +108,7 @@ function Product({
           ) : quantity < 10 ? (
             <p
               style={{
-                transform: 'translate(-9px, 0)',
+                transform: "translate(-9px, 0)",
               }}
               className="quantity"
             >
@@ -117,7 +117,7 @@ function Product({
           ) : (
             <p
               style={{
-                transform: 'translate(-6px, 0)',
+                transform: "translate(-6px, 0)",
               }}
               className="quantity"
             >
@@ -126,11 +126,11 @@ function Product({
           )}
           {!availability || !stockNumber ? (
             <Button
-              style={{ transform: 'translate(0,8px)' }}
+              style={{ transform: "translate(0,8px)" }}
               variant="secondary"
               // size="lg"
               disabled={true}
-              label={'Out of Stock'}
+              label={"Out of Stock"}
             />
           ) : (
             <AddToCart

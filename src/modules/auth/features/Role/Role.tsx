@@ -1,14 +1,14 @@
-import Button from '@src/modules/shared/components/Button/Button';
+import Button from "@src/modules/shared/components/Button/Button";
 import {
   // useLocation,
   useNavigate,
-} from 'react-router-dom';
-import { PATH } from '@src/modules/auth/routes/paths';
-import { useDispatch, useSelector } from 'react-redux';
-import { initialStateType, setRole } from '../../data/roleSlice';
+} from "react-router-dom";
+import { PATH } from "@src/modules/auth/routes/paths";
+import { useDispatch, useSelector } from "react-redux";
+import { initialStateType, setRole } from "../../data/roleSlice";
 // import { useEffect } from 'react';
-import { useAppSelector } from '@src/modules/shared/store';
-import { Link } from 'react-router-dom';
+import { useAppSelector } from "@src/modules/shared/store";
+import { Link } from "react-router-dom";
 
 function Role() {
   const dispatch = useDispatch();
@@ -39,8 +39,8 @@ function Role() {
           Are you willing to buy books or sell some?
         </h1>
         <div className="buttons">
-          <Button label={'Customer'} onClick={() => handleRole('user')} />
-          <Button label={'Vendor'} onClick={() => handleRole('vendor')} />
+          <Button label={"Customer"} onClick={() => handleRole("user")} />
+          <Button label={"Vendor"} onClick={() => handleRole("vendor")} />
         </div>
         <Link to={PATH.LOGIN} className="link">
           Already a member?

@@ -1,14 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   order: {
-    address_id: '',
-    paymentMethod_id: '1',
+    address_id: "",
+    paymentMethod_id: "1",
   },
 };
 
 const orderSlice = createSlice({
-  name: 'order',
+  name: "order",
   initialState,
   reducers: {},
 });

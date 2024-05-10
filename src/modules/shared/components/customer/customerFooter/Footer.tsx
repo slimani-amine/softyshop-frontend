@@ -1,12 +1,12 @@
-import LogoDarkmode from '../../../assets/icons/customerLayout/Footer/logo-darkmode.svg';
-import facebook from '../../../assets/icons/customerLayout/Footer/facebook.svg';
-import google from '../../../assets/icons/customerLayout/Footer/google.svg';
-import instagram from '../../../assets/icons/customerLayout/Footer/instagram.svg';
-import youtube from '../../../assets/icons/customerLayout/Footer/youtube.svg';
-import twitter from '../../../assets/icons/customerLayout/Footer/twitter.svg';
+import LogoDarkmode from "../../../assets/icons/customerLayout/Footer/logo-darkmode.svg";
+import facebook from "../../../assets/icons/customerLayout/Footer/facebook.svg";
+import google from "../../../assets/icons/customerLayout/Footer/google.svg";
+import instagram from "../../../assets/icons/customerLayout/Footer/instagram.svg";
+import youtube from "../../../assets/icons/customerLayout/Footer/youtube.svg";
+import twitter from "../../../assets/icons/customerLayout/Footer/twitter.svg";
 
-import googlePlay from '../../../assets/images/customerLayout/google-play.png';
-import appStore from '../../../assets/images/customerLayout/app-store.png';
+import googlePlay from "../../../assets/images/customerLayout/google-play.png";
+import appStore from "../../../assets/images/customerLayout/app-store.png";
 
 function Footer() {
   return (

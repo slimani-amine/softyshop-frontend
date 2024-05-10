@@ -1,8 +1,8 @@
-import Header from '../../components/customer/customerHeader/Header';
-import Sidebar from '../../components/customer/customerSidebar/Sidebar';
-import CustomerNavbar from '../../components/customer/customerNavbar/CustomerNavbar';
-import Footer from '../../components/customer/customerFooter/Footer';
-import { useLocation } from 'react-router-dom';
+import Header from "../../components/customer/customerHeader/Header";
+import Sidebar from "../../components/customer/customerSidebar/Sidebar";
+import CustomerNavbar from "../../components/customer/customerNavbar/CustomerNavbar";
+import Footer from "../../components/customer/customerFooter/Footer";
+import { useLocation } from "react-router-dom";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -21,7 +21,7 @@ function CustomerLayout({ children }: MainLayoutProps) {
         </div>
       </div>
       <div className="sidebar-and-outlet">
-        {pathname == '/checkout' ? (
+        {pathname == "/checkout" ? (
           <div></div>
         ) : (
           <div className="sidebar-container">
@@ -31,7 +31,7 @@ function CustomerLayout({ children }: MainLayoutProps) {
         <div className="outlet">{children}</div>
       </div>
 
-      {pathname == '/checkout' ? (
+      {pathname == "/checkout" ? (
         <div></div>
       ) : (
         <div className="footer-container">

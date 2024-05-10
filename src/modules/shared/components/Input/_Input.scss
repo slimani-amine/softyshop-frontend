@@ -1,5 +1,5 @@
-@use '../../assets/styles/base';
-@use '../../assets/styles/abstracts' as *;
+@use "../../assets/styles/base";
+@use "../../assets/styles/abstracts" as *;
 
 .input-form {
   width: 100%;
@@ -98,7 +98,7 @@
   @each $key, $value in $color {
     .input-#{$key} {
       color: $value;
-      @if $key == 'secondary' or $key == 'light' {
+      @if $key == "secondary" or $key == "light" {
         color: $dark;
       } @else {
         color: $value;

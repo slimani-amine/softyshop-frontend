@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState } from "react";
 import {
   Form,
   Upload,
@@ -9,22 +9,21 @@ import {
   Checkbox,
   message,
   Button as ButtonAnt,
-} from 'antd';
-import Button from '@src/modules/shared/components/Button/Button';
-import { useCreateCategoryMutation } from '../../service/categoryApi';
-import { handleFileChange } from '@src/modules/shared/utils/upload';
-import { useNavigate } from 'react-router-dom';
-import TypeOfResponse from '@src/modules/shared/services/ResponseType';
+} from "antd";
+import Button from "@src/modules/shared/components/Button/Button";
+import { useCreateCategoryMutation } from "../../service/categoryApi";
+import { handleFileChange } from "@src/modules/shared/utils/upload";
+import { useNavigate } from "react-router-dom";
+import TypeOfResponse from "@src/modules/shared/services/ResponseType";
 interface AddCategoryFormProps {
   onFinish: (values: any) => void;
 }
 
-
 const AddCategoryForm: FC<AddCategoryFormProps> = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [uploading, setUploading] = useState(false);
   const [files, setFile] = useState<any>(null);
-  console.log(files)
+  console.log(files);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [createCategory] = useCreateCategoryMutation();
@@ -35,28 +34,28 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
       const values = await form.validateFields(); // Validate form fields
       const objectPost = { ...values };
       // Create category
-      const response : TypeOfResponse = await createCategory({
+      const response: TypeOfResponse = await createCategory({
         name: objectPost.name,
         icon: selectedFileUrl,
-        isPublished: objectPost.isPublished === 'on' ? true : false,
+        isPublished: objectPost.isPublished === "on" ? true : false,
       });
-      if ('data' in response) {
+      if ("data" in response) {
         // Display success message if data exists
         message.success("Category saved successfully!");
         form.resetFields();
 
-        navigate("/categories")
-
-        
-    }       else if ("error" in response && response.error) {
-      // Display error message if error exists and it's truthy
-      message.error(`${response.error.message}`);
-  } else {
-      message.error("Unexpected response from server. Please try again later.");
-  }
-} catch (error) {
-  console.error("Error saving Category", error);
-}
+        navigate("/categories");
+      } else if ("error" in response && response.error) {
+        // Display error message if error exists and it's truthy
+        message.error(`${response.error.message}`);
+      } else {
+        message.error(
+          "Unexpected response from server. Please try again later.",
+        );
+      }
+    } catch (error) {
+      console.error("Error saving Category", error);
+    }
   };
 
   // const handleFileChange = (info: any) => {
@@ -70,29 +69,30 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
       <h1 className="title">Add New Category</h1>
       <div className="container-add-Product">
         <Form form={form}>
-
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
-                 Category Name :
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
+                Category Name :
               </label>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { 
-                      required: true, 
-                      message: 'Please enter Category name' 
+                  {
+                    required: true,
+                    message: "Please enter Category name",
                   },
                   {
-                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
-                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
-                  }
-              ]}
+                    pattern:
+                      /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                    message:
+                      "Name must contain at least two alphabetical characters and no leading spaces",
+                  },
+                ]}
               >
                 <Input
                   size="large"
@@ -105,7 +105,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
           <Form.Item
             className="upload-images"
             name="images"
-            rules={[{ required: true, message: 'Picture of Category!' }]}
+            rules={[{ required: true, message: "Picture of Category!" }]}
           >
             <Upload.Dragger
               className="drag-images"
@@ -113,12 +113,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
               accept="image/*"
               maxCount={1}
               onChange={(e: any) =>
-                handleFileChange(
-                  e,
-                  setFile,
-                  setSelectedFileUrl,
-                  setUploading
-                )
+                handleFileChange(e, setFile, setSelectedFileUrl, setUploading)
               }
               beforeUpload={() => false}
             >
@@ -126,7 +121,9 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
                 <div className="uploading-indicator">Uploading...</div>
               ) : (
                 <>
-                  <p className="ant-upload-text">Drag & drop Category image here</p>
+                  <p className="ant-upload-text">
+                    Drag & drop Category image here
+                  </p>
                   <div className="icon-drag">
                     <Divider className="divider" />
                     <p className="or">OR</p>
@@ -144,7 +141,12 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
             </div>
           </Form.Item>
           <Form.Item>
-            <Button type="submit" className="add-cat" disabled={uploading} onClick={handleSaveClick}>
+            <Button
+              type="submit"
+              className="add-cat"
+              disabled={uploading}
+              onClick={handleSaveClick}
+            >
               Save Category
             </Button>
           </Form.Item>

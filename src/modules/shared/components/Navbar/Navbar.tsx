@@ -1,16 +1,16 @@
-import { Avatar, Dropdown, MenuProps, Space } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import browseIcon from '../../assets/icons/navbar/website.png';
-import { ReactComponent as ProfileIcon } from '../../assets/icons/sidebar/profile.svg';
-import { ReactComponent as SettingsIcon } from '../../assets/icons/navbar/settings.svg';
-import { ReactComponent as LogoutIcon } from '../../assets/icons/navbar/logout.svg';
-import { RootState, useAppDispatch } from '../../store';
-import { logout } from '@src/modules/auth/data/authThunk';
-import Search from '../Search/Search';
-import NotificationIcon from '../../assets/icons/navbar/bell.png';
+import { Avatar, Dropdown, MenuProps, Space } from "antd";
+import { useNavigate } from "react-router-dom";
+import browseIcon from "../../assets/icons/navbar/website.png";
+import { ReactComponent as ProfileIcon } from "../../assets/icons/sidebar/profile.svg";
+import { ReactComponent as SettingsIcon } from "../../assets/icons/navbar/settings.svg";
+import { ReactComponent as LogoutIcon } from "../../assets/icons/navbar/logout.svg";
+import { RootState, useAppDispatch } from "../../store";
+import { logout } from "@src/modules/auth/data/authThunk";
+import Search from "../Search/Search";
+import NotificationIcon from "../../assets/icons/navbar/bell.png";
 //eslint-ignore-next-line
-import { useAnimation } from '../../layout/MainLayout/context/animationContext';
-import { useSelector } from 'react-redux';
+import { useAnimation } from "../../layout/MainLayout/context/animationContext";
+import { useSelector } from "react-redux";
 interface INavbarProps {
   setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   setCollapseSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,21 +19,20 @@ interface INavbarProps {
 
 const Navbar: React.FC<INavbarProps> = () => {
   const { isAnimating } = useAnimation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const current_user= useSelector((state: RootState) => state.auth.user)
-  console.log(current_user)
+  const current_user = useSelector((state: RootState) => state.auth.user);
+  console.log(current_user);
 
   const handleLogout = () => {
     dispatch(logout());
   };
-  const handleNavigate=()=>{
-    navigate('/books')
-    
-  }
-  const accountInfoItems: MenuProps['items'] = [
+  const handleNavigate = () => {
+    navigate("/books");
+  };
+  const accountInfoItems: MenuProps["items"] = [
     {
-      key: '1',
+      key: "1",
       label: (
         <Space>
           <Avatar size={32} className="navbar-avatar">
@@ -48,38 +47,38 @@ const Navbar: React.FC<INavbarProps> = () => {
       disabled: true,
     },
     {
-      key: '2',
+      key: "2",
       label: <p>Profile</p>,
       icon: (
         <ProfileIcon
-          style={{ stroke: 'black', width: '18px', height: '18px' }}
+          style={{ stroke: "black", width: "18px", height: "18px" }}
         />
       ),
     },
     {
-      key: '3',
+      key: "3",
       label: <p>Settings</p>,
       icon: (
         <SettingsIcon
-          style={{ stroke: 'black', width: '18px', height: '18px' }}
+          style={{ stroke: "black", width: "18px", height: "18px" }}
         />
       ),
     },
     {
-      key: '4',
+      key: "4",
       label: <p onClick={handleLogout}>logout</p>,
       icon: (
         <LogoutIcon
-          style={{ stroke: 'black', width: '18px', height: '18px' }}
+          style={{ stroke: "black", width: "18px", height: "18px" }}
         />
       ),
     },
   ];
 
   return (
-    <div className={` ${isAnimating ? '' : ''} navbar `}>
+    <div className={` ${isAnimating ? "" : ""} navbar `}>
       <div
-        className={`navbar-left ${isAnimating ? 'navbar-left-animate' : ''}`}
+        className={`navbar-left ${isAnimating ? "navbar-left-animate" : ""}`}
       >
         {/*<img
           src={menuIcon}
@@ -103,9 +102,9 @@ const Navbar: React.FC<INavbarProps> = () => {
         </div>
       </div>
       <div
-        className={`navbar-right ${isAnimating ? 'navbar-right-animate' : ''} `}
+        className={`navbar-right ${isAnimating ? "navbar-right-animate" : ""} `}
       >
-        <Space size={'middle'}>
+        <Space size={"middle"}>
           <Search />
 
           <div className="notification">
@@ -115,7 +114,7 @@ const Navbar: React.FC<INavbarProps> = () => {
 
           <Dropdown
             menu={{ items: accountInfoItems }}
-            trigger={['click']}
+            trigger={["click"]}
             placement="bottomRight"
             arrow
             className="navbar-dropdown-cursor"

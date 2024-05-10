@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Suspense, Fragment } from 'react';
-import { Routes, Route, RouteProps } from 'react-router-dom';
+import { Suspense, Fragment } from "react";
+import { Routes, Route, RouteProps } from "react-router-dom";
 
-import pages from './routes';
-import LazyLoad from '../components/LazyLoad/LazyLoad';
-
+import pages from "./routes";
+import LazyLoad from "../components/LazyLoad/LazyLoad";
 
 type RouteConfig = {
   exact: boolean | null;
@@ -17,7 +16,7 @@ type RouteConfig = {
 
 export const renderRoutes = (routes: RouteConfig[] = [], role: string) => {
   // Filter routes based on whether the user's role is included in the allowed roles
-  
+
   const filteredRoutes = routes.filter((route) => {
     return route.roles && route.roles.includes(role);
   });

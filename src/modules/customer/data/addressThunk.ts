@@ -1,80 +1,80 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BASE_URL } from '@src/modules/auth/data/authThunk';
-import { accessToken } from '@src/modules/auth/context/AuthProvider';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { BASE_URL } from "@src/modules/auth/data/authThunk";
+import { accessToken } from "@src/modules/auth/context/AuthProvider";
 
 export const addAddress = createAsyncThunk(
-  'address/addAddress',
+  "address/addAddress",
   async (query: any) => {
     try {
       const response = await fetch(
         `${BASE_URL}api/users/addresses/${query.userId}`,
         {
-          method: 'POST',
-          mode: 'cors',
-          cache: 'no-cache',
-          credentials: 'same-origin',
+          method: "POST",
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify(query.query),
-        }
+        },
       );
       const data = await response.json();
-      console.log('🚀 ~ data:', data);
+      console.log("🚀 ~ data:", data);
       return data;
     } catch (error) {
       console.log(error);
     }
-  }
+  },
 );
 
 export const getAddresses = createAsyncThunk(
-  'address/getAddresses',
+  "address/getAddresses",
   async (query: string | undefined) => {
     try {
-      console.log('🚀 ~ query:', query);
-      console.log('🚀 ~ accessToken:', accessToken);
+      console.log("🚀 ~ query:", query);
+      console.log("🚀 ~ accessToken:", accessToken);
       const response = await fetch(`${BASE_URL}api/users/addresses/${query}`, {
-        method: 'GET',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
       });
       const data = await response.json();
-      console.log('🚀 ~ data:', data.data);
+      console.log("🚀 ~ data:", data.data);
       return data.data;
     } catch (error) {
       console.log(error);
     }
-  }
+  },
 );
 
 export const deleteAddress = createAsyncThunk(
-  'address/deleteAddress',
+  "address/deleteAddress",
   async (query: number | undefined) => {
     try {
-      console.log('🚀 ~ query:', query);
-      console.log('🚀 ~ accessToken:', accessToken);
+      console.log("🚀 ~ query:", query);
+      console.log("🚀 ~ accessToken:", accessToken);
       const response = await fetch(`${BASE_URL}api/users/addresses/${query}`, {
-        method: 'DELETE',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
+        method: "DELETE",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
       });
       const data = await response.json();
-      console.log('🚀 ~ data:', data.data);
+      console.log("🚀 ~ data:", data.data);
       return data.data;
     } catch (error) {
       console.log(error);
     }
-  }
+  },
 );

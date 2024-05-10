@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { SIDEBARITEMS } from '../Sidebar/items';
-import { useTranslation } from 'react-i18next';
-import logo from '../../../shared/assets/icons/sidebar/logo.svg';
-import miniLogo from '../../../shared/assets/icons/sidebar/petit-logo.svg';
-import { useAnimation } from '../../layout/MainLayout/context/animationContext';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { SIDEBARITEMS } from "../Sidebar/items";
+import { useTranslation } from "react-i18next";
+import logo from "../../../shared/assets/icons/sidebar/logo.svg";
+import miniLogo from "../../../shared/assets/icons/sidebar/petit-logo.svg";
+import { useAnimation } from "../../layout/MainLayout/context/animationContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface ISidebarItemsProps {
   collapseSidebar: boolean;
@@ -17,7 +17,7 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
   // console.log(isAnimating)
 
   const { pathname } = useLocation();
-  const { t } = useTranslation('sidebar');
+  const { t } = useTranslation("sidebar");
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
   const handleToggleExpand = (label: string) => {
@@ -30,20 +30,20 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
 
   const Current_User =
     useSelector((state: RootState) => state.auth.user?.role.toUpperCase()) ||
-    'admin';
-  console.log('role in all', Current_User);
-  console.log(SIDEBARITEMS, 'sideeeszfshfuidshuhuidfhviu');
+    "admin";
+  console.log("role in all", Current_User);
+  console.log(SIDEBARITEMS, "sideeeszfshfuidshuhuidfhviu");
 
   return (
     <div className="sidebar-items">
       <div className="header-sidebar">
         <img
-          className={` ${isAnimating ? 'miniLogo' : 'logo'}`}
+          className={` ${isAnimating ? "miniLogo" : "logo"}`}
           src={isAnimating ? miniLogo : logo}
           alt=""
         />
         <div
-          className={`icon ${isAnimating ? 'animate_icon' : ''}  `}
+          className={`icon ${isAnimating ? "animate_icon" : ""}  `}
           onClick={toggleAnimation}
         >
           <svg
@@ -60,35 +60,35 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
           </svg>
         </div>
       </div>
-      <span className={`${isAnimating ? 'hidden-admin' : ''} admin`}>
+      <span className={`${isAnimating ? "hidden-admin" : ""} admin`}>
         {Current_User}
       </span>
       {SIDEBARITEMS?.map((route, index) => {
         const routeLink = route.link;
-        console.log(route,'route simple')
+        console.log(route, "route simple");
         const path = pathname;
-        const paths = path.split('/');
+        const paths = path.split("/");
         const link = routeLink.slice(1);
         const roles = route.roles;
-        console.log(roles?.includes(Current_User),'connnnt')
+        console.log(roles?.includes(Current_User), "connnnt");
         return roles?.includes(Current_User.toLocaleUpperCase()) ? (
           <React.Fragment key={index}>
             <Link
               to={route?.link}
               onClick={() => handleToggleExpand(route?.label)}
-              className={`item   ${paths.includes(link) && 'active'}   `}
+              className={`item   ${paths.includes(link) && "active"}   `}
             >
               <div className="item-left">
                 <div
                   className={`link-icon-stroke-color  ${
-                    paths.includes(link) && 'link-icon-stroke-color-active'
+                    paths.includes(link) && "link-icon-stroke-color-active"
                   }`}
                 >
                   {route?.icon}
                 </div>
                 <p
-                  className={`${isAnimating ? 'hidden' : ''}  ${
-                    paths.includes(link) && 'active'
+                  className={`${isAnimating ? "hidden" : ""}  ${
+                    paths.includes(link) && "active"
                   } item-label `}
                 >
                   {!collapseSidebar ? t(`${route?.label}`) : null}

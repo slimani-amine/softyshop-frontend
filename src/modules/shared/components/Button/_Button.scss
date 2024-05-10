@@ -1,5 +1,5 @@
-@use '../../assets/styles/base';
-@use '../../assets/styles/abstracts' as *;
+@use "../../assets/styles/base";
+@use "../../assets/styles/abstracts" as *;
 
 .btn {
   border-radius: 6px;
@@ -43,7 +43,7 @@ $color: (
 @each $key, $value in $color {
   .btn-#{$key} {
     background-color: $value;
-    @if $key == 'secondary' or $key == 'light' {
+    @if $key == "secondary" or $key == "light" {
       color: $dark;
     } @else {
       color: $light;

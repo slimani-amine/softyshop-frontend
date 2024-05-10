@@ -1,59 +1,55 @@
 .my-component-container {
-    position: relative;
-    user-select: none; /* Prevent text selection */
-    margin-right: 30px;
+  position: relative;
+  user-select: none; /* Prevent text selection */
+  margin-right: 30px;
+}
 
-  }
-  
-  .selected-option {
-    background-color: lightblue; /* Default background color */
-    padding: 4px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    height: 30px;
-    width: 100px; /* Adjust width as needed */
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease; /* Add transition for smoother color change */
-  }
-  
-  .custom-dropdown {
-    position: absolute;
-    top: 100%;
-    width: 100px;
-    left: 0%;
-    right: 0%;
-    
-    
+.selected-option {
+  background-color: lightblue; /* Default background color */
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 30px;
+  width: 100px; /* Adjust width as needed */
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Add transition for smoother color change */
+}
 
-    border-radius: 4px;
-    border-top: none;
-    border-radius: 0 0 4px 4px;
-    box-shadow: 5px 3px 10px rgba(2, 2, 2, 0.56);
-    border-radius: 8px;
-    z-index: 1;
-    opacity: 0; /* Initially hide the dropdown */
-    visibility: hidden; /* Initially hide the dropdown */
-    transition: opacity 0.3s ease, visibility 0s linear 0.3s; /* Add transitions for smoother visibility */
-  }
-  
-  .show {
-    opacity: 1; /* Show the dropdown */
-    visibility: visible; /* Show the dropdown */
-    transition-delay: 0s; /* Remove transition delay */
-  }
-  
-  .dropdown-option {
-    cursor: pointer;
-    color: white;
-    border-radius: 4px;
+.custom-dropdown {
+  position: absolute;
+  top: 100%;
+  width: 100px;
+  left: 0%;
+  right: 0%;
 
-    transition: all ease-in 0.1s; /* Add transition for smoother appearance */
-    
-  }
-  
-  .dropdown-option:hover {
-    transform: scale(1.09); /* Scale the option on hover */
+  border-radius: 4px;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 5px 3px 10px rgba(2, 2, 2, 0.56);
+  border-radius: 8px;
+  z-index: 1;
+  opacity: 0; /* Initially hide the dropdown */
+  visibility: hidden; /* Initially hide the dropdown */
+  transition:
+    opacity 0.3s ease,
+    visibility 0s linear 0.3s; /* Add transitions for smoother visibility */
+}
 
-  }
-  
+.show {
+  opacity: 1; /* Show the dropdown */
+  visibility: visible; /* Show the dropdown */
+  transition-delay: 0s; /* Remove transition delay */
+}
+
+.dropdown-option {
+  cursor: pointer;
+  color: white;
+  border-radius: 4px;
+
+  transition: all ease-in 0.1s; /* Add transition for smoother appearance */
+}
+
+.dropdown-option:hover {
+  transform: scale(1.09); /* Scale the option on hover */
+}

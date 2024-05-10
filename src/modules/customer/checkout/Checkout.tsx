@@ -1,25 +1,25 @@
-import CheckedItem from '@src/modules/shared/components/customer/customerSidebar/components/CheckedItem';
-import Number from './components/Number';
-import Section from './components/Section';
-import Title from './components/Title';
-import Button from '@src/modules/shared/components/Button/Button';
-import Address from './components/Address';
-import AddressTitle from './components/AddressTitle';
-import AddressContent from './components/AddressContent';
-import CheckoutSelect from './components/CheckoutSelect';
-import AddAddressModal from './components/AddAddressModal';
+import CheckedItem from "@src/modules/shared/components/customer/customerSidebar/components/CheckedItem";
+import Number from "./components/Number";
+import Section from "./components/Section";
+import Title from "./components/Title";
+import Button from "@src/modules/shared/components/Button/Button";
+import Address from "./components/Address";
+import AddressTitle from "./components/AddressTitle";
+import AddressContent from "./components/AddressContent";
+import CheckoutSelect from "./components/CheckoutSelect";
+import AddAddressModal from "./components/AddAddressModal";
 
-import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { getAddresses } from '../data/addressThunk';
-import { useEffect } from 'react';
-import { addressType } from '../data/dataTypes';
+import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
+import { getAddresses } from "../data/addressThunk";
+import { useEffect } from "react";
+import { addressType } from "../data/dataTypes";
 
 function Checkout() {
   const dispatch = useAppDispatch();
   const deliveryDate = useAppSelector((state) => state.checkout.deliveryDate);
   const deliveryTime = useAppSelector((state) => state.checkout.deliveryTime);
   const selectedAddress = useAppSelector(
-    (state) => state.address.selectedAddress
+    (state) => state.address.selectedAddress,
   );
   const userId = useAppSelector((state) => state?.auth?.user?.id);
   const isChecked = useAppSelector((state) => state.checkout.agreedToPayCash);
@@ -37,14 +37,14 @@ function Checkout() {
   }, [userId, dispatch, getAddresses]);
 
   const addresses: addressType[] = useAppSelector(
-    (state) => state?.address?.address
+    (state) => state?.address?.address,
   );
 
   // const [chosenAddress, setChosenAddress] = useState(null);
 
   return (
     <div className="checkout-page">
-      <div className="checkout" style={{ padding: '0 24px' }}>
+      <div className="checkout" style={{ padding: "0 24px" }}>
         <Section>
           <div className="checkout-title-bar">
             <Number>1</Number>
@@ -79,7 +79,7 @@ function Checkout() {
                   phoneNumber: string;
                   id: number;
                 },
-                index
+                index,
               ) => {
                 return (
                   <div key={index} className="checkout-address">
@@ -93,7 +93,7 @@ function Checkout() {
                     </Address>
                   </div>
                 );
-              }
+              },
             )}
           </div>
         </Section>
@@ -109,14 +109,14 @@ function Checkout() {
             </CheckedItem>
           </div>
           {isOrderReady ? (
-            <Button label="Place Order" size="xl" style={{ width: '100%' }} />
+            <Button label="Place Order" size="xl" style={{ width: "100%" }} />
           ) : (
             <Button
               label="Place Order"
               size="xl"
               variant="secondary"
               disabled={true}
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
             />
           )}
         </Section>
@@ -129,7 +129,7 @@ function Checkout() {
             return (
               <div className="checkout-order-item" key={index}>
                 <p className="checkout-order-details">
-                  <strong className="order-quantity">{item.quantity}</strong> x{' '}
+                  <strong className="order-quantity">{item.quantity}</strong> x{" "}
                   {item?.product?.name}
                 </p>
                 <p className="checkout-order-item-price">

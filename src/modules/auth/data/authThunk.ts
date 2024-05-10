@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '../utils/axios';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "../utils/axios";
 import {
   LoginPayload,
   RegisterPayload,
   enterNewPasswordPayload,
   resetPasswordPayload,
-} from './authTypes';
-import { clearTokens } from '../utils/token';
+} from "./authTypes";
+import { clearTokens } from "../utils/token";
 
 export const AUTH_URL = import.meta.env.VITE_APP_AUTH_URL;
 export const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
 export const login = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (query: LoginPayload, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(`${AUTH_URL}auth/login`, query);
@@ -25,16 +25,16 @@ export const login = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 export const register = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (query: RegisterPayload, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(
         `${AUTH_URL}auth/register`,
-        query
+        query,
       );
 
       if (response.status === 201) {
@@ -47,11 +47,11 @@ export const register = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 export const logout = createAsyncThunk(
-  'auth/logout',
+  "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(`${AUTH_URL}auth/logout`);
@@ -65,17 +65,17 @@ export const logout = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 export const resetPassword = createAsyncThunk(
-  'auth/reset',
+  "auth/reset",
   async (query: resetPasswordPayload, { rejectWithValue }) => {
     try {
       // console.log(query);
       const response = await axiosInstance.post(
         `${AUTH_URL}auth/password-reset/request`,
-        query
+        query,
       );
 
       // console.log(response);
@@ -87,17 +87,17 @@ export const resetPassword = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 export const enterNewPassword = createAsyncThunk(
-  'auth/enterNewPassword',
+  "auth/enterNewPassword",
   async (query: enterNewPasswordPayload, { rejectWithValue }) => {
     try {
       // console.log(query);
       const response = await axiosInstance.post(
         `${AUTH_URL}auth/password-reset`,
-        query
+        query,
       );
 
       // console.log(`response: ${response}`);
@@ -110,5 +110,5 @@ export const enterNewPassword = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err);
     }
-  }
+  },
 );

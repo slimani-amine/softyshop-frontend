@@ -1,8 +1,9 @@
 // import { PATH } from '@src/modules/auth/routes/paths';
-import { useEffect, useRef, useState } from 'react';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Navbar from '../../components/Navbar/Navbar';
-import { useAnimation } from './context/animationContext';
+import { useEffect, useRef, useState } from "react";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Navbar from "../../components/Navbar/Navbar";
+import { useAnimation } from "./context/animationContext";
+import { useLocation } from "react-router-dom";
 // import { isAsExpression } from 'typescript';
 // import { useNavigate } from 'react-router-dom';
 // import { useAppSelector } from '../../store';
@@ -27,19 +28,23 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       }
     };
 
-    document.addEventListener('mousedown', handler);
+    document.addEventListener("mousedown", handler);
 
     return () => {
-      document.removeEventListener('mousedown', handler);
+      document.removeEventListener("mousedown", handler);
     };
   });
   // const navigate = useNavigate();
+
+  const location = useLocation();
+  const currentPath = location.pathname.slice(1);
+  const isDashboard = currentPath === "dashboard";
 
   return (
     <div className="main-layout">
       <div
         className={`main-layout-sidebar ${
-          showSidebar ? 'main-layout-toggle-mobile-sidebar' : ''
+          showSidebar ? "main-layout-toggle-mobile-sidebar" : ""
         }  `}
       >
         <Sidebar collapseSidebar={collapseSidebar} />
@@ -49,8 +54,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
       <div
         className={`main-layout-content ${
-          showSidebar ? 'main-layout-disable-events' : ''
-        } ${isAnimating ? '' : ''}`}
+          showSidebar ? "main-layout-disable-events" : ""
+        } ${isAnimating ? "" : ""}`}
       >
         <div className="main-layout-navbar">
           <Navbar
@@ -64,8 +69,16 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           //   if (isAuthenticated) return;
           //   navigate(PATH.ROLE);
           // }}
-          className={`main-layout-outlet ${
-            isAnimating ? 'main-layout-outlet-animate' : ''
+          className={`${
+            isDashboard ? "main-layout-outlet-analytic" : "main-layout-outlet"
+          } ${
+            isAnimating
+              ? `${
+                  isDashboard
+                    ? "main-layout-outlet-animate-analytic"
+                    : "main-layout-outlet-animate"
+                }`
+              : ""
           }`}
         >
           {children}

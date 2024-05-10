@@ -1,5 +1,5 @@
-import { api } from '@src/modules/shared/services/api';
-import {Vendor , Address}  from './type';
+import { api } from "@src/modules/shared/services/api";
+import { Vendor, Address } from "./type";
 export const VendorsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     users: builder.query<any, { perPage: number; page: number }>({
@@ -9,65 +9,60 @@ export const VendorsApi = api.injectEndpoints({
     vendors: builder.query<any, { perPage: number; page: number }>({
       query: ({ perPage, page }) =>
         `api/users?perPage=${perPage}&page=${page}&search=role:vendor`,
-      providesTags: ['vendors'],
+      providesTags: ["vendors"],
     }),
     vendor: builder.query<any, any>({
       query: (id) => `api/users?search=id:${id}`,
-      providesTags: ['vendor'],
+      providesTags: ["vendor"],
     }),
     SearchVendors: builder.query<any, string>({
       query: (name) => `api/users?search=firstName:${name};role:vendor`,
-      providesTags: ['vendor'],
+      providesTags: ["vendor"],
     }),
     createVendor: builder.mutation<any, any>({
       query: (newStore) => ({
-        url: 'auth/register',
-        method: 'POST',
+        url: "auth/register",
+        method: "POST",
         body: newStore,
       }),
-      invalidatesTags: ['vendors'],
+      invalidatesTags: ["vendors"],
     }),
     deleteVendor: builder.mutation<any, string[]>({
       query: (ids) => ({
         url: `api/users`,
-        method: 'DELETE',
+        method: "DELETE",
         body: { ids: ids },
       }),
-      invalidatesTags: ['vendors'],
+      invalidatesTags: ["vendors"],
     }),
     UpdateVendor: builder.mutation<Vendor, { id: any; data: any }>({
       query: ({ id, data }) => ({
         url: `api/users/update/${id}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ['vendors', 'vendor'],
+      invalidatesTags: ["vendors", "vendor"],
     }),
     allvendors: builder.query<any, void>({
       query: () => `api/users?search=role:vendor`,
-      providesTags: ['vendors'],
+      providesTags: ["vendors"],
     }),
     adressesOfUser: builder.query<any, any>({
       query: (id) => `api/users/addresses/${id}`,
-      providesTags : ["address"]
-     
+      providesTags: ["address"],
     }),
-    addAdressOfUser: builder.mutation<any, {body :Address , id:string}>({
-      query: ({body,id}) =>({
-        url : `api/users/addresses/${id}`,
-        method : "POST",
-        body : body
+    addAdressOfUser: builder.mutation<any, { body: Address; id: string }>({
+      query: ({ body, id }) => ({
+        url: `api/users/addresses/${id}`,
+        method: "POST",
+        body: body,
       }),
-      invalidatesTags : ["address"]
-      
-
-     
+      invalidatesTags: ["address"],
     }),
   }),
 });
 
 export const {
-
   useUsersQuery,
   useAllvendorsQuery,
   useCreateVendorMutation,
@@ -77,5 +72,5 @@ export const {
   useSearchVendorsQuery,
   useUpdateVendorMutation,
   useAdressesOfUserQuery,
-  useAddAdressOfUserMutation
+  useAddAdressOfUserMutation,
 } = VendorsApi;

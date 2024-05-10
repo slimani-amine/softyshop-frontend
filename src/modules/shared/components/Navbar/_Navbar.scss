@@ -1,8 +1,8 @@
-.navbar-animate{
+.navbar-animate {
   width: 20%;
-  &:hover{
-    width:100%;
-    .navbar-right-animate{
+  &:hover {
+    width: 100%;
+    .navbar-right-animate {
       transform: translateX(90px);
     }
   }
@@ -29,7 +29,7 @@
     left: 15%;
 
     gap: 12px;
-    .browse_btn{
+    .browse_btn {
       display: flex;
       gap: 6px;
       margin-left: 15px;
@@ -39,15 +39,15 @@
       cursor: pointer;
       width: 172px;
       background-color: #f6f9fc;
-      transition: all  0.2s ease-in ;
-      &:hover{
-        background-color: rgba(242, 218, 174, 0.086) ;
-
+      transition: all 0.2s ease-in;
+      &:hover {
+        background-color: rgba(242, 218, 174, 0.086);
       }
-    .browse_icon{
-      height: 24px;
-      width: 24px;
-    }}
+      .browse_icon {
+        height: 24px;
+        width: 24px;
+      }
+    }
 
     .navbar-left-menu-icon {
       cursor: pointer;
@@ -66,12 +66,10 @@
       text-transform: uppercase;
     }
   }
-  .navbar-left-animate{
+  .navbar-left-animate {
     transform: translateX(-100px);
-    
-
   }
-  .navbar-right-animate{
+  .navbar-right-animate {
     transform: translateX(-90px);
   }
   .navbar-right {
@@ -81,46 +79,46 @@
     flex-direction: row-reverse;
     align-items: center;
     gap: 22px;
- 
-  .notification {
-    position: relative;
-    cursor: pointer;
-    margin-top: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 38px;
-    width: 38px;
-    border-radius: 50%;
-    transition: background-color 0.2s ease-in; /* Add transition */
-    .point_notifcation{
-      height: 8px;
-      width: 8px;
-      background-color: black;
+
+    .notification {
+      position: relative;
+      cursor: pointer;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 38px;
+      width: 38px;
       border-radius: 50%;
-      position: absolute;
-      z-index: 1000;
-      top:3px;
-      left: 26px;
-    }
-  
-    .Icon_notification{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      height: 20px;
-      width: 20px;
-      transform: translate(-58%, -59%);
-      transition: fill 0.2s ease-in-out; /* Add transition */
-    }
-    
-    &:hover {
-      background: #8a898921;
+      transition: background-color 0.2s ease-in; /* Add transition */
+      .point_notifcation {
+        height: 8px;
+        width: 8px;
+        background-color: black;
+        border-radius: 50%;
+        position: absolute;
+        z-index: 1000;
+        top: 3px;
+        left: 26px;
+      }
+
       .Icon_notification {
-        fill:rgba(248, 244, 244, 0.046) ; /* Change fill color on hover */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 20px;
+        width: 20px;
+        transform: translate(-58%, -59%);
+        transition: fill 0.2s ease-in-out; /* Add transition */
+      }
+
+      &:hover {
+        background: #8a898921;
+        .Icon_notification {
+          fill: rgba(248, 244, 244, 0.046); /* Change fill color on hover */
+        }
       }
     }
-  }
   }
 
   @media only screen and (max-width: 1024px) {

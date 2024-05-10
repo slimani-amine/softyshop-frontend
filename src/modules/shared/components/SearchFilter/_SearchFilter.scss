@@ -1,22 +1,20 @@
-.container_input-filter{
-    width:350px;
-    height: 44px;
+.container_input-filter {
+  width: 350px;
+  height: 44px;
+  background-color: white;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 20px;
+  color: rgb(138 135 135);
+  align-items: center;
+  gap: 14px;
+  border-radius: 10px;
+  .search_filter_input {
+    outline: none;
+    width: 100%;
     background-color: white;
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 20px;
-    color: rgb(138 135 135);
-    align-items: center;
-    gap: 14px;
-    border-radius: 10px;
-    .search_filter_input{
-        
-        outline: none;
-        width: 100%;
-        background-color: white;
-        &::placeholder{
-            color: rgb(138 135 135)
-        }
-
+    &::placeholder {
+      color: rgb(138 135 135);
     }
+  }
 }

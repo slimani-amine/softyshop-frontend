@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getCart, addToCart, deleteFromCart } from './cartThunk';
-import { initialStateCartType } from './dataTypes';
+import { createSlice } from "@reduxjs/toolkit";
+import { getCart, addToCart, deleteFromCart } from "./cartThunk";
+import { initialStateCartType } from "./dataTypes";
 
 const initialState: initialStateCartType = {
   cartId: 0,
@@ -8,13 +8,13 @@ const initialState: initialStateCartType = {
   cartItems: 0,
   cartAmount: 0,
   cartQuantity: 0,
-  error: '',
-  status: '',
-  token: '',
+  error: "",
+  status: "",
+  token: "",
 };
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     saveToken(state, action) {
@@ -26,7 +26,7 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getCart.pending, (state) => {
       state.error = null;
-      state.status = 'loading';
+      state.status = "loading";
     });
     builder.addCase(getCart.fulfilled, (state, action) => {
       state.cartId = action?.payload[0]?.id;
@@ -37,29 +37,29 @@ const cartSlice = createSlice({
     });
     builder.addCase(getCart.rejected, (state, action) => {
       state.error = action?.payload;
-      state.status = 'failed';
+      state.status = "failed";
     });
     builder.addCase(addToCart.pending, (state) => {
       state.error = null;
-      state.status = 'loading';
+      state.status = "loading";
     });
     builder.addCase(addToCart.fulfilled, (state) => {
-      state.status = 'succeeded';
+      state.status = "succeeded";
     });
     builder.addCase(addToCart.rejected, (state, action) => {
       state.error = action?.payload;
-      state.status = 'failed';
+      state.status = "failed";
     });
     builder.addCase(deleteFromCart.pending, (state) => {
       state.error = null;
-      state.status = 'loading';
+      state.status = "loading";
     });
     builder.addCase(deleteFromCart.fulfilled, (state) => {
-      state.status = 'succeeded';
+      state.status = "succeeded";
     });
     builder.addCase(deleteFromCart.rejected, (state, action) => {
       state.error = action?.payload;
-      state.status = 'failed';
+      state.status = "failed";
     });
   },
 });

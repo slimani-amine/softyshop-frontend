@@ -19,8 +19,8 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import L from 'leaflet'
-import maker from "@src/modules/shared/assets/icons/leaflet/marker.svg"
+import L from "leaflet";
+import maker from "@src/modules/shared/assets/icons/leaflet/marker.svg";
 import "leaflet/dist/leaflet.css";
 import { useStoreQuery, useUpdateStoreMutation } from "../../service/storeApi";
 import { useNavigate, useParams } from "react-router-dom";
@@ -52,17 +52,14 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
   const [showPopup, setShowPopup] = useState(true);
   const [fields, setFields] = useState<string[]>([]);
 
-
   const { data: fetchedStore, isLoading } = useStoreQuery(id?.toString());
   const store = fetchedStore?.data;
-
 
   const userStore = store?.user;
   const selectDefaultOption = {
     label: userStore?.email,
     value: userStore?.id,
   };
-
 
   useEffect(() => {
     if (fetchedStore?.data) {
@@ -80,11 +77,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
     }
   }, [initialValues, form, fetchedStore]);
 
-  const [position, setPosition] = useState<LatLngExpression>([
-    35,
-    10,
-   
-  ]);
+  const [position, setPosition] = useState<LatLngExpression>([35, 10]);
   const MapObject = {
     center: position, // Update center to match the LatLngExpression type
     zoom: 6,
@@ -100,7 +93,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
         handleClick(lat, lng);
       },
     });
-    console.log(map)
+    console.log(map);
     return null;
   };
 
@@ -112,11 +105,11 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
       const objectPost = { ...values, positionOfShop: position, fields };
       const address = await getPlaceName(
         objectPost.positionOfShop[0],
-        objectPost.positionOfShop[1]
+        objectPost.positionOfShop[1],
       );
-     
+
       const data = {
-        name:objectPost.name,
+        name: objectPost.name,
         phoneNumber: objectPost.phone,
         logo: selectedFileUrl,
         location: [objectPost.positionOfShop[0], objectPost.positionOfShop[1]],
@@ -125,24 +118,27 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
         socialMediaLinks: objectPost.data,
         vendor_id: objectPost.vendor,
       };
-    
 
-      const response:TypeOfResponse = await updateStore({ id: fetchedStore.data.id, data });
+      const response: TypeOfResponse = await updateStore({
+        id: fetchedStore.data.id,
+        data,
+      });
       if ("data" in response) {
         // Display success message if data exists
         message.success("Store Updated successfully!");
         form.resetFields();
         navigate("/stores");
-    } 
-        else if ("error" in response && response.error) {
-            // Display error message if error exists and it's truthy
-            message.error(`${response.error.message}`);
-        } else {
-            message.error("Unexpected response from server. Please try again later.");
-        }
+      } else if ("error" in response && response.error) {
+        // Display error message if error exists and it's truthy
+        message.error(`${response.error.message}`);
+      } else {
+        message.error(
+          "Unexpected response from server. Please try again later.",
+        );
+      }
     } catch (error) {
-        console.error("Error updating shop", error);
-}
+      console.error("Error updating shop", error);
+    }
   };
 
   async function getPlaceName(latitude: any, longitude: any) {
@@ -172,7 +168,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
   };
 
   const Current_User = useSelector(
-    (state: RootState) => state?.auth?.user?.role.toUpperCase()
+    (state: RootState) => state?.auth?.user?.role.toUpperCase(),
   );
   let vendors: any[] = [];
   if (Current_User === ADMIN) {
@@ -217,7 +213,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
     iconAnchor: [25, 50], // Point of the icon which will correspond to marker's location
     popupAnchor: [-3, -50], // Point from which the popup should open relative to the iconAnchor
   });
-  
+
   console.log(defaultFileListCover);
   console.log(defaultFileList);
   return (
@@ -239,15 +235,17 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
                   name="name"
                   style={{ marginBottom: 0 }}
                   rules={[
-                    { 
-                        required: true, 
-                        message: 'Please enter Product name' 
+                    {
+                      required: true,
+                      message: "Please enter Product name",
                     },
                     {
-                        pattern: /^(?!\s)(?=.*[a-zA-Z0-9'À-ÖØ-öø-ÿ\s])[a-zA-Z0-9'À-ÖØ-öø-ÿ\s]{2,}$/,
-                        message: 'Name must contain at least two characters (alphabetic or numeric) and no leading spaces'
-                    }
-                ]}
+                      pattern:
+                        /^(?!\s)(?=.*[a-zA-Z0-9'À-ÖØ-öø-ÿ\s])[a-zA-Z0-9'À-ÖØ-öø-ÿ\s]{2,}$/,
+                      message:
+                        "Name must contain at least two characters (alphabetic or numeric) and no leading spaces",
+                    },
+                  ]}
                 >
                   <Input
                     size="large"
@@ -313,9 +311,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
                     className="input-custom"
                     options={Current_User === ADMIN ? selectOptions : []}
                     defaultValue={
-                      Current_User === ADMIN
-                        ? selectDefaultOption
-                        : Email_user
+                      Current_User === ADMIN ? selectDefaultOption : Email_user
                     }
                     disabled={Current_User !== ADMIN}
                   />
@@ -326,21 +322,18 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
               className="label-order"
               htmlFor="products-search"
               style={{ color: "#6195def5", fontWeight: "500" }}
-              >
+            >
               Position Of Shop:
             </label>
-            <MapContainer  className="map" {...MapObject}>
+            <MapContainer className="map" {...MapObject}>
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {showPopup && (
                 <Marker position={position} icon={customIcon}>
-                  <Popup>
-              
-                  </Popup>
+                  <Popup></Popup>
                 </Marker>
               )}
               <ChoosePlaceOnClick handleClick={handleClick} />
             </MapContainer>
-
 
             <Form.Item className="upload-images" name="images">
               <Upload.Dragger
@@ -355,22 +348,22 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
                 }
                 beforeUpload={() => false}
               >
-                 {uploading ? (
-                <div className="uploading-indicator">Uploading...</div>
-              ) : (
-                <>
-                  <p className="ant-upload-text">
-                    Drag & drop Category image here
-                  </p>
-                  <div className="icon-drag">
-                    <Divider className="divider" />
-                    <p className="or">OR</p>
-                    <Divider className="divider" />
-                  </div>
-                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
-                  <p className="size-img">Upload 280*280 image</p>
-                </>
-              )}
+                {uploading ? (
+                  <div className="uploading-indicator">Uploading...</div>
+                ) : (
+                  <>
+                    <p className="ant-upload-text">
+                      Drag & drop Category image here
+                    </p>
+                    <div className="icon-drag">
+                      <Divider className="divider" />
+                      <p className="or">OR</p>
+                      <Divider className="divider" />
+                    </div>
+                    <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                    <p className="size-img">Upload 280*280 image</p>
+                  </>
+                )}
               </Upload.Dragger>
             </Form.Item>
             <Form.Item name="dynamicInputs">
@@ -409,27 +402,27 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
                     e,
                     setCover,
                     setSelectedCoverUrl,
-                    setUploading
+                    setUploading,
                   )
                 }
                 beforeUpload={() => false}
               >
-                 {uploading ? (
-                <div className="uploading-indicator">Uploading...</div>
-              ) : (
-                <>
-                  <p className="ant-upload-text">
-                    Drag & drop Category image here
-                  </p>
-                  <div className="icon-drag">
-                    <Divider className="divider" />
-                    <p className="or">OR</p>
-                    <Divider className="divider" />
-                  </div>
-                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
-                  <p className="size-img">Upload 280*280 image</p>
-                </>
-              )}
+                {uploading ? (
+                  <div className="uploading-indicator">Uploading...</div>
+                ) : (
+                  <>
+                    <p className="ant-upload-text">
+                      Drag & drop Category image here
+                    </p>
+                    <div className="icon-drag">
+                      <Divider className="divider" />
+                      <p className="or">OR</p>
+                      <Divider className="divider" />
+                    </div>
+                    <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                    <p className="size-img">Upload 280*280 image</p>
+                  </>
+                )}
               </Upload.Dragger>
             </Form.Item>
 

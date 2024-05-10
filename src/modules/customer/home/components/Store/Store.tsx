@@ -5,14 +5,14 @@
 // import { ReactComponent as Facebook } from '../../../../shared/assets/icons/home/facebook.svg';
 // import { ReactComponent as Instagram } from '../../../../shared/assets/icons/customerLayout/Footer/instagram.svg';
 // import { Link } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
+import { HashLink } from "react-router-hash-link";
 
 function Store({
   id,
   name,
   logo, // phoneNumber,
-  // location,
-} // isPublished,
+  // isPublished,
+} // location,
 // address,
 // socialMediaLinks,
 : {

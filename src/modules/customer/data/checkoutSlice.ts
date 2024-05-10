@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   chosenAddress: null,
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const checkoutSlice = createSlice({
-  name: 'checkout',
+  name: "checkout",
   initialState,
   reducers: {
     checkIt(state) {

@@ -20,11 +20,11 @@ interface AddBrandFormProps {
 }
 
 const EditBrandForm: FC<AddBrandFormProps> = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [files, setFile] = useState<any>(null);
   const [uploading, setUploading] = useState(false);
-  console.log(uploading)
-  console.log(files)
+  console.log(uploading);
+  console.log(files);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [updateBrand] = useUpdateBrandMutation();
@@ -52,28 +52,27 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
           logo: selectedFileUrl,
         },
       });
-      if ('data' in response) {
+      if ("data" in response) {
         // Display success message if data exists
         message.success("Brand updated successfully!");
         console.log(response.data);
         form.resetFields();
 
-        navigate("/brands")
-
-        
-    } else if ('error' in response) {
+        navigate("/brands");
+      } else if ("error" in response) {
         // Display error message if error exists
         message.error("Failed to save Brand. Please try again.");
-        console.error('Error saving Brand', response.error);
-    } else {
+        console.error("Error saving Brand", response.error);
+      } else {
         // Handle unexpected response format
-        message.error("Unexpected response from server. Please try again later.");
-    }
+        message.error(
+          "Unexpected response from server. Please try again later.",
+        );
+      }
     } catch (error) {
       console.error("Error updating Brand:", error);
     }
   };
-
 
   const defaultFileList = [
     {
@@ -92,26 +91,29 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
         <Form form={form} initialValues={initialValues}>
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
                 Name of Brand :
               </label>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
-                rules={[ 
-                  { 
-                      required: true, 
-                      message: 'Please enter Store name' 
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter Store name",
                   },
                   {
-                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
-                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
-                  }
-              ]}                          >
+                    pattern:
+                      /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                    message:
+                      "Name must contain at least two alphabetical characters and no leading spaces",
+                  },
+                ]}
+              >
                 <Input
                   size="large"
                   placeholder="Name"
@@ -128,12 +130,11 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
               accept="image/*"
               maxCount={1}
               onChange={(e: any) =>
-                handleFileChange(e, setFile, setSelectedFileUrl,setUploading)
+                handleFileChange(e, setFile, setSelectedFileUrl, setUploading)
               }
               beforeUpload={() => false}
             >
-            
-            {uploading ? (
+              {uploading ? (
                 <div className="uploading-indicator">Uploading...</div>
               ) : (
                 <>
@@ -153,7 +154,12 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button className="add-cat" disabled={uploading} onClick={handleFinish} type="submit">
+            <Button
+              className="add-cat"
+              disabled={uploading}
+              onClick={handleFinish}
+              type="submit"
+            >
               Save Brand
             </Button>
           </Form.Item>

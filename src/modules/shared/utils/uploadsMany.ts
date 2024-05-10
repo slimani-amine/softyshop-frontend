@@ -4,7 +4,7 @@ export const handleFileChange = async (
   e: any,
   setFile: any,
   setSelectedFileUrl: any,
-  setUploading: any
+  setUploading: any,
 ) => {
   if (e.fileList.length > 0) {
     const files = e.fileList.map((file: any) => file.originFileObj);
@@ -14,10 +14,7 @@ export const handleFileChange = async (
     try {
       setUploading(true);
       const uploadPromises = files.map(async (file: any) => {
-        if (
-          file.type.startsWith("image/") &&
-          file.size <= 2 * 1024 * 1024
-        ) {
+        if (file.type.startsWith("image/") && file.size <= 2 * 1024 * 1024) {
           const form = new FormData();
           form.append("file", file);
           form.append("upload_preset", "firaslatrach");
@@ -27,20 +24,18 @@ export const handleFileChange = async (
             {
               method: "post",
               body: form,
-            }
+            },
           );
 
           if (response.ok) {
             const data = await response.json();
             uploadedFileUrls.push(data.url);
           } else {
-            message.error(
-              "Error uploading file. Please try again."
-            );
+            message.error("Error uploading file. Please try again.");
           }
         } else {
           message.error(
-            "Invalid file format or size. Please choose a valid image file (max 2 MB)."
+            "Invalid file format or size. Please choose a valid image file (max 2 MB).",
           );
         }
       });
@@ -50,7 +45,7 @@ export const handleFileChange = async (
       setSelectedFileUrl(uploadedFileUrls);
     } catch (error) {
       message.error(
-        "An error occurred while uploading files. Please try again."
+        "An error occurred while uploading files. Please try again.",
       );
       console.error(error);
     } finally {

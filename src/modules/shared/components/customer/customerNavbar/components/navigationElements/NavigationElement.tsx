@@ -1,4 +1,4 @@
-import { ReactComponent as ChevronDownGray } from '../../../../../assets/icons/customerLayout/Navbar/chevron-down-gray.svg';
+import { ReactComponent as ChevronDownGray } from "../../../../../assets/icons/customerLayout/Navbar/chevron-down-gray.svg";
 
 function navigationElement({ children }: any) {
   return (

@@ -21,8 +21,8 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import L from 'leaflet'
-import maker from "@src/modules/shared/assets/icons/leaflet/marker.svg"
+import L from "leaflet";
+import maker from "@src/modules/shared/assets/icons/leaflet/marker.svg";
 import "leaflet/dist/leaflet.css";
 import { useCreateStoreMutation } from "../../service/storeApi";
 import { useAllvendorsQuery } from "../../../vendores/services/vendorApi";
@@ -33,7 +33,6 @@ import { useNavigate } from "react-router-dom";
 import { ADMIN } from "@src/global_roles_config";
 import TypeOfResponse from "@src/modules/shared/services/ResponseType";
 import { LatLngExpression } from "leaflet";
-
 
 interface AddShopFormProps {
   onFinish: (values: any) => void;
@@ -58,9 +57,8 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   const [position, setPosition] = useState<LatLngExpression>(initialPosition);
   const [createStore] = useCreateStoreMutation();
 
- 
   const Current_User = useSelector(
-    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase(),
   );
 
   const Id_user = useSelector((state: RootState) => state?.auth?.user?.id);
@@ -83,7 +81,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
     iconAnchor: [25, 50], // Point of the icon which will correspond to marker's location
     popupAnchor: [-3, -50], // Point from which the popup should open relative to the iconAnchor
   });
-  
+
   const MapObject = {
     center: position,
     zoom: 6,
@@ -117,41 +115,39 @@ const AddShopForm: FC<AddShopFormProps> = () => {
 
   const handleSaveClick = async () => {
     try {
-        const values = await form.validateFields();
-        const objectPost = { ...values, positionOfShop: position };
-        const plc = objectPost.positionOfShop[2];
-        console.log(position  , 'postion')
+      const values = await form.validateFields();
+      const objectPost = { ...values, positionOfShop: position };
+      const plc = objectPost.positionOfShop[2];
+      console.log(position, "postion");
 
-        const response:TypeOfResponse = await createStore({
-            name: objectPost.name,
-            phoneNumber: objectPost.phone,
-            logo: selectedFileUrl,
-            location: objectPost.positionOfShop.slice(0, 2), // Use slice instead of splice
-            address: plc,
-            socialMediaLinks: objectPost.data,
-            vendor_id: Current_User === ADMIN ? objectPost.vendor : Id_user,
-            cover: selectedCoverUrl,
-        });
+      const response: TypeOfResponse = await createStore({
+        name: objectPost.name,
+        phoneNumber: objectPost.phone,
+        logo: selectedFileUrl,
+        location: objectPost.positionOfShop.slice(0, 2), // Use slice instead of splice
+        address: plc,
+        socialMediaLinks: objectPost.data,
+        vendor_id: Current_User === ADMIN ? objectPost.vendor : Id_user,
+        cover: selectedCoverUrl,
+      });
 
-        
-
-        if ("data" in response) {
-            // Display success message if data exists
-            message.success("Store saved successfully!");
-            form.resetFields();
-            navigate("/stores");
-        } 
-        else if ("error" in response && response.error) {
-            // Display error message if error exists and it's truthy
-            message.error(`${response.error.message}`);
-        } else {
-            message.error("Unexpected response from server. Please try again later.");
-        }
+      if ("data" in response) {
+        // Display success message if data exists
+        message.success("Store saved successfully!");
+        form.resetFields();
+        navigate("/stores");
+      } else if ("error" in response && response.error) {
+        // Display error message if error exists and it's truthy
+        message.error(`${response.error.message}`);
+      } else {
+        message.error(
+          "Unexpected response from server. Please try again later.",
+        );
+      }
     } catch (error) {
-        console.error("Error saving shop", error);
+      console.error("Error saving shop", error);
     }
-};
-
+  };
 
   const Email_user = useSelector((state: RootState) => state.auth.user?.email);
   console.log(Email_user);
@@ -175,15 +171,17 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                   name="name"
                   style={{ marginBottom: 0 }}
                   rules={[
-                    { 
-                        required: true, 
-                        message: 'Please enter Product name' 
+                    {
+                      required: true,
+                      message: "Please enter Product name",
                     },
                     {
-                        pattern: /^(?!\s)(?=.*[a-zA-Z0-9'À-ÖØ-öø-ÿ\s])[a-zA-Z0-9'À-ÖØ-öø-ÿ\s]{2,}$/,
-                        message: 'Name must contain at least two characters (alphabetic or numeric) and no leading spaces'
-                    }
-                ]}
+                      pattern:
+                        /^(?!\s)(?=.*[a-zA-Z0-9'À-ÖØ-öø-ÿ\s])[a-zA-Z0-9'À-ÖØ-öø-ÿ\s]{2,}$/,
+                      message:
+                        "Name must contain at least two characters (alphabetic or numeric) and no leading spaces",
+                    },
+                  ]}
                 >
                   <Input
                     size="large"
@@ -210,7 +208,8 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                     {
                       required: Current_User === ADMIN,
                       message: "Please Select Vendor",
-                    }]}
+                    },
+                  ]}
                 >
                   <Select
                     size="middle"
@@ -268,10 +267,9 @@ const AddShopForm: FC<AddShopFormProps> = () => {
             <MapContainer className="map" {...MapObject}>
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {showPopup && (
-              <Marker position={position} icon={customIcon}>
-              <Popup>
-              </Popup>
-            </Marker>
+                <Marker position={position} icon={customIcon}>
+                  <Popup></Popup>
+                </Marker>
               )}
               <ChoosePlaceOnClick handleClick={handleClick} />
             </MapContainer>
@@ -284,7 +282,6 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 className="drag-images"
                 listType="picture"
                 accept="image/*"
-                
                 maxCount={1}
                 onChange={(e: any) =>
                   handleFileChange(e, setFile, setSelectedFileUrl, setUploading)
@@ -292,21 +289,21 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                 beforeUpload={() => false}
               >
                 {uploading ? (
-                <div className="uploading-indicator">Uploading...</div>
-              ) : (
-                <>
-                  <p className="ant-upload-text">
-                    Drag & drop Category image here
-                  </p>
-                  <div className="icon-drag">
-                    <Divider className="divider" />
-                    <p className="or">OR</p>
-                    <Divider className="divider" />
-                  </div>
-                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
-                  <p className="size-img">Upload 280*280 image</p>
-                </>
-              )}
+                  <div className="uploading-indicator">Uploading...</div>
+                ) : (
+                  <>
+                    <p className="ant-upload-text">
+                      Drag & drop Category image here
+                    </p>
+                    <div className="icon-drag">
+                      <Divider className="divider" />
+                      <p className="or">OR</p>
+                      <Divider className="divider" />
+                    </div>
+                    <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                    <p className="size-img">Upload 280*280 image</p>
+                  </>
+                )}
               </Upload.Dragger>
             </Form.Item>
             <Form.Item name="dynamicInputs">
@@ -347,27 +344,27 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                     e,
                     setCover,
                     setSelectedCoverUrl,
-                    setUploading
+                    setUploading,
                   )
                 }
                 beforeUpload={() => false}
               >
-              {uploading ? (
-                <div className="uploading-indicator">Uploading...</div>
-              ) : (
-                <>
-                  <p className="ant-upload-text">
-                    Drag & drop Category image here
-                  </p>
-                  <div className="icon-drag">
-                    <Divider className="divider" />
-                    <p className="or">OR</p>
-                    <Divider className="divider" />
-                  </div>
-                  <ButtonAnt className="btn-select">Select Files</ButtonAnt>
-                  <p className="size-img">Upload 280*280 image</p>
-                </>
-              )}
+                {uploading ? (
+                  <div className="uploading-indicator">Uploading...</div>
+                ) : (
+                  <>
+                    <p className="ant-upload-text">
+                      Drag & drop Category image here
+                    </p>
+                    <div className="icon-drag">
+                      <Divider className="divider" />
+                      <p className="or">OR</p>
+                      <Divider className="divider" />
+                    </div>
+                    <ButtonAnt className="btn-select">Select Files</ButtonAnt>
+                    <p className="size-img">Upload 280*280 image</p>
+                  </>
+                )}
               </Upload.Dragger>
             </Form.Item>
 

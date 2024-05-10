@@ -1,9 +1,9 @@
-import { FC, useState } from 'react';
-import Spinner from '@src/modules/shared/components/Spinner/Spinner';
+import { FC, useState } from "react";
+import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 import {
   useUpdateCatgoryMutation,
   useCategoryQuery,
-} from '../../service/categoryApi';
+} from "../../service/categoryApi";
 import {
   Form,
   Button as ButtonAnt,
@@ -12,23 +12,22 @@ import {
   Row,
   Col,
   Input,
- 
   message,
-} from 'antd';
-import Button from '@src/modules/shared/components/Button/Button';
-import { useNavigate, useParams } from 'react-router-dom';
-import { handleFileChange } from '@src/modules/shared/utils/upload';
-import TypeOfResponse from '@src/modules/shared/services/ResponseType';
+} from "antd";
+import Button from "@src/modules/shared/components/Button/Button";
+import { useNavigate, useParams } from "react-router-dom";
+import { handleFileChange } from "@src/modules/shared/utils/upload";
+import TypeOfResponse from "@src/modules/shared/services/ResponseType";
 interface AddCategoryFormProps {
   onFinish: (values: any) => void;
 }
 
 const EditCategoryForm: FC<AddCategoryFormProps> = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [files, setFile] = useState<any>(null);
   const [uploading, setUploading] = useState(false);
 
-  console.log(files)
+  console.log(files);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [updateCategory] = useUpdateCatgoryMutation();
@@ -41,7 +40,7 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
   if (isLoading) return <Spinner />;
 
   const initialValues = {
-    name: fetchCategory?.data?.docs[0]?.name || '',
+    name: fetchCategory?.data?.docs[0]?.name || "",
     images: [],
     isPublished: fetchCategory?.data?.docs[0]?.isPublished || false,
   };
@@ -49,52 +48,48 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
   const handleFinish = async () => {
     try {
       const values = await form.validateFields();
-      console.log(values, 'fg');
+      console.log(values, "fg");
       console.log(
         {
           name: values.name,
-          icon: '',
-          isPublished: values.isPublished === 'on' ? true : false,
+          icon: "",
+          isPublished: values.isPublished === "on" ? true : false,
         },
-        '0000000000000000000000000'
+        "0000000000000000000000000",
       );
-      const response : TypeOfResponse= await updateCategory({
+      const response: TypeOfResponse = await updateCategory({
         id: id,
         data: {
           name: values.name,
           icon: selectedFileUrl,
-          isPublished: values.isPublished === 'on' ? true : false,
+          isPublished: values.isPublished === "on" ? true : false,
         },
       });
-      if ('data' in response) {
+      if ("data" in response) {
         // Display success message if data exists
         message.success("Category updated successfully!");
         form.resetFields();
 
-        navigate("/categories")
-
-     
-    } 
-    else if ("error" in response && response.error) {
-      // Display error message if error exists and it's truthy
-      message.error(`${response.error.message}`);
-  } else {
-      message.error("Unexpected response from server. Please try again later.");
-  }
-   
-
-   
+        navigate("/categories");
+      } else if ("error" in response && response.error) {
+        // Display error message if error exists and it's truthy
+        message.error(`${response.error.message}`);
+      } else {
+        message.error(
+          "Unexpected response from server. Please try again later.",
+        );
+      }
     } catch (error) {
-      console.error('Error updating category:', error);
+      console.error("Error updating category:", error);
     }
   };
 
-  console.log(category, 'iufhgui');
+  console.log(category, "iufhgui");
   const defaultFileList = [
     {
-      uid: '-1',
-      name: 'Current Image',
-      status: 'done',
+      uid: "-1",
+      name: "Current Image",
+      status: "done",
       url: category.icon,
     } as any,
   ];
@@ -106,26 +101,28 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
         <Form form={form} initialValues={initialValues}>
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
-                 Category Name :
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
+                Category Name :
               </label>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { 
-                      required: true, 
-                      message: 'Please enter Category name' 
+                  {
+                    required: true,
+                    message: "Please enter Category name",
                   },
                   {
-                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
-                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
-                  }
-              ]}
+                    pattern:
+                      /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                    message:
+                      "Name must contain at least two alphabetical characters and no leading spaces",
+                  },
+                ]}
               >
                 <Input
                   size="large"
@@ -136,19 +133,14 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
             </Col>
           </Row>
           <Form.Item className="upload-images" name="images">
-          <Upload.Dragger
+            <Upload.Dragger
               className="drag-images"
               listType="picture"
               accept="image/*"
               maxCount={1}
               defaultFileList={defaultFileList}
               onChange={(e: any) =>
-                handleFileChange(
-                  e,
-                  setFile,
-                  setSelectedFileUrl,
-                  setUploading
-                )
+                handleFileChange(e, setFile, setSelectedFileUrl, setUploading)
               }
               beforeUpload={() => false}
             >
@@ -156,7 +148,9 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
                 <div className="uploading-indicator">Uploading...</div>
               ) : (
                 <>
-                  <p className="ant-upload-text">Drag & drop Category image here</p>
+                  <p className="ant-upload-text">
+                    Drag & drop Category image here
+                  </p>
                   <div className="icon-drag">
                     <Divider className="divider" />
                     <p className="or">OR</p>
@@ -169,9 +163,13 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
             </Upload.Dragger>
           </Form.Item>
 
-      
           <Form.Item>
-            <Button className="add-cat" onClick={handleFinish} disabled={uploading} type="submit">
+            <Button
+              className="add-cat"
+              onClick={handleFinish}
+              disabled={uploading}
+              type="submit"
+            >
               Save Category
             </Button>
           </Form.Item>

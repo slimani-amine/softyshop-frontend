@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { clearTokens, setTokens } from '../utils/token';
-import { login, logout, register } from './authThunk';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { clearTokens, setTokens } from "../utils/token";
+import { login, logout, register } from "./authThunk";
 
 export interface AuthState {
   status: string;
@@ -19,7 +19,7 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
-  status: 'idle',
+  status: "idle",
   isAuthenticated: false,
   isInitialised: false,
   user: null,
@@ -27,7 +27,7 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     initialise: (state, action) => {
@@ -45,7 +45,7 @@ const authSlice = createSlice({
     builder.addCase(login.pending, (state) => {
       // console.log(2);
       state.error = null;
-      state.status = 'loading';
+      state.status = "loading";
     });
     builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
       // console.log(3);
@@ -54,30 +54,30 @@ const authSlice = createSlice({
       setTokens(accessToken, refreshToken);
       state.isAuthenticated = true;
       state.user = user;
-      state.status = 'succeeded';
+      state.status = "succeeded";
     });
     builder.addCase(login.rejected, (state, action: PayloadAction<any>) => {
       state.error = action?.payload;
-      state.status = 'failed';
+      state.status = "failed";
     });
 
     builder.addCase(logout.pending, (state) => {
       state.error = null;
-      state.status = 'loading';
+      state.status = "loading";
     });
     builder.addCase(logout.fulfilled, (state) => {
       state.isAuthenticated = false;
       state.user = null;
-      state.status = 'succeeded';
+      state.status = "succeeded";
       clearTokens();
     });
     builder.addCase(logout.rejected, (state, action: PayloadAction<any>) => {
       state.error = action?.payload;
-      state.status = 'failed';
+      state.status = "failed";
     });
     builder.addCase(register.pending, (state) => {
       state.error = null;
-      state.status = 'loading';
+      state.status = "loading";
     });
     builder.addCase(register.fulfilled, (state, action: PayloadAction<any>) => {
       const { accessToken, refreshToken, user } = action.payload.data;
@@ -85,11 +85,11 @@ const authSlice = createSlice({
       setTokens(accessToken, refreshToken);
       state.isAuthenticated = true;
       state.user = user;
-      state.status = 'succeeded';
+      state.status = "succeeded";
     });
     builder.addCase(register.rejected, (state, action: PayloadAction<any>) => {
       state.error = action?.payload;
-      state.status = 'failed';
+      state.status = "failed";
     });
   },
 });

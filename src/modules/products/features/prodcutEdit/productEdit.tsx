@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from 'react';
-import { RootState } from '@src/modules/shared/store';
-import { handleFileChange } from '@src/modules/shared/utils/uploadsMany';
+import { FC, useEffect, useState } from "react";
+import { RootState } from "@src/modules/shared/store";
+import { handleFileChange } from "@src/modules/shared/utils/uploadsMany";
 
 import {
   Form,
@@ -13,20 +13,23 @@ import {
   Input,
   InputNumber,
   message,
-} from 'antd';
-import Button from '@src/modules/shared/components/Button/Button';
+} from "antd";
+import Button from "@src/modules/shared/components/Button/Button";
 const { TextArea } = Input;
 import {
   useAllStoresQuery,
   useMyStoresQuery,
-} from '@src/modules/bookStores/service/storeApi';
-import { useAllCategoriesQuery } from '@src/modules/categories/service/categoryApi';
-import { useAllBrandsQuery } from '@src/modules/brands/service/brandApi';
-import {  useProductQuery , useUpdateProductMutation } from '../../service/productApi';
-import { useAllCreatorsQuery } from '@src/modules/creators/service/creatorApi';
-import { useSelector } from 'react-redux';
-import {  useNavigate, useParams } from 'react-router-dom';
-import Spinner from '@src/modules/shared/components/Spinner/Spinner';
+} from "@src/modules/bookStores/service/storeApi";
+import { useAllCategoriesQuery } from "@src/modules/categories/service/categoryApi";
+import { useAllBrandsQuery } from "@src/modules/brands/service/brandApi";
+import {
+  useProductQuery,
+  useUpdateProductMutation,
+} from "../../service/productApi";
+import { useAllCreatorsQuery } from "@src/modules/creators/service/creatorApi";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import Spinner from "@src/modules/shared/components/Spinner/Spinner";
 interface AddProductFormProps {
   onFinish: (values: any) => void;
 }
@@ -35,9 +38,9 @@ const EditProduct: FC<AddProductFormProps> = () => {
   const [form] = Form.useForm();
   const [uploading, setUploading] = useState(false);
 
-const [updateProduct] = useUpdateProductMutation()
-  const navigate = useNavigate()
-  const { data: fetchedCatgeories} = useAllCategoriesQuery();
+  const [updateProduct] = useUpdateProductMutation();
+  const navigate = useNavigate();
+  const { data: fetchedCatgeories } = useAllCategoriesQuery();
   const categories = fetchedCatgeories?.data.docs || [];
   const selectOptionsCategories = categories.map((cat: any) => ({
     label: cat.name,
@@ -59,13 +62,13 @@ const [updateProduct] = useUpdateProductMutation()
   }));
 
   const [files, setFile] = useState<any>(null);
-  const [selectedFileUrl  , setSelectedFileUrl] = useState<string[]>([]);
-  console.log(files)
+  const [selectedFileUrl, setSelectedFileUrl] = useState<string[]>([]);
+  console.log(files);
   const Current_User = useSelector(
-    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase(),
   );
   let stores = [];
-  if (Current_User === 'ADMIN') {
+  if (Current_User === "ADMIN") {
     const { data: fetechedAllStores } = useAllStoresQuery();
     stores = fetechedAllStores?.data.docs;
   } else {
@@ -87,76 +90,67 @@ const [updateProduct] = useUpdateProductMutation()
   const { id } = useParams<{ id: string }>(); // Assuming useParams returns an object with 'id' property
 
   const { data: fetchedProduct, isLoading } = useProductQuery(id);
-  const product = fetchedProduct?.data
+  const product = fetchedProduct?.data;
 
-
- 
   useEffect(() => {
     if (fetchedProduct) {
-      console.log(product.brand?.id)
+      console.log(product.brand?.id);
       // Set form fields with fetched vendor data here
       form.setFieldsValue({
         name: product.name,
-        price : product.initialPrice,
-        category :product?.category?.id ,
-        discount : product.discount,
-        stock : product.stockNumber,
-        creator : product.creator?.id.toString(),
-        brand : product.brand?.id.toString(),
-        description : product.description,
-        store : product?.store?.id
-       
+        price: product.initialPrice,
+        category: product?.category?.id,
+        discount: product.discount,
+        stock: product.stockNumber,
+        creator: product.creator?.id.toString(),
+        brand: product.brand?.id.toString(),
+        description: product.description,
+        store: product?.store?.id,
+
         // Set other fields accordingly
       });
       setSelectedFileUrl(JSON.parse(product.images));
     }
   }, [fetchedProduct, form]);
 
-  
-
-  
-
-
-
-
   const handleSaveClick = async () => {
     try {
-
       const values = await form.validateFields();
-     
+
       const product = {
         name: values.name,
         initialPrice: values.price,
-        category_id: values.category+"",
+        category_id: values.category + "",
         discount: values.discount,
         stockNumber: values.stock,
         creator_id: values.creator,
         brand_id: values.brand,
         images: selectedFileUrl,
-        description : values.description ,      
+        description: values.description,
       };
       const response = await updateProduct({
         id: id,
         body: product,
       });
-      if ('data' in response) {
+      if ("data" in response) {
         // Display success message if data exists
         message.success("Product saved successfully!");
         console.log(response.data);
-        navigate("/products")
-        
-    } else if ('error' in response) {
+        navigate("/products");
+      } else if ("error" in response) {
         // Display error message if error exists
         message.error("Failed to save product. Please try again.");
-        console.error('Error saving product', response.error);
-    } else {
-        message.error("Unexpected response from server. Please try again later.");
-    }
+        console.error("Error saving product", response.error);
+      } else {
+        message.error(
+          "Unexpected response from server. Please try again later.",
+        );
+      }
 
-      console.log(response)
+      console.log(response);
       form.resetFields();
     } catch (error) {
-      console.error('Error saving product', error);
+      console.error("Error saving product", error);
     }
   };
   /*let images = [];
@@ -164,8 +158,6 @@ const [updateProduct] = useUpdateProductMutation()
     images = JSON.parse(product.images);
   } */
 
-
-  
   if (isLoading) {
     return <Spinner />;
   }
@@ -173,47 +165,49 @@ const [updateProduct] = useUpdateProductMutation()
     <div className="add-new-Product">
       <h1 className="title">Edit Product</h1>
       <div className="container-add-Product">
-        <Form form={form}  onFinish={handleFinish} >
+        <Form form={form} onFinish={handleFinish}>
           <Row gutter={[16, 0]} className="name-Product-new">
             <Col span={24}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
-                 Name :
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
+                Name :
               </label>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 20 }}
                 rules={[
-                  { 
-                      required: true, 
-                      message: 'Please enter Product name' 
+                  {
+                    required: true,
+                    message: "Please enter Product name",
                   },
                   {
-                      pattern: /^(?!\s)(?=.*[a-zA-Z0-9'À-ÖØ-öø-ÿ\s])[a-zA-Z0-9'À-ÖØ-öø-ÿ\s]{2,}$/,
-                      message: 'Name must contain at least two characters (alphabetic or numeric) and no leading spaces'
-                  }
-              ]}
+                    pattern:
+                      /^(?!\s)(?=.*[a-zA-Z0-9'À-ÖØ-öø-ÿ\s])[a-zA-Z0-9'À-ÖØ-öø-ÿ\s]{2,}$/,
+                    message:
+                      "Name must contain at least two characters (alphabetic or numeric) and no leading spaces",
+                  },
+                ]}
               >
                 <Input
                   size="large"
                   placeholder="Name"
                   className="input-custom"
-                  style={{ }} // Change color based on user role
+                  style={{}} // Change color based on user role
                 />
               </Form.Item>
             </Col>
           </Row>
           <Row>
             <Col span={24}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
-                 Store :
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
+                Store :
               </label>
               <Form.Item
                 name="store"
@@ -222,7 +216,7 @@ const [updateProduct] = useUpdateProductMutation()
                 rules={[
                   {
                     required: true,
-                    message: 'Product field must have at least 1 items',
+                    message: "Product field must have at least 1 items",
                   },
                 ]}
               >
@@ -231,29 +225,27 @@ const [updateProduct] = useUpdateProductMutation()
                   placeholder="Store"
                   className="input-custom"
                   options={selectStores}
-
                 />
               </Form.Item>
             </Col>
           </Row>
           <Row>
             <Col span={24}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
-                 Category :
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
+                Category :
               </label>
               <Form.Item
                 name="category"
                 className="Product"
                 style={{ marginBottom: 20 }}
-
                 rules={[
                   {
                     required: true,
-                    message: 'Product field must have at least 1 items',
+                    message: "Product field must have at least 1 items",
                   },
                 ]}
               >
@@ -262,19 +254,18 @@ const [updateProduct] = useUpdateProductMutation()
                   placeholder="Category"
                   className="input-custom"
                   options={selectOptionsCategories}
-
                 />
               </Form.Item>
             </Col>
           </Row>
           <Row>
             <Col span={24}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
-                 Brand :
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
+                Brand :
               </label>
               <Form.Item
                 name="brand"
@@ -283,7 +274,7 @@ const [updateProduct] = useUpdateProductMutation()
                 rules={[
                   {
                     required: true,
-                    message: 'Product field must have at least 1 items',
+                    message: "Product field must have at least 1 items",
                   },
                 ]}
               >
@@ -298,22 +289,21 @@ const [updateProduct] = useUpdateProductMutation()
           </Row>
           <Row>
             <Col span={24}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
-                 Creator  :
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
+                Creator :
               </label>
               <Form.Item
                 name="creator"
                 className="Product"
                 style={{ marginBottom: 20 }}
-                
                 rules={[
                   {
                     required: false,
-                    message: 'Product field must have at least 1 items',
+                    message: "Product field must have at least 1 items",
                   },
                 ]}
               >
@@ -321,7 +311,6 @@ const [updateProduct] = useUpdateProductMutation()
                   size="large"
                   placeholder="Creator"
                   className="input-custom"
-
                   options={selectOptionsCreators}
                 />
               </Form.Item>
@@ -330,21 +319,16 @@ const [updateProduct] = useUpdateProductMutation()
           <Form.Item
             className="upload-images"
             name="images"
-            rules={[{ required: false, message: 'Description is required!' }]}
+            rules={[{ required: false, message: "Description is required!" }]}
           >
-             <Upload.Dragger
+            <Upload.Dragger
               className="drag-images"
               listType="picture"
               accept="image/*"
               multiple={true}
               maxCount={3}
               onChange={(e: any) =>
-                handleFileChange(
-                  e,
-                  setFile,
-                  setSelectedFileUrl,
-                  setUploading
-                )
+                handleFileChange(e, setFile, setSelectedFileUrl, setUploading)
               }
               beforeUpload={() => false}
             >
@@ -352,7 +336,9 @@ const [updateProduct] = useUpdateProductMutation()
                 <div className="uploading-indicator">Uploading...</div>
               ) : (
                 <>
-                  <p className="ant-upload-text">Drag & drop Category image here</p>
+                  <p className="ant-upload-text">
+                    Drag & drop Category image here
+                  </p>
                   <div className="icon-drag">
                     <Divider className="divider" />
                     <p className="or">OR</p>
@@ -365,106 +351,104 @@ const [updateProduct] = useUpdateProductMutation()
             </Upload.Dragger>
           </Form.Item>
           <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
-                Description :
-              </label>
-          <Form.Item    
-            name="description"
-            >
+            className="label-order"
+            htmlFor="products-search"
+            style={{ color: "#6195def5", fontWeight: "500" }}
+          >
+            Description :
+          </label>
+          <Form.Item name="description">
             <TextArea
               placeholder="Description"
               autoSize={{ minRows: 7, maxRows: 20 }}
-
             />
           </Form.Item>
 
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={11}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
                 Regular Price :
               </label>
               <Form.Item
                 name="price"
                 style={{ marginBottom: 0 }}
-                rules={[{ required: true, message: 'Price is required!  ' }]}
+                rules={[{ required: true, message: "Price is required!  " }]}
               >
                 <InputNumber
                   name="price"
                   placeholder="Regular Price"
                   className="input-custom"
                   size="large"
-                  style={{ width: '100%' }}
+                  style={{ width: "100%" }}
                 />
               </Form.Item>
             </Col>
             <Col span={11}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
                 Discount :
               </label>
               <Form.Item
                 name="discount"
                 className="SalePrice"
-                
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { 
-                    required: true, 
-                    message: 'Please enter a sale price' 
+                  {
+                    required: true,
+                    message: "Please enter a sale price",
                   },
-                  { 
-                    type: 'number',
-                    max: 100, 
-                    message: 'Discount must be less than or equal to 100' 
-                  }
-                ]}              >
+                  {
+                    type: "number",
+                    max: 100,
+                    message: "Discount must be less than or equal to 100",
+                  },
+                ]}
+              >
                 <InputNumber
                   placeholder="Discount"
                   className="input-custom"
                   size="large"
-                  style={{ width: '100%' }}
+                  style={{ width: "100%" }}
                 />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
-            <label
-              className="label-order"
-              htmlFor="products-search"
-              style={{color:"#6195def5" , fontWeight:'500'}}
-               >
+              <label
+                className="label-order"
+                htmlFor="products-search"
+                style={{ color: "#6195def5", fontWeight: "500" }}
+              >
                 Stock :
               </label>
               <Form.Item
                 name="stock"
                 style={{ marginBottom: 0 }}
                 rules={[
-                  { 
-                    required: true, 
-                    message: 'Stock number is required!' 
+                  {
+                    required: true,
+                    message: "Stock number is required!",
                   },
-                  { 
-                    type: 'number',
-                    message: 'Stock number must be a valid number' 
-                  }
-                ]}              >
+                  {
+                    type: "number",
+                    message: "Stock number must be a valid number",
+                  },
+                ]}
+              >
                 <InputNumber
                   name="stock"
                   placeholder="Stock Number"
                   className="input-custom"
                   size="large"
-                  style={{ width: '100%' }}
+                  style={{ width: "100%" }}
                 />
               </Form.Item>
             </Col>

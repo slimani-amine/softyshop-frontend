@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import { CloseCircleOutlined } from "@ant-design/icons";
-import { InputNumber } from 'antd';
+import { InputNumber } from "antd";
 
 interface OrderItemProps {
   name: string;
@@ -11,7 +11,14 @@ interface OrderItemProps {
   onQuantityChange: (quantity: number) => void; // Function to handle quantity change
 }
 
-const OrderItem: React.FC<OrderItemProps> = ({ name, price, image, quantity, onRemove, onQuantityChange }) => {
+const OrderItem: React.FC<OrderItemProps> = ({
+  name,
+  price,
+  image,
+  quantity,
+  onRemove,
+  onQuantityChange,
+}) => {
   const handleRemove = () => {
     onRemove(); // Call the onRemove function when the close icon is clicked
   };
@@ -23,14 +30,13 @@ const OrderItem: React.FC<OrderItemProps> = ({ name, price, image, quantity, onR
       onQuantityChange(value);
     }
   };
-  
 
   return (
     <div className="order-item">
       <img src={image} alt={name} />
       <div className="details">
         <h2>{name}</h2>
-        <div className='price'>
+        <div className="price">
           <p>${price} X</p>
           <InputNumber
             value={quantity}
@@ -42,7 +48,9 @@ const OrderItem: React.FC<OrderItemProps> = ({ name, price, image, quantity, onR
           />
         </div>
       </div>
-      <div className='close-order' onClick={handleRemove}><CloseCircleOutlined /></div>
+      <div className="close-order" onClick={handleRemove}>
+        <CloseCircleOutlined />
+      </div>
     </div>
   );
 };

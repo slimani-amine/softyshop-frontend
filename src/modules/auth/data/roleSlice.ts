@@ -1,16 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface initialStateType {
   role: string | null | undefined;
 }
 
-const initialState = { role: 'user' };
+const initialState = { role: "user" };
 const roleSlice = createSlice({
-  name: 'role',
+  name: "role",
   initialState,
   reducers: {
     setRole: (state, action) => {
-      state.role = action.payload || 'user';
+      state.role = action.payload || "user";
     },
   },
 });

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 export default function Search() {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
   const handleSearchChange = (e: any) => {
     setSearchText(e.target.value);
@@ -14,7 +14,7 @@ export default function Search() {
   };
 
   const handleKeyDown = (e: any) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       handleSearchSubmit(e);
     }

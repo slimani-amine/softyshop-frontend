@@ -2,7 +2,7 @@ import MainLayout from "@src/modules/shared/layout/MainLayout/MainLayout";
 import AuthGuard from "@src/modules/shared/guards/AuthGuard";
 import { RouteProps } from "react-router-dom";
 import { Fragment, lazy } from "react";
-import { ADMIN , VENDOR } from "@src/global_roles_config";
+import { ADMIN, VENDOR } from "@src/global_roles_config";
 
 type RouteConfig = {
   exact: boolean | null;
@@ -10,8 +10,7 @@ type RouteConfig = {
   component: React.ComponentType<any>;
   guard?: React.ComponentType<any> | typeof Fragment | any;
   layout?: React.ComponentType<any> | typeof Fragment;
-  roles?: string[]
-  
+  roles?: string[];
 } & RouteProps;
 
 const routes: RouteConfig[] = [
@@ -22,15 +21,17 @@ const routes: RouteConfig[] = [
     path: "/stores",
     component: lazy(() => import("../feature/bookStore_list/bookStoreList")),
     layout: MainLayout,
-    roles:[ADMIN,VENDOR]
+    roles: [ADMIN, VENDOR],
   },
   {
     exact: true,
     guard: AuthGuard,
     path: "/stores/create",
-    component: lazy(() => import("../feature/bookStore_create/bookStoreCreate")),
+    component: lazy(
+      () => import("../feature/bookStore_create/bookStoreCreate"),
+    ),
     layout: MainLayout,
-    roles : [ADMIN,VENDOR]
+    roles: [ADMIN, VENDOR],
   },
   {
     exact: true,
@@ -38,8 +39,8 @@ const routes: RouteConfig[] = [
     path: "/stores/edit/:id",
     component: lazy(() => import("../feature/bookStore_edit/bookStoreEdit")),
     layout: MainLayout,
-    roles : [ADMIN,VENDOR]
-  }
+    roles: [ADMIN, VENDOR],
+  },
 ];
 
 export default routes;

@@ -1,18 +1,18 @@
-import { ReactComponent as Sun } from './Light.svg'
-import { ReactComponent as Moon } from './Moon.svg'
-import { useState } from 'react'
-import { toggleTheme } from '../../store/slices/theme/themeSlice'
-import { useAppDispatch, useAppSelector } from '../../store'
+import { ReactComponent as Sun } from "./Light.svg";
+import { ReactComponent as Moon } from "./Moon.svg";
+import { useState } from "react";
+import { toggleTheme } from "../../store/slices/theme/themeSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
 
 const ThemeButton = () => {
-  const dispatch = useAppDispatch()
-  const theme = useAppSelector((state) => state.theme.mode)
-  const [isChecked, setIsChecked] = useState(theme === 'dark')
+  const dispatch = useAppDispatch();
+  const theme = useAppSelector((state) => state.theme.mode);
+  const [isChecked, setIsChecked] = useState(theme === "dark");
 
   const switchTheme = () => {
-    dispatch(toggleTheme())
-    setIsChecked(!isChecked)
-  }
+    dispatch(toggleTheme());
+    setIsChecked(!isChecked);
+  };
 
   return (
     <div className="dark_mode">
@@ -28,7 +28,7 @@ const ThemeButton = () => {
         <Moon />
       </label>
     </div>
-  )
-}
+  );
+};
 
-export default ThemeButton
+export default ThemeButton;

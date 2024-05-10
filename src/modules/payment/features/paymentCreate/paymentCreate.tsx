@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Form, Row, Col, Input, message } from "antd";
 import Button from "@src/modules/shared/components/Button/Button";
-import { useCreatePaymentMutation} from "../../service/paymentApi";
+import { useCreatePaymentMutation } from "../../service/paymentApi";
 import { useNavigate } from "react-router-dom";
 
 interface AddPaymentFormProps {
@@ -20,7 +20,6 @@ const AddPaymentForm: FC<AddPaymentFormProps> = () => {
       // Create category
       const response = await createPayment({
         name: objectPost.name,
-        
       });
       if ("data" in response) {
         // Display success message if data exists
@@ -35,7 +34,7 @@ const AddPaymentForm: FC<AddPaymentFormProps> = () => {
       } else {
         // Handle unexpected response format
         message.error(
-          "Unexpected response from server. Please try again later."
+          "Unexpected response from server. Please try again later.",
         );
       }
     } catch (error) {

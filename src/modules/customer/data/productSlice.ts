@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { initialStateProductType } from './dataTypes';
+import { createSlice } from "@reduxjs/toolkit";
+import { initialStateProductType } from "./dataTypes";
 
 const initialState: initialStateProductType = {
   products: [],
 };
 
 const productSlice = createSlice({
-  name: 'product',
+  name: "product",
   initialState,
   reducers: {
     settProducts(state, action) {

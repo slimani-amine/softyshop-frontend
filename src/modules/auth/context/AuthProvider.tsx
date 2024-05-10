@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
-import jwtDecode from 'jwt-decode';
-import axiosInstance from '../utils/axios';
-import { useSelector, useDispatch } from 'react-redux';
-import useIsMountedRef from '../hook/useIsMountedRef';
-import { initialise } from '../data/authSlice';
-import { RootState } from '@src/modules/shared/store';
-import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
-import { AUTH_URL } from '../data/authThunk';
-import { saveToken } from '@src/modules/customer/data/cartSlice';
+import { useEffect } from "react";
+import jwtDecode from "jwt-decode";
+import axiosInstance from "../utils/axios";
+import { useSelector, useDispatch } from "react-redux";
+import useIsMountedRef from "../hook/useIsMountedRef";
+import { initialise } from "../data/authSlice";
+import { RootState } from "@src/modules/shared/store";
+import LazyLoad from "@src/modules/shared/components/LazyLoad/LazyLoad";
+import { AUTH_URL } from "../data/authThunk";
+import { saveToken } from "@src/modules/customer/data/cartSlice";
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ interface JwtPayload {
   exp: number;
 }
 
-export const accessToken: any = localStorage.getItem('accessToken');
+export const accessToken: any = localStorage.getItem("accessToken");
 const AuthProvider = ({ children }: AuthProviderProps) => {
   // console.log(accessToken);
   const dispatch = useDispatch();

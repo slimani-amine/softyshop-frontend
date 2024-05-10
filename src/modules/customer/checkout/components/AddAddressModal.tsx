@@ -1,26 +1,26 @@
-import Input from '@src/modules/shared/components/Input/Input';
-import Button from '@src/modules/shared/components/Button/Button';
-import React, { useState } from 'react';
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
-import { Modal } from 'antd';
-import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
-import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { addAddress, getAddresses } from '../../data/addressThunk';
-import toast from 'react-hot-toast';
+import Input from "@src/modules/shared/components/Input/Input";
+import Button from "@src/modules/shared/components/Button/Button";
+import React, { useState } from "react";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import { Modal } from "antd";
+import { getChangedValues } from "@src/modules/shared/utils/getChangedValuesFormik";
+import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
+import { addAddress, getAddresses } from "../../data/addressThunk";
+import toast from "react-hot-toast";
 
 const AddAddressModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const userId: string | undefined = useAppSelector(
-    (state) => state.auth.user?.id
+    (state) => state.auth.user?.id,
   );
 
   const initialValues = {
-    address: '',
-    phoneNumber: '',
-    city: '',
-    state: '',
-    zipCode: '',
+    address: "",
+    phoneNumber: "",
+    city: "",
+    state: "",
+    zipCode: "",
   };
   const [submitting, setSubmitting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,13 +40,13 @@ const AddAddressModal: React.FC = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: Yup.object().shape({
-      address: Yup.string().required('Address is required'),
+      address: Yup.string().required("Address is required"),
       phoneNumber: Yup.string()
-        .required('Phone number is required')
-        .matches(/^([9527]\d{7})$/g, 'Invalid phone number'),
-      city: Yup.string().required('The City is required'),
-      state: Yup.string().required('The State is required'),
-      zipCode: Yup.string().required('Zip Code is required'),
+        .required("Phone number is required")
+        .matches(/^([9527]\d{7})$/g, "Invalid phone number"),
+      city: Yup.string().required("The City is required"),
+      state: Yup.string().required("The State is required"),
+      zipCode: Yup.string().required("Zip Code is required"),
     }),
     onSubmit: (values) => {
       setSubmitting(true);
@@ -54,10 +54,10 @@ const AddAddressModal: React.FC = () => {
       dispatch(addAddress({ query: changedValues, userId }))
         .unwrap()
         .then(() => {
-          toast.success('Address added successfully');
+          toast.success("Address added successfully");
         })
         .catch((err) => {
-          toast.error(err?.message || 'something-went-wrong');
+          toast.error(err?.message || "something-went-wrong");
         })
         .finally(() => {
           setSubmitting(false);
@@ -73,7 +73,7 @@ const AddAddressModal: React.FC = () => {
         size="sm"
         outlined={true}
         label="Add New Address"
-        style={{ height: '36px', width: '150px' }}
+        style={{ height: "36px", width: "150px" }}
         onClick={showModal}
       />
       <Modal

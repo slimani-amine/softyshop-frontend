@@ -1,9 +1,4 @@
-import {
-  Table,
-  Space,
-  Button as AntButton,
-  Checkbox,
-} from "antd";
+import { Table, Space, Checkbox } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import { ReactComponent as EditIcon } from "@src/modules/shared/assets/icons/List/edit.svg";
@@ -15,9 +10,8 @@ import {
   useDeleteVendorMutation,
 } from "../../services/vendorApi";
 import { useEffect, useState } from "react"; // Import useState hook for managing modal state
-import {Vendor} from "../../services/type";
+import { Vendor } from "../../services/type";
 import { debounce } from "lodash";
-console.log(AntButton)
 export default function CategoryList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -64,7 +58,7 @@ export default function CategoryList() {
   };
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: string
+    id: string,
   ) => {
     const checked = e.target.checked;
     console.log(selectedRowIds);
@@ -135,7 +129,7 @@ export default function CategoryList() {
       render: (record: any) => (
         <Space>
           <div className="icon-action" onClick={() => Navigate(record?.id)}>
-            <EditIcon/>
+            <EditIcon />
           </div>
         </Space>
       ),

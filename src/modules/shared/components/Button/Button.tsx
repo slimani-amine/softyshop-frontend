@@ -1,24 +1,24 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes, ReactNode } from "react";
 
 interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
   icon?: string;
   label?: string;
   variant?:
-    | 'primary'
-    | 'info'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'dark'
-    | 'secondary'
-    | 'light'
-    | 'secondary-650';
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+    | "primary"
+    | "info"
+    | "success"
+    | "danger"
+    | "warning"
+    | "dark"
+    | "secondary"
+    | "light"
+    | "secondary-650";
+  size?: "sm" | "md" | "lg" | "xl";
   outlined?: boolean;
   rounded?: boolean;
   disabled?: boolean;
   loading?: boolean;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
   children?: ReactNode;
 }
 
@@ -37,18 +37,17 @@ const Button: React.FC<IButtonProps> = ({
   return (
     <button
       className={[
-        'btn',
+        "btn",
         `btn-${size}`,
-        `${outlined ? 'btn-outlined' : 'btn'}-${variant}`,
-        `${rounded ? 'btn-rounded' : ''}`,
-        `${disabled ? 'btn-disabled' : ''}`,
-
-      ].join(' ')}
+        `${outlined ? "btn-outlined" : "btn"}-${variant}`,
+        `${rounded ? "btn-rounded" : ""}`,
+        `${disabled ? "btn-disabled" : ""}`,
+      ].join(" ")}
       disabled={disabled || loading}
       {...props}
     >
       {loading ? (
-        'loading...'
+        "loading..."
       ) : children ? (
         children
       ) : (
@@ -63,22 +62,22 @@ const Button: React.FC<IButtonProps> = ({
 
 type ButtonDefaultProps = Pick<
   IButtonProps,
-  | 'icon'
-  | 'label'
-  | 'variant'
-  | 'size'
-  | 'outlined'
-  | 'rounded'
-  | 'disabled'
-  | 'children'
-  | 'loading'
+  | "icon"
+  | "label"
+  | "variant"
+  | "size"
+  | "outlined"
+  | "rounded"
+  | "disabled"
+  | "children"
+  | "loading"
 >;
 
 Button.defaultProps = {
-  icon: '',
-  label: 'Button',
-  variant: 'primary',
-  size: 'md',
+  icon: "",
+  label: "Button",
+  variant: "primary",
+  size: "md",
   outlined: false,
   rounded: false,
   loading: false,
