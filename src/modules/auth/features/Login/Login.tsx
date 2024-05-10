@@ -1,5 +1,5 @@
 import Button from '@src/modules/shared/components/Button/Button';
-import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import { useAppDispatch } from '@src/modules/shared/store';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { login } from '../../data/authThunk';
@@ -16,7 +16,7 @@ const initialValues = {
 };
 
 const Login = () => {
-  const role: any = useAppSelector((state) => state.auth.user?.role);
+  // const role: any = useAppSelector((state) => state.auth.user?.role);
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -37,9 +37,7 @@ const Login = () => {
         .unwrap()
         .then(() => {
           toast.success('Welcome to SoftyShop!');
-          console.log(role);
-          if (role == 'USER') navigate('/home');
-          else navigate('/products');
+          navigate('/home');
         })
         .catch((err) => {
           toast.error(err?.message || 'something went wrong');
