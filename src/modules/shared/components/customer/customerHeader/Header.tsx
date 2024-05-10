@@ -15,9 +15,7 @@ function Header() {
   const navigate = useNavigate();
   const dispatch: any = useAppDispatch();
   const accessToken = localStorage.getItem('accessToken');
-  // console.log(accessToken);
   const token = useAppSelector((state) => state.cart.token);
-  // console.log(token);
   useEffect(() => {
     function getTheCart() {
       dispatch(getCart(token));

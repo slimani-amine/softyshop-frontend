@@ -16,8 +16,12 @@ import { addressType } from '../data/dataTypes';
 import DifferentStoresModal from './components/DifferentStoresModal';
 import { popItUp, refuseAllFees } from '../data/addressSlice';
 import { checkIt } from '../data/checkoutSlice';
+import { addOrder } from '../data/orderThunk';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function Checkout() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const deliveryDate = useAppSelector((state) => state.checkout.deliveryDate);
   const deliveryTime = useAppSelector((state) => state.checkout.deliveryTime);
@@ -32,23 +36,6 @@ function Checkout() {
   const agreedToPayAllDeliveryFees = useAppSelector(
     (state) => state.address.agreedToPayAllDeliveryFees
   );
-
-  // const storesTheUserOrderedFrom = [
-  //   ...new Set(
-  //     cart
-  //       .filter((item) => item?.product?.store?.id)
-  //       .map((item) => item.product.store.id)
-  //   ),
-  // ];
-  // const stores = cart
-  //   .filter((item) => item?.product?.store?.id)
-  //   .map((item) => item.product.store);
-
-  // console.log('🚀 ~ Checkout ~ storesNumber:', storesNumber);
-  // console.log(
-  //   '🚀 ~ Checkout ~ storesTheUserOrderedFrom:',
-  //   storesTheUserOrderedFrom
-  // );
 
   const storeNames = [
     ...new Set(
@@ -91,6 +78,25 @@ function Checkout() {
 
   if (isMoreThanOneStore && !isOrderReady) dispatch(popItUp());
   if (!isChecked) dispatch(refuseAllFees());
+
+  function handleOrder() {
+    dispatch(
+      addOrder({
+        address_id: selectedAddress?.toString(),
+        paymentMethod_id: '1',
+      })
+    )
+      // .unwrap()
+      .then(() => {
+        toast.success('Order passed successfully');
+      })
+      .catch((err) => {
+        toast.error(err?.message || 'something-went-wrong');
+      })
+      .finally(() => {
+        navigate('/home');
+      });
+  }
 
   return (
     <div className="checkout-page">
@@ -152,13 +158,6 @@ function Checkout() {
           <div className="checkout-title-bar">
             <Number>3</Number> <Title>payment details</Title>
           </div>
-          {/* <div className="payment-method checked-item">
-            <CheckedItem>
-              <p className="payment-method-text">
-                I agree to pay cash on delivery
-              </p>
-            </CheckedItem>
-          </div> */}
           <div className="checked-item payment-method">
             <ConfigProvider
               theme={{
@@ -177,7 +176,12 @@ function Checkout() {
             </p>
           </div>
           {isOrderReady ? (
-            <Button label="Place Order" size="xl" style={{ width: '100%' }} />
+            <Button
+              onClick={() => handleOrder()}
+              label="Place Order"
+              size="xl"
+              style={{ width: '100%' }}
+            />
           ) : (
             <Button
               label="Place Order"
