@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import { RootState } from '@src/modules/shared/store';
 import { handleFileChange } from '@src/modules/shared/utils/uploadsMany';
-
 import {
   Form,
   Select,
@@ -133,9 +132,13 @@ const AddProductForm: FC<AddProductFormProps> = () => {
   return (
     <div className="add-new-Product">
       <h1 className="title">Add New Product</h1>
+      <div>
+     
+      </div>
       <div className="container-add-Product">
         <Form form={form} onFinish={handleFinish}>
           <Row gutter={[16, 0]} className="name-Product-new">
+          
             <Col span={24}>
             <label
               className="label-order"
