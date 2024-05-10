@@ -14,15 +14,21 @@ import { useEffect } from 'react';
 function Header() {
   const navigate = useNavigate();
   const dispatch: any = useAppDispatch();
-
-  const token = useAppSelector((state) => state.cart.token);
-
+  const accessToken = localStorage.getItem('accessToken');
+  // console.log(accessToken);
+  // const token = useAppSelector((state) => state.cart.token);
+  // console.log(token);
   useEffect(() => {
     function getTheCart() {
-      dispatch(getCart(token));
+      if (accessToken) {
+        dispatch(getCart(accessToken));
+      }
     }
     getTheCart();
-  }, [token, dispatch, getCart]);
+    // if (token == '' || token != accessToken) {
+    //   window.location.reload();
+    // }
+  }, [accessToken, dispatch, getCart]);
 
   const myCartItemsNumber: any = useAppSelector(
     (state) => state.cart.cartItems

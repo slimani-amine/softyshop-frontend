@@ -4,7 +4,7 @@ import axiosInstance from '../utils/axios';
 import { useSelector, useDispatch } from 'react-redux';
 import useIsMountedRef from '../hook/useIsMountedRef';
 import { initialise } from '../data/authSlice';
-import { RootState } from '@src/modules/shared/store';
+// import { RootState } from '@src/modules/shared/store';
 import LazyLoad from '@src/modules/shared/components/LazyLoad/LazyLoad';
 import { AUTH_URL } from '../data/authThunk';
 import { saveToken } from '@src/modules/customer/data/cartSlice';
@@ -24,11 +24,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const isMounted = useIsMountedRef();
   // const [updatedToken, setUpdatedToken] = useState(accessToken);
 
-  const { isInitialised } = useSelector((state: RootState) => state.auth);
-  // while (!updatedToken)
+  const { isInitialised } = useSelector((state: any) => state.auth);
+  // while (updatedToken != localStorage.getItem('accessToken'))
   //   setTimeout(() => {
-  //     setUpdatedToken(accessToken);
-  //   }, 500);
+  //     setUpdatedToken(localStorage.getItem('accessToken'));
+  //   }, 300);
   dispatch(saveToken(accessToken));
 
   const isValidToken = (token: string) => {

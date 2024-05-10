@@ -14,7 +14,6 @@ function Home() {
         const response = await fetch(`${BASE_URL}api/stores`);
         const data = await response.json();
         setStores(data.data.docs);
-        // window.location.reload();
       } catch (err: string | unknown) {
         console.log(err);
         return err;
