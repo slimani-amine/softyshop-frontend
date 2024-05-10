@@ -44,10 +44,10 @@ function Checkout() {
         .map((item) => item.product.store.name)
     ),
   ];
-  console.log('🚀 ~ Checkout ~ storeNames:', storeNames);
+  // console.log('🚀 ~ Checkout ~ storeNames:', storeNames);
 
   const storesNumber = storeNames.length;
-  console.log('🚀 ~ Checkout ~ storesNumber:', storesNumber);
+  // console.log('🚀 ~ Checkout ~ storesNumber:', storesNumber);
 
   useEffect(() => {
     function getAllAddresses() {
@@ -86,7 +86,7 @@ function Checkout() {
         paymentMethod_id: '1',
       })
     )
-      // .unwrap()
+      .unwrap()
       .then(() => {
         toast.success('Order passed successfully');
       })
