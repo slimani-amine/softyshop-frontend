@@ -43,7 +43,13 @@
       padding: 0px 0px;
       background: #f6f9fc;
       border-radius: 10px;
+      @media only screen and (max-width: 1600px) {
+        width: 1100px;
+        margin-left: 20%;
+        
+      }
     }
+
     .main-layout-outlet-analytic {
       transition: 0.2s ease-in;
       height: 100%;
@@ -55,7 +61,12 @@
       padding: 0px 0px;
       background: #f6f9fc;
       border-radius: 10px;
+      @media only screen and (max-width: 1600px) {
+        width: 1300px;
+        
+      }
     }
+
   }
 
   .main-layout-shadow {
