@@ -56,4 +56,34 @@
   justify-content: space-between;
   margin-bottom: 40px;
   padding: 0 50px;
+};
+
+.amount-container {
+  width: 150px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f75f;
+  border-radius: 8px;
+  border: 1px solid #2CAFFE;
+  h2{
+    color: #2CAFFE ;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+}
+.center{
+  h2{
+    font-size: 22px;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.header-csv{
+  display: flex;
+  gap: 20px;
 }

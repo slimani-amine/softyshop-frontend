@@ -66,15 +66,17 @@ const CSV: React.FC<CSVProps> = () => {
       return;
     }
 
-    const resultJSON = JSON.stringify(result);
-
+    const resultJSON = JSON.stringify(result[0]);
+    console.log(resultJSON)
     const response = await createProducts({
       id: selectedStoreId,
       newProducts: resultJSON,
     });
 
+
     if ("data" in response) {
       message.success("Product saved successfully!");
+      setResult([])
     } else if ("error" in response) {
       message.error("Failed to save product. Please try again.");
     } else {

@@ -7,7 +7,7 @@ const LineChart = ({ data }: any) => {
       type: "line",
     },
     title: {
-      text: "Line Chart",
+      text: "Profit curve",
     },
     series: [
       {
