@@ -32,6 +32,7 @@ const Login = () => {
     }),
     onSubmit: (values) => {
       setSubmitting(true);
+      console.log(values);
       const changedValues = getChangedValues(values, initialValues);
       dispatch(login(changedValues))
         .unwrap()
