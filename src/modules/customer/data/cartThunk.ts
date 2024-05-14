@@ -22,7 +22,7 @@ export const getCart = createAsyncThunk(
 
       return data.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 );
@@ -46,7 +46,7 @@ export const addToCart = createAsyncThunk(
 
       return data.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 );
@@ -55,7 +55,6 @@ export const deleteFromCart = createAsyncThunk(
   "cart/deleteFromCart",
   async (query: number) => {
     try {
-      // console.log(query);
       const response = await fetch(`${AUTH_URL}api/shopping/my-cart/${query}`, {
         method: "DELETE",
         mode: "cors",
@@ -70,7 +69,7 @@ export const deleteFromCart = createAsyncThunk(
 
       return data.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 );

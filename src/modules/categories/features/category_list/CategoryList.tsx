@@ -45,10 +45,9 @@ export default function CategoryList() {
     }
   }, [nameCategory, fetchedCategories, fetchedSearchCategories]);
   const Current_User = useSelector(
-    (state: RootState) => state.auth.user?.role.toLocaleUpperCase(),
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
   const handleSearchChange = debounce((searchText: string) => {
-    console.log("Search text for category list:", searchText);
     setNameCategory(searchText);
   }, 200);
 
@@ -80,10 +79,9 @@ export default function CategoryList() {
   };
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: string,
+    id: string
   ) => {
     const checked = e.target.checked;
-    console.log(selectedRowIds);
     setSelectedRowIds((prevIds) => {
       if (checked) {
         return [...prevIds, id]; // Add ID to the selected IDs array

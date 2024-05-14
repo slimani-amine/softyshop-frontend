@@ -20,7 +20,6 @@ const cartSlice = createSlice({
     saveToken(state, action) {
       if (!action.payload) return;
       state.token = action.payload;
-      // console.log('🚀 ~ saveToken ~ action.payload:', action.payload);
     },
   },
   extraReducers: (builder) => {

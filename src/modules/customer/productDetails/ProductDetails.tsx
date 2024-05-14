@@ -37,7 +37,7 @@ function ProductDetails() {
         const data = await response.json();
         setProduct(data.data);
       } catch (err: string | unknown) {
-        console.log(err);
+        console.error(err);
         return err;
       }
     };
@@ -59,7 +59,7 @@ function ProductDetails() {
     setIsLoading(true);
     Promise.all([
       await dispatch(
-        addToCart({ quantity: quantity + 1, productId: product?.id + "" }),
+        addToCart({ quantity: quantity + 1, productId: product?.id + "" })
       ),
       dispatch(getCart(accessToken)),
     ]);
@@ -71,7 +71,7 @@ function ProductDetails() {
     setIsLoading(true);
     Promise.all([
       await dispatch(
-        addToCart({ quantity: quantity - 1, productId: product?.id + "" }),
+        addToCart({ quantity: quantity - 1, productId: product?.id + "" })
       ),
       dispatch(getCart(accessToken)),
     ]);

@@ -17,7 +17,6 @@ const App = () => {
       (state: RootState) => state.auth.user?.role.toLocaleUpperCase(),
     ) || "VENDOR";
 
-  console.log(role);
   return (
     <AnimationProvider>
       <div id={theme}>

@@ -11,21 +11,19 @@ import {
   addToCart,
   deleteFromCart,
   getCart,
-} from "@src/modules/customer/data/cartThunk";
-import Button from "@src/modules/shared/components/Button/Button";
-import { useNavigate } from "react-router-dom";
-import { accessToken } from "@src/modules/auth/context/AuthProvider";
+} from '@src/modules/customer/data/cartThunk';
+import Button from '@src/modules/shared/components/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const TheDrawer: React.FC = () => {
+  const accessToken = useAppSelector((state) => state.cart.token);
   const [Loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  // const accessToken = useAppSelector((state) => state.cart.token);
   const isDrawerShown = useAppSelector((state) => state.drawer.isDrawerShown);
   const myCartItemsNumber: any = useAppSelector(
     (state) => state.cart.cartItems,
   );
-  // console.log(accessToken);
   const totalPrice = useAppSelector((state) => state.cart.cartAmount);
   const cart = useAppSelector((state) => state.cart.cart);
 
@@ -47,7 +45,6 @@ const TheDrawer: React.FC = () => {
     >
       <section className="items-section">
         {cart.map((item, index) => {
-          // console.log(item);
           if (!item?.product) return;
           return (
             <div key={index} className="cart-item">

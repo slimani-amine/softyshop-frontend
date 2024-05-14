@@ -13,7 +13,7 @@ function AllProducts() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${BASE_URL}api/products?perPage=100&page=1`,
+          `${BASE_URL}api/products?perPage=999999999999&page=1`
         );
         const data = await response.json();
         setProducts(
@@ -22,7 +22,6 @@ function AllProducts() {
           }),
         );
       } catch (err: string | unknown) {
-        console.log(err);
         return err;
       }
     };
@@ -36,10 +35,16 @@ function AllProducts() {
     );
     if (updatedProduct) {
       return { ...product, quantity: updatedProduct.quantity };
-    } else return product;
+    } else {
+      return product;
+    }
   });
 
-  dispatch(settProducts(updatedProducts));
+  const publishedProducts = updatedProducts.filter((product: any) => {
+    return product.isPublished;
+  });
+
+  dispatch(settProducts(publishedProducts));
 
   return (
     <div className="home">

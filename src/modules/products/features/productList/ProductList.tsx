@@ -59,7 +59,6 @@ export default function ProductList() {
   const userId = useSelector(
     (state: RootState) => state.auth.user?.id.toLocaleUpperCase(),
   );
-  console.log(userId);
   const { data: fetchdePr, isLoading } = usePrQuery({
     perPage: pageSize,
     page: currentPage,
@@ -88,12 +87,10 @@ export default function ProductList() {
   if (isLoading) {
     return <Spinner />;
   }
-  console.log(import.meta.env.VITE_APP_BASE_URL);
 
   const handleDelete = async () => {
     const response = await deleteProducts(selectedRowIds);
-    console.log(selectedRowIds);
-    if ("data" in response) {
+    if ('data' in response) {
       // Display success message if data exists
       message.success(
         ` Product${
@@ -111,7 +108,6 @@ export default function ProductList() {
   };
 
   const handleSearchChange = debounce((searchText: string) => {
-    console.log("Search text for category list:", searchText);
     setNameProduct(searchText);
   }, 200);
 
@@ -249,7 +245,6 @@ export default function ProductList() {
   };
   const handleSelectChange = (value: any) => {
     setSelectedStore(value);
-    console.log(selectedStore);
   };
 
   return (

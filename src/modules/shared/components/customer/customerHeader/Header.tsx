@@ -14,23 +14,17 @@ import { useEffect } from "react";
 function Header() {
   const navigate = useNavigate();
   const dispatch: any = useAppDispatch();
-
+  const accessToken = localStorage.getItem('accessToken');
   const token = useAppSelector((state) => state.cart.token);
-
   useEffect(() => {
     function getTheCart() {
       dispatch(getCart(token));
     }
     getTheCart();
+    if (token == '' || token != accessToken) {
+      window.location.reload();
+    }
   }, [token, dispatch, getCart]);
-
-  // (async function () {
-  //   while (!accessToken) {
-  //     await dispatch(saveToken(accessToken));
-  //     setTimeout(() => console.log(accessToken), 0.1);
-  //   }
-  //   await dispatch(getCart(accessToken));
-  // })();
 
   const myCartItemsNumber: any = useAppSelector(
     (state) => state.cart.cartItems,

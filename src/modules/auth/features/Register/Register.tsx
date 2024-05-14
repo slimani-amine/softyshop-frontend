@@ -62,7 +62,6 @@ const Register = () => {
     onSubmit: (values) => {
       setSubmitting(true);
       values.role = role;
-      // console.log(role);
       const changedValues = getChangedValues(values, initialValues);
       dispatch(register(changedValues))
         .unwrap()

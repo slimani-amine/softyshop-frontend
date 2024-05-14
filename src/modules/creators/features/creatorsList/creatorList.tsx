@@ -41,7 +41,7 @@ export default function CreatorsList() {
   }, [namecreator, fetchedcreators, fetchedSearchcreators]);
 
   const handleSearchChange = debounce((searchText: string) => {
-    console.log("Search text for creator list:", searchText);
+    console.log('Search text for creator list:', searchText);
     setNamecreator(searchText);
   }, 200);
 
@@ -76,8 +76,8 @@ export default function CreatorsList() {
     id: string,
   ) => {
     const checked = e.target.checked;
-    console.log(selectedRowIds);
-    setSelectedRowIds((prevIds) => {
+    console.log(selectedRowIds)
+    setSelectedRowIds(prevIds => {
       if (checked) {
         return [...prevIds, id]; // Add ID to the selected IDs array
       } else {

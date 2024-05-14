@@ -39,9 +39,9 @@ function storeDetails() {
         const response = await fetch(`${BASE_URL}api/stores/${storeId}`);
         const data = await response.json();
 
-        setStore(data.data);
+        setStore(data?.data);
       } catch (err: string | unknown) {
-        console.log(err);
+        console.error(err);
         return err;
       }
     };
@@ -53,20 +53,20 @@ function storeDetails() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${BASE_URL}api/stores/${storeId}/products?perPage=100&page=1`,
+          `${BASE_URL}api/stores/${storeId}/products?perPage=999999999999&page=1`
         );
 
         const data = await response.json();
 
         dispatch(
           settProducts(
-            data.data.docs.map((product: ProductType) => {
+            data?.data?.docs.map((product: ProductType) => {
               return { ...product, quantity: 0 };
             }),
           ),
         );
       } catch (err: string | unknown) {
-        console.log(err);
+        console.error(err);
         return err;
       }
     };
@@ -74,10 +74,12 @@ function storeDetails() {
     fetchData();
   }, [BASE_URL]);
 
-  const theProducts = useAppSelector((state) => state.product.products);
-  const cart = useAppSelector((state) => state.cart.cart);
+  const theProducts = useAppSelector((state) => state?.product?.products);
+  const cart = useAppSelector((state) => state?.cart?.cart);
   const updatedProducts = theProducts.map((product: any) => {
-    const updatedProduct = cart.find((item) => item.product.id === product.id);
+    const updatedProduct = cart.find(
+      (item) => item?.product?.id === product?.id
+    );
     if (updatedProduct) {
       return { ...product, quantity: updatedProduct.quantity };
     } else return product;
@@ -91,7 +93,7 @@ function storeDetails() {
           <div className="store-profile-photo-wrapper">
             <img
               className="store-profile-photo"
-              src={store.logo}
+              src={store?.logo}
               height={110}
               width={110}
               alt=""
@@ -99,7 +101,7 @@ function storeDetails() {
           </div>
           <div className="store-info">
             <div className="store-name-and-media">
-              <h2 className="store-name">{store.name}</h2>
+              <h2 className="store-name">{store?.name}</h2>
               <div className="social-media">
                 <a href="#">
                   <FacebookIcon className="icon" />
@@ -119,11 +121,11 @@ function storeDetails() {
               <div className="store-phone-and-location">
                 <div className="store-location">
                   <LocationIcon className="location-icon" />{" "}
-                  <p className="location">{store.address}</p>
+                  <p className="location">{store?.address}</p>
                 </div>
                 <div className="store-location">
                   <PhoneIcon className="phoneIcon" />{" "}
-                  <p className="location">(+216) {store.phoneNumber}</p>
+                  <p className="location">(+216) {store?.phoneNumber}</p>
                 </div>
               </div>
               <div className="contact-button">

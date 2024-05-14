@@ -20,8 +20,11 @@ const checkoutSlice = createSlice({
     setTime(state, payload: any) {
       state.deliveryTime = payload;
     },
+    setCheckedToFalse(state) {
+      state.agreedToPayCash = false;
+    },
   },
 });
 
 export default checkoutSlice.reducer;
-export const { checkIt, setDate, setTime } = checkoutSlice.actions;
+export const { checkIt, setDate, setTime,setCheckedToFalse } = checkoutSlice.actions;

@@ -21,16 +21,15 @@ const Navbar: React.FC<INavbarProps> = () => {
   const { isAnimating } = useAnimation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const current_user = useSelector((state: RootState) => state.auth.user);
-  console.log(current_user);
-
+  const current_user= useSelector((state: RootState) => state.auth.user)
   const handleLogout = () => {
     dispatch(logout());
   };
-  const handleNavigate = () => {
-    navigate("/books");
-  };
-  const accountInfoItems: MenuProps["items"] = [
+  const handleNavigate=()=>{
+    navigate('/home')
+    
+  }
+  const accountInfoItems: MenuProps['items'] = [
     {
       key: "1",
       label: (

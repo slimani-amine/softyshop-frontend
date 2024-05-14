@@ -34,7 +34,6 @@ export default function bookStoreList() {
   };
 
   const [publishStore] = usePublishStoreMutation();
-  console.log(Current_User);
   const { data: fetchdStoress, isLoading } = useStoressQuery({
     page: currentPage,
     perPage: pageSize,
@@ -53,7 +52,6 @@ export default function bookStoreList() {
     position: string[];
   }
   const handleSearchChange = debounce((searchText: string) => {
-    console.log("Search text for category mlist:", searchText);
     setNameStore(searchText);
   }, 200);
 
@@ -73,7 +71,6 @@ export default function bookStoreList() {
       if ("data" in response) {
         // Display success message if data exists
         message.success("Store deleted successfully!");
-        console.log(response.data);
       } else if ("error" in response) {
         // Display error message if error exists
         message.error("Failed to Delete Store. Please try again.");
@@ -94,7 +91,6 @@ export default function bookStoreList() {
     id: string,
   ) => {
     const checked = e.target.checked;
-    console.log(selectedRowIds);
     setSelectedRowIds((prevIds) => {
       if (checked) {
         return [...prevIds, id];

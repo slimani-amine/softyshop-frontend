@@ -24,7 +24,6 @@ const baseQuery = fetchBaseQuery({
 const staggeredBaseQueryWithBailOut = retry(
   async (args: string | FetchArgs, api, extraOptions) => {
     const result = await baseQuery(args, api, extraOptions);
-    console.log({ result });
     if (result.error) {
       if (result.error.status === 409) {
         try {

@@ -4,6 +4,7 @@ import MyComponent from "../../components/Select_satatus/SelectStatus";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useNavigate } from "react-router-dom";
+
 import {
   useOrdersQuery,
   useUpdateOrderMutation,
@@ -23,7 +24,7 @@ export default function CategoryList() {
   const [pageSize, setPageSize] = useState(5);
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
   const Current_User = useSelector(
-    (state: RootState) => state.auth.user?.role.toLocaleUpperCase(),
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
   const [numberOrder, setNumberOrder] = useState<string>("");
   const { data: fetchedOrders } = useOrdersQuery({
@@ -96,7 +97,7 @@ export default function CategoryList() {
   };
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: string,
+    id: string
   ) => {
     const checked = e.target.checked;
     console.log(selectedRowIds);
@@ -178,7 +179,7 @@ export default function CategoryList() {
 
             console.log(id, typeof id);
             paiedOrder(
-              { id: id }, // Pass the category ID
+              { id: id } // Pass the category ID
             );
           }}
         />

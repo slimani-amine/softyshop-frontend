@@ -2,9 +2,19 @@ import { api } from "@src/modules/shared/services/api";
 
 export const OrderApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    orders: builder.query<any, { perPage: number; page: number }>({
-      query: ({ perPage, page }) =>
-        `api/admin/orders?perPage=${perPage}&page=${page}`,
+    orders: builder.query<
+      any,
+      { perPage: number; page: number; role: string | undefined }
+    >({
+      query: ({ perPage, page, role }) => {
+        let url;
+        if (role === "VENDOR") {
+          url = `/api/admin/vendorOrders?perPage=${perPage}&page=${page}`;
+        } else {
+          url = `/api/admin/orders?perPage=${perPage}&page=${page}`;
+        }
+        return url;
+      },
       providesTags: ["orders"],
     }),
 
@@ -44,8 +54,14 @@ export const OrderApi = api.injectEndpoints({
       invalidatesTags: ["creators", "creator"],
     }),
 
-    searchOrders: builder.query<any, string>({
-      query: (subName) => `api/admin/orders/?phoneNumber=${subName}`,
+    searchOrders: builder.query<any,{ subName: string; role: string | undefined }>({
+      query: ({ subName, role }) => {
+        let url = `/api/admin/vendorOrders`;  
+        if (role === "ADMIN") {
+          url = `/api/admin/orders?phoneNumber=${subName}`;
+        }
+        return url;
+      },
       providesTags: ["creators"],
     }),
     paiedOrder: builder.mutation<any, { id: any }>({

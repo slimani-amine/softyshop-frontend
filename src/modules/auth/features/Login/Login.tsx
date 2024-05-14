@@ -1,14 +1,14 @@
-import Button from "@src/modules/shared/components/Button/Button";
-import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { login } from "../../data/authThunk";
-import Input from "@src/modules/shared/components/Input/Input";
-import { getChangedValues } from "@src/modules/shared/utils/getChangedValuesFormik";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { PATH } from "../../routes/paths";
-import toast from "react-hot-toast";
+import Button from '@src/modules/shared/components/Button/Button';
+import { useAppDispatch } from '@src/modules/shared/store';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { login } from '../../data/authThunk';
+import Input from '@src/modules/shared/components/Input/Input';
+import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { PATH } from '../../routes/paths';
+import toast from 'react-hot-toast';
 
 const initialValues = {
   email: "",
@@ -16,7 +16,7 @@ const initialValues = {
 };
 
 const Login = () => {
-  const role: any = useAppSelector((state) => state.auth.user?.role);
+  // const role: any = useAppSelector((state) => state.auth.user?.role);
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -37,10 +37,8 @@ const Login = () => {
       dispatch(login(changedValues))
         .unwrap()
         .then(() => {
-          toast.success("Welcome to SoftyShop!");
-          console.log(role);
-          if (role == "USER") navigate("/home");
-          else navigate("/products");
+          toast.success('Welcome to SoftyShop!');
+          navigate('/home');
         })
         .catch((err) => {
           toast.error(err?.message || "something went wrong");

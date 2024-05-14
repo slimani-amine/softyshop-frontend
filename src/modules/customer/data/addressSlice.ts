@@ -7,13 +7,17 @@ interface addressStateType {
   selectedAddress: number | null;
   status: string;
   error: string;
+  isPopUpShown: boolean;
+  agreedToPayAllDeliveryFees: boolean;
 }
 
 const initialState: addressStateType = {
   address: [],
   selectedAddress: null,
-  status: "",
-  error: "",
+  status: '',
+  error: '',
+  isPopUpShown: false,
+  agreedToPayAllDeliveryFees: false,
 };
 
 const addressSlice = createSlice({
@@ -21,8 +25,19 @@ const addressSlice = createSlice({
   initialState,
   reducers: {
     updateSelectedId(state, action) {
-      console.log("🚀 ~ updateSelectedId ~ action.payload:", action.payload);
       state.selectedAddress = action.payload;
+    },
+    popItUp(state) {
+      state.isPopUpShown = true;
+    },
+    hideIt(state) {
+      state.isPopUpShown = false;
+    },
+    agreeToAllFees(state) {
+      state.agreedToPayAllDeliveryFees = true;
+    },
+    refuseAllFees(state) {
+      state.agreedToPayAllDeliveryFees = false;
     },
   },
   extraReducers: (builder) => {
@@ -53,4 +68,10 @@ const addressSlice = createSlice({
 });
 
 export default addressSlice.reducer;
-export const { updateSelectedId } = addressSlice.actions;
+export const {
+  updateSelectedId,
+  popItUp,
+  hideIt,
+  agreeToAllFees,
+  refuseAllFees,
+} = addressSlice.actions;

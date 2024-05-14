@@ -12,8 +12,7 @@ interface MainLayoutProps {
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
-  //const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  // console.log(isAuthenticated);
+  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const { isAnimating } = useAnimation();

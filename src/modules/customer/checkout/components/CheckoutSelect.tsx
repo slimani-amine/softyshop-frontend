@@ -41,8 +41,7 @@ const CheckoutSelect: React.FC = () => {
   const time: //  { payload: string | null; type: string | null } | null
   any = useAppSelector((state) => state.checkout.deliveryTime);
 
-  // console.log(date?.payload);
-  // console.log(time?.payload);
+
 
   return (
     <>

@@ -72,13 +72,11 @@ export const resetPassword = createAsyncThunk(
   "auth/reset",
   async (query: resetPasswordPayload, { rejectWithValue }) => {
     try {
-      // console.log(query);
       const response = await axiosInstance.post(
         `${AUTH_URL}auth/password-reset/request`,
         query,
       );
 
-      // console.log(response);
       if (response.status === 200) {
         return response.data;
       }
@@ -94,13 +92,11 @@ export const enterNewPassword = createAsyncThunk(
   "auth/enterNewPassword",
   async (query: enterNewPasswordPayload, { rejectWithValue }) => {
     try {
-      // console.log(query);
       const response = await axiosInstance.post(
         `${AUTH_URL}auth/password-reset`,
         query,
       );
 
-      // console.log(`response: ${response}`);
 
       if (response.status === 200) {
         return response.data;

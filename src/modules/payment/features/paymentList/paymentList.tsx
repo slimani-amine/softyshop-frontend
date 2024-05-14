@@ -65,7 +65,6 @@ export default function PaymentsList() {
     id: string,
   ) => {
     const checked = e.target.checked;
-    console.log(selectedRowIds);
     setSelectedRowIds((prevIds) => {
       if (checked) {
         return [...prevIds, id]; // Add ID to the selected IDs array

@@ -119,7 +119,7 @@ const OrderForm: FC<OrderFormProps> = () => {
         console.error("Error saving product", response.error);
       } else {
         message.error(
-          "Unexpected response from server. Please try again later.",
+          "Unexpected response from server. Please try again later."
         );
       }
     } catch (error) {
@@ -153,7 +153,7 @@ const OrderForm: FC<OrderFormProps> = () => {
           return { ...prod, quantity: quantity };
         }
         return prod;
-      }),
+      })
     );
   };
 
@@ -187,7 +187,7 @@ const OrderForm: FC<OrderFormProps> = () => {
                           <SearchSpecific
                             options={products_option}
                             onChange={handleProductSelection}
-                            placeHolder="Select Products"
+                            placeHolder="Select products..."
                           />
                         </Form.Item>
                       </Col>
@@ -238,7 +238,7 @@ const OrderForm: FC<OrderFormProps> = () => {
                         <SearchSpecific
                           options={users_option}
                           onChange={(value: string) => setSelectedUserId(value)}
-                          placeHolder="Select Email"
+                          placeHolder="Select Email..."
                         />
                       </Form.Item>
                     </Col>
@@ -293,7 +293,7 @@ const OrderForm: FC<OrderFormProps> = () => {
                         <SearchSpecific
                           options={addrress_option}
                           onChange={handleProductSelection}
-                          placeHolder="select Address"
+                          placeHolder="Select address..."
                         />
                       </Form.Item>
 
@@ -337,7 +337,7 @@ const OrderForm: FC<OrderFormProps> = () => {
                           onChange={function (_value: string): void {
                             throw new Error("Function not implemented.");
                           }}
-                          placeHolder={"Select Method"}
+                          placeHolder="Select payment..."
                         />
                       </Form.Item>
                     </Col>
