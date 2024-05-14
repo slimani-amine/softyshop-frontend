@@ -19,11 +19,14 @@ import { checkIt, setCheckedToFalse } from "../data/checkoutSlice";
 import { addOrder } from "../data/orderThunk";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { getCart } from "../data/cartThunk";
 
 function Checkout() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const accessToken = useAppSelector((state) => state.cart.token);
   const deliveryDate = useAppSelector((state) => state.checkout.deliveryDate);
+
   const deliveryTime = useAppSelector((state) => state.checkout.deliveryTime);
   const userId = useAppSelector((state) => state?.auth?.user?.id);
   const isChecked = useAppSelector((state) => state.checkout.agreedToPayCash);
@@ -95,6 +98,7 @@ function Checkout() {
         toast.error(err?.message || "something-went-wrong");
       })
       .finally(() => {
+        dispatch(getCart(accessToken));
         navigate("/home");
       });
   }
