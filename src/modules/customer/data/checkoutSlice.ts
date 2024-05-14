@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   chosenAddress: null,
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const checkoutSlice = createSlice({
-  name: 'checkout',
+  name: "checkout",
   initialState,
   reducers: {
     checkIt(state) {
@@ -20,8 +20,11 @@ const checkoutSlice = createSlice({
     setTime(state, payload: any) {
       state.deliveryTime = payload;
     },
+    setCheckedToFalse(state) {
+      state.agreedToPayCash = false;
+    },
   },
 });
 
 export default checkoutSlice.reducer;
-export const { checkIt, setDate, setTime } = checkoutSlice.actions;
+export const { checkIt, setDate, setTime,setCheckedToFalse } = checkoutSlice.actions;

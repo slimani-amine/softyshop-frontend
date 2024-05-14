@@ -26,8 +26,6 @@ function Home() {
   {
     return (
       <>
-        {user?.role === 'user' && <Navigate to="/home" />}
-        {user?.role === 'vendor' && <Navigate to="/products" />}
         <div className="home">
           {Stores?.map(
             (

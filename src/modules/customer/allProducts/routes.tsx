@@ -20,8 +20,8 @@ const routes: RouteConfig[] = [
   {
     exact: true,
     guard: AuthGuard,
-    path: '/books',
-    component: lazy(() => import('./AllProducts')),
+    path: '/bookstores',
+    component: lazy(() => import('../home/features/Home')),
     layout: CustomerLayout,
     roles: [ADMIN, VENDOR, CUSTOMER],
   },

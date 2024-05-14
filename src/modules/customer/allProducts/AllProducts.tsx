@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import Product from '../home/components/Product/Product';
-import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { settProducts } from '../data/productSlice';
-import { BASE_URL } from '@src/modules/auth/data/authThunk';
-import { ProductType } from '../data/dataTypes';
+import { useEffect, useState } from "react";
+import Product from "../home/components/Product/Product";
+import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
+import { settProducts } from "../data/productSlice";
+import { BASE_URL } from "@src/modules/auth/data/authThunk";
+import { ProductType } from "../data/dataTypes";
 
 function AllProducts() {
   const [Products, setProducts] = useState([]);
@@ -36,10 +36,17 @@ function AllProducts() {
     );
     if (updatedProduct) {
       return { ...product, quantity: updatedProduct.quantity };
-    } else return product;
+    } else {
+      return product;
+    }
   });
 
-  dispatch(settProducts(updatedProducts));
+  const publishedProducts = updatedProducts.filter((product: any) => {
+    return product.isPublished;
+  });
+  console.log("🚀 ~ publishedProducts ~ publishedProducts:", publishedProducts)
+
+  dispatch(settProducts(publishedProducts));
 
   return (
     <div className="home">

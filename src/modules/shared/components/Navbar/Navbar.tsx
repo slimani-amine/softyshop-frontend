@@ -28,7 +28,7 @@ const Navbar: React.FC<INavbarProps> = () => {
     dispatch(logout());
   };
   const handleNavigate=()=>{
-    navigate('/books')
+    navigate('/home')
     
   }
   const accountInfoItems: MenuProps['items'] = [
