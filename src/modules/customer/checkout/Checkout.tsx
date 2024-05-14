@@ -85,7 +85,7 @@ function Checkout() {
     dispatch(
       addOrder({
         address_id: selectedAddress?.toString(),
-        paymentMethod_id: "2",
+        paymentMethod_id: "1",
       })
     )
       .unwrap()
