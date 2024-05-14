@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import Store from '../components/Store/Store';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
-import { useAppSelector } from '@src/modules/shared/store';
-import { Navigate } from 'react-router-dom';
 
 function Home() {
-  const user = useAppSelector((state) => state.auth.user);
 
   const [Stores, setStores] = useState([]);
   useEffect(() => {
