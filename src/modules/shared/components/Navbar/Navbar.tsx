@@ -22,8 +22,6 @@ const Navbar: React.FC<INavbarProps> = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch();
   const current_user= useSelector((state: RootState) => state.auth.user)
-  console.log(current_user)
-
   const handleLogout = () => {
     dispatch(logout());
   };

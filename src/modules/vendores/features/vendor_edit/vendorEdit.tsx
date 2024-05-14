@@ -24,7 +24,6 @@ const UpdateVendorForm: FC = () => {
   const [form] = Form.useForm();
   const { id } = useParams<{ id: string }>(); // Assuming useParams returns an object with 'id' property
   const [files, setFile] = useState<any>(null);
-  console.log(files);
   const [uploading, setUploading] = useState(false);
 
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
@@ -51,7 +50,6 @@ const UpdateVendorForm: FC = () => {
     try {
       const values = await form.validateFields();
       const objectPost = { ...values, isVerified };
-      console.log(objectPost, "object post");
       const response : TypeOfResponse = await updateVendor({
         id,
         data: {
@@ -62,11 +60,9 @@ const UpdateVendorForm: FC = () => {
           picture: selectedFileUrl,
         },
       });
-      console.log(response);
       if ("data" in response) {
         // Display success message if data exists
         message.success("Vendor saved successfully!");
-        console.log(response.data);
         navigate("/vendors");
       } else if ("error" in response && response.error) {
         // Display error message if error exists and it's truthy

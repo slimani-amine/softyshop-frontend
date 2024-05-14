@@ -7,15 +7,11 @@ export default function Search({ placeholder , onSearchChange }: { placeholder: 
   const handleSearchChange = (e: any) => {
     setSearchText(e.target.value);
     onSearchChange(e.target.value)
-    console.log(`Search text: ${e.target.value}`);
 
-    // You can add more logic here to handle the search text changes
   };
 
   const handleSearchSubmit = (e: any) => {
     e.preventDefault();
-    // You can add more logic here to handle the search submission
-    console.log(`Search text: ${searchText}`);
   };
 
   const handleKeyDown = (e: any) => {

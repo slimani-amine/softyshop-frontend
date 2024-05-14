@@ -1,19 +1,15 @@
-import { FC, useState} from "react";
-import {
-  Form,
-  Row,
-  Col,
-  Input,
-  message,
- 
-} from "antd";
+import { FC, useState } from "react";
+import { Form, Row, Col, Input, message } from "antd";
 import OrderItem from "../../components/orderItem/orderItem";
 import Button from "@src/modules/shared/components/Button/Button";
 import SearchSpecific from "@src/modules/shared/components/SearchSpecific/SearchSpecific";
 import { useAllPaymentsQuery } from "@src/modules/payment/service/paymentApi";
 import { useAllProductsQuery } from "@src/modules/products/service/productApi";
 import { useUsersQuery } from "@src/modules/vendores/services/vendorApi";
-import { useAdressesOfUserQuery , useAddAdressOfUserMutation } from "@src/modules/vendores/services/vendorApi";
+import {
+  useAdressesOfUserQuery,
+  useAddAdressOfUserMutation,
+} from "@src/modules/vendores/services/vendorApi";
 import ModalAddress from "../../components/AddressModal";
 import { useCreateOrderMutation } from "../../services/orderApi";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +26,7 @@ interface Product {
 }
 
 const OrderForm: FC<OrderFormProps> = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [pageSize] = useState(5);
   const [currentPage] = useState(1);
@@ -38,7 +34,7 @@ const OrderForm: FC<OrderFormProps> = () => {
   const [selectedUserId, setSelectedUserId] = useState<string>("");
   const [showAddressModal, setShowAddressModal] = useState<boolean>(false);
   const [addressForm] = Form.useForm(); // Form for the modal
-  
+
   const handleOpenModal = () => {
     setShowAddressModal(true);
   };
@@ -50,13 +46,11 @@ const OrderForm: FC<OrderFormProps> = () => {
   };
 
   // Function to handle form submission in the modal
-  const [addAddress] = useAddAdressOfUserMutation()
-  const [addOrder] = useCreateOrderMutation()
+  const [addAddress] = useAddAdressOfUserMutation();
+  const [addOrder] = useCreateOrderMutation();
   const handleAddAddress = async (values: any) => {
     try {
-      console.log("New address values:", values);
-      
-      await addAddress({body : values , id:selectedUserId})
+      await addAddress({ body: values, id: selectedUserId });
 
       // Perform any action you need with the new address values
 
@@ -66,13 +60,11 @@ const OrderForm: FC<OrderFormProps> = () => {
     }
   };
 
-
-const {data:fetchedPayments} = useAllPaymentsQuery()
-const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
-  label: payment.name,
-  value: payment.id,
-}));
-
+  const { data: fetchedPayments } = useAllPaymentsQuery();
+  const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
+    label: payment.name,
+    value: payment.id,
+  }));
 
   const { data: fetchedUsers } = useUsersQuery({
     perPage: pageSize,
@@ -95,46 +87,38 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
     value: product.id,
   }));
 
- const {data: fetchedAddresses} = useAdressesOfUserQuery(selectedUserId)
- console.log(fetchedAddresses?.data)
- const addrress_option = fetchedAddresses?.data?.map((address: any) => ({
-  label: address.address,
-  value: address.id,
-}));
-
+  const { data: fetchedAddresses } = useAdressesOfUserQuery(selectedUserId);
+  const addrress_option = fetchedAddresses?.data?.map((address: any) => ({
+    label: address.address,
+    value: address.id,
+  }));
 
   const handleSaveClick = async () => {
     try {
       const values = await form.validateFields();
-     
-      const productsPayload = products.map(obj => ({
+
+      const productsPayload = products.map((obj) => ({
         productId: obj.productId,
-        quantity: obj.quantity
+        quantity: obj.quantity,
       }));
-      const payload= {...values,products:productsPayload}
-      
-      const response = await addOrder(payload)
-      if ('data' in response) {
+      const payload = { ...values, products: productsPayload };
+
+      const response = await addOrder(payload);
+      if ("data" in response) {
         // Display success message if data exists
         message.success("Product saved successfully!");
         form.resetFields();
 
-        navigate("/orders")
-
-        
-    } else if ('error' in response) {
+        navigate("/orders");
+      } else if ("error" in response) {
         // Display error message if error exists
         message.error("Failed to save product. Please try again.");
-        console.error('Error saving product', response.error);
-    } else {
-        message.error("Unexpected response from server. Please try again later.");
-    }
-      
-
-
-
-
-      
+        console.error("Error saving product", response.error);
+      } else {
+        message.error(
+          "Unexpected response from server. Please try again later."
+        );
+      }
     } catch (error) {
       console.error("Error saving shop", error);
       message.error("Error saving shop");
@@ -178,39 +162,34 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
           <Form form={form} className="form-shop">
             <div className="form-content">
               <div className="part-1">
-               
-                  <Row gutter={[3, 0]} className="name-Shop">
-                    <Col span={3}>
-                     
-                        <Row gutter={[3, 0]} className="name-Shop">
-                          <Col span={3}>
-                         
-                            <label
-                              className="label-order"
-                              htmlFor="products-search"
-                            >
-                              Product:
-                            </label>
-                            <Form.Item 
-                                  name="products"
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Products",
-                                    },
-                                  
-                                  ]}
-                              >
-                            <SearchSpecific
-                              options={products_option}
-                              onChange={handleProductSelection}
-                            />
-                             </Form.Item>
-                          </Col>
-                        </Row>
-                    </Col>
-                  </Row>
-               
+                <Row gutter={[3, 0]} className="name-Shop">
+                  <Col span={3}>
+                    <Row gutter={[3, 0]} className="name-Shop">
+                      <Col span={3}>
+                        <label
+                          className="label-order"
+                          htmlFor="products-search"
+                        >
+                          Product:
+                        </label>
+                        <Form.Item
+                          name="products"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Products",
+                            },
+                          ]}
+                        >
+                          <SearchSpecific
+                            options={products_option}
+                            onChange={handleProductSelection}
+                          />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
 
                 <Form.Item className="product-selected">
                   {products.map((product: any, index) => {
@@ -243,19 +222,19 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
                       <label className="label-order" htmlFor="products-search">
                         Email:
                       </label>
-                      <Form.Item 
-                      name="userId" 
+                      <Form.Item
+                        name="userId"
                         rules={[
                           {
                             required: true,
                             message: "Email",
                           },
-                        
-                        ]}>
-                      <SearchSpecific
-                        options={users_option}
-                        onChange={(value: string) => setSelectedUserId(value)}
-                      />
+                        ]}
+                      >
+                        <SearchSpecific
+                          options={users_option}
+                          onChange={(value: string) => setSelectedUserId(value)}
+                        />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -263,25 +242,23 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
                 <Form.Item>
                   <Row gutter={[4, 0]} className="name-Shop">
                     <Col span={3}>
-                      <label
-                        className="label-order"
-                        htmlFor="products-search"
-                      >
+                      <label className="label-order" htmlFor="products-search">
                         phoneNumber:
                       </label>
                       <Form.Item
                         name="phoneNumber"
                         style={{ marginBottom: 0, width: "280px" }}
                         rules={[
-                          { 
-                              required: true, 
-                              message: 'Please enter Shop phone' 
+                          {
+                            required: true,
+                            message: "Please enter Shop phone",
                           },
                           {
-                              pattern: /^[2-57-9]\d{7}$/,
-                              message: 'Phone number must be 8 digits and start with 2, 4, 5, 7, or 9'
-                          }
-                      ]}    
+                            pattern: /^[2-57-9]\d{7}$/,
+                            message:
+                              "Phone number must be 8 digits and start with 2, 4, 5, 7, or 9",
+                          },
+                        ]}
                       >
                         <Input
                           size="small"
@@ -295,10 +272,7 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
                 <Form.Item>
                   <Row gutter={[4, 0]} className="name-Shop">
                     <Col span={3}>
-                      <label
-                        className="label-order"
-                        htmlFor="products-search"
-                      >
+                      <label className="label-order" htmlFor="products-search">
                         Address:
                       </label>
                       <Form.Item
@@ -309,38 +283,36 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
                             required: true,
                             message: "Please enter address",
                           },
-                        
                         ]}
                       >
                         <SearchSpecific
-                              options={addrress_option}
-                              onChange={handleProductSelection}
-                            />
-
+                          options={addrress_option}
+                          onChange={handleProductSelection}
+                        />
                       </Form.Item>
-       
-        <Button
-            size="sm"
-            disabled={!(selectedUserId.length >0)}
-            variant={selectedUserId.length >0?  "primary" : "dark"}
-            onClick={handleOpenModal}
-            style={{marginTop:"50px" , width:"150px"}}
-          >
-            Add new Address
-          </Button>
 
+                      <Button
+                        size="sm"
+                        disabled={!(selectedUserId.length > 0)}
+                        variant={selectedUserId.length > 0 ? "primary" : "dark"}
+                        onClick={handleOpenModal}
+                        style={{ marginTop: "50px", width: "150px" }}
+                      >
+                        Add new Address
+                      </Button>
                     </Col>
                   </Row>
                 </Form.Item>
               </div>
-              <div className="part-3">{/* Other content */}
-              <Form.Item>
+              <div className="part-3">
+                {/* Other content */}
+                <Form.Item>
                   <Row gutter={[4, 0]} className="name-Shop">
                     <Col span={3}>
                       <label
                         className="label-order"
                         htmlFor="products-search"
-                        style={{minWidth:"200px"}}
+                        style={{ minWidth: "200px" }}
                       >
                         Payment:
                       </label>
@@ -352,18 +324,15 @@ const payment_option = fetchedPayments?.data?.docs?.map((payment: any) => ({
                             required: true,
                             message: "Please enter address",
                           },
-                        
                         ]}
                       >
                         <SearchSpecific
-                          options={payment_option} onChange={function (_value: string): void {
+                          options={payment_option}
+                          onChange={function (_value: string): void {
                             throw new Error("Function not implemented.");
-                          } }                            />
-
+                          }}
+                        />
                       </Form.Item>
-       
-       
-
                     </Col>
                   </Row>
                 </Form.Item>

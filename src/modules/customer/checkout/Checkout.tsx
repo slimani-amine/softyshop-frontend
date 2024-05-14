@@ -47,10 +47,8 @@ function Checkout() {
         .map((item) => item.product.store.name)
     ),
   ];
-  // console.log('🚀 ~ Checkout ~ storeNames:', storeNames);
 
   const storesNumber = storeNames.length;
-  // console.log('🚀 ~ Checkout ~ storesNumber:', storesNumber);
 
   useEffect(() => {
     function getAllAddresses() {

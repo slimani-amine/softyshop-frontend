@@ -14,7 +14,6 @@ interface ISidebarItemsProps {
 
 const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
   const { toggleAnimation, isAnimating } = useAnimation();
-  // console.log(isAnimating)
 
   const { pathname } = useLocation();
   const { t } = useTranslation('sidebar');
@@ -31,8 +30,6 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
   const Current_User =
     useSelector((state: RootState) => state.auth.user?.role.toUpperCase()) ||
     'admin';
-  console.log('role in all', Current_User);
-  console.log(SIDEBARITEMS, 'sideeeszfshfuidshuhuidfhviu');
 
   return (
     <div className="sidebar-items">
@@ -65,12 +62,10 @@ const SidebarItems: React.FC<ISidebarItemsProps> = ({ collapseSidebar }) => {
       </span>
       {SIDEBARITEMS?.map((route, index) => {
         const routeLink = route.link;
-        console.log(route,'route simple')
         const path = pathname;
         const paths = path.split('/');
         const link = routeLink.slice(1);
         const roles = route.roles;
-        console.log(roles?.includes(Current_User),'connnnt')
         return roles?.includes(Current_User.toLocaleUpperCase()) ? (
           <React.Fragment key={index}>
             <Link

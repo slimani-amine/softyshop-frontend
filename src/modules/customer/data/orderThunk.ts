@@ -23,7 +23,7 @@ export const addOrder = createAsyncThunk(
       const data = await response.json();
       return data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );

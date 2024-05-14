@@ -21,10 +21,9 @@ export const addAddress = createAsyncThunk(
         }
       );
       const data = await response.json();
-      // console.log('🚀 ~ data:', data);
       return data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );
@@ -33,8 +32,6 @@ export const getAddresses = createAsyncThunk(
   'address/getAddresses',
   async (query: string | undefined) => {
     try {
-      // console.log('🚀 ~ query:', query);
-      // console.log('🚀 ~ accessToken:', accessToken);
       const response = await fetch(`${BASE_URL}api/users/addresses/${query}`, {
         method: 'GET',
         mode: 'cors',
@@ -46,10 +43,9 @@ export const getAddresses = createAsyncThunk(
         },
       });
       const data = await response.json();
-      // console.log('🚀 ~ data:', data.data);
       return data.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );
@@ -58,8 +54,6 @@ export const deleteAddress = createAsyncThunk(
   'address/deleteAddress',
   async (query: number | undefined) => {
     try {
-      // console.log('🚀 ~ query:', query);
-      // console.log('🚀 ~ accessToken:', accessToken);
       const response = await fetch(`${BASE_URL}api/users/addresses/${query}`, {
         method: 'DELETE',
         mode: 'cors',
@@ -71,10 +65,9 @@ export const deleteAddress = createAsyncThunk(
         },
       });
       const data = await response.json();
-      // console.log('🚀 ~ data:', data.data);
       return data.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );

@@ -10,7 +10,6 @@ const userSlice = createSlice({
   reducers: {
     saveUser(state, action) {
       if (!action.payload) return;
-      console.log('🚀 ~ saveUser ~ action:', action.payload);
       state.user = action.payload;
     },
   },

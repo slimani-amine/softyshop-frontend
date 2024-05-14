@@ -35,7 +35,6 @@ export default function CategoryList() {
   const [updateOrder] = useUpdateOrderMutation();
 
   const handleUpdateOrder = async (orderId: string, newStatus: string) => {
-    console.log(orderId, "yoooooo");
     try {
       const payload = {
         status: newStatus,
@@ -103,7 +102,6 @@ export default function CategoryList() {
     id: string
   ) => {
     const checked = e.target.checked;
-    console.log(selectedRowIds);
     setSelectedRowIds((prevIds) => {
       if (checked) {
         return [...prevIds, id]; // Add ID to the selected IDs array
@@ -177,10 +175,7 @@ export default function CategoryList() {
         <Switch
           checked={record.isPaied}
           onClick={() => {
-            console.log(record.id);
             const id = record.id;
-
-            console.log(id, typeof id);
             paiedOrder(
               { id: id } // Pass the category ID
             );

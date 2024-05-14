@@ -36,7 +36,6 @@ const Input: React.FC<IInputProps> = ({
 }) => {
   const [showPassword, setShowPassword] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
-  // console.log(isFocused)
 
   const handleFocus = () => {
     setIsFocused(true);

@@ -45,7 +45,6 @@ export default function BrandList() {
 
  
   const handleSearchChange = debounce((searchText: string) => {
-    console.log('Search text for Brand list:', searchText);
     setNameBrand(searchText);
   }, 200);
 
@@ -68,7 +67,6 @@ export default function BrandList() {
   };
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     const checked = e.target.checked;
-    console.log(selectedRowIds)
     setSelectedRowIds(prevIds => {
       if (checked) {
         return [...prevIds, id]; // Add ID to the selected IDs array

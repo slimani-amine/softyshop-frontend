@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import Store from '../components/Store/Store';
-import { BASE_URL } from '@src/modules/auth/data/authThunk';
+import { useEffect, useState } from "react";
+import Store from "../components/Store/Store";
+import { BASE_URL } from "@src/modules/auth/data/authThunk";
 
 function Home() {
-
   const [Stores, setStores] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -12,7 +11,7 @@ function Home() {
         const data = await response.json();
         setStores(data.data.docs);
       } catch (err: string | unknown) {
-        console.log(err);
+        console.error(err);
         return err;
       }
     };

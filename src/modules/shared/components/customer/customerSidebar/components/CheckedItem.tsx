@@ -1,8 +1,6 @@
 import { Checkbox, ConfigProvider } from 'antd';
 
 function CheckedItem({ children }: { children: React.ReactNode }) {
-  // console.log(isChecked);
-
   return (
     <div className="checked-item">
       <ConfigProvider

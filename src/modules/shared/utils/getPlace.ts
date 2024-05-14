@@ -7,7 +7,6 @@ async function getPlaceName(latitude: string, longitude: string) {
 
       if (response.ok) {
         const placeName = data.display_name;
-        console.log(`The place is: ${placeName}`);
         return placeName;
       } else {
         console.error(`Error fetching data: ${response.statusText}`);

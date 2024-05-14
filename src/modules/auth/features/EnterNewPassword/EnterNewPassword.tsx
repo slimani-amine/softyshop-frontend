@@ -39,7 +39,6 @@ function EnterNewPassword() {
       setSubmitting(true);
       const changedValues = getChangedValues(values, initialValues);
       const { password: newPassword } = changedValues;
-      console.log(newPassword, token);
 
       dispatch(enterNewPassword({ newPassword, token }))
         .unwrap()
@@ -56,7 +55,6 @@ function EnterNewPassword() {
     },
   });
 
-  console.log(formik);
   return (
     <div className="enter-module">
       <div className="enter-card-container">

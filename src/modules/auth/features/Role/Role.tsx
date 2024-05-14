@@ -16,8 +16,6 @@ function Role() {
   const navigate = useNavigate();
   // const { pathname } = useLocation();
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated);
-  console.log(role);
 
   // useEffect(
   //   function () {

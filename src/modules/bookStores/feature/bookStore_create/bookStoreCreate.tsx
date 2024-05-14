@@ -49,11 +49,6 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [cover, setCover] = useState<any>(null);
   const [selectedCoverUrl, setSelectedCoverUrl] = useState<string>();
-
-  console.log(selectedCoverUrl);
-  console.log(files);
-  console.log(cover);
-  console.log(uploading);
   const initialPosition: LatLngExpression = [33.892166, 9.561555499999997]; // New York coordinates
   const [position, setPosition] = useState<LatLngExpression>(initialPosition);
   const [createStore] = useCreateStoreMutation();
@@ -64,8 +59,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   );
 
   const Id_user = useSelector((state: RootState) => state?.auth?.user?.id);
-  console.log(Id_user);
-  console.log(Current_User);
+
   let vendors = []; // Initialize vendors outside the condition to avoid undefined errors
   if (Current_User === ADMIN) {
     const { data: fetchedVendors } = useAllvendorsQuery();
@@ -120,7 +114,6 @@ const AddShopForm: FC<AddShopFormProps> = () => {
         const values = await form.validateFields();
         const objectPost = { ...values, positionOfShop: position };
         const plc = objectPost.positionOfShop[2];
-        console.log(position  , 'postion')
 
         const response:TypeOfResponse = await createStore({
             name: objectPost.name,
@@ -154,8 +147,6 @@ const AddShopForm: FC<AddShopFormProps> = () => {
 
 
   const Email_user = useSelector((state: RootState) => state.auth.user?.email);
-  console.log(Email_user);
-
   return (
     <div className="">
       <div className="parent-container">

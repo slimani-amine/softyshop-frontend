@@ -22,7 +22,6 @@ function AllProducts() {
           })
         );
       } catch (err: string | unknown) {
-        console.log(err);
         return err;
       }
     };
@@ -44,7 +43,6 @@ function AllProducts() {
   const publishedProducts = updatedProducts.filter((product: any) => {
     return product.isPublished;
   });
-  console.log("🚀 ~ publishedProducts ~ publishedProducts:", publishedProducts)
 
   dispatch(settProducts(publishedProducts));
 

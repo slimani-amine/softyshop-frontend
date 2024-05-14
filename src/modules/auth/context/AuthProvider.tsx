@@ -48,7 +48,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
         const user = response?.data?.data;
         // todo const user = { ...response?.data?.data, token: accessToken };
-        // console.log(user);
         dispatch(initialise({ isAuthenticated: true, user }));
       } else {
         dispatch(initialise({ isAuthenticated: false, user: null }));

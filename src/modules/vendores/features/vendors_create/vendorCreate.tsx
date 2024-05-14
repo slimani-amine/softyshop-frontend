@@ -23,7 +23,6 @@ const AddVendorForm: FC = () => {
   const [files, setFile] = useState<any>(null);
   const [uploading, setUploading] = useState(false);
 
-  console.log(files);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
 
   const navigate = useNavigate();
@@ -32,7 +31,6 @@ const AddVendorForm: FC = () => {
     try {
       const values = await form.validateFields();
       const objectPost = { ...values };
-      console.log(objectPost, "object post");
       const response : TypeOfResponse = await createVendor({
         firstName: objectPost.name,
         lastName: objectPost.lastName,
@@ -46,7 +44,6 @@ const AddVendorForm: FC = () => {
       if ("data" in response) {
         // Display success message if data exists
         message.success("Vendor saved successfully!");
-        console.log(response.data);
         navigate("/vendors");
       } else if ("error" in response && response.error) {
         // Display error message if error exists and it's truthy
@@ -63,7 +60,6 @@ const AddVendorForm: FC = () => {
 
   const handleGeneratePassword = () => {
     const generatedPassword = generatePassword();
-    console.log(generatePassword);
     form.setFieldsValue({ password: generatedPassword });
     setGeneratedPassword(generatedPassword);
   };

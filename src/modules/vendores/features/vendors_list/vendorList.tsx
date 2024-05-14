@@ -17,7 +17,6 @@ import {
 import { useEffect, useState } from "react"; // Import useState hook for managing modal state
 import {Vendor} from "../../services/type";
 import { debounce } from "lodash";
-console.log(AntButton)
 export default function CategoryList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -32,8 +31,6 @@ export default function CategoryList() {
     perPage: pageSize,
     page: currentPage,
   });
-  console.log(fetchedVendors);
-  console.log(vendors);
   const handlePaginationChange = (page: number, pageSize?: number) => {
     setCurrentPage(page);
     setPageSize(pageSize || 5); // Update pageSize if changed
@@ -48,7 +45,6 @@ export default function CategoryList() {
     }
   }, [nameVendor, fetchedVendors, fetchedSearchVendors]);
   const handleSearchChange = debounce((searchText: string) => {
-    console.log("Search text for category list:", searchText);
     setNameVendor(searchText);
   }, 300);
 
@@ -67,7 +63,6 @@ export default function CategoryList() {
     id: string
   ) => {
     const checked = e.target.checked;
-    console.log(selectedRowIds);
     setSelectedRowIds((prevIds) => {
       if (checked) {
         return [...prevIds, id]; // Add ID to the selected IDs array
