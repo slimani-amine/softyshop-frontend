@@ -1,7 +1,6 @@
 import {
   Table,
   Space,
-  Button as AntButton,
   Checkbox,
 } from "antd";
 import SeachFilter from "@src/modules/shared/components/SearchFilter/SearchFilter";

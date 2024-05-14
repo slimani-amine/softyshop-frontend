@@ -24,11 +24,13 @@ const AddCategoryForm: FC<AddCategoryFormProps> = () => {
   const navigate = useNavigate()
   const [uploading, setUploading] = useState(false);
   const [files, setFile] = useState<any>(null);
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [createCategory] = useCreateCategoryMutation();
   const handleSaveClick = async () => {
     try {
+      console.log(selectedFileUrl);
 
       const values = await form.validateFields(); // Validate form fields
       const objectPost = { ...values };

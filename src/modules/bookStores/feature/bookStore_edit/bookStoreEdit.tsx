@@ -100,6 +100,7 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
         handleClick(lat, lng);
       },
     });
+    console.log(map)
     return null;
   };
 
@@ -216,7 +217,9 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
     iconAnchor: [25, 50], // Point of the icon which will correspond to marker's location
     popupAnchor: [-3, -50], // Point from which the popup should open relative to the iconAnchor
   });
-
+  
+  console.log(defaultFileListCover);
+  console.log(defaultFileList);
   return (
     <div className="">
       <div className="parent-container">

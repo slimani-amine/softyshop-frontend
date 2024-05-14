@@ -28,6 +28,7 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
   const [files, setFile] = useState<any>(null);
   const [uploading, setUploading] = useState(false);
 
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [updateCategory] = useUpdateCatgoryMutation();
@@ -35,6 +36,7 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
 
   const { data: fetchCategory, isLoading } = useCategoryQuery(id);
   const category = fetchCategory?.data?.docs[0];
+  console.log(category, 11);
 
   if (isLoading) return <Spinner />;
 
@@ -47,6 +49,15 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
   const handleFinish = async () => {
     try {
       const values = await form.validateFields();
+      console.log(values, 'fg');
+      console.log(
+        {
+          name: values.name,
+          icon: '',
+          isPublished: values.isPublished === 'on' ? true : false,
+        },
+        '0000000000000000000000000'
+      );
       const response : TypeOfResponse= await updateCategory({
         id: id,
         data: {
@@ -78,6 +89,7 @@ const EditCategoryForm: FC<AddCategoryFormProps> = () => {
     }
   };
 
+  console.log(category, 'iufhgui');
   const defaultFileList = [
     {
       uid: '-1',

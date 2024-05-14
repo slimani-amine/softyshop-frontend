@@ -23,6 +23,8 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
   const navigate = useNavigate()
   const [files, setFile] = useState<any>(null);
   const [uploading, setUploading] = useState(false);
+  console.log(uploading)
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [updateBrand] = useUpdateBrandMutation();
@@ -30,6 +32,7 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
 
   const { data: fetchBrand, isLoading } = useBrandQuery(id);
   const brand = fetchBrand?.data?.docs[0];
+  console.log(brand);
   if (isLoading) return <Spinner />;
 
   const initialValues = {
@@ -52,6 +55,7 @@ const EditBrandForm: FC<AddBrandFormProps> = () => {
       if ('data' in response) {
         // Display success message if data exists
         message.success("Brand updated successfully!");
+        console.log(response.data);
         form.resetFields();
 
         navigate("/brands")

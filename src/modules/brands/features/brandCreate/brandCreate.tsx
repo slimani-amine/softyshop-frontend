@@ -18,14 +18,18 @@ interface AddBrandFormProps {
 }
 
 const AddBrandForm: FC<AddBrandFormProps> = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [uploading, setUploading] = useState(false);
+  console.log(uploading)
   const [files, setFile] = useState<any>(null);
+  console.log(files)
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [createBrand] = useCreateBrandMutation();
   const handleSaveClick = async () => {
     try {
+      console.log(selectedFileUrl);
+      
       const values = await form.validateFields(); // Validate form fields
       const objectPost = { ...values };
       // Create Brand
@@ -33,20 +37,22 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
         name: objectPost.name,
         logo: selectedFileUrl,
       });
-      if ("data" in response) {
+      if ('data' in response) {
         // Display success message if data exists
         message.success("Store updated successfully!");
-        navigate("/stores");
-      } else if ("error" in response) {
+        console.log(response.data);
+        navigate("/stores")
+        
+    } else if ('error' in response) {
         // Display error message if error exists
         message.error("Failed to save Store. Please try again.");
-        console.error("Error saving Store", response.error);
-      } else {
+        console.error('Error saving Store', response.error);
+    } else {
         // Handle unexpected response format
-        message.error(
-          "Unexpected response from server. Please try again later."
-        );
-      }
+        message.error("Unexpected response from server. Please try again later.");
+    }
+      console.log(response)
+      console.log(response)
 
       // Reset form fields and validation status
       form.resetFields();
@@ -70,28 +76,26 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
         <Form form={form}>
           <Row gutter={[16, 0]} className="name-Product">
             <Col span={22}>
-              <label
-                className="label-order"
-                htmlFor="products-search"
-                style={{ color: "#6195def5", fontWeight: "500" }}
-              >
+            <label
+              className="label-order"
+              htmlFor="products-search"
+              style={{color:"#6195def5" , fontWeight:'500'}}
+               >
                 Name Of Brand :
               </label>
               <Form.Item
                 name="name"
                 style={{ marginBottom: 0 }}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter Store name",
+                rules={[ 
+                  { 
+                      required: true, 
+                      message: 'Please enter Store name' 
                   },
                   {
-                    pattern:
-                      /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
-                    message:
-                      "Name must contain at least two alphabetical characters and no leading spaces",
-                  },
-                ]}
+                      pattern: /^(?!\s)(?=(?:.*[a-zA-Z\u0600-\u06FF]){2})[a-zA-Z\u0600-\u06FF\s]{2,}$/,
+                      message: 'Name must contain at least two alphabetical characters and no leading spaces'
+                  }
+              ]}            
               >
                 <Input
                   size="large"
@@ -112,7 +116,12 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
               accept="image/*"
               maxCount={1} // set maxCount to 1 for single image
               onChange={(e: any) =>
-                handleFileChange(e, setFile, setSelectedFileUrl, setUploading)
+                handleFileChange(
+                  e,
+                  setFile,
+                  setSelectedFileUrl,
+                  setUploading
+                )
               }
               beforeUpload={() => false}
             >
@@ -126,7 +135,7 @@ const AddBrandForm: FC<AddBrandFormProps> = () => {
               <p className="size-img">Upload 280*280 image</p>
             </Upload.Dragger>
           </Form.Item>
-
+      
           <Form.Item>
             <Button type="submit" className="add-cat" onClick={handleSaveClick}>
               Save Brand

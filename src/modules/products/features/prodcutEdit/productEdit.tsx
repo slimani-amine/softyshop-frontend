@@ -60,6 +60,7 @@ const [updateProduct] = useUpdateProductMutation()
 
   const [files, setFile] = useState<any>(null);
   const [selectedFileUrl  , setSelectedFileUrl] = useState<string[]>([]);
+  console.log(files)
   const Current_User = useSelector(
     (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
@@ -71,11 +72,15 @@ const [updateProduct] = useUpdateProductMutation()
     const { data: fetechedAllStores } = useMyStoresQuery();
     stores = fetechedAllStores?.data.docs;
   }
+  console.log(stores);
   const selectStores = stores?.map((store: any) => ({
     label: store.name,
     value: store.id,
   }));
+  console.log(selectStores);
   const handleFinish = (values: any) => {
+    console.log(values);
+    console.log(values);
     form.resetFields();
   };
 
@@ -88,6 +93,7 @@ const [updateProduct] = useUpdateProductMutation()
  
   useEffect(() => {
     if (fetchedProduct) {
+      console.log(product.brand?.id)
       // Set form fields with fetched vendor data here
       form.setFieldsValue({
         name: product.name,
@@ -136,6 +142,7 @@ const [updateProduct] = useUpdateProductMutation()
       if ('data' in response) {
         // Display success message if data exists
         message.success("Product saved successfully!");
+        console.log(response.data);
         navigate("/products")
         
     } else if ('error' in response) {
@@ -145,6 +152,8 @@ const [updateProduct] = useUpdateProductMutation()
     } else {
         message.error("Unexpected response from server. Please try again later.");
     }
+
+      console.log(response)
       form.resetFields();
     } catch (error) {
       console.error('Error saving product', error);
