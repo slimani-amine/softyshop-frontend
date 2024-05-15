@@ -8,11 +8,16 @@ import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesForm
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { addAddress, getAddresses } from '../../data/addressThunk';
 import toast from 'react-hot-toast';
+import { updateSelectedId } from '../../data/addressSlice';
+import { addressType } from '../../data/dataTypes';
 
 const AddAddressModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const userId: string | undefined = useAppSelector(
     (state) => state.auth.user?.id
+  );
+  const addresses: addressType[] = useAppSelector(
+    (state) => state?.address?.address
   );
 
   const initialValues = {
@@ -62,6 +67,7 @@ const AddAddressModal: React.FC = () => {
         .finally(() => {
           setSubmitting(false);
           dispatch(getAddresses(userId));
+          dispatch(updateSelectedId(addresses[0].id));
         });
       return handleOk();
     },
