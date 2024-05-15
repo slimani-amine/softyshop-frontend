@@ -1,7 +1,7 @@
-import Header from '../../components/customer/customerHeader/Header';
-import Sidebar from '../../components/customer/customerSidebar/Sidebar';
-import CustomerNavbar from '../../components/customer/customerNavbar/CustomerNavbar';
-import Footer from '../../components/customer/customerFooter/Footer';
+import Header from '../../components/customerLayout/customerHeader/Header';
+import Sidebar from '../../components/customerLayout/customerSidebar/Sidebar';
+import CustomerNavbar from '../../components/customerLayout/customerNavbar/CustomerNavbar';
+import Footer from '../../components/customerLayout/customerFooter/Footer';
 import { useLocation } from 'react-router-dom';
 
 interface MainLayoutProps {

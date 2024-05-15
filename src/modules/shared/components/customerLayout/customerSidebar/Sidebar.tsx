@@ -4,8 +4,18 @@ import fourStars from '../../../assets/icons/customerLayout/Sidebar/4-stars.png'
 import threeStars from '../../../assets/icons/customerLayout/Sidebar/3-stars.png';
 import twoStars from '../../../assets/icons/customerLayout/Sidebar/2-stars.png';
 import oneStar from '../../../assets/icons/customerLayout/Sidebar/1-stars.png';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import { useEffect } from 'react';
+import { getBrands } from '../data/brandThunk';
 
 function Sidebar() {
+  const dispatch = useAppDispatch();
+  const brands = useAppSelector((state) => state.brand.brands);
+
+  useEffect(() => {
+    dispatch(getBrands());
+  }, [dispatch, getBrands]);
+
   return (
     <div className="sidebar-customer">
       <div className="categories sidebar-chunk">
@@ -34,12 +44,10 @@ function Sidebar() {
         </div>
       </div>
       <div className="sidebar-chunk">
-        <div className="sidebar-chunk-title">Brands</div>
-        <CheckedItem>Mac</CheckedItem>
-        <CheckedItem>Karts</CheckedItem>
-        <CheckedItem>Baals</CheckedItem>
-        <CheckedItem>Buks</CheckedItem>
-        <CheckedItem>Luasis</CheckedItem>
+        <div className="sidebar-chunk-title">Publishing Companies</div>
+        {(brands as { name: string }[]).map((brand) => (
+          <CheckedItem>{brand.name}</CheckedItem>
+        ))}
       </div>
       <div className="sidebar-chunk">
         <CheckedItem>On Sale</CheckedItem>
