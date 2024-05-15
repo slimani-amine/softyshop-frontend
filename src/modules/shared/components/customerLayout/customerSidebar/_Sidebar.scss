@@ -41,8 +41,9 @@
       color: #7d879c;
       gap: 14px;
       li {
+        cursor: pointer;
         color: inherit;
-        a {
+        p {
           color: inherit;
         }
       }

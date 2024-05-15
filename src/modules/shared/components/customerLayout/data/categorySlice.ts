@@ -3,6 +3,7 @@ import { getCategories } from './categoryThunk';
 
 const initialState = {
   categories: [],
+  selectedCategoryById: null,
   error: '',
   status: '',
 };

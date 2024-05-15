@@ -13,7 +13,21 @@ import { brandType, categoryType } from '../data/dataTypes';
 function Sidebar() {
   const dispatch = useAppDispatch();
   const brands = useAppSelector((state) => state.brand.brands);
+  const sortedBrands = brands
+    .slice()
+    .sort((a: categoryType, b: categoryType) => {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      else return 0;
+    });
   const categories = useAppSelector((state) => state.category.categories);
+  const sortedCategories = categories
+    .slice()
+    .sort((a: categoryType, b: categoryType) => {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      else return 0;
+    });
 
   useEffect(() => {
     dispatch(getBrands());
@@ -25,23 +39,11 @@ function Sidebar() {
       <div className="categories sidebar-chunk">
         <h5 className="categories-title sidebar-chunk-title">Categories</h5>
         <ul className="list categories-list">
-          {categories.map((category: categoryType, index: number) => (
-            <li key={index}>
-              <a href="#">{category.name}</a>
+          {sortedCategories.map((category: categoryType, index: number) => (
+            <li key={index} id={category.id.toString()}>
+              <p>{category.name}</p>
             </li>
           ))}
-          <li>
-            <a href="#">Bath Preparations</a>
-          </li>
-          <li>
-            <a href="#">Eye Makeup Preparation</a>
-          </li>
-          <li>
-            <a href="#">Fragrence</a>
-          </li>
-          <li>
-            <a href="#">Hair Preparations</a>
-          </li>
         </ul>
       </div>
       <div className="sidebar-chunk price">
@@ -54,14 +56,13 @@ function Sidebar() {
       </div>
       <div className="sidebar-chunk brands-list">
         <div className="sidebar-chunk-title">Publishing Companies</div>
-        {brands.map((brand: brandType, index) => (
+        {sortedBrands.map((brand: brandType, index) => (
           <CheckedItem key={index}>{brand.name}</CheckedItem>
         ))}
       </div>
       <div className="sidebar-chunk">
         <CheckedItem>On Sale</CheckedItem>
         <CheckedItem>In stock</CheckedItem>
-        <CheckedItem>Featured</CheckedItem>
       </div>
       <div className="sidebar-chunk ratings-chunk">
         <div className="sidebar-chunk-title">Ratings</div>

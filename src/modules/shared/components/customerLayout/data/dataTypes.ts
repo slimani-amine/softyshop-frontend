@@ -9,6 +9,7 @@ export interface categoryStateType {
   categories: categoryType[];
   error: string;
   status: string;
+  selectedCategoryById: number | null;
 }
 
 export interface brandType {
