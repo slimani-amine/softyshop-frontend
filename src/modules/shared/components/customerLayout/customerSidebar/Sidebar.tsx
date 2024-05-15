@@ -72,7 +72,7 @@ function Sidebar() {
           <img src={oneStar} alt="" />
         </CheckedItem>
       </div>
-      <div className="sidebar-chunk colors-chunk">
+      {/* <div className="sidebar-chunk colors-chunk">
         <div className="sidebar-chunk-title">Colors</div>
         <div className="colors">
           <div className="color black"></div>
@@ -82,7 +82,7 @@ function Sidebar() {
           <div className="color aqua"></div>
           <div className="color purple"></div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
