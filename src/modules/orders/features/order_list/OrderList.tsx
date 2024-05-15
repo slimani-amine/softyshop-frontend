@@ -30,6 +30,7 @@ export default function CategoryList() {
   const { data: fetchedOrders } = useOrdersQuery({
     perPage: pageSize,
     page: currentPage,
+    role: Current_User,
   });
 
   const [updateOrder] = useUpdateOrderMutation();
@@ -50,7 +51,10 @@ export default function CategoryList() {
   const [deleteOrders] = useDeleteOrdersMutation();
   //const [updateCategory] = useUpdateCatgoryMutation();
   const [deleteModalVisible, setDeleteModalVisible] = useState(false); // State to manage modal visibility
-  const { data: fetchedSearchOrders } = useSearchOrdersQuery(numberOrder);
+  const { data: fetchedSearchOrders } = useSearchOrdersQuery({
+    subName: numberOrder,
+    role: Current_User,
+  });
   const [paiedOrder] = usePaiedOrderMutation();
   const [orders, setOrders] = useState<Array<any>>([]);
   const handlePaginationChange = (page: number, pageSize?: number) => {
@@ -129,18 +133,18 @@ export default function CategoryList() {
     },
     {
       title: "Total",
-      dataIndex: ["cart", "totalAmount"], // Accessing nested property
+      dataIndex: ["totalAmount"], // Accessing nested property
       key: "id",
       render: (totalAmount: string) => (
         <p className="price-td">{totalAmount} dt</p>
       ),
     },
     {
-      title: "Phone",
-      dataIndex: "phoneNumber",
-      key: "name",
+      title: "Quantity",
+      dataIndex: "Quantity",
+      key: "Quantity",
       render: (_phone: string, record: any) => (
-        <div className="name-column">{record.phoneNumber}</div>
+        <div className="name-column">{record.totalQuantity}</div>
       ),
     },
     {
