@@ -11,6 +11,7 @@ import addressReducer from '@src/modules/customer/data/addressSlice';
 import userReducer from '@src/modules/customer/data/userSlice';
 import orderReducer from '@src/modules/customer/data/orderSlice';
 import brandReducer from '../components/customerLayout/data/brandSlice';
+import categoryReducer from '../components/customerLayout/data/categorySlice';
 import { api } from '../services/api';
 
 const rootReducer = combineReducers({
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   order: orderReducer,
   brand: brandReducer,
+  category: categoryReducer,
   [api.reducerPath]: api.reducer,
 });
 

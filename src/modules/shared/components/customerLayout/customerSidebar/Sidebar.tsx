@@ -7,13 +7,17 @@ import oneStar from '../../../assets/icons/customerLayout/Sidebar/1-stars.png';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { useEffect } from 'react';
 import { getBrands } from '../data/brandThunk';
+import { getCategories } from '../data/categoryThunk';
+import { brandType, categoryType } from '../data/dataTypes';
 
 function Sidebar() {
   const dispatch = useAppDispatch();
   const brands = useAppSelector((state) => state.brand.brands);
+  const categories = useAppSelector((state) => state.category.categories);
 
   useEffect(() => {
     dispatch(getBrands());
+    dispatch(getCategories());
   }, [dispatch, getBrands]);
 
   return (
@@ -21,6 +25,11 @@ function Sidebar() {
       <div className="categories sidebar-chunk">
         <h5 className="categories-title sidebar-chunk-title">Categories</h5>
         <ul className="list categories-list">
+          {categories.map((category: categoryType, index: number) => (
+            <li key={index}>
+              <a href="#">{category.name}</a>
+            </li>
+          ))}
           <li>
             <a href="#">Bath Preparations</a>
           </li>
@@ -43,10 +52,10 @@ function Sidebar() {
           <input placeholder="250" type="number" />
         </div>
       </div>
-      <div className="sidebar-chunk">
+      <div className="sidebar-chunk brands-list">
         <div className="sidebar-chunk-title">Publishing Companies</div>
-        {(brands as { name: string }[]).map((brand) => (
-          <CheckedItem>{brand.name}</CheckedItem>
+        {brands.map((brand: brandType, index) => (
+          <CheckedItem key={index}>{brand.name}</CheckedItem>
         ))}
       </div>
       <div className="sidebar-chunk">
@@ -54,7 +63,7 @@ function Sidebar() {
         <CheckedItem>In stock</CheckedItem>
         <CheckedItem>Featured</CheckedItem>
       </div>
-      <div className="sidebar-chunk">
+      <div className="sidebar-chunk ratings-chunk">
         <div className="sidebar-chunk-title">Ratings</div>
         <CheckedItem>
           <img src={fiveStars} alt="" />

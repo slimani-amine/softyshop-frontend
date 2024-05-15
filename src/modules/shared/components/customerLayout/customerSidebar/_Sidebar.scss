@@ -24,7 +24,17 @@
       font-weight: 600;
       margin-bottom: 20px;
     }
+    .brands-list {
+      scrollbar-width: thin;
+      scrollbar-color: #d23e57 #fafafa;
+      max-height: 200px;
+      overflow-y: auto;
+    }
     .categories-list {
+      scrollbar-width: thin;
+      scrollbar-color: #d23e57 #fafafa;
+      max-height: 200px;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
       font-weight: 300;
@@ -61,6 +71,9 @@
       align-items: center;
       gap: 12px;
     }
+  }
+  .ratings-chunk {
+    border: none;
   }
   .colors-chunk {
     border: none;
