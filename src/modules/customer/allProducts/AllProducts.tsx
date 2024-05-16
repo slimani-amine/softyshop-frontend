@@ -1,25 +1,34 @@
 import { useEffect, useState } from 'react';
 import Product from '../home/components/Product/Product';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { settProducts } from '../data/productSlice';
+import { setProducts } from '../data/productSlice';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 import { ProductType } from '../data/dataTypes';
 
 function AllProducts() {
   const All_URL = `${BASE_URL}api/products?perPage=999999999999&page=1`;
-  const [Products, setProducts] = useState([]);
   const dispatch = useAppDispatch();
+  const Products = useAppSelector((state) => state.product.products);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${All_URL}`);
         const data = await response.json();
-        setProducts(
-          data.data.docs.map((product: ProductType) => {
-            return { ...product, quantity: 0 };
-          })
+
+        const products = data.data.docs.map((product: ProductType) => {
+          return { ...product, quantity: 0 };
+        });
+        console.log('🚀 ~ products ~ products:', products);
+        const publishedProducts = products.filter((product: any) => {
+          return product.isPublished;
+        });
+        console.log(
+          '🚀 ~ publishedProducts ~ publishedProducts:',
+          publishedProducts
         );
+        // setProducts(publishedProducts);
+        dispatch(setProducts(publishedProducts));
       } catch (err: string | unknown) {
         return err;
       }
@@ -39,11 +48,7 @@ function AllProducts() {
     }
   });
 
-  const publishedProducts = updatedProducts.filter((product: any) => {
-    return product.isPublished;
-  });
-
-  dispatch(settProducts(publishedProducts));
+  // dispatch(setProducts(publishedProducts));
 
   return (
     <div className="home">

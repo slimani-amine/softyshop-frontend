@@ -9,7 +9,7 @@ const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    settProducts(state, action) {
+    setProducts(state, action) {
       state.products = action.payload;
     },
     updateQuantity(state, action) {
@@ -19,4 +19,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const { updateQuantity, settProducts } = productSlice.actions;
+export const { updateQuantity, setProducts } = productSlice.actions;

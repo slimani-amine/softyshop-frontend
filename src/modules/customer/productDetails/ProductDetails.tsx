@@ -10,7 +10,7 @@ import { BASE_URL } from '@src/modules/auth/data/authThunk';
 function ProductDetails() {
   const dispatch = useAppDispatch();
   const { productId } = useParams();
-  // const token = useAppSelector((state) => state.cart.token);
+  const token = useAppSelector((state) => state.cart.token);
   const cart = useAppSelector((state) => state.cart.cart);
   const accessToken = useAppSelector((state) => state.cart.token);
 
@@ -34,7 +34,7 @@ function ProductDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // dispatch(getCart(token));
+        dispatch(getCart(token));
         const response = await fetch(`${BASE_URL}api/products/${productId}`);
         const data = await response.json();
         setProduct(data.data);

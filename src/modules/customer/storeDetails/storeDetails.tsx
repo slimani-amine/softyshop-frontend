@@ -1,34 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 // import Product from '../home/components/Product/Product';
-import { ReactComponent as PhoneIcon } from "../../shared/assets/icons/store/phone.svg";
-import { ReactComponent as LocationIcon } from "../../shared/assets/icons/store/location.svg";
-import { ReactComponent as FacebookIcon } from "../../shared/assets/icons/store/facebook.svg";
-import { ReactComponent as XIcon } from "../../shared/assets/icons/store/x.svg";
-import { ReactComponent as YoutubeIcon } from "../../shared/assets/icons/store/youtube.svg";
-import { ReactComponent as InstagramIcon } from "../../shared/assets/icons/store/instagram.svg";
-import Button from "@src/modules/shared/components/Button/Button";
-import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
-import { settProducts } from "../data/productSlice";
-import { useParams } from "react-router-dom";
-import { BASE_URL } from "@src/modules/auth/data/authThunk";
-import { ProductType } from "../data/dataTypes";
-import Product from "../home/components/Product/Product";
+import { ReactComponent as PhoneIcon } from '../../shared/assets/icons/store/phone.svg';
+import { ReactComponent as LocationIcon } from '../../shared/assets/icons/store/location.svg';
+import { ReactComponent as FacebookIcon } from '../../shared/assets/icons/store/facebook.svg';
+import { ReactComponent as XIcon } from '../../shared/assets/icons/store/x.svg';
+import { ReactComponent as YoutubeIcon } from '../../shared/assets/icons/store/youtube.svg';
+import { ReactComponent as InstagramIcon } from '../../shared/assets/icons/store/instagram.svg';
+import Button from '@src/modules/shared/components/Button/Button';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import { setProducts } from '../data/productSlice';
+import { useParams } from 'react-router-dom';
+import { BASE_URL } from '@src/modules/auth/data/authThunk';
+import { ProductType } from '../data/dataTypes';
+import Product from '../home/components/Product/Product';
 
 function storeDetails() {
   const dispatch = useAppDispatch();
   const { storeId } = useParams();
   const [store, setStore] = useState({
     id: 0,
-    name: "",
+    name: '',
     phoneNumber: 0,
-    logo: "",
+    logo: '',
     isPublished: false,
-    location: "",
-    address: "",
-    socialMediaLinks: "",
+    location: '',
+    address: '',
+    socialMediaLinks: '',
     deletedAt: null,
-    createdAt: "",
-    updatedAt: "",
+    createdAt: '',
+    updatedAt: '',
     user: null,
     products: [],
   });
@@ -58,13 +58,20 @@ function storeDetails() {
 
         const data = await response.json();
 
-        dispatch(
-          settProducts(
-            data?.data?.docs.map((product: ProductType) => {
-              return { ...product, quantity: 0 };
-            })
-          )
+        const products = data.data.docs.map((product: ProductType) => {
+          return { ...product, quantity: 0 };
+        });
+        console.log('🚀 ~ products ~ products:', products);
+        const publishedProducts = products.filter((product: any) => {
+          return product.isPublished;
+        });
+        console.log(
+          '🚀 ~ publishedProducts ~ publishedProducts:',
+          publishedProducts
         );
+        // setProducts(publishedProducts);
+
+        dispatch(setProducts(publishedProducts));
       } catch (err: string | unknown) {
         console.error(err);
         return err;
@@ -120,16 +127,16 @@ function storeDetails() {
             <div className="store-contact">
               <div className="store-phone-and-location">
                 <div className="store-location">
-                  <LocationIcon className="location-icon" />{" "}
+                  <LocationIcon className="location-icon" />{' '}
                   <p className="location">{store?.address}</p>
                 </div>
                 <div className="store-location">
-                  <PhoneIcon className="phoneIcon" />{" "}
+                  <PhoneIcon className="phoneIcon" />{' '}
                   <p className="location">(+216) {store?.phoneNumber}</p>
                 </div>
               </div>
               <div className="contact-button">
-                <Button label={"Contact Vendor"} />
+                <Button label={'Contact Vendor'} />
               </div>
             </div>
           </div>
