@@ -10,6 +10,7 @@ import "./app/index.scss";
 import "./i18n";
 import { Toaster } from "react-hot-toast";
 
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <HelmetProvider>
     <Provider store={store}>

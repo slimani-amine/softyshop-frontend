@@ -3,7 +3,7 @@ import Highcharts from "highcharts";
 
 const StatusPieChart = ({ data }: any) => {
   // Create an array of data points for the pie chart
-  const seriesData = data.map(
+  const seriesData = data?.map(
     (status: { name: any; percentage: any; color: any }) => ({
       name: status.name,
       y: status.percentage,
