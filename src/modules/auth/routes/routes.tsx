@@ -42,15 +42,15 @@ const routes: RouteConfig[] = [
     component: lazy(() => import("../features/Register/Register")),
     layout: GuestLayout,
   },
-  {
-    roles: [VENDOR, ADMIN, CUSTOMER],
+  // {
+  //   roles: [VENDOR, ADMIN, CUSTOMER],
 
-    exact: true,
-    guard: GuestGuard,
-    path: PATH.ROLE,
-    component: lazy(() => import("../features/Role/Role")),
-    layout: GuestLayout,
-  },
+  //   exact: true,
+  //   guard: GuestGuard,
+  //   path: PATH.ROLE,
+  //   component: lazy(() => import("../features/Role/Role")),
+  //   layout: GuestLayout,
+  // },
   {
     roles: [VENDOR, ADMIN, CUSTOMER],
 

@@ -28,3 +28,7 @@ export interface enterNewPasswordPayload {
   newPassword: string | null;
   token: string | null;
 }
+
+export interface LoginWithGoogleBody {
+  idToken: string;
+}

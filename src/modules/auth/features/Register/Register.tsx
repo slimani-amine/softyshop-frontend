@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { PATH } from "../../routes/paths";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import GoogleButton from "@src/modules/shared/components/GoogleButton";
 
 const initialValues = {
   firstName: "",
@@ -40,20 +41,20 @@ const Register = () => {
         .email("Invalid email address")
         .matches(
           /^([a-zA-Z0-9._%+-]+)@((?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})$/,
-          "Invalid email address",
+          "Invalid email address"
         )
         .test(
           "no-special-chars",
           "Email contains disallowed characters",
           (value: string | undefined) =>
-            !value || /^[^<>()\\/[\]{}\s]+@[^\s]+$/.test(value),
+            !value || /^[^<>()\\/[\]{}\s]+@[^\s]+$/.test(value)
         )
         .required("Email is required"),
       password: Yup.string()
         .required("Password is required")
         .matches(
           /^(?=.*\S).{8,}$/,
-          "Password must be 8 characters long at least.",
+          "Password must be 8 characters long at least."
         ),
       verifyPassword: Yup.string()
         .required("Confirm password is required")
@@ -83,24 +84,31 @@ const Register = () => {
     <div className="register-module">
       <form className="register-card-container" onSubmit={formik.handleSubmit}>
         <h1 className="title">Sign Up</h1>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            gap: "10px",
+          }}
+        >
+          <Input
+            name="firstName"
+            formik={formik}
+            variant="secondary"
+            placeholder="Enter your firstname"
+            label="First Name"
+            required={true}
+          />
 
-        <Input
-          name="firstName"
-          formik={formik}
-          variant="secondary"
-          placeholder="Enter your firstname"
-          label="First Name"
-          required={true}
-        />
-
-        <Input
-          name="lastName"
-          formik={formik}
-          variant="secondary"
-          placeholder="Enter your lastname"
-          label="Last Name"
-          required={true}
-        />
+          <Input
+            name="lastName"
+            formik={formik}
+            variant="secondary"
+            placeholder="Enter your lastname"
+            label="Last Name"
+            required={true}
+          />
+        </div>
 
         <Input
           name="phoneNumber"
@@ -141,7 +149,15 @@ const Register = () => {
           required={true}
         />
 
-        <Button label={"Sign Up"} type={"submit"} loading={submitting} />
+        <Button
+          label={"Sign Up"}
+          type={"submit"}
+          loading={submitting}
+          style={{
+            width: "100%",
+          }}
+        />
+        <GoogleButton />
 
         <Link to={PATH.LOGIN} className="link">
           Already a member?

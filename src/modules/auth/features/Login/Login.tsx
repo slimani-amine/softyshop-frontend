@@ -1,14 +1,15 @@
-import Button from '@src/modules/shared/components/Button/Button';
-import { useAppDispatch } from '@src/modules/shared/store';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { login } from '../../data/authThunk';
-import Input from '@src/modules/shared/components/Input/Input';
-import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { PATH } from '../../routes/paths';
-import toast from 'react-hot-toast';
+import Button from "@src/modules/shared/components/Button/Button";
+import { useAppDispatch } from "@src/modules/shared/store";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { login } from "../../data/authThunk";
+import Input from "@src/modules/shared/components/Input/Input";
+import { getChangedValues } from "@src/modules/shared/utils/getChangedValuesFormik";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { PATH } from "../../routes/paths";
+import toast from "react-hot-toast";
+import GoogleButton from "@src/modules/shared/components/GoogleButton";
 
 const initialValues = {
   email: "",
@@ -37,8 +38,8 @@ const Login = () => {
       dispatch(login(changedValues))
         .unwrap()
         .then(() => {
-          toast.success('Welcome to SoftyShop!');
-          navigate('/home');
+          toast.success("Welcome to SoftyShop!");
+          navigate("/home");
         })
         .catch((err) => {
           toast.error(err?.message || "something went wrong");
@@ -75,9 +76,18 @@ const Login = () => {
           type="password"
           required={true}
         />
-        <Button label={"Login"} type={"submit"} loading={submitting} />
+        <Button
+          label={"Login"}
+          type={"submit"}
+          loading={submitting}
+          style={{
+            width: "100%",
+          }}
+        />
+        <GoogleButton />
+
         <div className="links">
-          <Link to={PATH.ROLE} className="link">
+          <Link to={PATH.REGISTER} className="link">
             Create an Account.
           </Link>
           <p>||</p>

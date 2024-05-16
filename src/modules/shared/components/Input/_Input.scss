@@ -36,23 +36,24 @@
     background-color: transparent;
     border-radius: 2px;
     width: 100%;
-    .input-field p {
-      position: absolute;
-      top: -40px;
-      left: 0px;
-      background-color: rgb(255, 255, 255);
-      z-index: 3;
-      font-size: 16px;
-    }
+
     input {
-      width: 320px;
+      width: 100%; // Ensures the input field takes the full width of the container
+      border: none;
+      outline: none;
+      background-color: transparent;
     }
 
-    .input {
-      outline: none;
+    .input-field {
       width: 100%;
-      border: 0;
-      background-color: transparent;
+      p {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background-color: rgb(255, 255, 255);
+        z-index: 3;
+        font-size: 16px;
+      }
     }
 
     .icon {

@@ -20,6 +20,7 @@
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
     "@mui/x-charts": "^7.3.2",
+    "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^1.9.7",
     "accessible-nprogress": "^2.1.2",
     "antd": "^5.5.2",

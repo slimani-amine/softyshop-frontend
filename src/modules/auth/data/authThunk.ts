@@ -3,11 +3,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axios";
 import {
   LoginPayload,
+  LoginWithGoogleBody,
   RegisterPayload,
   enterNewPasswordPayload,
   resetPasswordPayload,
 } from "./authTypes";
 import { clearTokens } from "../utils/token";
+import { googleClientId, googleRedirect, googleSecret } from "@src/config";
 
 export const AUTH_URL = import.meta.env.VITE_APP_AUTH_URL;
 export const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
@@ -25,7 +27,7 @@ export const login = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err);
     }
-  },
+  }
 );
 
 export const register = createAsyncThunk(
@@ -34,7 +36,7 @@ export const register = createAsyncThunk(
     try {
       const response = await axiosInstance.post(
         `${AUTH_URL}auth/register`,
-        query,
+        query
       );
 
       if (response.status === 201) {
@@ -47,7 +49,7 @@ export const register = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err);
     }
-  },
+  }
 );
 
 export const logout = createAsyncThunk(
@@ -65,7 +67,7 @@ export const logout = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err);
     }
-  },
+  }
 );
 
 export const resetPassword = createAsyncThunk(
@@ -74,7 +76,7 @@ export const resetPassword = createAsyncThunk(
     try {
       const response = await axiosInstance.post(
         `${AUTH_URL}auth/password-reset/request`,
-        query,
+        query
       );
 
       if (response.status === 200) {
@@ -85,7 +87,7 @@ export const resetPassword = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err);
     }
-  },
+  }
 );
 
 export const enterNewPassword = createAsyncThunk(
@@ -94,9 +96,8 @@ export const enterNewPassword = createAsyncThunk(
     try {
       const response = await axiosInstance.post(
         `${AUTH_URL}auth/password-reset`,
-        query,
+        query
       );
-
 
       if (response.status === 200) {
         return response.data;
@@ -106,5 +107,48 @@ export const enterNewPassword = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err);
     }
-  },
+  }
 );
+
+export const googleLogin = createAsyncThunk(
+  "auth/googleLogin",
+  async (body: LoginWithGoogleBody, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `${AUTH_URL}auth/google/login`,
+        body
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      }
+
+      throw new Error(response.statusText);
+    } catch (err: any) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const exchangeCodeForIdToken = async (authorizationCode: string) => {
+  try {
+    const response = await axiosInstance.post(
+      `https://oauth2.googleapis.com/token`,
+      {
+        client_id: googleClientId,
+        client_secret: googleSecret,
+        code: authorizationCode,
+        grant_type: "authorization_code",
+        redirect_uri: googleRedirect,
+      }
+    );
+
+    if (response.status === 200) {
+      return response.data.id_token;
+    }
+
+    throw new Error(response.statusText);
+  } catch (err: any) {
+    return console.error(err);
+  }
+};

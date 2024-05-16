@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearTokens, setTokens } from "../utils/token";
-import { login, logout, register } from "./authThunk";
+import { login, logout, register, googleLogin } from "./authThunk";
 
 export interface AuthState {
   status: string;
@@ -87,6 +87,27 @@ const authSlice = createSlice({
       state.error = action?.payload;
       state.status = "failed";
     });
+    builder.addCase(googleLogin.pending, (state) => {
+      state.error = null;
+      state.status = "loading";
+    });
+    builder.addCase(
+      googleLogin.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        const { accessToken, refreshToken, user } = action.payload.data;
+        setTokens(accessToken, refreshToken);
+        state.isAuthenticated = true;
+        state.user = user;
+        state.status = "succeeded";
+      }
+    );
+    builder.addCase(
+      googleLogin.rejected,
+      (state, action: PayloadAction<any>) => {
+        state.error = action?.payload;
+        state.status = "failed";
+      }
+    );
   },
 });
 
