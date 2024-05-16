@@ -1,15 +1,16 @@
-import Button from "@src/modules/shared/components/Button/Button";
-import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { addToCart, getCart } from "@src/modules/customer/data/cartThunk";
-import { ReactComponent as AddToCart } from "../../shared/assets/icons/home/add-product-details.svg";
-import { ReactComponent as RemoveFromCart } from "../../shared/assets/icons/home/removeProductDetails.svg";
-import { BASE_URL } from "@src/modules/auth/data/authThunk";
+import Button from '@src/modules/shared/components/Button/Button';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { addToCart, getCart } from '@src/modules/customer/data/cartThunk';
+import { ReactComponent as AddToCart } from '../../shared/assets/icons/home/add-product-details.svg';
+import { ReactComponent as RemoveFromCart } from '../../shared/assets/icons/home/removeProductDetails.svg';
+import { BASE_URL } from '@src/modules/auth/data/authThunk';
 
 function ProductDetails() {
   const dispatch = useAppDispatch();
   const { productId } = useParams();
+  // const token = useAppSelector((state) => state.cart.token);
   const cart = useAppSelector((state) => state.cart.cart);
   const accessToken = useAppSelector((state) => state.cart.token);
 
@@ -18,13 +19,13 @@ function ProductDetails() {
   const [isInStock, setIsInStock] = useState(false);
   const [product, setProduct] = useState({
     id: 0,
-    name: "",
-    images: "",
-    rating: "",
+    name: '',
+    images: '',
+    rating: '',
     price: 0,
-    brand: { id: 0, name: "" },
-    category: { id: 0, name: "" },
-    store: { id: 0, name: "" },
+    brand: { id: 0, name: '' },
+    category: { id: 0, name: '' },
+    store: { id: 0, name: '' },
     availability: false,
     stockNumber: 0,
   });
@@ -33,6 +34,7 @@ function ProductDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // dispatch(getCart(token));
         const response = await fetch(`${BASE_URL}api/products/${productId}`);
         const data = await response.json();
         setProduct(data.data);
@@ -59,7 +61,7 @@ function ProductDetails() {
     setIsLoading(true);
     Promise.all([
       await dispatch(
-        addToCart({ quantity: quantity + 1, productId: product?.id + "" })
+        addToCart({ quantity: quantity + 1, productId: product?.id + '' })
       ),
       dispatch(getCart(accessToken)),
     ]);
@@ -71,7 +73,7 @@ function ProductDetails() {
     setIsLoading(true);
     Promise.all([
       await dispatch(
-        addToCart({ quantity: quantity - 1, productId: product?.id + "" })
+        addToCart({ quantity: quantity - 1, productId: product?.id + '' })
       ),
       dispatch(getCart(accessToken)),
     ]);
@@ -91,11 +93,11 @@ function ProductDetails() {
         <h1 className="product-name">{product.name}</h1>
         <div className="brand-and-category">
           <p className="brand">
-            <span className="brand-title">Publisher:</span>{" "}
+            <span className="brand-title">Publisher:</span>{' '}
             {product?.brand?.name}
           </p>
           <p className="brand">
-            <span className="brand-title">category:</span>{" "}
+            <span className="brand-title">category:</span>{' '}
             {product?.category?.name}
           </p>
         </div>
@@ -105,9 +107,9 @@ function ProductDetails() {
         <h2 className="price">${product.price.toFixed(2)}</h2>
         <p className="stock">
           {isInStock ? (
-            `Stock Available: (${product?.stockNumber} ${
-              product?.stockNumber == 1 ? "book" : "books"
-            }  remaining)`
+            `In Stock: ${product?.stockNumber} ${
+              product?.stockNumber == 1 ? 'book' : 'books'
+            }  remaining`
           ) : (
             <strong className="out-of-stock">Out of Stock</strong>
           )}
@@ -115,12 +117,12 @@ function ProductDetails() {
         {/* 'primary' | 'info' | 'success' | 'danger' | 'warning' | 'dark' | 'secondary' | 'light' */}
         {quantity == 0 && (
           <Button
-            style={{ width: "160px" }}
+            style={{ width: '160px' }}
             size="lg"
-            variant={isInStock ? "primary" : "secondary"}
+            variant={isInStock ? 'primary' : 'secondary'}
             onClick={handleAddToCart}
             disabled={loading || !isInStock}
-            label={"Add To Cart"}
+            label={'Add To Cart'}
           />
         )}
         {quantity > 0 && (

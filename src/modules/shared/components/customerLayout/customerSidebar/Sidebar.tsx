@@ -5,12 +5,30 @@ import threeStars from '../../../assets/icons/customerLayout/Sidebar/3-stars.png
 import twoStars from '../../../assets/icons/customerLayout/Sidebar/2-stars.png';
 import oneStar from '../../../assets/icons/customerLayout/Sidebar/1-stars.png';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getBrands } from '../data/brandThunk';
 import { getCategories } from '../data/categoryThunk';
 import { brandType, categoryType } from '../data/dataTypes';
+import { Link, useLocation } from 'react-router-dom';
 
 function Sidebar() {
+  const [priceFloor, setPriceFloor] = useState<number | null>(null);
+  const [priceCeiling, setPriceCeiling] = useState<number | null>(null);
+  if (priceFloor == 0 || priceFloor == -1) setPriceFloor(null);
+  if (priceCeiling == 0 || priceCeiling == -1) setPriceCeiling(null);
+
+  // const paramsObj = {
+  //   priceCeiling: '0',
+  //   priceFloor: '0',
+  // };
+  // const searchParams = new URLSearchParams(paramsObj);
+
+  // if (priceFloor && priceCeiling)
+  //   URLSearchParams.append(`${priceFloor}`, `${priceCeiling}`);
+  // console.log(searchParams.toString());
+
+  const { search } = useLocation();
+  console.log(search);
   const dispatch = useAppDispatch();
   const brands = useAppSelector((state) => state.brand.brands);
   const sortedBrands = brands
@@ -37,21 +55,44 @@ function Sidebar() {
   return (
     <div className="sidebar-customer">
       <div className="categories sidebar-chunk">
-        <h5 className="categories-title sidebar-chunk-title">Categories</h5>
+        <Link to="">
+          <h5 className="categories-title sidebar-chunk-title">
+            All Categories
+          </h5>
+        </Link>
         <ul className="list categories-list">
-          {sortedCategories.map((category: categoryType, index: number) => (
-            <li key={index} id={category.id.toString()}>
-              <p>{category.name}</p>
-            </li>
-          ))}
+          {sortedCategories.map((category: categoryType) => {
+            const id = category.id.toString();
+            const categoryQuery =
+              search == '' || search.startsWith('?category_id=')
+                ? `?category_id=${id}`
+                : `&category_id=${id}`;
+            return (
+              <Link key={id} to={categoryQuery}>
+                <li>
+                  <p>{category.name}</p>
+                </li>
+              </Link>
+            );
+          })}
         </ul>
       </div>
       <div className="sidebar-chunk price">
         <div className="sidebar-chunk-title">Price Range</div>
         <div className="price-body">
-          <input placeholder="0" type="number" />
+          <input
+            placeholder="0"
+            type="number"
+            value={priceFloor ?? ''}
+            onChange={(e) => setPriceFloor(+e.target.value)}
+          />
           <p>-</p>
-          <input placeholder="250" type="number" />
+          <input
+            placeholder="250"
+            type="number"
+            value={priceCeiling ?? ''}
+            onChange={(e) => setPriceCeiling(+e.target.value)}
+          />
         </div>
       </div>
       <div className="sidebar-chunk brands-list">
@@ -61,7 +102,7 @@ function Sidebar() {
         ))}
       </div>
       <div className="sidebar-chunk">
-        <CheckedItem>On Sale</CheckedItem>
+        <CheckedItem id={1}>On Sale</CheckedItem>
         <CheckedItem>In stock</CheckedItem>
       </div>
       <div className="sidebar-chunk ratings-chunk">

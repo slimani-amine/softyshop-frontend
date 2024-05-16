@@ -1,6 +1,12 @@
 import { Checkbox, ConfigProvider } from 'antd';
 
-function CheckedItem({ children }: { children: React.ReactNode }) {
+function CheckedItem({
+  children,
+  id,
+}: {
+  children: React.ReactNode;
+  id?: number;
+}) {
   return (
     <div className="checked-item">
       <ConfigProvider
@@ -10,7 +16,7 @@ function CheckedItem({ children }: { children: React.ReactNode }) {
           },
         }}
       >
-        <Checkbox />
+        <Checkbox id={id} onChange={() => console.log(id)} />
       </ConfigProvider>{' '}
       {children}
     </div>

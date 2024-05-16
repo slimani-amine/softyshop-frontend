@@ -17,8 +17,12 @@
     list-style: none;
   }
   .sidebar-chunk {
+    user-select: none;
     padding: 24px 0;
     border-bottom: #f3f5f9 1px solid;
+    .categories-title {
+      cursor: pointer;
+    }
     .sidebar-chunk-title {
       font-size: 14px;
       font-weight: 600;
@@ -39,7 +43,7 @@
       flex-direction: column;
       font-weight: 300;
       color: #7d879c;
-      gap: 14px;
+      gap: 10px;
       li {
         cursor: pointer;
         color: inherit;
