@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { settProducts } from '../data/productSlice';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 import { ProductType } from '../data/dataTypes';
-//
+
 function AllProducts() {
   const All_URL = `${BASE_URL}api/products?perPage=999999999999&page=1`;
   const [Products, setProducts] = useState([]);
