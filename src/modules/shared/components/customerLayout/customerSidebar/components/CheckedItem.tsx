@@ -6,10 +6,10 @@ function CheckedItem({
   id,
 }: {
   children: React.ReactNode;
-  id?: number;
+  id?: number | string;
 }) {
   const [isChecked, setIsChecked] = useState(false);
-  setIsChecked(!isChecked);
+  console.log(id, isChecked);
   return (
     <div className="checked-item">
       <ConfigProvider
@@ -22,7 +22,9 @@ function CheckedItem({
         <Checkbox
           id={id?.toString()}
           checked={isChecked}
-          onChange={() => console.log(id, isChecked)}
+          onChange={() => {
+            setIsChecked(!isChecked);
+          }}
         />
       </ConfigProvider>{' '}
       {children}

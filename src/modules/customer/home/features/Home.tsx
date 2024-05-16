@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import Store from "../components/Store/Store";
-import { BASE_URL } from "@src/modules/auth/data/authThunk";
+import { useEffect, useState } from 'react';
+import Store from '../components/Store/Store';
+import { BASE_URL } from '@src/modules/auth/data/authThunk';
 
 function Home() {
   const [Stores, setStores] = useState([]);
@@ -9,7 +9,11 @@ function Home() {
       try {
         const response = await fetch(`${BASE_URL}api/stores`);
         const data = await response.json();
-        setStores(data.data.docs);
+        const publishedStores = data.data.docs.filter((product: any) => {
+          return product.isPublished;
+        });
+        console.log('🚀 ~ publishedStores ~ publishedStores:', publishedStores);
+        setStores(publishedStores);
       } catch (err: string | unknown) {
         console.error(err);
         return err;

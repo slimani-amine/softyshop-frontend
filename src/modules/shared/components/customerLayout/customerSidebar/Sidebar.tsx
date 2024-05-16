@@ -9,13 +9,16 @@ import { useEffect, useState } from 'react';
 import { getBrands } from '../data/brandThunk';
 import { getCategories } from '../data/categoryThunk';
 import { brandType, categoryType } from '../data/dataTypes';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 function Sidebar() {
   const [priceFloor, setPriceFloor] = useState<number | null>(null);
   const [priceCeiling, setPriceCeiling] = useState<number | null>(null);
   if (priceFloor == 0 || priceFloor == -1) setPriceFloor(null);
   if (priceCeiling == 0 || priceCeiling == -1) setPriceCeiling(null);
+
+  const [searchParams] = useSearchParams();
+  console.log(searchParams.get('category_id'));
 
   // const paramsObj = {
   //   priceCeiling: '0',
@@ -98,12 +101,14 @@ function Sidebar() {
       <div className="sidebar-chunk brands-list">
         <div className="sidebar-chunk-title">Publishing Companies</div>
         {sortedBrands.map((brand: brandType, index) => (
-          <CheckedItem key={index}>{brand.name}</CheckedItem>
+          <CheckedItem id={`brand ${brand.id}`} key={index}>
+            {brand.name}
+          </CheckedItem>
         ))}
       </div>
       <div className="sidebar-chunk">
         <CheckedItem id={1}>On Sale</CheckedItem>
-        <CheckedItem>In stock</CheckedItem>
+        <CheckedItem id={0}>In stock</CheckedItem>
       </div>
       <div className="sidebar-chunk ratings-chunk">
         <div className="sidebar-chunk-title">Ratings</div>
