@@ -16,7 +16,7 @@ function CheckedItem({
           },
         }}
       >
-        <Checkbox id={id} onChange={() => console.log(id)} />
+        <Checkbox id={id?.toString()} onChange={() => console.log(id)} />
       </ConfigProvider>{' '}
       {children}
     </div>
