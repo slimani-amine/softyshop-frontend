@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Product from '../home/components/Product/Product';
 import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { setProducts } from '../data/productSlice';
