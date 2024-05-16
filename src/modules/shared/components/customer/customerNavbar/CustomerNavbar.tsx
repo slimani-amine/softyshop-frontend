@@ -33,14 +33,13 @@ function CustomerNavbar() {
         <option value="goldfish">Music</option>
       </select> */}
       <div className="navigation-elements">
-        <Link to="/home">Home</Link>
+        <Link to="/home">All products</Link>
         <Link to="/bookstores" className="all-customer-books">
-          Bookstores
+          All stores
         </Link>
         {/* <NavigationElement>Pages</NavigationElement>
         <NavigationElement>User Account</NavigationElement>
         <NavigationElement>Vendor Account</NavigationElement> */}
-        <Button label={"Logout"} onClick={handleLogout}></Button>
         {/* <p  className="logout">
           logout
         </p> */}

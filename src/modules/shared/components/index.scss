@@ -8,5 +8,6 @@
 @use "./Search/Search";
 @use "./SearchFilter/SearchFilter";
 @use "./DynamicInput/DynamicInput.scss";
+@use "./GoogleButton/GoogleButton.scss";
 @forward "./customer/index.scss";
 @use "./Spinner/spinner";

@@ -4,37 +4,99 @@ import { ReactComponent as MagnifyingGlass1 } from "../../../assets/icons/custom
 import { ReactComponent as ChevronDownBlack } from "../../../assets/icons/customerLayout/Navbar/chevron-down-black.svg";
 import Logo from "../../../assets/icons/customerLayout/Header/logo-complete.svg";
 import Search from "./components/Search";
-import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
+import { useAppSelector, useAppDispatch } from "@src/modules/shared/store";
 import { showDrawer } from "@src/modules/customer/data/drawerSlice";
 import TheDrawer from "@src/modules/customer/home/components/Cart/Cart";
 import { useNavigate } from "react-router-dom";
 import { getCart } from "@src/modules/customer/data/cartThunk";
 import { useEffect } from "react";
+import { Avatar, Dropdown, Space, MenuProps } from "antd";
+import { ReactComponent as ProfileIcon } from "../../../assets/icons/sidebar/profile.svg";
+import { ReactComponent as SettingsIcon } from "../../../assets/icons/navbar/settings.svg";
+import { ReactComponent as LogoutIcon } from "../../../assets/icons/navbar/logout.svg";
+import { ReactComponent as Buisness } from "../../../assets/icons/navbar/marketing-bill-payment-invoice-receipt-svgrepo-com.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "@src/modules/shared/store";
+import { logout } from "@src/modules/auth/data/authThunk";
 
 function Header() {
   const navigate = useNavigate();
-  const dispatch: any = useAppDispatch();
-  const accessToken = localStorage.getItem('accessToken');
+  const dispatch = useAppDispatch();
+  const accessToken = localStorage.getItem("accessToken");
   const token = useAppSelector((state) => state.cart.token);
+
   useEffect(() => {
     function getTheCart() {
       dispatch(getCart(token));
     }
     getTheCart();
-    if (token == '' || token != accessToken) {
+    if (token === "" || token !== accessToken) {
       window.location.reload();
     }
   }, [token, dispatch, getCart]);
 
   const myCartItemsNumber: any = useAppSelector(
-    (state) => state.cart.cartItems,
+    (state) => state.cart.cartItems
   );
   const role: string | undefined = useAppSelector(
-    (state) => state.auth.user?.role,
+    (state) => state.auth.user?.role
   );
   function interactWithDrawer() {
     dispatch(showDrawer());
   }
+  const current_user = useSelector((state: RootState) => state.auth.user);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  const accountInfoItems: MenuProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <Space>
+          <Avatar size={32} className="navbar-avatar">
+            <img src={current_user?.picture} alt="User picture" />
+          </Avatar>
+          <div className="navbar-account-info">
+            <p className="sidebar-accountinfo-item">{current_user?.email}</p>
+            <p>Role: {current_user?.role}</p>
+          </div>
+        </Space>
+      ),
+      disabled: true,
+    },
+    {
+      key: "2",
+      label: <p>My Workspace</p>,
+      onClick: () => {
+        navigate("/dashboard");
+      },
+      icon: (
+        <Buisness
+          style={{ stroke: "black", width: "18px", height: "18px" }}
+        />
+      ),
+    },
+    {
+      key: "3",
+      label: <p>Settings</p>,
+      icon: (
+        <SettingsIcon
+          style={{ stroke: "black", width: "18px", height: "18px" }}
+        />
+      ),
+    },
+    {
+      key: "4",
+      label: <p onClick={handleLogout}>logout</p>,
+      icon: (
+        <LogoutIcon
+          style={{ stroke: "black", width: "18px", height: "18px" }}
+        />
+      ),
+    },
+  ];
 
   return (
     <>
@@ -42,8 +104,7 @@ function Header() {
       <div className="header">
         <div
           onClick={() => {
-            if (role == "user") navigate("/home");
-            else navigate("/products");
+            navigate("/home");
           }}
           className="logo-wrapper"
         >
@@ -65,7 +126,15 @@ function Header() {
 
         <div className="icons">
           <div className="profile-icon-wrapper">
-            <ProfileIcon1 className="profile-icon" />
+            <Dropdown
+              menu={{ items: accountInfoItems }}
+              trigger={["click"]}
+              placement="bottomRight"
+              arrow
+              className="navbar-dropdown-cursor"
+            >
+              <ProfileIcon1 className="profile-icon" />
+            </Dropdown>
           </div>
           <div className="shopping-bag-icon-wrapper">
             <ShoppingBagIcon1
