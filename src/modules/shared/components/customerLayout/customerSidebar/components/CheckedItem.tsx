@@ -1,4 +1,5 @@
 import { Checkbox, ConfigProvider } from 'antd';
+import { useState } from 'react';
 
 function CheckedItem({
   children,
@@ -7,6 +8,8 @@ function CheckedItem({
   children: React.ReactNode;
   id?: number;
 }) {
+  const [isChecked, setIsChecked] = useState(false);
+  setIsChecked(!isChecked);
   return (
     <div className="checked-item">
       <ConfigProvider
@@ -16,7 +19,11 @@ function CheckedItem({
           },
         }}
       >
-        <Checkbox id={id} onChange={() => console.log(id)} />
+        <Checkbox
+          id={id?.toString()}
+          checked={isChecked}
+          onChange={() => console.log(id, isChecked)}
+        />
       </ConfigProvider>{' '}
       {children}
     </div>
