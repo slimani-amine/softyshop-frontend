@@ -139,6 +139,10 @@ function Header() {
             <ShoppingBagIcon1
               onClick={() => interactWithDrawer()}
               className="shopping-bag-icon"
+              style={{
+                width: '40px',
+                height: '40px',
+              }}
             />
           </div>
 

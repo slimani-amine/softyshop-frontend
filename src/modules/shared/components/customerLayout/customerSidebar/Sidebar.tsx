@@ -9,7 +9,8 @@ import { useEffect, useState } from 'react';
 import { getBrands } from '../data/brandThunk';
 import { getCategories } from '../data/categoryThunk';
 import { brandType, categoryType } from '../data/dataTypes';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { Checkbox, ConfigProvider } from 'antd';
 
 function Sidebar() {
   const [priceFloor, setPriceFloor] = useState<number | null>(null);
@@ -17,12 +18,22 @@ function Sidebar() {
   if (priceFloor == 0 || priceFloor == -1) setPriceFloor(null);
   if (priceCeiling == 0 || priceCeiling == -1) setPriceCeiling(null);
 
+  console.log(priceFloor, priceCeiling);
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams.get('category_id'));
+  const category_id = searchParams.get('category_id');
+
+  const [isOnSaleChecked, setIsOnSaleChecked] = useState(false);
+  const [isInStockChecked, setIsInStockChecked] = useState(false);
   // const paramsObj = {
-  //   priceCeiling: '0',
-  //   priceFloor: '0',
+  //   priceCeiling: '',
+  //   priceFloor: '',
+  //   category_id: '',
+  //   inStock: '',
+  //   onSale: '',
   // };
+  // delete paramsObj?.setSearchParams(new URLSearchParams(paramsObj));
+  // console.log(paramsObj.toString());
+
   // const searchParams = new URLSearchParams(paramsObj);
 
   // if (priceFloor && priceCeiling)
@@ -54,14 +65,149 @@ function Sidebar() {
     dispatch(getCategories());
   }, [dispatch, getBrands]);
 
+  useEffect(
+    () => {
+      if (
+        priceCeiling &&
+        priceFloor &&
+        category_id &&
+        isInStockChecked &&
+        isOnSaleChecked
+      )
+        setSearchParams({
+          priceCeiling: priceCeiling.toString(),
+          priceFloor: priceFloor.toString(),
+          inStock: isInStockChecked.toString(),
+          onSale: isOnSaleChecked.toString(),
+          category_id,
+        });
+      if (
+        priceCeiling &&
+        priceFloor &&
+        !category_id &&
+        isInStockChecked &&
+        !isOnSaleChecked
+      ) {
+        setSearchParams({
+          priceCeiling: priceCeiling.toString(),
+          priceFloor: priceFloor.toString(),
+          inStock: isInStockChecked.toString(),
+          onSale: isOnSaleChecked.toString(),
+        });
+      }
+      if (
+        priceCeiling &&
+        priceFloor &&
+        !category_id &&
+        !isInStockChecked &&
+        isOnSaleChecked
+      ) {
+        setSearchParams({
+          priceCeiling: priceCeiling.toString(),
+          priceFloor: priceFloor.toString(),
+          inStock: isInStockChecked.toString(),
+          onSale: isOnSaleChecked.toString(),
+        });
+      }
+      if (
+        priceCeiling &&
+        priceFloor &&
+        !category_id &&
+        isInStockChecked &&
+        isOnSaleChecked
+      ) {
+        setSearchParams({
+          priceCeiling: priceCeiling.toString(),
+          priceFloor: priceFloor.toString(),
+          inStock: isInStockChecked.toString(),
+          onSale: isOnSaleChecked.toString(),
+        });
+      }
+      if (
+        priceCeiling &&
+        priceFloor &&
+        category_id &&
+        !isInStockChecked &&
+        !isOnSaleChecked
+      ) {
+        setSearchParams({
+          priceCeiling: priceCeiling.toString(),
+          priceFloor: priceFloor.toString(),
+          category_id,
+        });
+      }
+      if (
+        priceCeiling &&
+        priceFloor &&
+        !category_id &&
+        !isInStockChecked &&
+        !isOnSaleChecked
+      ) {
+        setSearchParams({
+          priceCeiling: priceCeiling.toString(),
+          priceFloor: priceFloor.toString(),
+        });
+      }
+
+      if (
+        (category_id && isInStockChecked && !priceCeiling && !priceFloor) ||
+        (category_id && isOnSaleChecked && !priceCeiling && !priceFloor)
+      )
+        setSearchParams({
+          inStock: isInStockChecked.toString(),
+          onSale: isOnSaleChecked.toString(),
+          category_id,
+        });
+      if (
+        (isInStockChecked || isOnSaleChecked) &&
+        !category_id &&
+        !priceCeiling &&
+        !priceFloor
+      )
+        setSearchParams({
+          inStock: isInStockChecked.toString(),
+          onSale: isOnSaleChecked.toString(),
+        });
+      if (
+        !isInStockChecked &&
+        !isOnSaleChecked &&
+        !priceCeiling &&
+        !priceFloor &&
+        category_id
+      )
+        setSearchParams({
+          category_id,
+        });
+      if (
+        !isInStockChecked &&
+        !isOnSaleChecked &&
+        !category_id &&
+        !priceCeiling &&
+        !priceFloor
+      )
+        setSearchParams({});
+    },
+
+    //
+    [
+      category_id,
+      isInStockChecked,
+      isOnSaleChecked,
+      priceCeiling,
+      priceFloor,
+      search,
+    ]
+  );
+
   return (
     <div className="sidebar-customer">
       <div className="categories sidebar-chunk">
-        <Link to="">
-          <h5 className="categories-title sidebar-chunk-title">
-            All Categories
-          </h5>
-        </Link>
+        <h5
+          onClick={() => setSearchParams({})}
+          className="categories-title sidebar-chunk-title"
+        >
+          All Categories
+        </h5>
         <ul className="list categories-list">
           {sortedCategories.map((category: categoryType) => {
             const id = category.id.toString();
@@ -103,8 +249,40 @@ function Sidebar() {
         ))}
       </div>
       <div className="sidebar-chunk">
-        <CheckedItem id={'onSale'}>On Sale</CheckedItem>
-        <CheckedItem id={'inStock'}>In stock</CheckedItem>
+        <div className="checked-item payment-method">
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: '#0F3460',
+              },
+            }}
+          >
+            <Checkbox
+              checked={isOnSaleChecked}
+              onChange={() => {
+                setIsOnSaleChecked(!isOnSaleChecked);
+              }}
+            />
+          </ConfigProvider>{' '}
+          On Sale
+        </div>
+        <div className="checked-item payment-method">
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: '#0F3460',
+              },
+            }}
+          >
+            <Checkbox
+              checked={isInStockChecked}
+              onChange={() => {
+                setIsInStockChecked(!isInStockChecked);
+              }}
+            />
+          </ConfigProvider>{' '}
+          In Stock
+        </div>
       </div>
       <div className="sidebar-chunk ratings-chunk">
         <div className="sidebar-chunk-title">Ratings</div>
