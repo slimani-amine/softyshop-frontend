@@ -19,14 +19,9 @@ function AllProducts() {
         const products = data.data.docs.map((product: ProductType) => {
           return { ...product, quantity: 0 };
         });
-        console.log('🚀 ~ products ~ products:', products);
         const publishedProducts = products.filter((product: any) => {
           return product.isPublished;
         });
-        console.log(
-          '🚀 ~ publishedProducts ~ publishedProducts:',
-          publishedProducts
-        );
         // setProducts(publishedProducts);
         dispatch(setProducts(publishedProducts));
       } catch (err: string | unknown) {

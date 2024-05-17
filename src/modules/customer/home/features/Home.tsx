@@ -12,7 +12,7 @@ function Home() {
         const publishedStores = data.data.docs.filter((product: any) => {
           return product.isPublished;
         });
-        console.log('🚀 ~ publishedStores ~ publishedStores:', publishedStores);
+        // console.log('🚀 ~ publishedStores ~ publishedStores:', publishedStores);
         setStores(publishedStores);
       } catch (err: string | unknown) {
         console.error(err);

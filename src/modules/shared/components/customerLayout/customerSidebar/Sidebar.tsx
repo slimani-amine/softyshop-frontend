@@ -17,9 +17,8 @@ function Sidebar() {
   if (priceFloor == 0 || priceFloor == -1) setPriceFloor(null);
   if (priceCeiling == 0 || priceCeiling == -1) setPriceCeiling(null);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   console.log(searchParams.get('category_id'));
-
   // const paramsObj = {
   //   priceCeiling: '0',
   //   priceFloor: '0',
@@ -66,16 +65,13 @@ function Sidebar() {
         <ul className="list categories-list">
           {sortedCategories.map((category: categoryType) => {
             const id = category.id.toString();
-            const categoryQuery =
-              search == '' || search.startsWith('?category_id=')
-                ? `?category_id=${id}`
-                : `&category_id=${id}`;
+            function handleCategoryQuery(id: string) {
+              setSearchParams({ category_id: id });
+            }
             return (
-              <Link key={id} to={categoryQuery}>
-                <li>
-                  <p>{category.name}</p>
-                </li>
-              </Link>
+              <li key={id} onClick={() => handleCategoryQuery(id)}>
+                <p>{category.name}</p>
+              </li>
             );
           })}
         </ul>
@@ -107,24 +103,24 @@ function Sidebar() {
         ))}
       </div>
       <div className="sidebar-chunk">
-        <CheckedItem id={1}>On Sale</CheckedItem>
-        <CheckedItem id={0}>In stock</CheckedItem>
+        <CheckedItem id={'onSale'}>On Sale</CheckedItem>
+        <CheckedItem id={'inStock'}>In stock</CheckedItem>
       </div>
       <div className="sidebar-chunk ratings-chunk">
         <div className="sidebar-chunk-title">Ratings</div>
-        <CheckedItem>
+        <CheckedItem id="rating-5">
           <img src={fiveStars} alt="" />
         </CheckedItem>
-        <CheckedItem>
+        <CheckedItem id="rating-4">
           <img src={fourStars} alt="" />
         </CheckedItem>
-        <CheckedItem>
+        <CheckedItem id="rating-3">
           <img src={threeStars} alt="" />
         </CheckedItem>
-        <CheckedItem>
+        <CheckedItem id="rating-2">
           <img src={twoStars} alt="" />
         </CheckedItem>
-        <CheckedItem>
+        <CheckedItem id="rating-1">
           <img src={oneStar} alt="" />
         </CheckedItem>
       </div>

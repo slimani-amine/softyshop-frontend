@@ -1,4 +1,5 @@
 .customer-navbar {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,10 +19,12 @@
     justify-content: space-between;
     // gap: 2px;
     .icon-and-title {
+      width: 100%;
       display: flex;
       align-items: center;
       gap: 2px;
       .categories-title {
+        width: 100%;
         font-size: 14px;
         font-weight: 600;
         transform: translate(0, 1px);
@@ -29,10 +32,11 @@
     }
   }
   .navigation-elements {
+    width: 100%;
     display: flex;
-    align-items: center;
+    align-items: end;
     gap: 32px;
-
+    justify-content: end;
     .all-customer-books {
       margin-right: 24px;
     }
