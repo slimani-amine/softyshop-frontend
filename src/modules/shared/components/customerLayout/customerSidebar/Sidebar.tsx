@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { useEffect, useState } from 'react';
 import { getBrands } from '../data/brandThunk';
 import { getCategories } from '../data/categoryThunk';
-import { brandType, categoryType } from '../data/dataTypes';
+import { categoryType } from '../data/dataTypes';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Checkbox, ConfigProvider } from 'antd';
 
@@ -43,14 +43,14 @@ function Sidebar() {
   const { search } = useLocation();
   console.log(search);
   const dispatch = useAppDispatch();
-  const brands = useAppSelector((state) => state.brand.brands);
-  const sortedBrands = brands
-    .slice()
-    .sort((a: categoryType, b: categoryType) => {
-      if (a.name > b.name) return 1;
-      if (a.name < b.name) return -1;
-      else return 0;
-    });
+  // const brands = useAppSelector((state) => state.brand.brands);
+  // const sortedBrands = brands
+  //   .slice()
+  //   .sort((a: categoryType, b: categoryType) => {
+  //     if (a.name > b.name) return 1;
+  //     if (a.name < b.name) return -1;
+  //     else return 0;
+  //   });
   const categories = useAppSelector((state) => state.category.categories);
   const sortedCategories = categories
     .slice()
@@ -68,11 +68,21 @@ function Sidebar() {
   useEffect(
     () => {
       if (
-        priceCeiling &&
-        priceFloor &&
-        category_id &&
-        isInStockChecked &&
-        isOnSaleChecked
+        (priceCeiling &&
+          priceFloor &&
+          category_id &&
+          isInStockChecked &&
+          isOnSaleChecked) ||
+        (priceCeiling &&
+          priceFloor &&
+          category_id &&
+          !isInStockChecked &&
+          isOnSaleChecked) ||
+        (priceCeiling &&
+          priceFloor &&
+          category_id &&
+          isInStockChecked &&
+          !isOnSaleChecked)
       )
         setSearchParams({
           priceCeiling: priceCeiling.toString(),
@@ -151,7 +161,8 @@ function Sidebar() {
 
       if (
         (category_id && isInStockChecked && !priceCeiling && !priceFloor) ||
-        (category_id && isOnSaleChecked && !priceCeiling && !priceFloor)
+        (category_id && isInStockChecked && priceCeiling && !priceFloor) ||
+        (category_id && isOnSaleChecked && !priceCeiling && priceFloor)
       )
         setSearchParams({
           inStock: isInStockChecked.toString(),
@@ -240,14 +251,14 @@ function Sidebar() {
           />
         </div>
       </div>
-      <div className="sidebar-chunk brands-list">
+      {/*<div className="sidebar-chunk brands-list">
         <div className="sidebar-chunk-title">Publishing Companies</div>
         {sortedBrands.map((brand: brandType, index) => (
           <CheckedItem id={`brand ${brand.id}`} key={index}>
             {brand.name}
           </CheckedItem>
         ))}
-      </div>
+      </div>*/}
       <div className="sidebar-chunk">
         <div className="checked-item payment-method">
           <ConfigProvider

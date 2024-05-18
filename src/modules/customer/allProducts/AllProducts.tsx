@@ -4,12 +4,14 @@ import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
 import { setProducts } from '../data/productSlice';
 import { BASE_URL } from '@src/modules/auth/data/authThunk';
 import { ProductType } from '../data/dataTypes';
+import { useLocation } from 'react-router';
 
 function AllProducts() {
   const All_URL = `${BASE_URL}api/products?perPage=999999999999&page=1`;
   const dispatch = useAppDispatch();
   const Products = useAppSelector((state) => state.product.products);
 
+  const { search } = useLocation();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,6 +34,33 @@ function AllProducts() {
     fetchData();
   }, [BASE_URL]);
   const cart = useAppSelector((state) => state.cart.cart);
+
+  console.log(search);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}api/products${search}&perPage=999999999999&page=1`
+        );
+        const data = await response.json();
+
+        const products = data.data.docs.map((product: ProductType) => {
+          return { ...product, quantity: 0 };
+        });
+        const publishedProducts = products.filter((product: any) => {
+          return product.isPublished;
+        });
+        // setProducts(publishedProducts);
+        dispatch(setProducts(publishedProducts));
+      } catch (err: string | unknown) {
+        return err;
+      }
+    };
+
+    fetchData();
+  }, [search]);
+
   const updatedProducts = Products.map((product: any) => {
     const updatedProduct = cart.find(
       (item) => item?.product?.id === product?.id
