@@ -1,7 +1,8 @@
+import { useLocation } from "react-router-dom";
+import Footer from "../../components/customer/customerFooter/Footer";
 import Header from "../../components/customer/customerHeader/Header";
 import Sidebar from "../../components/customer/customerSidebar/Sidebar";
-import Footer from "../../components/customer/customerFooter/Footer";
-import { useLocation } from "react-router-dom";
+import CustomerNavbar from "../../components/customer/customerNavbar/CustomerNavbar";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -9,25 +10,30 @@ interface MainLayoutProps {
 
 function CustomerLayout({ children }: MainLayoutProps) {
   const { pathname } = useLocation();
-  const hideSidebar = pathname === "/checkout";
-  const hideFooter = pathname === "/checkout";
-
   return (
     <div className="customer-layout">
       <div className="header-and-nav">
         <div className="header-container">
           <Header />
         </div>
+        <div className="nav-container">
+          <CustomerNavbar />
+        </div>
       </div>
       <div className="sidebar-and-outlet">
-        {(
+        {pathname === "/checkout" || pathname === "/my-profile" ? (
+          <div></div>
+        ) : (
           <div className="sidebar-container">
             <Sidebar />
           </div>
         )}
         <div className="outlet">{children}</div>
       </div>
-      { (
+
+      {pathname == "/checkout" ? (
+        <div></div>
+      ) : (
         <div className="footer-container">
           <Footer />
         </div>

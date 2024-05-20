@@ -146,8 +146,22 @@ function StoreDetails() {
       {updatedProducts.length === 0 ? (
         <Empty description={<span>This store is empty</span>} />
       ) : (
-        <div className="books">
-          <div className="all-products">
+        <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          margin: "0 0 36px 24px"
+
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gridAutoRows: "auto",
+            gridGap: "1rem",
+          }}
+        >
             {updatedProducts.map(
               (
                 {

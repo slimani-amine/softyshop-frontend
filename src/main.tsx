@@ -1,6 +1,5 @@
 // Import necessary components and providers
 import AuthProvider from "./modules/auth/context/AuthProvider";
-import GoogleAuthProvider from "./modules/auth/providers/google-auth-provider";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "./modules/shared/store";

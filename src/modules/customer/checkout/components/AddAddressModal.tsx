@@ -61,7 +61,7 @@ const AddAddressModal: React.FC = () => {
         })
         .finally(() => {
           setSubmitting(false);
-          dispatch(getAddresses(userId));
+          dispatch(getAddresses({userId}));
         });
       return handleOk();
     },

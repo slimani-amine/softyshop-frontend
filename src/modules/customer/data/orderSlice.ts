@@ -33,7 +33,10 @@ const orderSlice = createSlice({
     });
     builder.addCase(getOrders.fulfilled, (state, action) => {
       state.status = "succeeded";
-      state.myOrders = action.payload;
+      state.myOrders = {
+        orders: action.payload.docs,
+        totalRecords: action.payload.meta.totalRecords,
+      };
     });
     builder.addCase(getOrders.rejected, (state, action) => {
       state.error = action?.payload as string;

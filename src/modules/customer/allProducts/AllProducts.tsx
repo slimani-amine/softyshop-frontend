@@ -12,7 +12,7 @@ function AllProducts() {
   const dispatch = useAppDispatch();
   const Products = useAppSelector((state) => state.product.products);
 
-  const perPage = 6; 
+  const perPage = 6;
 
   const fetchData = async (page: number, perPage: number) => {
     try {
@@ -55,19 +55,20 @@ function AllProducts() {
 
   return (
     <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      
-    }}
-  >
-    <div
-      className="all-products"
       style={{
         display: "flex",
-        height: "auto",
+        flexDirection: "column",
+        margin: "0 0 36px 24px"
       }}
     >
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gridAutoRows: "auto",
+          gridGap: "1rem",
+        }}
+      >
         {updatedProducts?.map(
           (
             {

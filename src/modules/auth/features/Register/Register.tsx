@@ -8,7 +8,6 @@ import { getChangedValues } from "@src/modules/shared/utils/getChangedValuesForm
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PATH } from "../../routes/paths";
-import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import GoogleButton from "@src/modules/shared/components/GoogleButton";
 
@@ -25,7 +24,6 @@ const initialValues = {
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { role } = useSelector((state: any) => state.role);
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -62,14 +60,13 @@ const Register = () => {
     }),
     onSubmit: (values) => {
       setSubmitting(true);
-      values.role = role;
+      values.role = "vendor";
       const changedValues = getChangedValues(values, initialValues);
       dispatch(register(changedValues))
         .unwrap()
         .then(() => {
           toast.success("Account created successfully");
-          if (role == "user") navigate("/home");
-          if (role == "vendor") navigate("/products");
+          navigate("/home");
         })
         .catch((err) => {
           toast.error(err?.message || "something-went-wrong");

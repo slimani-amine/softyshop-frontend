@@ -17,7 +17,7 @@ function AddressTitle({
     Promise.all([
       await dispatch(deleteAddress(id)),
       toast.success("Address deleted successfully"),
-      dispatch(getAddresses(userId)),
+      dispatch(getAddresses({userId})),
     ]);
   }
   return (

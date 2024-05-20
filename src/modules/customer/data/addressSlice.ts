@@ -1,21 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addAddress, getAddresses } from "./addressThunk";
-import { addressType } from "./dataTypes";
 
-interface addressStateType {
-  address: addressType[];
-  selectedAddress: number | null;
-  status: string;
-  error: string;
-  isPopUpShown: boolean;
-  agreedToPayAllDeliveryFees: boolean;
-}
-
-const initialState: addressStateType = {
-  address: [],
+const initialState = {
+  addresses: { addresses: [], totalRecords: 1 },
   selectedAddress: null,
-  status: '',
-  error: '',
+  status: "",
+  error: "",
   isPopUpShown: false,
   agreedToPayAllDeliveryFees: false,
 };
@@ -58,7 +48,10 @@ const addressSlice = createSlice({
     });
     builder.addCase(getAddresses.fulfilled, (state, action) => {
       state.status = "succeeded";
-      state.address = action.payload;
+      state.addresses = {
+        addresses: action.payload.docs,
+        totalRecords: action.payload.meta.totalRecords,
+      };
     });
     builder.addCase(getAddresses.rejected, (state, action) => {
       state.error = action?.payload as string;

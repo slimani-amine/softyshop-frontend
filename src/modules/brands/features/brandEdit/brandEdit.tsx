@@ -22,9 +22,8 @@ interface AddBrandFormProps {
 const EditBrandForm: FC<AddBrandFormProps> = () => {
   const navigate = useNavigate();
   const [files, setFile] = useState<any>(null);
+  console.log("🚀 ~ files:", files)
   const [uploading, setUploading] = useState(false);
-  console.log(uploading);
-  console.log(files);
   const [selectedFileUrl, setSelectedFileUrl] = useState<string>();
   const [form] = Form.useForm();
   const [updateBrand] = useUpdateBrandMutation();

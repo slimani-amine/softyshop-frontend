@@ -30,10 +30,10 @@ export const addOrder = createAsyncThunk(
 
 export const getOrders = createAsyncThunk(
   "order/getOrders",
-  async (query: { page: number; pageSize: number }) => {
+  async (query: { page: number; perPage: number }) => {
     try {
       const response = await fetch(
-        `${BASE_URL}api/shopping/my-cart/my-orders?page=${query.page}&pageSize=${query.pageSize}`,
+        `${BASE_URL}api/shopping/my-cart/my-orders?page=${query.page}&perPage=${query.perPage}`,
         {
           method: "GET",
           mode: "cors",
@@ -51,7 +51,6 @@ export const getOrders = createAsyncThunk(
       }
 
       const {data} = await response.json();
-      console.log("🚀 ~ data:", data)
       return data;
     } catch (error) {
       console.error("Error fetching orders:", error);

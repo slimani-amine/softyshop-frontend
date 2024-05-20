@@ -8,11 +8,9 @@ import AddressTitle from "./components/AddressTitle";
 import AddressContent from "./components/AddressContent";
 import CheckoutSelect from "./components/CheckoutSelect";
 import AddAddressModal from "./components/AddAddressModal";
-
 import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
 import { getAddresses } from "../data/addressThunk";
 import { useEffect } from "react";
-import { addressType } from "../data/dataTypes";
 import DifferentStoresModal from "./components/DifferentStoresModal";
 import { popItUp, refuseAllFees } from "../data/addressSlice";
 import { checkIt, setCheckedToFalse } from "../data/checkoutSlice";
@@ -35,7 +33,7 @@ function Checkout() {
   const Total = total + 28;
   const selectedAddress = useAppSelector(
     (state) => state.address.selectedAddress
-  );
+  ) as any;
   const agreedToPayAllDeliveryFees = useAppSelector(
     (state) => state.address.agreedToPayAllDeliveryFees
   );
@@ -52,15 +50,13 @@ function Checkout() {
 
   useEffect(() => {
     function getAllAddresses() {
-      dispatch(getAddresses(userId));
+      dispatch(getAddresses({ userId }));
     }
     getAllAddresses();
     dispatch(setCheckedToFalse());
   }, [userId, dispatch, getAddresses]);
 
-  const addresses: addressType[] = useAppSelector(
-    (state) => state?.address?.address,
-  );
+  const { addresses } = useAppSelector((state) => state?.address?.addresses);
 
   // const [chosenAddress, setChosenAddress] = useState(null);
   const isOrderReady =
@@ -84,7 +80,7 @@ function Checkout() {
   function handleOrder() {
     dispatch(
       addOrder({
-        address_id: selectedAddress?.toString(),
+        address_id: selectedAddress,
         paymentMethod_id: "2",
         // paymentMethod_id: "1",
       })
@@ -140,7 +136,7 @@ function Checkout() {
                   phoneNumber: string;
                   id: number;
                 },
-                index,
+                index
               ) => {
                 return (
                   <div key={index} className="checkout-address">
@@ -154,7 +150,7 @@ function Checkout() {
                     </Address>
                   </div>
                 );
-              },
+              }
             )}
           </div>
         </Section>

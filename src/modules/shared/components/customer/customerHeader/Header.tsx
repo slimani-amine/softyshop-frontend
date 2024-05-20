@@ -82,16 +82,6 @@ function Header() {
       ),
     },
     {
-      key: "3",
-      label: <p>My Workspace</p>,
-      onClick: () => {
-        navigate("/dashboard");
-      },
-      icon: (
-        <Buisness style={{ stroke: "black", width: "18px", height: "18px" }} />
-      ),
-    },
-    {
       key: "4",
       label: <p>Settings</p>,
       icon: (
@@ -138,15 +128,15 @@ function Header() {
         </div>
 
         <div className="icons">
-          <Link
+          {/* <Link
             to="/home"
             className="profile-icon-wrapper"
             style={{
               transform: "translate(3px,8px)",
             }}
-          >
-            <Home className="profile-icon" />
-          </Link>
+          > */}
+            {/* <Home className="profile-icon" />
+          </Link> */}
 
           {/* <div
             className="profile-icon-wrapper"

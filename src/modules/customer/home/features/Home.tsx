@@ -40,12 +40,15 @@ function Home() {
         style={{
           display: "flex",
           flexDirection: "column",
+          margin: "0 0 36px 24px"
         }}
       >
         <div
-          className="all-products"
           style={{
-            display: "flex",
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gridAutoRows: "auto",
+            gridGap: "1rem",
           }}
         >
           {Stores?.map(

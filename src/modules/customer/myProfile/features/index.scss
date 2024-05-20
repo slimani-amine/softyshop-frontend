@@ -5,11 +5,15 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  margin: 1% 0;
   .card__img {
     width: 100%;
   }
   .avatar {
     transform: translate(0, -50px);
+  }
+  .card__title {
+    font-weight: bold;
   }
   .description {
     transform: translate(0, -50px);
@@ -45,19 +49,12 @@
   display: flex;
   gap: 24px;
 }
-.addresses-section {
-  max-width: 800px;
-  width: 800px;
-  min-width: 800px;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #d23e57 #fff;
+.section-content-empty {
+  justify-content: center;
 }
 
 .orders-section {
   width: 100%;
-  display: block;
-  gap: 20px;
 }
 
 .order-card {
@@ -67,7 +64,6 @@
   overflow: hidden;
   position: relative;
   transition: transform 0.2s ease-in-out;
-  width: 100%;
   margin: 20px 0 0 0;
 }
 
@@ -95,6 +91,11 @@
 .order-id {
   font-size: 14px;
   font-weight: bold;
+  display: inline-block;
+  width: 180px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
 
 .order-status {

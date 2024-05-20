@@ -33,9 +33,12 @@ const Navbar: React.FC<INavbarProps> = () => {
       key: "1",
       label: (
         <Space>
-          <Avatar size={32} className="navbar-avatar">
-            <img src={`${current_user?.picture}`} alt="" />
-          </Avatar>
+          <Avatar
+            size={32}
+            className="navbar-avatar"
+            src={current_user?.picture}
+            alt="User picture"
+          />
           <div className="navbar-account-info">
             <p className="sidebar-accountinfo-item">{current_user?.email}</p>
             <p>Role: {current_user?.role}</p>

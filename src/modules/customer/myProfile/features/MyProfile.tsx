@@ -19,34 +19,46 @@ function MyProfile() {
   const navigate = useNavigate();
   const current_user = useSelector((state: any) => state.auth.user);
   const dispatch = useAppDispatch();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(3);
+  const [orderCurrentPage, setOrderCurrentPage] = useState(1);
+  const [orderPageSize] = useState(3);
+  const [addressesCurrentPage, setAddressesCurrentPage] = useState(1);
+  const [addressesPageSize] = useState(3);
+
   useEffect(() => {
-    function getAllAddresses() {
-      dispatch(getAddresses(current_user.id));
+    if (current_user) {
+      dispatch(
+        getAddresses({
+          page: addressesCurrentPage,
+          perPage: addressesPageSize,
+          userId: current_user.id,
+        })
+      );
+      dispatch(getOrders({ page: orderCurrentPage, perPage: orderPageSize }));
     }
-    function getMyOrders() {
-      dispatch(getOrders({ page: currentPage, pageSize }));
-    }
-    getAllAddresses();
-    getMyOrders();
-  }, [current_user, dispatch, getAddresses, getOrders]);
+  }, [
+    current_user,
+    dispatch,
+    addressesCurrentPage,
+    orderCurrentPage,
+    addressesPageSize,
+    orderPageSize,
+  ]);
 
-  const addresses: addressType[] = useAppSelector(
-    (state) => state?.address?.address
+  const { addresses, totalRecords: addressesTotalRecords } = useAppSelector(
+    (state) => state?.address?.addresses || { addresses: [], totalRecords: 0 }
   );
 
-  const { orders, totalRecords } = useAppSelector(
-    (state) => state?.order.myOrders
+  const { orders, totalRecords: ordersTotalRecords } = useAppSelector(
+    (state) => state?.order?.myOrders || { orders: [], totalRecords: 0 }
   );
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  const handleOrdersPageChange = (page: number) => {
+    setOrderCurrentPage(page);
   };
-  const displayedOrders = orders.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+
+  const handleAddressesPageChange = (page: number) => {
+    setAddressesCurrentPage(page);
+  };
 
   return (
     <div className="card">
@@ -197,6 +209,51 @@ function MyProfile() {
           </Button>
         </div>
       </div>
+
+      <Section>
+        <div className="checkout-title-bar-and-button">
+          <div className="checkout-title-bar">
+            <Number> </Number> <Title>My Orders</Title>
+          </div>
+        </div>
+        <div
+          className={`section-content orders-section ${
+            orders.length === 0 && "section-content-empty"
+          }`}
+        >
+          {orders.length === 0 ? (
+            <Empty description={<span>You don't have any orders.</span>} />
+          ) : (
+            orders.map((order: orderType) => (
+              <div key={order.id} className="order-card">
+                <div className="order-details"> 
+                  <div className="order-info">
+                    <p className="order-id">#{order.id}</p>
+                    <p className={`order-status status-${order.status}`}>
+                      {order.status}
+                    </p>
+                  </div>
+                  <p className="order-date">{convertDate(order.createdAt)}</p>
+                  <div className="order-cart">
+                    <p>{order.cart.totalQuantity} Product(s)</p>
+                    <p>Total ${order.cart.totalAmount.toFixed(2)}</p>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+        {ordersTotalRecords > orderPageSize && (
+          <Pagination
+            className="pagination"
+            current={orderCurrentPage}
+            pageSize={orderPageSize}
+            total={ordersTotalRecords}
+            onChange={handleOrdersPageChange}
+            showSizeChanger={false}
+          />
+        )}
+      </Section>
       <Section>
         <div className="checkout-title-bar-and-button">
           <div className="checkout-title-bar">
@@ -213,7 +270,7 @@ function MyProfile() {
           {addresses.length === 0 ? (
             <Empty description={<span>You don't have addresses </span>} />
           ) : (
-            addresses.map((address, index) => {
+            addresses.map((address: addressType, index) => {
               const {
                 state,
                 address: streetAddress,
@@ -237,44 +294,13 @@ function MyProfile() {
             })
           )}
         </div>
-      </Section>
-      <Section>
-        <div className="checkout-title-bar-and-button">
-          <div className="checkout-title-bar">
-            <Number> </Number> <Title>My Orders</Title>
-          </div>
-        </div>
-        <div className="section-content orders-section">
-          {orders.length === 0 ? (
-            <Empty description={<span>You don't have any orders.</span>} />
-          ) : (
-            displayedOrders.map((order: orderType) => (
-              <div key={order.id} className="order-card">
-                {/* Example image, adjust based on your data */}
-                <div className="order-details">
-                  <div className="order-info">
-                    <p className="order-id">#{order.id}</p>
-                    <p className={`order-status status-${order.status}`}>
-                      {order.status}
-                    </p>
-                  </div>
-                  <p className="order-date">{convertDate(order.createdAt)}</p>
-                  <div className="order-cart">
-                    <p>{order.cart.totalQuantity} Product(s)</p>
-                    <p>Total ${order.cart.totalAmount.toFixed(2)}</p>
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-        {totalRecords > pageSize && (
+        {addressesTotalRecords > addressesPageSize && (
           <Pagination
             className="pagination"
-            current={currentPage}
-            pageSize={pageSize}
-            total={totalRecords}
-            onChange={handlePageChange}
+            current={addressesCurrentPage}
+            pageSize={addressesPageSize}
+            total={addressesTotalRecords}
+            onChange={handleAddressesPageChange}
             showSizeChanger={false}
           />
         )}

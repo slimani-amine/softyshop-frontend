@@ -7,7 +7,6 @@ import { PATH } from "@src/modules/auth/routes/paths";
 import { useDispatch, useSelector } from "react-redux";
 import { initialStateType, setRole } from "../../data/roleSlice";
 // import { useEffect } from 'react';
-import { useAppSelector } from "@src/modules/shared/store";
 import { Link } from "react-router-dom";
 
 function Role() {
@@ -15,8 +14,6 @@ function Role() {
   const role: any = useSelector((state: initialStateType) => state.role);
   const navigate = useNavigate();
   // const { pathname } = useLocation();
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated);
 
   // useEffect(
   //   function () {

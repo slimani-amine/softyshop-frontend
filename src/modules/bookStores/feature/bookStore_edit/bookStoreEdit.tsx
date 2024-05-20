@@ -87,13 +87,12 @@ const EditShopForm: FC<EditShopFormProps> = ({ initialValues }) => {
   const ChoosePlaceOnClick: FC<{
     handleClick: (lat: number, lng: number) => void;
   }> = ({ handleClick }) => {
-    const map = useMapEvents({
+    useMapEvents({
       click: (event: any) => {
         const { lat, lng } = event.latlng;
         handleClick(lat, lng);
       },
     });
-    console.log(map);
     return null;
   };
 

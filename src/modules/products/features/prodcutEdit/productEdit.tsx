@@ -75,15 +75,11 @@ const EditProduct: FC<AddProductFormProps> = () => {
     const { data: fetechedAllStores } = useMyStoresQuery();
     stores = fetechedAllStores?.data.docs;
   }
-  console.log(stores);
   const selectStores = stores?.map((store: any) => ({
     label: store.name,
     value: store.id,
   }));
-  console.log(selectStores);
-  const handleFinish = (values: any) => {
-    console.log(values);
-    console.log(values);
+  const handleFinish = () => {
     form.resetFields();
   };
 
@@ -94,7 +90,6 @@ const EditProduct: FC<AddProductFormProps> = () => {
 
   useEffect(() => {
     if (fetchedProduct) {
-      console.log(product.brand?.id);
       // Set form fields with fetched vendor data here
       form.setFieldsValue({
         name: product.name,
