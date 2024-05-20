@@ -27,3 +27,35 @@ export const addOrder = createAsyncThunk(
     }
   }
 );
+
+export const getOrders = createAsyncThunk(
+  "order/getOrders",
+  async (query: { page: number; pageSize: number }) => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}api/shopping/my-cart/my-orders?page=${query.page}&pageSize=${query.pageSize}`,
+        {
+          method: "GET",
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch orders");
+      }
+
+      const {data} = await response.json();
+      console.log("🚀 ~ data:", data)
+      return data;
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      throw error;
+    }
+  }
+);

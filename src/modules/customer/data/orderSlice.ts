@@ -1,13 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { addOrder } from './orderThunk';
+import { createSlice } from "@reduxjs/toolkit";
+import { addOrder, getOrders } from "./orderThunk";
 
 const initialState = {
   order: {
     address_id: "",
     paymentMethod_id: "1",
   },
-  error: '',
-  status: '',
+  myOrders: { orders: [], totalRecords: 1 },
+  error: "",
+  status: "",
 };
 
 const orderSlice = createSlice({
@@ -17,14 +18,26 @@ const orderSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(addOrder.pending, (state) => {
       state.error = null as any;
-      state.status = 'loading';
+      state.status = "loading";
     });
     builder.addCase(addOrder.fulfilled, (state) => {
-      state.status = 'succeeded';
+      state.status = "succeeded";
     });
     builder.addCase(addOrder.rejected, (state, action) => {
       state.error = action?.payload as string;
-      state.status = 'failed';
+      state.status = "failed";
+    });
+    builder.addCase(getOrders.pending, (state) => {
+      state.error = null as any;
+      state.status = "loading";
+    });
+    builder.addCase(getOrders.fulfilled, (state, action) => {
+      state.status = "succeeded";
+      state.myOrders = action.payload;
+    });
+    builder.addCase(getOrders.rejected, (state, action) => {
+      state.error = action?.payload as string;
+      state.status = "failed";
     });
   },
 });

@@ -36,7 +36,6 @@ export default function CategoryList() {
   const [updateOrder] = useUpdateOrderMutation();
 
   const handleUpdateOrder = async (orderId: string, newStatus: string) => {
-    console.log(orderId, "yoooooo");
     try {
       const payload = {
         status: newStatus,

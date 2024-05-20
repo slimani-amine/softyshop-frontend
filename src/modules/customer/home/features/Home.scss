@@ -1,4 +1,9 @@
 .home {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
+  .all-products {
+    display: flex;
+    // flex-wrap: wrap;
+  }
 }

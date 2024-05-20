@@ -21,15 +21,14 @@ const Navbar: React.FC<INavbarProps> = () => {
   const { isAnimating } = useAnimation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const current_user= useSelector((state: RootState) => state.auth.user)
+  const current_user = useSelector((state: RootState) => state.auth.user);
   const handleLogout = () => {
     dispatch(logout());
   };
-  const handleNavigate=()=>{
-    navigate('/home')
-    
-  }
-  const accountInfoItems: MenuProps['items'] = [
+  const handleNavigate = () => {
+    navigate("/home");
+  };
+  const accountInfoItems: MenuProps["items"] = [
     {
       key: "1",
       label: (
@@ -48,6 +47,9 @@ const Navbar: React.FC<INavbarProps> = () => {
     {
       key: "2",
       label: <p>Profile</p>,
+      onClick: () => {
+        navigate("/my-profile");
+      },
       icon: (
         <ProfileIcon
           style={{ stroke: "black", width: "18px", height: "18px" }}

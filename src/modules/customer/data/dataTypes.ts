@@ -83,3 +83,15 @@ export interface addToCartPayload {
   quantity: number;
   productId: string;
 }
+
+export interface orderType {
+  id: string;
+  isPaied: boolean;
+  status: string;
+  createdAt: string;
+  cart: {
+    id: number;
+    totalQuantity: number;
+    totalAmount: number;
+  };
+}

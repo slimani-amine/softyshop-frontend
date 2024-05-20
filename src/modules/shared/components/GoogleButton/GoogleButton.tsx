@@ -12,7 +12,6 @@ const GoogleButton: React.FC = () => {
 
   const onSuccess = async (tokenResponse: any) => {
     const idToken = (await exchangeCodeForIdToken(tokenResponse?.code)) as any;
-    console.log("🚀 ~ onSuccess ~ idToken:", idToken);
     if (idToken) dispatch(googleLogin({ idToken }));
   };
 

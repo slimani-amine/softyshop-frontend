@@ -1,5 +1,7 @@
 .home {
+  display: flex;
   .store-card-identification {
+    width: 100%;
     background-color: #fff;
     // background-color: transparent;
     margin: 0 0 36px 24px;
@@ -100,8 +102,13 @@
       }
     }
   }
-  .books {
+  .books{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100%;
   }
+.all-products{
+  display: flex;
+  // width: 100%;
+}
 }

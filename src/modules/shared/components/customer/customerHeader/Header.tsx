@@ -2,6 +2,9 @@ import { ReactComponent as ShoppingBagIcon1 } from "../../../assets/icons/custom
 import { ReactComponent as ProfileIcon1 } from "../../../assets/icons/customerLayout/Header/profileIcon.svg";
 import { ReactComponent as MagnifyingGlass1 } from "../../../assets/icons/customerLayout/Header/magnifyingGlass.svg";
 import { ReactComponent as ChevronDownBlack } from "../../../assets/icons/customerLayout/Navbar/chevron-down-black.svg";
+import { ReactComponent as Home } from "../../../assets/icons/customerLayout/Header/home.svg";
+// import { ReactComponent as Shop } from "../../../assets/icons/customerLayout/Header/shop.svg";
+import { ReactComponent as ProfileIcon } from "../../../assets/icons/sidebar/profile.svg";
 import Logo from "../../../assets/icons/customerLayout/Header/logo-complete.svg";
 import Search from "./components/Search";
 import { useAppSelector, useAppDispatch } from "@src/modules/shared/store";
@@ -11,13 +14,13 @@ import { useNavigate } from "react-router-dom";
 import { getCart } from "@src/modules/customer/data/cartThunk";
 import { useEffect } from "react";
 import { Avatar, Dropdown, Space, MenuProps } from "antd";
-import { ReactComponent as ProfileIcon } from "../../../assets/icons/sidebar/profile.svg";
 import { ReactComponent as SettingsIcon } from "../../../assets/icons/navbar/settings.svg";
 import { ReactComponent as LogoutIcon } from "../../../assets/icons/navbar/logout.svg";
 import { ReactComponent as Buisness } from "../../../assets/icons/navbar/marketing-bill-payment-invoice-receipt-svgrepo-com.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/modules/shared/store";
 import { logout } from "@src/modules/auth/data/authThunk";
+import { Link } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
@@ -38,9 +41,6 @@ function Header() {
   const myCartItemsNumber: any = useAppSelector(
     (state) => state.cart.cartItems
   );
-  const role: string | undefined = useAppSelector(
-    (state) => state.auth.user?.role
-  );
   function interactWithDrawer() {
     dispatch(showDrawer());
   }
@@ -55,9 +55,12 @@ function Header() {
       key: "1",
       label: (
         <Space>
-          <Avatar size={32} className="navbar-avatar">
-            <img src={current_user?.picture} alt="User picture" />
-          </Avatar>
+          <Avatar
+            size={32}
+            className="navbar-avatar"
+            src={current_user?.picture}
+            alt="User picture"
+          />
           <div className="navbar-account-info">
             <p className="sidebar-accountinfo-item">{current_user?.email}</p>
             <p>Role: {current_user?.role}</p>
@@ -68,18 +71,28 @@ function Header() {
     },
     {
       key: "2",
-      label: <p>My Workspace</p>,
+      label: <p>Profile</p>,
       onClick: () => {
-        navigate("/dashboard");
+        navigate("/my-profile");
       },
       icon: (
-        <Buisness
+        <ProfileIcon
           style={{ stroke: "black", width: "18px", height: "18px" }}
         />
       ),
     },
     {
       key: "3",
+      label: <p>My Workspace</p>,
+      onClick: () => {
+        navigate("/dashboard");
+      },
+      icon: (
+        <Buisness style={{ stroke: "black", width: "18px", height: "18px" }} />
+      ),
+    },
+    {
+      key: "4",
       label: <p>Settings</p>,
       icon: (
         <SettingsIcon
@@ -88,7 +101,7 @@ function Header() {
       ),
     },
     {
-      key: "4",
+      key: "5",
       label: <p onClick={handleLogout}>logout</p>,
       icon: (
         <LogoutIcon
@@ -125,6 +138,25 @@ function Header() {
         </div>
 
         <div className="icons">
+          <Link
+            to="/home"
+            className="profile-icon-wrapper"
+            style={{
+              transform: "translate(3px,8px)",
+            }}
+          >
+            <Home className="profile-icon" />
+          </Link>
+
+          {/* <div
+            className="profile-icon-wrapper"
+            style={{
+              transform: "translate(0,5px)",
+            }}
+          >
+            <Shop className="profile-icon" />
+          </div> */}
+
           <div className="profile-icon-wrapper">
             <Dropdown
               menu={{ items: accountInfoItems }}
@@ -137,10 +169,7 @@ function Header() {
             </Dropdown>
           </div>
           <div className="shopping-bag-icon-wrapper">
-            <ShoppingBagIcon1
-              onClick={() => interactWithDrawer()}
-              className="shopping-bag-icon"
-            />
+            <ShoppingBagIcon1 onClick={() => interactWithDrawer()} />
           </div>
 
           <span className="cart-items-number">

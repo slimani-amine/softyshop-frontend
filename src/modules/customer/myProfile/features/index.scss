@@ -1,0 +1,151 @@
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  .card__img {
+    width: 100%;
+  }
+  .avatar {
+    transform: translate(0, -50px);
+  }
+  .description {
+    transform: translate(0, -50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2%;
+  }
+}
+
+.checkout-title-bar-and-button {
+  display: flex;
+  justify-content: space-between;
+}
+.checkout-title-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.payment-method {
+  margin: 60px 0;
+
+  .payment-method-text {
+    font-size: 18px;
+    font-weight: 400;
+  }
+}
+.section-content {
+  display: flex;
+  gap: 24px;
+}
+.addresses-section {
+  max-width: 800px;
+  width: 800px;
+  min-width: 800px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d23e57 #fff;
+}
+
+.orders-section {
+  width: 100%;
+  display: block;
+  gap: 20px;
+}
+
+.order-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s ease-in-out;
+  width: 100%;
+  margin: 20px 0 0 0;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+}
+
+.order-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.order-details {
+  padding: 20px;
+}
+
+.order-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.order-id {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.order-status {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+  color: white;
+  padding: 1%;
+  border-radius: 10px;
+}
+
+.order-date {
+  font-size: 14px;
+  color: #555555;
+  // text-align: end;
+}
+
+.order-cart {
+  display: flex;
+  justify-content: space-between;
+  p {
+    font-weight: bold;
+  }
+}
+
+.empty-orders {
+  text-align: center;
+  margin-top: 20px;
+  color: #888888;
+}
+
+.status-processing {
+  background-color: #1890ff; /* Blue for 'processing' */
+}
+
+.status-on_delivery {
+  background-color: #b0c41a; /* Green for 'on_delivery' */
+}
+
+.status-delivered {
+  background-color: #36cfc9; /* Turquoise for 'delivered' */
+}
+
+.status-cancelled {
+  background-color: #f5222d; /* Red for 'cancelled' */
+}
+
+.pagination {
+  display: flex;
+  justify-content: end;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

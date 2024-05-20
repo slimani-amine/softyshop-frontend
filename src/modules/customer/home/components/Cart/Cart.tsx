@@ -11,9 +11,9 @@ import {
   addToCart,
   deleteFromCart,
   getCart,
-} from '@src/modules/customer/data/cartThunk';
-import Button from '@src/modules/shared/components/Button/Button';
-import { useNavigate } from 'react-router-dom';
+} from "@src/modules/customer/data/cartThunk";
+import Button from "@src/modules/shared/components/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 const TheDrawer: React.FC = () => {
   const accessToken = useAppSelector((state) => state.cart.token);
@@ -22,7 +22,7 @@ const TheDrawer: React.FC = () => {
   const dispatch = useAppDispatch();
   const isDrawerShown = useAppSelector((state) => state.drawer.isDrawerShown);
   const myCartItemsNumber: any = useAppSelector(
-    (state) => state.cart.cartItems,
+    (state) => state.cart.cartItems
   );
   const totalPrice = useAppSelector((state) => state.cart.cartAmount);
   const cart = useAppSelector((state) => state.cart.cart);
@@ -59,7 +59,7 @@ const TheDrawer: React.FC = () => {
                         addToCart({
                           quantity: item?.quantity + 1,
                           productId: item?.product?.id + "",
-                        }),
+                        })
                       ),
                       dispatch(getCart(accessToken)),
                     ]);
@@ -80,7 +80,7 @@ const TheDrawer: React.FC = () => {
                           addToCart({
                             quantity: item?.quantity - 1,
                             productId: item?.product?.id + "",
-                          }),
+                          })
                         ),
                         dispatch(getCart(accessToken)),
                       ]);
@@ -107,7 +107,7 @@ const TheDrawer: React.FC = () => {
                   {item?.product?.name}
                 </p>
                 <p className="pricing-details">{`$${item?.product?.price.toFixed(
-                  2,
+                  2
                 )} x ${item.quantity} `}</p>
                 <p className="total-price">
                   ${(item?.product?.price * item.quantity).toFixed(2)}
@@ -128,15 +128,28 @@ const TheDrawer: React.FC = () => {
           );
         })}
       </section>
-      <Button
-        size="xl"
-        style={{ maxWidth: "340px", width: "100%", marginTop: "48px" }}
-        label={`Checkout Now ($${totalPrice.toFixed(2)})`}
-        onClick={() => {
-          dispatch(hideDrawer());
-          navigate("/checkout");
-        }}
-      />
+
+      {cart.length > 0 ? (
+        <Button
+          size="xl"
+          style={{ maxWidth: "340px", width: "100%", marginTop: "48px" }}
+          label={`Checkout Now ($${totalPrice.toFixed(2)})`}
+          onClick={() => {
+            dispatch(hideDrawer());
+            navigate("/checkout");
+          }}
+        />
+      ) : (
+        <Button
+          size="xl"
+          style={{ maxWidth: "340px", width: "100%", marginTop: "48px" }}
+          label={`Your cart is empty`}
+          onClick={() => {
+            dispatch(hideDrawer());
+            navigate("/home");
+          }}
+        />
+      )}
     </Drawer>
   );
 };

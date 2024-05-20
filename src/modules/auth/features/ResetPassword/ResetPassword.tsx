@@ -47,7 +47,6 @@ function ResetPassword() {
         </h1>
         <form className="reset-form" onSubmit={formik.handleSubmit}>
           <Input
-            defaultValue="fadi@benromdhan.com"
             name="email"
             formik={formik}
             variant="secondary"

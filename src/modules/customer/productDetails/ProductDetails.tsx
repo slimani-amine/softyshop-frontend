@@ -1,18 +1,18 @@
 import Button from "@src/modules/shared/components/Button/Button";
 import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { addToCart, getCart } from "@src/modules/customer/data/cartThunk";
 import { ReactComponent as AddToCart } from "../../shared/assets/icons/home/add-product-details.svg";
 import { ReactComponent as RemoveFromCart } from "../../shared/assets/icons/home/removeProductDetails.svg";
 import { BASE_URL } from "@src/modules/auth/data/authThunk";
-
 function ProductDetails() {
   const dispatch = useAppDispatch();
   const { productId } = useParams();
+  const navigate = useNavigate();
+  const token = useAppSelector((state) => state.cart.token);
   const cart = useAppSelector((state) => state.cart.cart);
   const accessToken = useAppSelector((state) => state.cart.token);
-
   const [loading, setIsLoading] = useState(false);
   const [quantity, setQuantity] = useState<number>(0);
   const [isInStock, setIsInStock] = useState(false);
@@ -29,10 +29,10 @@ function ProductDetails() {
     stockNumber: 0,
   });
   const images = product?.images?.length && JSON.parse(product?.images);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
+        dispatch(getCart(token));
         const response = await fetch(`${BASE_URL}api/products/${productId}`);
         const data = await response.json();
         setProduct(data.data);
@@ -41,20 +41,17 @@ function ProductDetails() {
         return err;
       }
     };
-
     fetchData();
   }, [BASE_URL]);
-
   useEffect(
     function () {
       setQuantity(
         cart?.find((item: any) => item?.product?.id == product?.id)?.quantity ||
-          0,
+          0
       );
     },
-    [setQuantity, cart],
+    [setQuantity, cart]
   );
-
   async function handleAddToCart() {
     setIsLoading(true);
     Promise.all([
@@ -65,7 +62,6 @@ function ProductDetails() {
     ]);
     setIsLoading(false);
   }
-
   async function handleRemoveFromCart() {
     if (quantity < 1) return;
     setIsLoading(true);
@@ -77,7 +73,6 @@ function ProductDetails() {
     ]);
     setIsLoading(false);
   }
-
   useEffect(() => {
     setIsInStock(product?.availability && product?.stockNumber != 0);
   }, [isInStock, setIsInStock, product]);
@@ -144,7 +139,15 @@ function ProductDetails() {
         )}
 
         <p className="store">
-          <span className="store-title">Sold By:</span> {product?.store?.name}
+          <span className="store-title">Sold By:</span>
+          <p
+            className="store-content"
+            onClick={() => {
+              navigate(`/bookstores/${product?.store?.id}`);
+            }}
+          >
+            {product?.store?.name}
+          </p>
         </p>
       </div>
     </div>

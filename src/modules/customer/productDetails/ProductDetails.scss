@@ -49,14 +49,23 @@
       }
     }
     .store {
-      font-size: 14px;
-      font-weight: 600;
-      font-size: large;
-      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 2px;
       .store-title {
         line-height: 1;
         font-size: large;
         font-weight: 100;
+      }
+      .store-content {
+        font-size: 14px;
+        font-weight: 600;
+        font-size: large;
+        font-weight: 600;
+        cursor: pointer;
+        :hover {
+          color: #d23f57;
+        }
       }
     }
     .buttons-product-details {

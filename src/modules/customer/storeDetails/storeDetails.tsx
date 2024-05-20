@@ -13,10 +13,17 @@ import { useParams } from "react-router-dom";
 import { BASE_URL } from "@src/modules/auth/data/authThunk";
 import { ProductType } from "../data/dataTypes";
 import Product from "../home/components/Product/Product";
-
-function storeDetails() {
+import { Pagination } from "antd";
+import { Empty } from "antd";
+function StoreDetails() {
   const dispatch = useAppDispatch();
   const { storeId } = useParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const perPage = 3;
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
   const [store, setStore] = useState({
     id: 0,
     name: "",
@@ -49,30 +56,31 @@ function storeDetails() {
     fetchData();
   }, [BASE_URL]);
 
+  const fetchData = async (page: number, perPage: number) => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}api/stores/${storeId}/products?isPublished=true&perPage=${perPage}&page=${page}`
+      );
+
+      const data = await response.json();
+      setTotalRecords(data.data.meta.totalRecords);
+
+      dispatch(
+        settProducts(
+          data?.data?.docs.map((product: ProductType) => {
+            return { ...product, quantity: 0 };
+          })
+        )
+      );
+    } catch (err: string | unknown) {
+      console.error(err);
+      return err;
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${BASE_URL}api/stores/${storeId}/products?perPage=999999999999&page=1`
-        );
-
-        const data = await response.json();
-
-        dispatch(
-          settProducts(
-            data?.data?.docs.map((product: ProductType) => {
-              return { ...product, quantity: 0 };
-            }),
-          ),
-        );
-      } catch (err: string | unknown) {
-        console.error(err);
-        return err;
-      }
-    };
-
-    fetchData();
-  }, [BASE_URL]);
+    fetchData(currentPage, perPage);
+  }, [currentPage]);
 
   const theProducts = useAppSelector((state) => state?.product?.products);
   const cart = useAppSelector((state) => state?.cart?.cart);
@@ -135,38 +143,53 @@ function storeDetails() {
           </div>
         </div>
       </div>
-      <div className="books">
-        {updatedProducts.map(
-          (
-            {
-              availability,
-              id,
-              name,
-              images,
-              //  rating
-              price,
-              stockNumber,
-              quantity,
-            },
-            index,
-          ) => {
-            return (
-              <Product
-                availability={availability}
-                id={id}
-                key={index}
-                name={name}
-                // rating={rating}
-                price={Number(price)}
-                images={images}
-                stockNumber={stockNumber}
-                quantity={quantity}
-              />
-            );
-          },
-        )}
-      </div>
+      {updatedProducts.length === 0 ? (
+        <Empty description={<span>This store is empty</span>} />
+      ) : (
+        <div className="books">
+          <div className="all-products">
+            {updatedProducts.map(
+              (
+                {
+                  availability,
+                  id,
+                  name,
+                  images,
+                  price,
+                  stockNumber,
+                  quantity,
+                },
+                index
+              ) => (
+                <Product
+                  availability={availability}
+                  id={id}
+                  key={index}
+                  name={name}
+                  price={Number(price)}
+                  images={images}
+                  stockNumber={stockNumber}
+                  quantity={quantity}
+                />
+              )
+            )}
+          </div>
+          <Pagination
+            current={currentPage}
+            total={totalRecords}
+            pageSize={perPage}
+            onChange={handlePageChange}
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              marginTop: "20px",
+              marginBottom: "20px",
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }
-export default storeDetails;
+
+export default StoreDetails;

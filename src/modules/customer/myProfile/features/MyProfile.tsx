@@ -1,23 +1,53 @@
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Empty, Pagination } from "antd";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Section from "../../checkout/components/Section";
 import Number from "../../checkout/components/Number";
 import Title from "../../checkout/components/Title";
 import AddAddressModal from "../../checkout/components/AddAddressModal";
-import { addressType } from "../../data/dataTypes";
-import { useAppSelector } from "@src/modules/shared/store";
+import { addressType, orderType } from "../../data/dataTypes";
+import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
 import Address from "../../checkout/components/Address";
 import AddressTitle from "../../checkout/components/AddressTitle";
 import AddressContent from "../../checkout/components/AddressContent";
+import { useEffect, useState } from "react";
+import { getAddresses } from "../../data/addressThunk";
+import { getOrders } from "../../data/orderThunk";
+import convertDate from "@src/modules/shared/utils/convertTime";
 
-function myProfile() {
+function MyProfile() {
   const navigate = useNavigate();
   const current_user = useSelector((state: any) => state.auth.user);
-  console.log("🚀 ~ Header ~ current_user:", current_user);
+  const dispatch = useAppDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(3);
+  useEffect(() => {
+    function getAllAddresses() {
+      dispatch(getAddresses(current_user.id));
+    }
+    function getMyOrders() {
+      dispatch(getOrders({ page: currentPage, pageSize }));
+    }
+    getAllAddresses();
+    getMyOrders();
+  }, [current_user, dispatch, getAddresses, getOrders]);
+
   const addresses: addressType[] = useAppSelector(
     (state) => state?.address?.address
   );
+
+  const { orders, totalRecords } = useAppSelector(
+    (state) => state?.order.myOrders
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+  const displayedOrders = orders.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
   return (
     <div className="card">
       <div className="card__img">
@@ -33,8 +63,8 @@ function myProfile() {
               y2="100%"
               gradientTransform="rotate(222,648,379)"
             >
-              <stop offset="0" stop-color="#ffffff"></stop>
-              <stop offset="1" stop-color="#FC726E"></stop>
+              <stop offset="0" stopColor="#ffffff"></stop>
+              <stop offset="1" stopColor="#FC726E"></stop>
             </linearGradient>
             <pattern
               patternUnits="userSpaceOnUse"
@@ -45,7 +75,7 @@ function myProfile() {
               y="0"
               viewBox="0 0 1080 900"
             >
-              <g fill-opacity="0.5">
+              <g fillOpacity="0.5">
                 <polygon fill="#444" points="90 150 0 300 180 300"></polygon>
                 <polygon points="90 150 180 0 0 0"></polygon>
                 <polygon fill="#AAA" points="270 150 360 0 180 0"></polygon>
@@ -159,7 +189,6 @@ function myProfile() {
         <div className="card__wrapper">
           <Button
             className="card__btn"
-            type="dashed"
             onClick={() => {
               navigate("/dashboard");
             }}
@@ -168,51 +197,90 @@ function myProfile() {
           </Button>
         </div>
       </div>
-        <Section>
-          <div className="checkout-title-bar-and-button">
-            <div className="checkout-title-bar">
-              <Number> </Number> <Title>My addresses</Title>
-            </div>
-            <AddAddressModal />
+      <Section>
+        <div className="checkout-title-bar-and-button">
+          <div className="checkout-title-bar">
+            <Number> </Number> <Title>My addresses</Title>
           </div>
-          <div className="section-content addresses-section">
-            {addresses?.map(
-              (
-                {
-                  state,
-                  address,
-                  city,
-                  zipCode,
-                  phoneNumber,
-                  id,
-                }: {
-                  state: string;
-                  address: string;
-                  city: string;
-                  zipCode: string;
-                  phoneNumber: string;
-                  id: number;
-                },
-                index
-              ) => {
-                return (
-                  <div key={index} className="checkout-address">
-                    <Address id={id}>
-                      <AddressTitle id={id.toString()}>{state}</AddressTitle>
-                      <AddressContent>
-                        {address} <br /> {city}, {zipCode}
-                        <br />
-                        {phoneNumber}
-                      </AddressContent>
-                    </Address>
+          <AddAddressModal />
+        </div>
+        <div
+          className="section-content addresses-section"
+          style={{
+            justifyContent: addresses.length === 0 ? "center" : "flex-start",
+          }}
+        >
+          {addresses.length === 0 ? (
+            <Empty description={<span>You don't have addresses </span>} />
+          ) : (
+            addresses.map((address, index) => {
+              const {
+                state,
+                address: streetAddress,
+                city,
+                zipCode,
+                phoneNumber,
+                id,
+              } = address;
+              return (
+                <div key={index} className="checkout-address">
+                  <Address id={id}>
+                    <AddressTitle id={id.toString()}>{state}</AddressTitle>
+                    <AddressContent>
+                      {streetAddress} <br /> {city}, {zipCode}
+                      <br />
+                      {phoneNumber}
+                    </AddressContent>
+                  </Address>
+                </div>
+              );
+            })
+          )}
+        </div>
+      </Section>
+      <Section>
+        <div className="checkout-title-bar-and-button">
+          <div className="checkout-title-bar">
+            <Number> </Number> <Title>My Orders</Title>
+          </div>
+        </div>
+        <div className="section-content orders-section">
+          {orders.length === 0 ? (
+            <Empty description={<span>You don't have any orders.</span>} />
+          ) : (
+            displayedOrders.map((order: orderType) => (
+              <div key={order.id} className="order-card">
+                {/* Example image, adjust based on your data */}
+                <div className="order-details">
+                  <div className="order-info">
+                    <p className="order-id">#{order.id}</p>
+                    <p className={`order-status status-${order.status}`}>
+                      {order.status}
+                    </p>
                   </div>
-                );
-              }
-            )}
-          </div>
-        </Section>
+                  <p className="order-date">{convertDate(order.createdAt)}</p>
+                  <div className="order-cart">
+                    <p>{order.cart.totalQuantity} Product(s)</p>
+                    <p>Total ${order.cart.totalAmount.toFixed(2)}</p>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+        {totalRecords > pageSize && (
+          <Pagination
+            className="pagination"
+            current={currentPage}
+            pageSize={pageSize}
+            total={totalRecords}
+            onChange={handlePageChange}
+            showSizeChanger={false}
+          />
+        )}
+      </Section>
     </div>
   );
 }
 
-export default myProfile;
+export default MyProfile;

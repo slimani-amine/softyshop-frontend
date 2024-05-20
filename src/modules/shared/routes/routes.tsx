@@ -12,6 +12,7 @@ import creatorRoutes from "../../creators/routes/routes";
 import brandRoutes from "../../brands/routes/routes";
 import orderRoutes from "../../orders/routes/routes";
 import paymentRoutes from "../../payment/routes/routes";
+import myProfileRoutes from "../../customer/myProfile/routes/routes";
 
 const Routes = [
   ...sharedRoutes,
@@ -28,6 +29,7 @@ const Routes = [
   ...brandRoutes,
   ...orderRoutes,
   ...paymentRoutes,
+  ...myProfileRoutes,
 ];
 
 // Filter routes based on the user's role
