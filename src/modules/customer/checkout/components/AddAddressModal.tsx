@@ -1,18 +1,21 @@
-import Input from "@src/modules/shared/components/Input/Input";
-import Button from "@src/modules/shared/components/Button/Button";
-import React, { useState } from "react";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { Modal } from "antd";
-import { getChangedValues } from "@src/modules/shared/utils/getChangedValuesFormik";
-import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
-import { addAddress, getAddresses } from "../../data/addressThunk";
-import toast from "react-hot-toast";
+import Input from '@src/modules/shared/components/Input/Input';
+import Button from '@src/modules/shared/components/Button/Button';
+import React, { useState } from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { Modal } from 'antd';
+import { getChangedValues } from '@src/modules/shared/utils/getChangedValuesFormik';
+import { useAppDispatch, useAppSelector } from '@src/modules/shared/store';
+import { addAddress, getAddresses } from '../../data/addressThunk';
+import toast from 'react-hot-toast';
 
 const AddAddressModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const userId: string | undefined = useAppSelector(
     (state) => state.auth.user?.id,
+  );
+  const addresses: addressType[] = useAppSelector(
+    (state) => state?.address?.address
   );
 
   const initialValues = {
@@ -61,7 +64,7 @@ const AddAddressModal: React.FC = () => {
         })
         .finally(() => {
           setSubmitting(false);
-          dispatch(getAddresses({userId}));
+          dispatch(getAddresses(userId));
         });
       return handleOk();
     },

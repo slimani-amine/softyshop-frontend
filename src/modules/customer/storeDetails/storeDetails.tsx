@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 // import Product from '../home/components/Product/Product';
 import { ReactComponent as PhoneIcon } from "../../shared/assets/icons/store/phone.svg";
 import { ReactComponent as LocationIcon } from "../../shared/assets/icons/store/location.svg";
@@ -26,16 +26,16 @@ function StoreDetails() {
   };
   const [store, setStore] = useState({
     id: 0,
-    name: "",
+    name: '',
     phoneNumber: 0,
-    logo: "",
+    logo: '',
     isPublished: false,
-    location: "",
-    address: "",
-    socialMediaLinks: "",
+    location: '',
+    address: '',
+    socialMediaLinks: '',
     deletedAt: null,
-    createdAt: "",
-    updatedAt: "",
+    createdAt: '',
+    updatedAt: '',
     user: null,
     products: [],
   });
@@ -128,16 +128,16 @@ function StoreDetails() {
             <div className="store-contact">
               <div className="store-phone-and-location">
                 <div className="store-location">
-                  <LocationIcon className="location-icon" />{" "}
+                  <LocationIcon className="location-icon" />{' '}
                   <p className="location">{store?.address}</p>
                 </div>
                 <div className="store-location">
-                  <PhoneIcon className="phoneIcon" />{" "}
+                  <PhoneIcon className="phoneIcon" />{' '}
                   <p className="location">(+216) {store?.phoneNumber}</p>
                 </div>
               </div>
               <div className="contact-button">
-                <Button label={"Contact Vendor"} />
+                <Button label={'Contact Vendor'} />
               </div>
             </div>
           </div>

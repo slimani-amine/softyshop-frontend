@@ -17,23 +17,37 @@
     list-style: none;
   }
   .sidebar-chunk {
-    padding-bottom: 24px;
+    user-select: none;
+    padding: 24px 0;
     border-bottom: #f3f5f9 1px solid;
+    .categories-title {
+      cursor: pointer;
+    }
     .sidebar-chunk-title {
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 20px;
     }
+    .brands-list {
+      scrollbar-width: thin;
+      scrollbar-color: #d23e57 #fafafa;
+      max-height: 200px;
+      overflow-y: auto;
+    }
     .categories-list {
+      scrollbar-width: thin;
+      scrollbar-color: #d23e57 #fafafa;
+      max-height: 170px;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
       font-weight: 300;
-      color: #7d879c;
-      gap: 14px;
+      gap: 10px;
       li {
+        cursor: pointer;
         color: inherit;
-        a {
-          color: inherit;
+        p {
+          color: #7d879c;
         }
       }
     }
@@ -61,6 +75,9 @@
       align-items: center;
       gap: 12px;
     }
+  }
+  .ratings-chunk {
+    border: none;
   }
   .colors-chunk {
     border: none;

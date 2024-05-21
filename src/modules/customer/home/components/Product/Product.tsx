@@ -56,13 +56,18 @@ function Product({
     setIsLoading(false);
   }
 
+  const token = useAppSelector((state) => state.cart.token);
+  function handleGetCart() {
+    dispatch(getCart(token));
+  }
+
   return (
     <div
       onMouseEnter={() => setShowIcons(true)}
       onMouseLeave={() => setShowIcons(false)}
       className="card"
     >
-      <HashLink to={`${id}#`}>
+      <HashLink onClick={() => handleGetCart()} to={`${id}#`}>
         <div className="image-wrapper">
           <img
             width={336.75}
@@ -79,7 +84,7 @@ function Product({
         </>
       )}
       <div className="product-info-and-buttons">
-        <HashLink to={`${id}#`}>
+        <HashLink onClick={() => handleGetCart()} to={`${id}#`}>
           {quantity == 0 ? (
             <div className="product-info">
               <p className="name"> {name}</p>

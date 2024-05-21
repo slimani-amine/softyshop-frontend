@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Product from "../home/components/Product/Product";
 import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
-import { settProducts } from "../data/productSlice";
+import { setProducts } from "../data/productSlice";
 import { BASE_URL } from "@src/modules/auth/data/authThunk";
 import { ProductType } from "../data/dataTypes";
 import { Pagination } from "antd"; // Assuming you're using antd for pagination controls
@@ -21,7 +21,7 @@ function AllProducts() {
       );
       const data = await response.json();
       dispatch(
-        settProducts(
+        setProducts(
           data.data.docs.map((product: ProductType) => {
             return { ...product, quantity: 0 };
           })
