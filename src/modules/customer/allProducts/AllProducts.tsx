@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
 import { setProducts } from "../data/productSlice";
 import { BASE_URL } from "@src/modules/auth/data/authThunk";
 import { ProductType } from "../data/dataTypes";
-import { Pagination } from "antd"; // Assuming you're using antd for pagination controls
+import { Pagination } from "antd"; 
 import { useLocation } from "react-router-dom";
 
 function AllProducts() {
@@ -12,7 +12,7 @@ function AllProducts() {
   const [totalRecords, setTotalRecords] = useState(0);
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.product.products);
-  const perPage = 3;
+  const perPage = 9;
   const { search } = useLocation();
 
   const fetchData = async (page: number, perPage: number) => {
@@ -42,7 +42,7 @@ function AllProducts() {
 
   const cart = useAppSelector((state) => state.cart.cart);
   const updatedProducts = products.map((product) => {
-    const cartItem = cart.find((item) => item.product.id === product.id);
+    const cartItem = cart.find((item) => item.product?.id === product?.id);
     return cartItem ? { ...product, quantity: cartItem.quantity } : product;
   });
 
