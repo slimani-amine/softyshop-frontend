@@ -5,52 +5,45 @@ import { setProducts } from "../data/productSlice";
 import { BASE_URL } from "@src/modules/auth/data/authThunk";
 import { ProductType } from "../data/dataTypes";
 import { Pagination } from "antd"; // Assuming you're using antd for pagination controls
+import { useLocation } from "react-router-dom";
 
 function AllProducts() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
   const dispatch = useAppDispatch();
-  const Products = useAppSelector((state) => state.product.products);
-
-  const perPage = 6;
+  const products = useAppSelector((state) => state.product.products);
+  const perPage = 3;
+  const { search } = useLocation();
 
   const fetchData = async (page: number, perPage: number) => {
     try {
       const response = await fetch(
-        `${BASE_URL}api/products?isPublished=true&perPage=${perPage}&page=${page}`
+        `${BASE_URL}api/products${search ? search +'&': '?'}isPublished=true&perPage=${perPage}&page=${page}`
       );
       const data = await response.json();
-      dispatch(
-        setProducts(
-          data.data.docs.map((product: ProductType) => {
-            return { ...product, quantity: 0 };
-          })
-        )
-      );
+      const products = data.data.docs.map((product: ProductType) => ({
+        ...product,
+        quantity: 0,
+      }));
+      dispatch(setProducts(products));
       setTotalRecords(data.data.meta.totalRecords);
-    } catch (err: string | unknown) {
+    } catch (err) {
       console.error("Error fetching data:", err);
     }
   };
 
   useEffect(() => {
     fetchData(currentPage, perPage);
-  }, [currentPage]);
+  }, [currentPage, search]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
   const cart = useAppSelector((state) => state.cart.cart);
-  const updatedProducts = Products.map((product: any) => {
-    const updatedProduct = cart.find(
-      (item) => item?.product?.id === product?.id
-    );
-    if (updatedProduct) {
-      return { ...product, quantity: updatedProduct.quantity };
-    } else {
-      return product;
-    }
+  const updatedProducts = products.map((product) => {
+    const cartItem = cart.find((item) => item.product.id === product.id);
+    return cartItem ? { ...product, quantity: cartItem.quantity } : product;
   });
 
   return (
@@ -58,7 +51,7 @@ function AllProducts() {
       style={{
         display: "flex",
         flexDirection: "column",
-        margin: "0 0 36px 24px"
+        margin: "0 0 36px 24px",
       }}
     >
       <div
@@ -66,50 +59,36 @@ function AllProducts() {
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
           gridAutoRows: "auto",
-          gridGap: "1rem",
+          gap: "1rem",
         }}
       >
-        {updatedProducts?.map(
-          (
-            {
-              availability,
-              id,
-              name,
-              images,
-              // rating,
-              price,
-              stockNumber,
-              quantity,
-            },
-            index
-          ) => (
-            <Product
-              key={index}
-              availability={availability}
-              id={id}
-              name={name}
-              // rating={rating}
-              price={price}
-              stockNumber={stockNumber}
-              images={images}
-              quantity={quantity}
-              // className="product"
-            />
-          )
-        )}
+        {updatedProducts.map((product, index) => (
+          <Product
+            key={index}
+            availability={product.availability}
+            id={product.id}
+            name={product.name}
+            price={product.price}
+            stockNumber={product.stockNumber}
+            images={product.images}
+            quantity={product.quantity}
+          />
+        ))}
       </div>
-      <Pagination
-        current={currentPage}
-        total={totalRecords}
-        pageSize={perPage}
-        onChange={handlePageChange}
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          marginTop: "20px",
-          marginBottom: "20px",
-        }}
-      />
+      {totalRecords > perPage && (
+        <Pagination
+          current={currentPage}
+          total={totalRecords}
+          pageSize={perPage}
+          onChange={handlePageChange}
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -18,7 +18,6 @@ function Sidebar() {
   if (priceFloor == 0 || priceFloor == -1) setPriceFloor(null);
   if (priceCeiling == 0 || priceCeiling == -1) setPriceCeiling(null);
 
-  console.log(priceFloor, priceCeiling);
   const [searchParams, setSearchParams] = useSearchParams();
   const category_id = searchParams.get('category_id');
 
@@ -41,7 +40,6 @@ function Sidebar() {
   // console.log(searchParams.toString());
 
   const { search } = useLocation();
-  console.log(search);
   const dispatch = useAppDispatch();
   // const brands = useAppSelector((state) => state.brand.brands);
   // const sortedBrands = brands
