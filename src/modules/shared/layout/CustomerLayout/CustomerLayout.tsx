@@ -1,8 +1,9 @@
 import { useLocation } from "react-router-dom";
-import Footer from "../../components/customer/customerFooter/Footer";
-import Header from "../../components/customer/customerHeader/Header";
+
 import Sidebar from "../../components/customer/customerSidebar/Sidebar";
 import CustomerNavbar from "../../components/customer/customerNavbar/CustomerNavbar";
+import Header from "../../components/customerLayout/customerHeader/Header";
+import Footer from "../../components/customerLayout/customerFooter/Footer";
 
 interface MainLayoutProps {
   children: React.ReactNode;

@@ -23,10 +23,9 @@ function Checkout() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const accessToken = useAppSelector((state) => state.cart.token);
+  const deliveryDate = useAppSelector((state) => state.checkout.deliveryDate);
 
-  // const deliveryDate = useAppSelector((state) => state.checkout.deliveryDate);
-  // const deliveryTime = useAppSelector((state) => state.checkout.deliveryTime);
-
+  const deliveryTime = useAppSelector((state) => state.checkout.deliveryTime);
   const userId = useAppSelector((state) => state?.auth?.user?.id);
   const isChecked = useAppSelector((state) => state.checkout.agreedToPayCash);
   const cart = useAppSelector((state) => state.cart.cart);
@@ -59,20 +58,19 @@ function Checkout() {
 
   const { addresses } = useAppSelector((state) => state?.address?.addresses);
 
-  if (addresses.length == 1) dispatch(updateSelectedId(addresses[0].id));
   // const [chosenAddress, setChosenAddress] = useState(null);
   const isOrderReady =
     (isChecked &&
-      // deliveryDate &&
-      // deliveryTime &&
+      deliveryDate &&
+      deliveryTime &&
       selectedAddress &&
       storesNumber == 1) ||
     (agreedToPayAllDeliveryFees && isChecked && storesNumber > 1);
 
   const isMoreThanOneStore =
     isChecked &&
-    // deliveryDate &&
-    // deliveryTime &&
+    deliveryDate &&
+    deliveryTime &&
     selectedAddress &&
     storesNumber > 1;
 
@@ -89,22 +87,22 @@ function Checkout() {
     )
       .unwrap()
       .then(() => {
-        toast.success('Order passed successfully');
+        toast.success("Order passed successfully");
       })
       .catch((err) => {
-        toast.error(err?.message || 'something-went-wrong');
+        toast.error(err?.message || "something-went-wrong");
       })
       .finally(() => {
         dispatch(getCart(accessToken));
-        navigate('/home');
+        navigate("/home");
       });
   }
 
   return (
     <div className="checkout-page">
       <DifferentStoresModal storesNumber={storesNumber} />
-      <div className="checkout" style={{ padding: '0 24px' }}>
-        {/* <Section>
+      <div className="checkout" style={{ padding: "0 24px" }}>
+        <Section>
           <div className="checkout-title-bar">
             <Number>1</Number>
             <Title>delivery date & time</Title>
@@ -112,11 +110,11 @@ function Checkout() {
           <div className="date-section">
             <CheckoutSelect></CheckoutSelect>
           </div>
-        </Section> */}
+        </Section>
         <Section>
           <div className="checkout-title-bar-and-button">
             <div className="checkout-title-bar">
-              <Number>1</Number> <Title>delivery address</Title>
+              <Number>2</Number> <Title>delivery address</Title>
             </div>
             <AddAddressModal />
           </div>
@@ -158,13 +156,13 @@ function Checkout() {
         </Section>
         <Section>
           <div className="checkout-title-bar">
-            <Number>2</Number> <Title>payment details</Title>
+            <Number>3</Number> <Title>payment details</Title>
           </div>
           <div className="checked-item payment-method">
             <ConfigProvider
               theme={{
                 token: {
-                  colorPrimary: '#0F3460',
+                  colorPrimary: "#0F3460",
                 },
               }}
             >
@@ -172,7 +170,7 @@ function Checkout() {
                 value={isChecked}
                 onChange={() => dispatch(checkIt())}
               />
-            </ConfigProvider>{' '}
+            </ConfigProvider>{" "}
             <p className="payment-method-text">
               I agree to pay cash on delivery
             </p>
@@ -182,7 +180,7 @@ function Checkout() {
               onClick={() => handleOrder()}
               label="Place Order"
               size="xl"
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
             />
           ) : (
             <Button
@@ -190,7 +188,7 @@ function Checkout() {
               size="xl"
               variant="secondary"
               disabled={true}
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
             />
           )}
         </Section>
@@ -203,7 +201,7 @@ function Checkout() {
             return (
               <div className="checkout-order-item" key={index}>
                 <p className="checkout-order-details">
-                  <strong className="order-quantity">{item.quantity}</strong> x{' '}
+                  <strong className="order-quantity">{item.quantity}</strong> x{" "}
                   {item?.product?.name}
                 </p>
                 <p className="checkout-order-item-price">

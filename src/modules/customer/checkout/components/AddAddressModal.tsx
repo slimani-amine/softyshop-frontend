@@ -14,9 +14,9 @@ const AddAddressModal: React.FC = () => {
   const userId: string | undefined = useAppSelector(
     (state) => state.auth.user?.id,
   );
-  const addresses: addressType[] = useAppSelector(
-    (state) => state?.address?.address
-  );
+  // const addresses = useAppSelector(
+  //   (state) => state?.address?.addresses
+  // );
 
   const initialValues = {
     address: "",
@@ -64,7 +64,7 @@ const AddAddressModal: React.FC = () => {
         })
         .finally(() => {
           setSubmitting(false);
-          dispatch(getAddresses(userId));
+          dispatch(getAddresses({userId}));
         });
       return handleOk();
     },

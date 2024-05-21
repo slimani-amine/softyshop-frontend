@@ -8,7 +8,7 @@ import { ReactComponent as YoutubeIcon } from "../../shared/assets/icons/store/y
 import { ReactComponent as InstagramIcon } from "../../shared/assets/icons/store/instagram.svg";
 import Button from "@src/modules/shared/components/Button/Button";
 import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
-import { settProducts } from "../data/productSlice";
+import { setProducts } from "../data/productSlice";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "@src/modules/auth/data/authThunk";
 import { ProductType } from "../data/dataTypes";
@@ -66,7 +66,7 @@ function StoreDetails() {
       setTotalRecords(data.data.meta.totalRecords);
 
       dispatch(
-        settProducts(
+        setProducts(
           data?.data?.docs.map((product: ProductType) => {
             return { ...product, quantity: 0 };
           })
