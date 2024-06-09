@@ -116,6 +116,7 @@ const AddShopForm: FC<AddShopFormProps> = () => {
   const handleSaveClick = async () => {
     try {
       const values = await form.validateFields();
+      values.vendor="944f90eb-d2e7-4a5f-9bdd-863704ebb1b2"
       const objectPost = { ...values, positionOfShop: position };
       const plc = objectPost.positionOfShop[2];
       console.log(position, "postion");
@@ -204,12 +205,12 @@ const AddShopForm: FC<AddShopFormProps> = () => {
                   name="vendor"
                   className="select-vendor"
                   style={{ marginBottom: "20px" }}
-                  rules={[
-                    {
-                      required: Current_User === ADMIN,
-                      message: "Please Select Vendor",
-                    },
-                  ]}
+                  // rules={[
+                  //   {
+                  //     required: Current_User === ADMIN,
+                  //     message: "Please Select Vendor",
+                  //   },
+                  // ]}
                 >
                   <Select
                     size="middle"

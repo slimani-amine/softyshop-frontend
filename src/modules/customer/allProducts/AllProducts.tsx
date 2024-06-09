@@ -4,8 +4,9 @@ import { useAppDispatch, useAppSelector } from "@src/modules/shared/store";
 import { setProducts } from "../data/productSlice";
 import { BASE_URL } from "@src/modules/auth/data/authThunk";
 import { ProductType } from "../data/dataTypes";
-import { Pagination } from "antd"; 
+import { Pagination } from "antd";
 import { useLocation } from "react-router-dom";
+import Widget from "../home/components/Widget/Widget";
 
 function AllProducts() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +19,9 @@ function AllProducts() {
   const fetchData = async (page: number, perPage: number) => {
     try {
       const response = await fetch(
-        `${BASE_URL}api/products${search ? search +'&': '?'}isPublished=true&perPage=${perPage}&page=${page}`
+        `${BASE_URL}api/products${
+          search ? search + "&" : "?"
+        }isPublished=true&perPage=${perPage}&page=${page}`
       );
       const data = await response.json();
       const products = data.data.docs.map((product: ProductType) => ({
@@ -54,6 +57,7 @@ function AllProducts() {
         margin: "0 0 36px 24px",
       }}
     >
+      <Widget />
       <div
         style={{
           display: "grid",

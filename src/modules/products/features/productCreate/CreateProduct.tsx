@@ -59,7 +59,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
   const [selectedFileUrl, setSelectedFileUrl] = useState<string[]>([]);
   console.log(files);
   const Current_User = useSelector(
-    (state: RootState) => state.auth.user?.role.toLocaleUpperCase(),
+    (state: RootState) => state.auth.user?.role.toLocaleUpperCase()
   );
   console.log(Current_User);
   let stores = [];
@@ -88,6 +88,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
   const handleSaveClick = async () => {
     try {
       const values = await form.validateFields();
+      console.log("🚀 ~ handleSaveClick ~ values:", values);
 
       const product = {
         name: values.name,
@@ -101,7 +102,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
         description: values.description,
       };
       const response = await createProduct({
-        id: values.store,
+        id: values?.store,
         newProduct: product,
       });
       if ("data" in response) {
@@ -116,7 +117,7 @@ const AddProductForm: FC<AddProductFormProps> = () => {
       } else {
         // Handle unexpected response format
         message.error(
-          "Unexpected response from server. Please try again later.",
+          "Unexpected response from server. Please try again later."
         );
       }
 
@@ -238,12 +239,12 @@ const AddProductForm: FC<AddProductFormProps> = () => {
                 name="brand"
                 className="Product"
                 style={{ marginBottom: 20 }}
-                rules={[
-                  {
-                    required: true,
-                    message: "Product field must have at least 1 items",
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Product field must have at least 1 items",
+                //   },
+                // ]}
               >
                 <Select
                   size="large"
@@ -267,12 +268,12 @@ const AddProductForm: FC<AddProductFormProps> = () => {
                 name="creator"
                 className="Product"
                 style={{ marginBottom: 20 }}
-                rules={[
-                  {
-                    required: true,
-                    message: "Product field must have at least 1 items",
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Product field must have at least 1 items",
+                //   },
+                // ]}
               >
                 <Select
                   size="large"

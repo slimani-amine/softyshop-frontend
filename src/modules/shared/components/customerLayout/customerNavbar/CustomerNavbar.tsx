@@ -1,13 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function CustomerNavbar() {
   return (
     <div className="customer-navbar">
       <div className="navigation-elements">
         <Link to="/home">Home</Link>
-        <Link to="/bookstores" className="all-customer-books">
-          Bookstores
-        </Link>
+        <Link to="/bookstores">Stores</Link>
+        <Link to="/dashboard">Workspace</Link>
       </div>
     </div>
   );

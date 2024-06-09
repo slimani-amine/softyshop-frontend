@@ -52,7 +52,7 @@ export const SIDEBARITEMS = [
 
   {
     link: "/authors",
-    label: "Authors",
+    label: "Product creators",
     icon: <BrandIcon />,
     roles: ["VENDOR", "ADMIN"],
   },

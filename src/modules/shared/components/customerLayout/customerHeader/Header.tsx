@@ -44,7 +44,7 @@ function Header() {
   function interactWithDrawer() {
     dispatch(showDrawer());
   }
-  const current_user = useSelector((state: RootState) => state.auth.user);
+  const current_user = useSelector((state: any) => state.auth.user);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -62,7 +62,9 @@ function Header() {
             alt="User picture"
           />
           <div className="navbar-account-info">
-            <p className="sidebar-accountinfo-item">{current_user?.email}</p>
+            <p className="sidebar-accountinfo-item">
+              {current_user?.firstName} {current_user?.lastName}
+            </p>
             <p>Role: {current_user?.role}</p>
           </div>
         </Space>
@@ -135,7 +137,7 @@ function Header() {
               transform: "translate(3px,8px)",
             }}
           > */}
-            {/* <Home className="profile-icon" />
+          {/* <Home className="profile-icon" />
           </Link> */}
 
           {/* <div

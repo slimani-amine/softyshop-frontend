@@ -18,6 +18,7 @@ import convertDate from "@src/modules/shared/utils/convertTime";
 function MyProfile() {
   const navigate = useNavigate();
   const current_user = useSelector((state: any) => state.auth.user);
+  console.log("🚀 ~ MyProfile ~ current_user:", current_user)
   const dispatch = useAppDispatch();
   const [orderCurrentPage, setOrderCurrentPage] = useState(1);
   const [orderPageSize] = useState(3);
@@ -191,7 +192,11 @@ function MyProfile() {
       <Avatar
         size={200}
         className="avatar"
-        src={current_user?.picture}
+        src={
+          current_user?.picture === "http://localhost:3001/images/default.png"
+            ? "https://img.freepik.com/premium-vector/user-profile-icon-vector-9_666870-1776.jpg"
+            : current_user?.picture
+        }
         alt="User picture"
       />
       <div className="description">
@@ -226,7 +231,7 @@ function MyProfile() {
           ) : (
             orders.map((order: orderType) => (
               <div key={order.id} className="order-card">
-                <div className="order-details"> 
+                <div className="order-details">
                   <div className="order-info">
                     <p className="order-id">#{order.id}</p>
                     <p className={`order-status status-${order.status}`}>

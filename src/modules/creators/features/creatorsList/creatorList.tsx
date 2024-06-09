@@ -147,7 +147,7 @@ export default function CreatorsList() {
 
   return (
     <div className="Product-List">
-      <h1>Authors List</h1>
+      <h1>Product creators List</h1>
       <div className="header-Product-list">
         <SeachFilter
           onSearchChange={handleSearchChange}
