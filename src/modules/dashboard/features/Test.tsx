@@ -176,7 +176,7 @@ console.log(ordersStatics,'orders')
       </div>
       <div className="container-analytic">
         <div className="vendor-analytic">
-          <h1 className="title-analytic">Vendor Analytic</h1>
+          {/* <h1 className="title-analytic">Vendor Analytic</h1> */}
           <Space direction="vertical" size={12}>
             <RangePicker onChange={handleVendorDateRangeChange} />
           </Space>
@@ -196,13 +196,13 @@ console.log(ordersStatics,'orders')
           <LineChart data={[43, 30, 12, 10]} />
         </div>
 
-        <div className="store-analytic">
+        {/* <div className="store-analytic"> */}
         
-        <MyChartComponent options={optionsOfStoresSelling} />
-          <StaticCircle
+        {/* <MyChartComponent options={optionsOfStoresSelling} /> */}
+          {/* <StaticCircle
             data={ordersPercentage}
-          />
-        </div>
+          /> */}
+        {/* </div> */}
       </div>
       {/* Or use this to create a download link */}
    
