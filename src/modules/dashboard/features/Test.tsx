@@ -1,12 +1,12 @@
 // Import necessary components and functions
 import  { useState } from "react";
 import { DatePicker, Space } from "antd";
-import SearchSpecific from "@src/modules/shared/components/SearchSpecific/SearchSpecific";
 import MyChartComponent from "../components/axis_labels/AxisLabel";
 import StaticCircle from "../components/circle_statistic/CirecleStatic";
 import LineChart from "../components/line_chart/Line_chart";
 import StaticCard from "../components/statistic_card/Static_card";
-import { useMyStoresQuery } from "@src/modules/bookStores/service/storeApi";
+//import { useMyStoresQuery } from "@src/modules/bookStores/service/storeApi";
+import { useAnalyticsQuery } from "../service/analyticsApi";
 import Papa from "papaparse";
 import Amount from "../components/amount/Amount";
 
@@ -15,29 +15,69 @@ const { RangePicker } = DatePicker;
 
 // Define your component
 export default function Dashboard() {
-  const [_selectedStore, setSelectedStore] = useState<string>();
+  const [_selectedStore] = useState<string>();
   const [_selectedDateVendor, setSelectedDateVendor] = useState<any[]>([]);
-  const [_selectedDateShop, setSelectedDateShop] = useState<any[]>([]);
+  const [_selectedDateShop] = useState<any[]>([]);
   const [csvData, setCsvData] = useState("");
 
-  const { data: fetechedMyStores } = useMyStoresQuery();
+
+  /*const { data: fetechedMyStores } = useMyStoresQuery();
   const MyStores = fetechedMyStores?.data?.docs;
   const stores_options = MyStores?.map((product: any) => ({
     label: product.name,
     value: product.id,
-  }));
+  }));*/
 
-  const handleSelectChange = (value: any) => {
+
+  const {data : fetchedAnalytics} = useAnalyticsQuery({
+    StartDate : _selectedDateVendor[0],
+    EndDate : _selectedDateVendor[1]
+
+  })
+  // Extract data and storeSelling using optional chaining
+  const data = fetchedAnalytics?.data?.result;
+  const originalStoreSelling = data?.optionsOfStoresSelling;
+
+  const names = originalStoreSelling?.map((store:any) => store.name);
+
+// Extract numbers array
+  const numbers = originalStoreSelling?.map((store:any) => store.numberOfOrders);
+// percentage of orders 
+const colors = ["#DFF6FF" , "#3d6d6f" ,"#3d6d6f","#5F5D9C"  ]
+const ordersStatics=[
+  { name: "delivred", percentage: 1, color: "#DFF6FF" },
+  { name: "In Progress", percentage: 30, color: "#3d6d6f" },
+  { name: "Completed", percentage: 28, color: "#06283D" },
+  { name: "Canceled", percentage: 20, color: "#5F5D9C" },
+]
+
+console.log(data?.orderStatusPercentages, 'okkki')
+const ordersPercentage = data?.orderStatusPercentages?.map((order:any , index: any) => ({
+  name: order.name,
+  percentage: order.percentage,
+  color : colors[index]
+  
+}));
+console.log(ordersPercentage , 'iiiiiiiiiii')
+
+console.log(data, 'efezfzefzefezf')
+console.log(ordersStatics,'orders')
+
+  
+  
+  
+
+  /*const handleSelectChange = (value: any) => {
     setSelectedStore(value);
-  };
+  };*/
 
   const handleVendorDateRangeChange = (_dates: any, dateStrings: [string, string]) => {
     setSelectedDateVendor(dateStrings);
   };
 
-  const handleShopDateRangeChange = (_dates: any, dateStrings: [string, string]) => {
+ /* const handleShopDateRangeChange = (_dates: any, dateStrings: [string, string]) => {
     setSelectedDateShop(dateStrings);
-  };
+  };*/
 
   const generateCSV = () => {
     const csv = Papa.unparse({
@@ -61,7 +101,8 @@ export default function Dashboard() {
     setCsvData(csv);
   };
   //store statics
-  const Statics = {NumberOfProducts:1033 , NumberOfStores:23, NumberOfOrders:431 ,StoreProfits:3243}
+  const Statics = {NumberOfProducts:data?.numberOfProducts, NumberOfStores:data?.numberOfStores, NumberOfOrders:data?.numberofOrders,StoreProfits:data?.StoreProfits}
+
   const optionsOfBooksSelling = {
     chart: {
         type: "bar",
@@ -93,12 +134,7 @@ export default function Dashboard() {
         },
     ],
 };
-const ordersStatics=[
-  { name: "Done", percentage: 22, color: "#DFF6FF" },
-  { name: "In Progress", percentage: 30, color: "#3d6d6f" },
-  { name: "Completed", percentage: 28, color: "#06283D" },
-  { name: "Canceled", percentage: 20, color: "#5F5D9C" },
-]
+
 
 
   const optionsOfStoresSelling = {
@@ -109,7 +145,7 @@ const ordersStatics=[
       text: "Best-selling stores",
     },
     xAxis: {
-      categories: ["Store1", "Store2", "Store3", "BLUESTORE", "best store"], // Example categories
+      categories: names, // Example categories
     },
     yAxis: {
       title: {
@@ -118,7 +154,7 @@ const ordersStatics=[
     },
     series: [
       {
-        data: [9, 6, 1, 5, 7], // Example data
+        data: numbers, // Example data
       },
     ],
   };
@@ -158,28 +194,13 @@ const ordersStatics=[
           </div>
           
           <LineChart data={[43, 30, 12, 10]} />
-          <MyChartComponent options={optionsOfStoresSelling} />
         </div>
 
         <div className="store-analytic">
-          <h1 className="title-analytic">Store Analytic</h1>
-          <div className="params-store">
-            <SearchSpecific
-              options={stores_options}
-              onChange={(value) => handleSelectChange(value)}
-              placeHolder="Select Store"
-            />
-            <Space direction="vertical" size={12}>
-              <RangePicker onChange={handleShopDateRangeChange} />
-            </Space>
-          </div>
-          <div className="center">
-            <h1>Store profits</h1>
-            <Amount amount={2072}/>
-          </div>
-          <MyChartComponent options={optionsOfBooksSelling} />
+        
+        <MyChartComponent options={optionsOfStoresSelling} />
           <StaticCircle
-            data={ordersStatics}
+            data={ordersPercentage}
           />
         </div>
       </div>

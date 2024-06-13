@@ -1,7 +1,8 @@
+import CountUp from 'react-countup'
 const Amount = ({amount}: {amount :number}) => {
     return (
         <div className="amount-container">
-            <h2>{amount} Dt</h2>
+            <p className='countUp'><CountUp end={amount} duration={3}/> Dt</p>
 
         </div>
     );

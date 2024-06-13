@@ -189,7 +189,7 @@ export default function CategoryList() {
       ),
     },
   ];
-
+  
   const tableProps = {
     dataSource: orders,
     columns: columns,
